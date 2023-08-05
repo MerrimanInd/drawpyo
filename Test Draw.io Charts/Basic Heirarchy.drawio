@@ -1,0 +1,59 @@
+<mxfile host="Electron" modified="2023-08-05T17:22:36.193Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.5 Chrome/114.0.5735.243 Electron/25.3.1 Safari/537.36" etag="fSyrn2eNBmkOtyZIt6NW" version="21.6.5" type="device">
+  <diagram name="Page-1" id="GRXrVSJ3_2ZGtGiiIE3V">
+    <mxGraphModel dx="850" dy="824" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-1" target="7KEc3_y8xHBtGOdUQax5-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="425" y="280" />
+              <mxPoint x="250" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-27" value="Line Label" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="7KEc3_y8xHBtGOdUQax5-8">
+          <mxGeometry x="-0.5142" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-1" target="7KEc3_y8xHBtGOdUQax5-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-1" value="Top Level Object" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-2" target="7KEc3_y8xHBtGOdUQax5-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-2" target="7KEc3_y8xHBtGOdUQax5-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-2" value="Mid Level Object 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-3" target="7KEc3_y8xHBtGOdUQax5-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7KEc3_y8xHBtGOdUQax5-3" target="7KEc3_y8xHBtGOdUQax5-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-3" value="Mid Level Object 2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-4" value="Bottom Level Object 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-5" value="Bottom Level Object 2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-6" value="Bottom Level Object 3" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7KEc3_y8xHBtGOdUQax5-7" value="Bottom Level Object 4" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
