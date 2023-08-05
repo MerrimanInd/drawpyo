@@ -1,6 +1,6 @@
 from .xml_base import XMLBase
 from datetime import datetime
-from os import path, makedirs
+from os import path, makedirs, getcwd
 
 
 class File(XMLBase):

@@ -1,4 +1,4 @@
-from .base_object import DiagramBase
+from .base_diagram import DiagramBase
 
 
 __all__ = ['EdgeBase']
