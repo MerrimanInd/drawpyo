@@ -27,9 +27,9 @@ class Page:
         self.connect = kwargs.get("connect", 1)
         self.arrows = kwargs.get("arrows", 1)
         self.fold = kwargs.get("fold", 1)
-        self.page_scale = kwargs.get("page_scale", 1)
-        self.page_width = kwargs.get("page_width", 850)
-        self.page_height = kwargs.get("page_height", 1100)
+        self.scale = kwargs.get("scale", 1)
+        self.width = kwargs.get("width", 850)
+        self.height = kwargs.get("height", 1100)
         self.math = kwargs.get("math", 0)
         self.shadow = kwargs.get("shadow", 0)
 
@@ -40,7 +40,8 @@ class Page:
         self.root = Root()
 
     def add_object(self, obj):
-        self.objects.append(obj)
+        if obj not in self.objects:
+            self.objects.append(obj)
 
     def remove_object(self, obj):
         self.objects.remove(obj)
@@ -125,9 +126,9 @@ class mxGraph(XMLBase):
             "arrows": self.page.arrows,
             "fold": self.page.fold,
             "page": self.page.page_num,
-            "pageScale": self.page.page_scale,
-            "pageWidth": self.page.page_width,
-            "pageHeight": self.page.page_height,
+            "pageScale": self.page.scale,
+            "pageWidth": self.page.width,
+            "pageHeight": self.page.height,
             "math": self.page.math,
             "shadow": self.page.shadow,
         }

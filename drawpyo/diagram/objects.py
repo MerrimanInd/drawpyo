@@ -32,6 +32,16 @@ class ObjectBase(DiagramBase):
             "vertex": self.vertex,
             "parent": self.parent_id}
 
+    def __repr__(self):
+        if self.value is not None:
+            name_str = "{0} object with value {1}".format(self.__class__.__name__, self.value)
+        else:
+            name_str = "{0} object".format(self.__class__.__name__)
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
+
     # Position property
     @property
     def position(self):
