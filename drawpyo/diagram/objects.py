@@ -52,6 +52,17 @@ class ObjectBase(DiagramBase):
         self.geometry.x = value[0]
         self.geometry.y = value[1]
 
+    @property
+    def center_position(self):
+        x = self.geometry.x + self.geometry.width/2
+        y = self.geometry.y + self.geometry.height/2
+        return (x,y)
+
+    @center_position.setter
+    def center_position(self, position):
+        self.geometry.x = position[0]-self.geometry.width/2
+        self.geometry.y = position[1]-self.geometry.height/2
+
     # Size property
     @property
     def size(self):
