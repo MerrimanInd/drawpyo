@@ -1,6 +1,6 @@
 from ..file import File
 from ..page import Page
-from ..diagram.objects import ObjectBase
+from ..diagram.objects import ObjectBase, Group
 from ..diagram.edges import EdgeBase
 
 
@@ -52,6 +52,10 @@ class LeafObject(ObjectBase):
             elif self.tree.direction in ["left", "right"]:
                 return self.geometry.height
 
+class TreeGroup(Group):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.trunk_object = kwargs.get("trunk_object", None)
 
 class TreeDiagram:
     def __init__(self, **kwargs):
@@ -290,6 +294,22 @@ class TreeDiagram:
     ###########################################################
 
     def auto_layout(self):
+        # Sort each layer according to parent grouping
+        self.sort_into_levels()
+        self.group_all_levels()
+
+        lvl_count = len(self.grouped_objects)
+        # add spaces between levels
+        bottom_depth = (lvl_count - 1) * self.level_spacing
+
+
+        def layout_branch(obj):
+            if len(obj.branches) > 0:
+                # found a base object
+
+
+
+    def auto_layout_old(self):
         # Sort each layer according to parent grouping
         self.sort_into_levels()
         self.group_all_levels()

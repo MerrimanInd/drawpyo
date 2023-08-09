@@ -14,4 +14,8 @@ mid_level.position = (page.width/2, 115)
 
 link = drawpyo.diagram.EdgeBase(page=page, source=top_level, target=mid_level)
 
+grp = drawpyo.diagram.Group()
+grp.add_object(top_level)
+grp.add_object(mid_level)
+
 file.write()
