@@ -38,7 +38,11 @@ tree.add_object(top_level)
 # tree.add_object(mid_level)
 # tree.add_object(bottom_level)
 
+# grp = drawpyo.diagram_types.TreeGroup()
+# grp.add_object(top_level)
+# grp.add_object(mid_level_1)
+# grp.add_object(mid_level_2)
 
 # Finally, set the layout automatically and write the tree to a file.
-tree.auto_layout()
+grp = tree.auto_layout()
 tree.write()

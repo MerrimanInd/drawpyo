@@ -138,8 +138,11 @@ class Group:
         self.geometry = ObjGeometry()
 
     def add_object(self, obj):
-        if obj not in self.objects:
-            self.objects.append(obj)
+        if not isinstance(obj, list):
+            obj = [obj]
+        for o in obj:
+            if o not in self.objects:
+                self.objects.append(o)
 
     ###########################################################
     # Passive properties
@@ -194,8 +197,11 @@ class Group:
         delta_x = new_center[0] - current_center[0]
         delta_y = new_center[1] - current_center[1]
         for obj in self.objects:
-            obj.geometry.x = obj.geometry.x + delta_x
-            obj.geometry.y = obj.geometry.y + delta_y
+            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
+            # obj.geometry.x = obj.geometry.x + delta_x
+            # obj.geometry.y = obj.geometry.y + delta_y
+        self.geometry.x = new_center[0] + self.width / 2
+        self.geometry.y = new_center[1] + self.height / 2
 
     @property
     def position(self):
@@ -207,5 +213,8 @@ class Group:
         delta_x = new_position[0] - current_position[0]
         delta_y = new_position[1] - current_position[1]
         for obj in self.objects:
-            obj.geometry.x = obj.geometry.x + delta_x
-            obj.geometry.y = obj.geometry.y + delta_y
+            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
+            # obj.geometry.x = obj.geometry.x + delta_x
+            # obj.geometry.y = obj.geometry.y + delta_y
+        self.geometry.x = new_position[0]
+        self.geometry.y = new_position[1]

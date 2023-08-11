@@ -56,6 +56,33 @@ class TreeGroup(Group):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.trunk_object = kwargs.get("trunk_object", None)
+        self.tree = kwargs.get("tree", None)
+        
+    @property
+    def trunk_object(self):
+        return self._trunk_object
+    
+    @trunk_object.setter
+    def trunk_object(self, value):
+        if value is not None:
+            self.add_object(value)
+            self._trunk_object = value
+        
+    @property
+    def size_of_level(self):
+        if self.tree is not None:
+            if self.tree.direction in ["up", "down"]:
+                return self.height
+            elif self.tree.direction in ["left", "right"]:
+                return self.width
+
+    @property
+    def size_in_level(self):
+        if self.tree is not None:
+            if self.tree.direction in ["up", "down"]:
+                return self.width
+            elif self.tree.direction in ["left", "right"]:
+                return self.height
 
 class TreeDiagram:
     def __init__(self, **kwargs):
@@ -293,20 +320,55 @@ class TreeDiagram:
     # Layout and Output
     ###########################################################
 
+    @property
+    def roots(self):
+        return [x for x in self.page.objects[2:] if x.trunk is None]
+
     def auto_layout(self):
-        # Sort each layer according to parent grouping
         self.sort_into_levels()
         self.group_all_levels()
+        # Sort each layer according to parent grouping
 
-        lvl_count = len(self.grouped_objects)
-        # add spaces between levels
-        bottom_depth = (lvl_count - 1) * self.level_spacing
+        # lvl_count = len(self.grouped_objects)
+        # # add spaces between levels
+        # bottom_depth = (lvl_count - 1) * self.level_spacing
 
 
-        def layout_branch(obj):
-            if len(obj.branches) > 0:
-                # found a base object
-
+        def layout_branch(trunk):
+            grp = TreeGroup(tree=self)
+            if len(trunk.branches) > 0:
+                # has branches, go through each leaf and check its branches
+                for leaf in trunk.branches:
+                    if len(leaf.branches) > 0:
+                        # If this leaf has its own branches then recursive call
+                        grp.add_object(layout_branch(leaf))
+                    else:
+                        grp.add_object(leaf)
+            
+            # layout the row
+            # top align
+            pos = self.origin
+            
+            for leaf in grp.objects:
+                leaf.position = pos
+                pos = self.move_in_level(pos, leaf.size_in_level+self.item_spacing)
+            
+            # position the trunk at the center and a level above
+            pos = grp.center_position
+            level_space = grp.size_of_level/2 + self.level_spacing + trunk.size_of_level/2
+            pos = self.move_between_levels(pos, -level_space)
+            trunk.center_position = pos
+            # add the trunk_object
+            grp.trunk_object = trunk
+            return grp
+        
+        top_group = layout_branch(self.roots[0])
+        #top_group.center_position = self.origin
+        
+        self.draw_connections()
+        return top_group
+            
+                    
 
 
     def auto_layout_old(self):
