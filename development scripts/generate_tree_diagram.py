@@ -2,7 +2,8 @@ import drawpyo
 
 tree = drawpyo.diagram_types.TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
                                                file_name = "Tree Diagram.drawio",
-                                               direction= "down")
+                                               direction= "down",
+                                               link_style= "ortho")
 
 
 # Define a handful of LeafObjects, give them value names
@@ -16,6 +17,7 @@ bottom_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level
 bottom_level_2 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 2", trunk=mid_level_1)
 bottom_level_3 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 3", trunk=mid_level_2)
 bottom_level_4 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 4", trunk=mid_level_2)
+bottom_level_4.add_peer(bottom_level_2)
 bottom_level_5 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 5", trunk=mid_level_2)
 
 basement_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="basement level 1", trunk=bottom_level_3)

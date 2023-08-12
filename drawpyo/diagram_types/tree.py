@@ -11,6 +11,7 @@ class LeafObject(BasicObject):
         self.branches = kwargs.get("branches", [])
         self.trunk = kwargs.get("trunk", None)
         self.level = kwargs.get("level", None)
+        self.peers = kwargs.get("peers", [])
 
     @property
     def tree(self):
@@ -35,6 +36,12 @@ class LeafObject(BasicObject):
     def add_branch(self, obj):
         self.branches.append(obj)
         obj._trunk = self
+        
+    def add_peer(self, obj):
+        if obj not in self.peers:
+            self.peers.append(obj)
+        if self not in obj.peers:
+            obj.peers.append(self)
 
     @property
     def size_of_level(self):
@@ -96,7 +103,7 @@ class TreeDiagram:
         self.item_spacing = kwargs.get("item_spacing", 15)
         self.group_spacing = kwargs.get("group_spacing", 30)
         self.direction = kwargs.get("direction", "down")
-        self.link_style = kwargs.get("link_style", "right_angle")
+        self.link_style = kwargs.get("link_style", "ortho")
         self.padding = kwargs.get("padding", 10)
 
         # Set up the File and Page objects
@@ -144,22 +151,6 @@ class TreeDiagram:
             raise ValueError(
                 "{0} is not a valid entry for direction. Must be {1}.".format(
                     d, ", ".join(directions)
-                )
-            )
-
-    @property
-    def link_style(self):
-        return self._link_style
-
-    @link_style.setter
-    def link_style(self, d):
-        link_styles = ["right_angle", "straight", "curved"]
-        if d in link_styles:
-            self._link_style = d
-        else:
-            raise ValueError(
-                "{0} is not a valid entry for link_style. Must be {1}.".format(
-                    d, ", ".join(link_styles)
                 )
             )
 
@@ -222,6 +213,37 @@ class TreeDiagram:
             return (start[0], position)
         else:
             raise ValueError("No direction defined!")
+            
+    ###########################################################
+    # Style Properties
+    ###########################################################
+
+    @property
+    def link_style(self):
+        return self._link_style
+
+    @link_style.setter
+    def link_style(self, d):
+        link_styles = ["ortho", "straight", "curved"]
+        if d in link_styles:
+            self._link_style = d
+        else:
+            raise ValueError(
+                "{0} is not a valid entry for link_style. Must be {1}.".format(
+                    d, ", ".join(link_styles)
+                )
+            )
+
+    @property
+    def link_style_string(self):
+        if self.link_style == "ortho":
+            return "rounded=0;orthogonalLoop=1;jettySize=auto;edgeStyle=orthogonalEdgeStyle;"
+        elif self.link_style == "straight":
+            return "rounded=0;orthogonalLoop=1;jettySize=auto;"
+        elif self.link_style == "curved":
+            return "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;curved=1;"
+        
+        
 
     ###########################################################
     # Object Linking and Sorting
@@ -299,10 +321,28 @@ class TreeDiagram:
             pos = self.move_between_levels(pos, top_group.size_of_level / 2)
             top_group.center_position = pos
 
+        # lastly add peer links
+        self.connect_peers()
+        
         return top_group
 
+    def connect_peers(self):
+        peer_style = "endArrow=none;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;"
+        for obj in self.objects:
+            for peer in obj.peers:
+                link_exists = False
+                for link in self.links:
+                    if link.source == obj and link.target == peer:
+                        link_exists = True
+                    elif link.source == peer and link.target == obj:
+                        link_exists = True
+                if not link_exists:
+                    edge = EdgeBase(page=self.page, source=obj, target=peer)
+                    edge.style = peer_style
+                    self.links.append(edge)
+
     def connect(self, source, target):
-        edge = EdgeBase(page=self.page, source=source, target=target)
+        edge = EdgeBase(page=self.page, source=source, target=target, style=self.link_style_string)
         if self.direction == "down":
             trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
             branch_style = "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
