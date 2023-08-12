@@ -255,8 +255,15 @@ class TreeDiagram:
                     else:
                         grp.add_object(leaf)
 
-            # layout the row
-            # top align
+                # layout the row
+                # top align
+                if len(grp.objects) > 0:
+                    grp = layout_group(grp)
+                    grp = add_trunk(grp, trunk)
+                    
+            return grp
+        
+        def layout_group(grp, pos=self.origin):
             pos = self.origin
 
             for leaf in grp.objects:
@@ -264,8 +271,9 @@ class TreeDiagram:
                 pos = self.move_in_level(
                     pos, leaf.size_in_level + self.item_spacing
                 )
-
-            # position the trunk at the center and a level above
+            return grp
+        
+        def add_trunk(grp, trunk):
             pos = grp.center_position
             level_space = (
                 grp.size_of_level / 2
@@ -277,12 +285,19 @@ class TreeDiagram:
             # add the trunk_object
             grp.trunk_object = trunk
             return grp
-
-        top_group = layout_branch(self.roots[0])
-        # Center the top group
-        pos = self.origin
-        pos = self.move_between_levels(pos, top_group.size_of_level / 2)
-        top_group.center_position = pos
+        
+        top_group = TreeGroup(tree=self)
+        
+        for root in self.roots:
+            top_group.add_object(layout_branch(root))
+        
+        if len(top_group.objects) > 0:
+            # Position top group
+            top_group = layout_group(top_group)
+            # Center the top group
+            pos = self.origin
+            pos = self.move_between_levels(pos, top_group.size_of_level / 2)
+            top_group.center_position = pos
 
         return top_group
 

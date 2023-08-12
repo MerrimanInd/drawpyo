@@ -1,3 +1,10 @@
+xmlize = {}
+xmlize[">"] = "&gt;"
+xmlize["<"] = "&gt;"
+xmlize['"'] = "&#34;"
+xmlize["&"] = "&#38;"
+xmlize["'"] = "&#39;"
+
 class XMLBase:
     def __init__(self, **kwargs):
         self.id = kwargs.get("id", id(self))
@@ -36,9 +43,6 @@ class XMLBase:
         return open_tag[:-1] + " />"
     
     def xml_ify(self, parameter_string):
-        xmlize = {}
-        xmlize[">"] = "&gt;"
-        xmlize["<"] = "&gt;"
         return self.translate_txt(parameter_string, xmlize)
     
     @staticmethod

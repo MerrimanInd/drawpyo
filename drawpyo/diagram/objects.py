@@ -20,7 +20,7 @@ text_direction = {None: None, "horizontal": 1, "vertical": 0}
 container = {None: None, "vertical_container": None}
 
 base_styles = {
-    None: None,
+    None: "",
     "rectanle": "",
     "rounded rectangle": "rounded=1;",
     "text": "text;",
@@ -204,7 +204,7 @@ class BasicObject(DiagramBase):
     def style(self):
         style_str = base_styles[self.base_style]
         for att, value in self.style_attributes.items():
-            if value is not None and value == "":
+            if value is not None and not value == "":
                 style_str = style_str + "{0}={1};".format(att, value)
         return style_str
 
