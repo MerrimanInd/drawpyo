@@ -1,10 +1,10 @@
 from ..file import File
 from ..page import Page
-from ..diagram.objects import ObjectBase, Group
+from ..diagram.objects import BasicObject, Group
 from ..diagram.edges import EdgeBase
 
 
-class LeafObject(ObjectBase):
+class LeafObject(BasicObject):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.tree = kwargs.get("tree", None)

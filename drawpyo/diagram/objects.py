@@ -1,43 +1,111 @@
 from .base_diagram import DiagramBase
 
 
-__all__ = ["ObjectBase", "Group"]
+__all__ = ["BasicObject", "Group"]
 
 # Dash pattern property
 line_styles = {
-None: None,
-"solid": "0",
-"small_dash": "1",
-"medium_dash": "1;dashPattern=8 8",
-"large_dash": "1;dashPattern=12 12",
-"small_dot": "1;dashPattern=1 1",
-"medium_dot": "1;dashPattern=1 2",
-"large_dot": "1;dashPattern=1 4"
-    }
+    None: None,
+    "solid": "0",
+    "small_dash": "1",
+    "medium_dash": "1;dashPattern=8 8",
+    "large_dash": "1;dashPattern=12 12",
+    "small_dot": "1;dashPattern=1 1",
+    "medium_dot": "1;dashPattern=1 2",
+    "large_dot": "1;dashPattern=1 4",
+}
 
-text_direction = {
-    None:None,
-    "horizontal":1,
-    "vertical":0}
+text_direction = {None: None, "horizontal": 1, "vertical": 0}
 
-container = {
-    None:None,
-    "vertical_container": }
+container = {None: None, "vertical_container": None}
+
+base_styles = {
+    None: None,
+    "rectanle": "",
+    "rounded rectangle": "rounded=1;",
+    "text": "text;",
+    "ellipse": "ellipse;",
+    "square": "aspect=fixed;",
+    "circle": "ellipse;aspect=fixed;",
+    "process": "shape=process;backgroundOutline=1;",
+    "diamond": "rhombus;",
+    "parallelogram": "shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;",
+    "hexagon": "shape=hexagon;perimeter=hexagonPerimeter2;fixedSize=1;",
+    "triangle": "triangle;",
+    "cylinder": "shape=cylinder3;boundedLbl=1;backgroundOutline=1;",
+    "cloud": "ellipse;shape=cloud;",
+    "document": "shape=document;boundedLbl=1;",
+    "internal storage": "shape=internalStorage;backgroundOutline=1;",
+    "cube": "shape=cube;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;",
+    "step": "shape=step;perimeter=stepPerimeter;",
+    "trapezoid": "shape=trapezoid;perimeter=trapezoidPerimeter;",
+    "tape": "shape=tape;",
+    "note": "shape=note;backgroundOutline=1;darkOpacity=0.05;",
+    "card": "shape=card;",
+    "callout": "shape=callout;perimeter=calloutPerimeter;",
+    "actor": "shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;",
+    "or": "shape=xor;",
+    "and": "shape=or;",
+    "data storage": "shape=dataStorage;fixedSize=1;",
+    "container": "swimlane;startSize=0;",
+    "labeled container": "swimlane;",
+    "labeled horizontal container": "swimlane;horizontal=0;",
+}
+
+
+default_sizes = {
+    None: (120, 60),
+    "rectangle": (120, 60),
+    "rounded rectangle": (120, 60),
+    "text": (60, 20),
+    "ellipse": (120, 80),
+    "square": (80, 80),
+    "circle": (80, 80),
+    "process": (120, 60),
+    "diamond": (80, 80),
+    "parallelogram": (120, 60),
+    "hexagon": (120, 80),
+    "triangle": (60, 80),
+    "cylinder": (60, 80),
+    "cloud": (120, 80),
+    "document": (120, 80),
+    "internal storage": (80, 80),
+    "cube": (120, 80),
+    "step": (120, 80),
+    "trapezoid": (120, 60),
+    "tape": (120, 100),
+    "note": (80, 100),
+    "card": (80, 100),
+    "callout": (120, 80),
+    "actor": (30, 60),
+    "or": (60, 80),
+    "and": (60, 80),
+    "data storage": (100, 80),
+    "container": (200, 200),
+    "labeled container": (200, 200),
+    "labeled horizontal container": (200, 200),
+}
 
 
 ###########################################################
 # Objects
 ###########################################################
 
-class ObjectBase(DiagramBase):
+
+class BasicObject(DiagramBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.base_style = kwargs.get("base_style", None)
 
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
-        self.size = kwargs.get("size", (120, 60))
+        self.size = kwargs.get("size", default_sizes[self.base_style])
         self.vertex = kwargs.get("vertex", 1)
+
+        # TODO enumerate to fixed
+        self.aspect = kwargs.get("aspect", None)
 
         # Content
         self.value = kwargs.get("value", "")
@@ -58,7 +126,6 @@ class ObjectBase(DiagramBase):
         self.comic = kwargs.get("comic", None)
         self.line_pattern = kwargs.get("line_pattern", None)
 
-
         self.font_family = kwargs.get("font_family", None)
         self.font_size = kwargs.get("font_size", None)
         self.align = kwargs.get("align", None)
@@ -77,12 +144,10 @@ class ObjectBase(DiagramBase):
         self.italic_font = kwargs.get("italic_font", False)
         self.underline_font = kwargs.get("underline_font", False)
 
-
         self.out_edges = kwargs.get("out_edges", [])
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
-
 
     def __repr__(self):
         if self.value is not None:
@@ -95,7 +160,6 @@ class ObjectBase(DiagramBase):
 
     def __str_(self):
         return self.__repr__()
-
 
     @property
     def attributes(self):
@@ -110,7 +174,6 @@ class ObjectBase(DiagramBase):
     ###########################################################
     # Style properties
     ###########################################################
-
 
     @property
     def style_attributes(self):
@@ -134,16 +197,29 @@ class ObjectBase(DiagramBase):
             "horizontal": self.horizontal,
             "textOpacity": self.text_opacity,
             "opacity": self.opacity,
-            "dashed": self.dashed
+            "dashed": self.dashed,
         }
 
     @property
     def style(self):
-        style_str = ""
-        for (att, value) in self.style_attributes.items():
-            if value is not None:
+        style_str = base_styles[self.base_style]
+        for att, value in self.style_attributes.items():
+            if value is not None and value == "":
                 style_str = style_str + "{0}={1};".format(att, value)
         return style_str
+
+    @property
+    def base_style(self):
+        return self._base_style
+
+    @base_style.setter
+    def base_style(self, value):
+        if value in base_styles.keys():
+            self._base_style = value
+        else:
+            raise ValueError(
+                "{0} is not an allowed value of base_style".format(value)
+            )
 
     @property
     def horizontal(self):
@@ -158,7 +234,9 @@ class ObjectBase(DiagramBase):
         if value in text_direction.keys():
             self._text_direction = value
         else:
-            raise ValueError("{0} is not an allowed value of text_direction".format(value))
+            raise ValueError(
+                "{0} is not an allowed value of text_direction".format(value)
+            )
 
     @property
     def font_style(self):
@@ -206,7 +284,9 @@ class ObjectBase(DiagramBase):
         if value in line_styles.keys():
             self._line_pattern = value
         else:
-            raise ValueError("{0} is not an allowed value of line_pattern".format(value))
+            raise ValueError(
+                "{0} is not an allowed value of line_pattern".format(value)
+            )
 
     ###########################################################
     # Geometry properties
@@ -373,8 +453,8 @@ class Group:
             obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
             # obj.geometry.x = obj.geometry.x + delta_x
             # obj.geometry.y = obj.geometry.y + delta_y
-        #self.geometry.x = new_center[0] + self.width / 2
-        #self.geometry.y = new_center[1] + self.height / 2
+        # self.geometry.x = new_center[0] + self.width / 2
+        # self.geometry.y = new_center[1] + self.height / 2
         self.update_geometry()
 
     @property
@@ -390,6 +470,6 @@ class Group:
             obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
             # obj.geometry.x = obj.geometry.x + delta_x
             # obj.geometry.y = obj.geometry.y + delta_y
-        #self.geometry.x = new_position[0]
-        #self.geometry.y = new_position[1]
+        # self.geometry.x = new_position[0]
+        # self.geometry.y = new_position[1]
         self.update_geometry()
