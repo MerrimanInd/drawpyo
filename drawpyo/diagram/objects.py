@@ -241,6 +241,7 @@ class BasicObject(DiagramBase):
     @property
     def font_style(self):
         # TODO there HAS to be a better way to do this
+        # it's basically an enumerated truth table
         bld = self.bold_font
         ita = self.italic_font
         unl = self.underline_font

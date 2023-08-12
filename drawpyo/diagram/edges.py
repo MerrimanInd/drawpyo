@@ -1,24 +1,103 @@
 from .base_diagram import DiagramBase
 
 
-__all__ = ['EdgeBase']
+__all__ = ['BasicEdge']
+
+line_shape = {
+    None: "",
+    "straight": "",
+    "orthogonal": "edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;",
+    "vertical": "edgeStyle=elbowEdgeStyle;",
+    "horizontal": "edgeStyle=elbowEdgeStyle;elbow=vertical;",
+    "isometric": "edgeStyle=isometricEdgeStyle;",
+    "isometric_vertical": "edgeStyle=isometricEdgeStyle;elbow=vertical;",
+    "curved": "edgeStyle=orthogonalEdgeStyle;elbow=vertical;curved=1;",
+    "entity_relation": "edgeStyle=entityRelationEdgeStyle;elbow=vertical;"}
+
+line_type = {
+    None: "",
+    "line": "",
+    "link": "shape=link;",
+    "arrow": "shape=flexArrow;",
+    "simple_arrow": "shape=arrow;"}
+
+line_style = {
+    None: "",
+    "solid": "",
+    "dashed_small": "dashed=1;",
+    "dashed_medium": "dashed=1;dashPattern=8 8;",
+    "dashed_large": "dashed=1;dashPattern=12 12;",
+    "dotted_small": "dashed=1;dashPattern=1 1;",
+    "dotted_medium": "dashed=1;dashPattern=1 2;",
+    "dotted_large": "dashed=1;dashPattern=1 4;"}
+
+# first argument is the style name, second is whether it's fillable
+line_ends = {
+    None:False,
+    "":False,
+    "classic":True,
+    "classicThin":True,
+    "open":False,
+    "openThin":False,
+    "openAsync":False,
+    "block":True,
+    "blockThin":True,
+    "async":True,
+    "oval":True,
+    "diamond":True,
+    "diamondThin":True,
+    "dash":False,
+    "halfCircle":False,
+    "cross":False,
+    "circlePlus":False,
+    "circle":False,
+    "baseDash":False,
+    "ERone":False,
+    "ERmandOne":False,
+    "ERmany":False,
+    "ERoneToMany":False,
+    "ERzeroToOne":False,
+    "ERzeroToMany":False,
+    "doubleBlock":True}
 
 ###########################################################
 # Edges
 ###########################################################
 
-class EdgeBase(DiagramBase):
+class BasicEdge(DiagramBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.xml_class = "mxCell"
 
-        self.default_style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;"
-        self.style = kwargs.get("style", self.default_style)
-
+        # Style
+        #self.default_style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;"
+        self.extra_styles = kwargs.get("style", None)
+        
+        self.line_shape = kwargs.get("line_shape", "orthogonal")
+        self.line_type = kwargs.get("line_type", "line")
+        self.line_style = kwargs.get("line_style", "solid")
+        self.line_end_target = kwargs.get("line_end_target", None)
+        self.line_end_source = kwargs.get("line_end_source", None)
+        self.end_fill_target = kwargs.get("end_fill_target", False)
+        self.end_fill_source = kwargs.get("end_fill_source", False)
+        
+        self.jetty_size = kwargs.get("jetty_size", "auto")
+        self.html = kwargs.get("html", 1)
+        self.rounded = kwargs.get("rounded", 0)
+        
+        # Connection and geometry
         self.edge = kwargs.get("edge", 1)
         self.source = kwargs.get("source", None)
         self.target = kwargs.get("target", None)
         self.geometry = EdgeGeometry()
+        self.entry_x = kwargs.get("entry_x", None)
+        self.entry_y = kwargs.get("entry_y", None)
+        self.entry_dx = kwargs.get("entry_dx", None)
+        self.entry_dy = kwargs.get("entry_dy", None)
+        self.exit_x = kwargs.get("exit_x", None)
+        self.exit_y = kwargs.get("exit_y", None)
+        self.exit_dx = kwargs.get("exit_dx", None)
+        self.exit_dy = kwargs.get("exit_dy", None)
 
     @property
     def attributes(self):
@@ -77,7 +156,70 @@ class EdgeBase(DiagramBase):
             return self.target.id
         else:
             return 1
+        
+    ###########################################################
+    # Style properties
+    ###########################################################
 
+    @property
+    def style_attributes(self):
+        return {
+            "html": self.html,
+            "rounded": self.rounded,
+            "jettySize": self.jetty_size,
+            "entryX": self.entry_x,
+            "entryY": self.entry_y,
+            "entryDx": self.entry_dx,
+            "entryDy": self.entry_dy,
+            "exitX": self.exit_x,
+            "exitY": self.exit_y,
+            "exitDx": self.exit_dx,
+            "exitDy": self.exit_dy,
+            "startArrow": self.start_arrow,
+            "endArrow": self.end_arrow,
+            "startFill": self.start_fill,
+            "endFill": self.end_fill
+        }
+
+    @property
+    def style(self):
+        style_str = self.base_style
+        for att, value in self.style_attributes.items():
+            if value is not None and not value == "":
+                style_str = style_str + "{0}={1};".format(att, value)
+        style_str = style_str + self.extra_styles
+        return style_str
+    
+    @property
+    def base_style(self):
+        style_str = ""
+        style_str = style_str + line_shape[self.line_shape]
+        style_str = style_str + line_type[self.line_type]
+        style_str = style_str + line_style[self.line_style]
+        return style_str
+    
+    @property
+    def start_arrow(self):
+        return self.line_end_source
+    
+    @property
+    def start_fill(self):
+        if line_ends[self.line_end_source]:
+            return self.end_fill_source
+        else:
+            return None
+    
+    @property
+    def end_arrow(self):
+        return self.line_end_target
+    
+    @property
+    def end_fill(self):
+        if line_ends[self.line_end_target]:
+            return self.end_fill_target
+        else:
+            return None
+    
     ###########################################################
     # XML Generation
     ###########################################################

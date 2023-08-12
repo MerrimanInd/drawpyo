@@ -1,7 +1,7 @@
 from ..file import File
 from ..page import Page
 from ..diagram.objects import BasicObject, Group
-from ..diagram.edges import EdgeBase
+from ..diagram.edges import BasicEdge
 
 
 class LeafObject(BasicObject):
@@ -337,12 +337,12 @@ class TreeDiagram:
                     elif link.source == peer and link.target == obj:
                         link_exists = True
                 if not link_exists:
-                    edge = EdgeBase(page=self.page, source=obj, target=peer)
-                    edge.style = peer_style
+                    edge = BasicEdge(page=self.page, source=obj, target=peer)
+                    edge.extra_styles = peer_style
                     self.links.append(edge)
 
     def connect(self, source, target):
-        edge = EdgeBase(page=self.page, source=source, target=target, style=self.link_style_string)
+        edge = BasicEdge(page=self.page, source=source, target=target, style=self.link_style_string)
         if self.direction == "down":
             trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
             branch_style = "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
@@ -355,7 +355,7 @@ class TreeDiagram:
         elif self.direction == "right":
             trunk_style = "exitX=1;exitY=0.5;exitDx=0;exitDy=0;"
             branch_style = "entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
-        edge.style = edge.style + trunk_style + branch_style
+        edge.extra_styles = edge.style + trunk_style + branch_style
         self.links.append(edge)
 
     def draw_connections(self):
