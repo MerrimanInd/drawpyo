@@ -52,22 +52,26 @@ class LeafObject(ObjectBase):
             elif self.tree.direction in ["left", "right"]:
                 return self.geometry.height
 
+
 class TreeGroup(Group):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.trunk_object = kwargs.get("trunk_object", None)
         self.tree = kwargs.get("tree", None)
-        
+
     @property
     def trunk_object(self):
         return self._trunk_object
-    
+
     @trunk_object.setter
     def trunk_object(self, value):
         if value is not None:
             self.add_object(value)
             self._trunk_object = value
-        
+
+
+    # I don't love that these are copy-pasted from LeafObject but the multiple
+    # inheritance was too much of a pain to have TreeGroup inherit.
     @property
     def size_of_level(self):
         if self.tree is not None:
@@ -83,6 +87,7 @@ class TreeGroup(Group):
                 return self.width
             elif self.tree.direction in ["left", "right"]:
                 return self.height
+
 
 class TreeDiagram:
     def __init__(self, **kwargs):
@@ -101,10 +106,7 @@ class TreeDiagram:
         self.page = Page(file=self.file)
 
         # Set up object and level lists
-        self.unsorted_objects = []
-        self.objects = {0: []}
-        self.grouped_objects = {0: {0: []}}
-        self.levels = kwargs.get("levels", {})
+        self.objects = []
         self.links = []
 
     ###########################################################
@@ -226,95 +228,11 @@ class TreeDiagram:
     ###########################################################
 
     def add_object(self, obj, **kwargs):
-        obj.page = self.page
-        if "trunk" in kwargs:
-            obj.trunk = kwargs.get("trunk")
-
-        if "level" in kwargs:
-            level = kwargs.get("level")
-
-            if isinstance(level, str):
-                if level in self.levels:
-                    level = self.levels[level]
-                else:
-                    raise ValueError(
-                        "Level was passed in as a string but isn't present in the TreeDiagram.levels dictionary. Passed in value was {0}.".format(
-                            level
-                        )
-                    )
-
-            obj.level = level
-
-            if level not in self.objects:
-                self.objects[level] = []
-
-            self.objects[level].append(obj)
-        else:
-            self.unsorted_objects.append(obj)
-
-    def add_obj_to_group(self, obj, level, group):
-        if level not in self.grouped_objects:
-            self.grouped_objects[level] = {}
-        if group not in self.grouped_objects[level]:
-            self.grouped_objects[level][group] = []
-        self.grouped_objects[level][group].append(obj)
-
-    def sort_into_levels(self):
-        while len(self.unsorted_objects) > 0:
-            max_sort = True
-            for obj in self.unsorted_objects:
-                trunk_obj = obj.trunk
-                if trunk_obj is None:
-                    # Top level object
-                    lvl = 0
-                elif trunk_obj.level is not None:
-                    # Has a trunk object and it's sorted
-                    lvl = trunk_obj.level + 1
-                else:
-                    # Has a trunk object but it's not yet sorted
-                    lvl = None
-
-                if lvl is not None:
-                    max_sort = False
-                    obj.level = lvl
-                    self.unsorted_objects.remove(obj)
-                    self.add_object(obj, level=lvl)
-                    # self.objects[lvl].append(obj)
-            if max_sort:
-                # Condition triggers the first time the program loops through
-                # and isn't able to sort any of the remaining objects.
-                print(
-                    "Maximum sorting achieved. {0} objects are unsortable, examine unsorted_objects.".format(
-                        len(self.unsorted_objects)
-                    )
-                )
-                break
-
-    def order_level(self, level):
-        trunks = {}
-        trunk_order = 0
-        for obj in self.objects[level]:
-            if obj.trunk not in trunks:
-                trunks[obj.trunk] = trunk_order
-                trunk_order = trunk_order + 1
-            obj.level_order = trunks[obj.trunk]
-        self.objects[level].sort(key=lambda x: x.level_order, reverse=True)
-
-    def group_all_levels(self):
-        for lvl in self.objects.keys():
-            self.group_level(lvl)
-
-    def group_level(self, level):
-        # create a dict for matching trunks to groups
-        trunks = {}
-        group = 0
-        for obj in self.objects[level]:
-            if obj.trunk not in trunks:
-                trunks[obj.trunk] = group
-                group = group + 1
-
-            obj.group = trunks[obj.trunk]
-            self.add_obj_to_group(obj, level, obj.group)
+        if obj not in self.objects:
+            obj.page = self.page
+            if "trunk" in kwargs:
+                obj.trunk = kwargs.get("trunk")
+            self.objects.append(obj)
 
     ###########################################################
     # Layout and Output
@@ -325,177 +243,72 @@ class TreeDiagram:
         return [x for x in self.page.objects[2:] if x.trunk is None]
 
     def auto_layout(self):
-        self.sort_into_levels()
-        self.group_all_levels()
-        # Sort each layer according to parent grouping
-
-        # lvl_count = len(self.grouped_objects)
-        # # add spaces between levels
-        # bottom_depth = (lvl_count - 1) * self.level_spacing
-
-
         def layout_branch(trunk):
             grp = TreeGroup(tree=self)
             if len(trunk.branches) > 0:
                 # has branches, go through each leaf and check its branches
                 for leaf in trunk.branches:
+                    self.connect(trunk, leaf)
                     if len(leaf.branches) > 0:
                         # If this leaf has its own branches then recursive call
                         grp.add_object(layout_branch(leaf))
                     else:
                         grp.add_object(leaf)
-            
+
             # layout the row
             # top align
             pos = self.origin
-            
+
             for leaf in grp.objects:
                 leaf.position = pos
-                pos = self.move_in_level(pos, leaf.size_in_level+self.item_spacing)
-            
+                pos = self.move_in_level(
+                    pos, leaf.size_in_level + self.item_spacing
+                )
+
             # position the trunk at the center and a level above
             pos = grp.center_position
-            level_space = grp.size_of_level/2 + self.level_spacing + trunk.size_of_level/2
+            level_space = (
+                grp.size_of_level / 2
+                + self.level_spacing
+                + trunk.size_of_level / 2
+            )
             pos = self.move_between_levels(pos, -level_space)
             trunk.center_position = pos
             # add the trunk_object
             grp.trunk_object = trunk
             return grp
-        
+
         top_group = layout_branch(self.roots[0])
-        #top_group.center_position = self.origin
-        
-        self.draw_connections()
+        # Center the top group
+        pos = self.origin
+        pos = self.move_between_levels(pos, top_group.size_of_level / 2)
+        top_group.center_position = pos
+
         return top_group
-            
-                    
 
-
-    def auto_layout_old(self):
-        # Sort each layer according to parent grouping
-        self.sort_into_levels()
-        self.group_all_levels()
-
-        # Place objects
-
-        """
-        Placement algorithm:
-        	• Go to bottom of page
-        	• Place bottom group
-        	• For each layer:
-        		○ Find average position of each group in last layer
-        		○ Place root objects at average and one layer up
-        Place final block at origin
-        """
-
-        lvl_count = len(self.grouped_objects)
-        # add spaces between levels
-        bottom_depth = (lvl_count - 1) * self.level_spacing
-
-        # add size of levels
-        for lvl in range(0, lvl_count, 1):
-            bottom_depth = bottom_depth + self.get_height_of_level(lvl)
-
-        # if the direction is left or up the bottom_depth needs to be reduced
-        # by one since the location includes the size of a layer
-        if self.direction in ["right", "down"]:
-            bottom_depth = bottom_depth - self.get_height_of_level(lvl)
-
-        curr_position = self.move_between_levels(self.origin, bottom_depth)
-        self.place_grouped_level(curr_position, lvl_count - 1)
-
-        for lvl_num in range(lvl_count - 1, 0, -1):
-            # start at the bottom level and work up
-            for grp in self.grouped_objects[lvl_num]:
-                # Get the avg position of the group
-                pos = self.get_avg_pos_of_group(lvl_num, grp)
-
-                # Get the trunk_obj object
-                trunk_obj = self.grouped_objects[lvl_num][grp][0].trunk
-
-                # Set the position of the group's trunk_obj object
-                pos = self.move_between_levels(
-                    pos,
-                    -(
-                        self.level_spacing
-                        + self.get_height_of_level(lvl_num) / 2
-                        + trunk_obj.size_of_level / 2
-                    ),
-                )
-                trunk_obj.center_position = pos
-        self.draw_connections()
+    def connect(self, source, target):
+        edge = EdgeBase(page=self.page, source=source, target=target)
+        if self.direction == "down":
+            trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
+            branch_style = "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+        elif self.direction == "up":
+            trunk_style = "exitX=0.5;exitY=0;exitDx=0;exitDy=0;"
+            branch_style = "entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+        elif self.direction == "left":
+            trunk_style = "exitX=0;exitY=0.5;exitDx=0;exitDy=0;"
+            branch_style = "entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+        elif self.direction == "right":
+            trunk_style = "exitX=1;exitY=0.5;exitDx=0;exitDy=0;"
+            branch_style = "entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+        edge.style = edge.style + trunk_style + branch_style
+        self.links.append(edge)
 
     def draw_connections(self):
         # Draw connections
         for lvl in self.objects.values():
             for obj in lvl:
                 if obj.trunk is not None:
-                    edge = EdgeBase(
-                        page=self.page, source=obj.trunk, target=obj
-                    )
-                    if self.direction == "down":
-                        trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
-                        branch_style = (
-                            "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
-                        )
-                    elif self.direction == "up":
-                        trunk_style = "exitX=0.5;exitY=0;exitDx=0;exitDy=0;"
-                        branch_style = (
-                            "entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
-                        )
-                    elif self.direction == "left":
-                        trunk_style = "exitX=0;exitY=0.5;exitDx=0;exitDy=0;"
-                        branch_style = (
-                            "entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
-                        )
-                    elif self.direction == "right":
-                        trunk_style = "exitX=1;exitY=0.5;exitDx=0;exitDy=0;"
-                        branch_style = (
-                            "entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
-                        )
-
-                    edge.style = edge.style + trunk_style + branch_style
-                    self.links.append(edge)
-
-    def place_grouped_level(self, origin, level):
-        width = self.get_size_of_level(level)
-
-        # Offset to half the total level width then back in to the origin of
-        # the first block
-        curr_pos = self.move_in_level(origin, -(width / 2))
-
-        for grp in self.grouped_objects[level].values():
-            for obj in grp:
-                obj.position = curr_pos
-                curr_pos = self.move_in_level(
-                    curr_pos, self.item_spacing + obj.size_in_level
-                )
-            curr_pos = self.move_in_level(
-                curr_pos, self.group_spacing - self.item_spacing
-            )
-
-    def get_avg_pos_of_group(self, level_num, group_num):
-        grp = self.grouped_objects[level_num][group_num]
-        grp_cnt = len(grp)
-        avg_x = sum(obj.center_position[0] for obj in grp) / grp_cnt
-        avg_y = sum(obj.center_position[1] for obj in grp) / grp_cnt
-        return (avg_x, avg_y)
-
-    def get_height_of_level(self, level_num):
-        return max(obj.size_of_level for obj in self.objects[level_num])
-
-    def get_size_of_level(self, level):
-        # Add the width of all the spacings between the groups
-        total_width = (
-            len(self.grouped_objects[level]) - 1
-        ) * self.group_spacing
-        for grp in self.grouped_objects[level].values():
-            # Add the spacing between the objects in the group
-            total_width = total_width + (len(grp) - 1) * self.item_spacing
-            for obj in grp:
-                # Add the width of the objects themselves
-                total_width = total_width + obj.size_in_level
-        return total_width
+                    self.connect(source=obj.trunk, target=obj)
 
     def write(self, **kwargs):
         self.file.write(**kwargs)

@@ -22,7 +22,8 @@ class XMLBase:
         open_tag = "<" + self.xml_class
         for (att, value) in self.attributes.items():
             if value is not None:
-                open_tag = open_tag + " " + att + '="' + str(value) + '"'
+                xml_parameter = self.xml_ify(str(value))
+                open_tag = open_tag + " " + att + '="' + xml_parameter + '"'
         return open_tag + ">"
 
     @property
@@ -33,3 +34,15 @@ class XMLBase:
     def xml(self):
         open_tag = self.xml_open_tag
         return open_tag[:-1] + " />"
+    
+    def xml_ify(self, parameter_string):
+        xmlize = {}
+        xmlize[">"] = "&gt;"
+        xmlize["<"] = "&gt;"
+        return self.translate_txt(parameter_string, xmlize)
+    
+    @staticmethod
+    def translate_txt(string, replacement_dict):
+        for key, value in replacement_dict.items():
+            string = string.replace(key, str(value))
+        return string

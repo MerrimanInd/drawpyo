@@ -1,4 +1,3 @@
-
 import drawpyo
 
 tree = drawpyo.diagram_types.TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
@@ -19,30 +18,9 @@ bottom_level_3 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level
 bottom_level_4 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 4", trunk=mid_level_2)
 bottom_level_5 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 5", trunk=mid_level_2)
 
+basement_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="basement level 1", trunk=bottom_level_3)
+basement_level_2 = drawpyo.diagram_types.LeafObject(tree=tree, value="basement level 2", trunk=bottom_level_3)
 
-# Optionally, you can name the levels for clarity
-tree.levels = {'top': 0,
-                'mid': 1,
-                'bottom': 2}
 
-# You can add LeafObjects to the tree and assign them to a level with either a
-# defined name or a number. 0 is always the trunk level.
-
-# tree.add_object(top_level, level="top")
-tree.add_object(mid_level_1, level="mid")
-# tree.add_object(bottom_level_1, level="bottom")
-
-# You can also add items independently if they didn't have a tree attribute
-# assigned at instantiation.
-tree.add_object(top_level)
-# tree.add_object(mid_level)
-# tree.add_object(bottom_level)
-
-# grp = drawpyo.diagram_types.TreeGroup()
-# grp.add_object(top_level)
-# grp.add_object(mid_level_1)
-# grp.add_object(mid_level_2)
-
-# Finally, set the layout automatically and write the tree to a file.
 grp = tree.auto_layout()
 tree.write()
