@@ -74,8 +74,22 @@ class TreeGroup(Group):
     def trunk_object(self, value):
         if value is not None:
             self.add_object(value)
-            self._trunk_object = value
+        self._trunk_object = value
 
+    def center_trunk(self):
+        branches_grp = TreeGroup(tree=self.tree)
+        for obj in self.objects:
+            if obj is not self.trunk_object:
+                branches_grp.add_object(obj)
+        pos = branches_grp.center_position
+        
+        level_space = (
+            branches_grp.size_of_level / 2
+            + self.tree.level_spacing
+            + self.trunk_object.size_of_level / 2
+        )
+        pos = self.tree.move_between_levels(pos, -level_space)
+        self.trunk_object.center_position = pos
 
     # I don't love that these are copy-pasted from LeafObject but the multiple
     # inheritance was too much of a pain to have TreeGroup inherit.
@@ -262,11 +276,12 @@ class TreeDiagram:
 
     @property
     def roots(self):
-        return [x for x in self.page.objects[2:] if x.trunk is None]
+        return [x for x in self.objects if x.trunk is None]
 
     def auto_layout(self):
         def layout_branch(trunk):
             grp = TreeGroup(tree=self)
+            grp.trunk_object = trunk
             if len(trunk.branches) > 0:
                 # has branches, go through each leaf and check its branches
                 for leaf in trunk.branches:
@@ -278,35 +293,34 @@ class TreeDiagram:
                         grp.add_object(leaf)
 
                 # layout the row
-                # top align
-                if len(grp.objects) > 0:
-                    grp = layout_group(grp)
-                    grp = add_trunk(grp, trunk)
-                    
+                grp = layout_group(grp)
+                #grp = add_trunk(grp, trunk)
+                grp.center_trunk()
             return grp
         
         def layout_group(grp, pos=self.origin):
             pos = self.origin
 
             for leaf in grp.objects:
-                leaf.position = pos
-                pos = self.move_in_level(
-                    pos, leaf.size_in_level + self.item_spacing
-                )
+                if leaf is not grp.trunk_object:
+                    leaf.position = pos
+                    pos = self.move_in_level(
+                        pos, leaf.size_in_level + self.item_spacing
+                    )
             return grp
         
-        def add_trunk(grp, trunk):
-            pos = grp.center_position
-            level_space = (
-                grp.size_of_level / 2
-                + self.level_spacing
-                + trunk.size_of_level / 2
-            )
-            pos = self.move_between_levels(pos, -level_space)
-            trunk.center_position = pos
-            # add the trunk_object
-            grp.trunk_object = trunk
-            return grp
+        # def add_trunk(grp, trunk):
+        #     pos = grp.center_position
+        #     level_space = (
+        #         grp.size_of_level / 2
+        #         + self.level_spacing
+        #         + trunk.size_of_level / 2
+        #     )
+        #     pos = self.move_between_levels(pos, -level_space)
+        #     trunk.center_position = pos
+        #     # add the trunk_object
+        #     grp.trunk_object = trunk
+        #     return grp
         
         top_group = TreeGroup(tree=self)
         
