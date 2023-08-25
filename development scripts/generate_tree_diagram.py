@@ -1,28 +1,42 @@
-import drawpyo
+from drawpyo.diagram_types import TreeDiagram, LeafObject
 
-tree = drawpyo.diagram_types.TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
-                                               file_name = "Tree Diagram.drawio",
-                                               direction= "down",
-                                               link_style= "ortho")
+tree = TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
+                   file_name = "Coffee Grinders.drawio",
+                   direction= "down",
+                   link_style= "ortho")
 
+# Top object
+grinders = LeafObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
 
-# Define a handful of LeafObjects, give them value names
+# Main categories
+blade_grinders = LeafObject(tree=tree, value="Blade Grinders", base_style="rounded rectangle", trunk=grinders)
+burr_grinders = LeafObject(tree=tree, value="Burr Grinders", base_style="rounded rectangle", trunk=grinders)
+blunt_objects = LeafObject(tree=tree, value="Blunt Objects", base_style="rounded rectangle", trunk=grinders)
 
-top_level = drawpyo.diagram_types.LeafObject(tree=tree, value="top level item")
+# Other
+elec_blade = LeafObject(tree=tree, value="Electric Blade Grinder", trunk=blade_grinders)
+mnp = LeafObject(tree=tree, value="Mortar and Pestle", trunk=blunt_objects)
 
-mid_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="mid level item 1", trunk=top_level)
-mid_level_2 = drawpyo.diagram_types.LeafObject(tree=tree, value="mid level item 2", trunk=top_level)
+# Conical Burrs
+conical = LeafObject(tree=tree, value="Conical Burrs", base_style="rounded rectangle", trunk=burr_grinders)
+elec_conical = LeafObject(tree=tree, value="Electric", trunk=conical)
+manual_conical = LeafObject(tree=tree, value="Manual", trunk=conical)
 
-bottom_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 1", trunk=mid_level_1)
-bottom_level_2 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 2", trunk=mid_level_1)
-bottom_level_3 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 3", trunk=mid_level_2)
-bottom_level_4 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 4", trunk=mid_level_2)
-bottom_level_4.add_peer(bottom_level_2)
-bottom_level_5 = drawpyo.diagram_types.LeafObject(tree=tree, value="bottom level item 5", trunk=mid_level_2)
+HarioSkerton = LeafObject(tree=tree, value="Hario Skerton", trunk=manual_conical)
+Comandante = LeafObject(tree=tree, value="Comandante", trunk=manual_conical)
+JZpresso = LeafObject(tree=tree, value="ZJpresso JX-Pro", trunk=manual_conical)
+weberHG2 = LeafObject(tree=tree, value="Weber HG-2", trunk=manual_conical)
 
-basement_level_1 = drawpyo.diagram_types.LeafObject(tree=tree, value="basement level 1", trunk=bottom_level_3)
-basement_level_2 = drawpyo.diagram_types.LeafObject(tree=tree, value="basement level 2", trunk=bottom_level_3)
+BaratzaEnc = LeafObject(tree=tree, value="Baratza Encore", trunk=elec_conical)
+Niche = LeafObject(tree=tree, value="Niche Zero", trunk=elec_conical)
+WeberKey = LeafObject(tree=tree, value="Weber Key", trunk=elec_conical)
 
+# Flat Burrs
+flat = LeafObject(tree=tree, value="Flat Burrs", base_style="rounded rectangle", trunk=burr_grinders)
+
+DF64 = LeafObject(tree=tree, value="Turin DF64", trunk=flat)
+FellowOde = LeafObject(tree=tree, value="Fellow Ode", trunk=flat)
+LagomP64 = LeafObject(tree=tree, value="Lagom P64", trunk=flat)
 
 grp = tree.auto_layout()
 tree.write()

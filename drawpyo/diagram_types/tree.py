@@ -1,6 +1,6 @@
 from ..file import File
 from ..page import Page
-from ..diagram.objects import BasicObject, Group
+from ..diagram.objects import BasicObject, Group, base_styles
 from ..diagram.edges import BasicEdge
 
 
@@ -358,18 +358,33 @@ class TreeDiagram:
     def connect(self, source, target):
         edge = BasicEdge(page=self.page, source=source, target=target, style=self.link_style_string)
         if self.direction == "down":
-            trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exit_x = 0.5
+            edge.exit_y = 1
+            # branch style
+            edge.entry_x = 0.5
+            edge.entry_y = 0
         elif self.direction == "up":
-            trunk_style = "exitX=0.5;exitY=0;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exit_x = 0.5
+            edge.exit_y = 0
+            # branch style
+            edge.entry_x = 0.5
+            edge.entry_y = 1
         elif self.direction == "left":
-            trunk_style = "exitX=0;exitY=0.5;exitDx=0;exitDy=0;"
-            branch_style = "entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exit_x = 0
+            edge.exit_y = 0.5
+            # branch style
+            edge.entry_x = 1
+            edge.entry_y = 0.5
         elif self.direction == "right":
-            trunk_style = "exitX=1;exitY=0.5;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
-        edge.extra_styles = edge.style + trunk_style + branch_style
+            # trunk style
+            edge.exit_x = 1
+            edge.exit_y = 0.5
+            # branch style
+            edge.entry_x = 0
+            edge.entry_y = 0.5
         self.links.append(edge)
 
     def draw_connections(self):

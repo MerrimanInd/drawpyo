@@ -15,7 +15,7 @@ line_styles = {
     "large_dot": "1;dashPattern=1 4",
 }
 
-text_direction = {None: None, "horizontal": 1, "vertical": 0}
+text_directions = {None: None, "horizontal": 1, "vertical": 0}
 
 container = {None: None, "vertical_container": None}
 
@@ -97,7 +97,7 @@ class BasicObject(DiagramBase):
         super().__init__(**kwargs)
 
         self.base_style = kwargs.get("base_style", None)
-
+        
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
@@ -111,9 +111,10 @@ class BasicObject(DiagramBase):
         self.value = kwargs.get("value", "")
 
         # Style
+        
         # self.default_style = "rounded=0;whiteSpace=wrap;html=1;"
         # self.style = kwargs.get("style", self.default_style)
-
+        
         self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
         self.white_space = kwargs.get("white_space", "wrap")
@@ -143,11 +144,16 @@ class BasicObject(DiagramBase):
         self.bold_font = kwargs.get("bold_font", False)
         self.italic_font = kwargs.get("italic_font", False)
         self.underline_font = kwargs.get("underline_font", False)
+        
+        # Base style declaration comes last since it overwrites the defaults
+        # set by all kwargs.get lines above
+        #self.parse_style_string(base_styles[self.base_style])
 
         self.out_edges = kwargs.get("out_edges", [])
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
+        
 
     def __repr__(self):
         if self.value is not None:
@@ -171,6 +177,31 @@ class BasicObject(DiagramBase):
             "parent": self.parent_id,
         }
 
+
+    ###########################################################
+    # Style templates
+    ###########################################################
+
+    @property
+    def line_styles(self):
+        return line_styles
+    
+    @property
+    def text_directions(self):
+        return text_directions
+    
+    @property
+    def container(self):
+        return container
+    
+    @property
+    def base_styles(self):
+        return base_styles
+    
+    @property
+    def default_sizes(self):
+        return default_sizes
+    
     ###########################################################
     # Style properties
     ###########################################################
@@ -201,14 +232,6 @@ class BasicObject(DiagramBase):
         }
 
     @property
-    def style(self):
-        style_str = base_styles[self.base_style]
-        for att, value in self.style_attributes.items():
-            if value is not None and not value == "":
-                style_str = style_str + "{0}={1};".format(att, value)
-        return style_str
-
-    @property
     def base_style(self):
         return self._base_style
 
@@ -223,7 +246,7 @@ class BasicObject(DiagramBase):
 
     @property
     def horizontal(self):
-        return text_direction[self._text_direction]
+        return text_directions[self._text_direction]
 
     @property
     def text_direction(self):
@@ -231,7 +254,7 @@ class BasicObject(DiagramBase):
 
     @text_direction.setter
     def text_direction(self, value):
-        if value in text_direction.keys():
+        if value in text_directions.keys():
             self._text_direction = value
         else:
             raise ValueError(

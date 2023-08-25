@@ -180,18 +180,9 @@ class BasicEdge(DiagramBase):
             "startFill": self.start_fill,
             "endFill": self.end_fill
         }
-
-    @property
-    def style(self):
-        style_str = self.base_style
-        for att, value in self.style_attributes.items():
-            if value is not None and not value == "":
-                style_str = style_str + "{0}={1};".format(att, value)
-        style_str = style_str + self.extra_styles
-        return style_str
     
     @property
-    def base_style(self):
+    def base_style_str(self):
         style_str = ""
         style_str = style_str + line_shape[self.line_shape]
         style_str = style_str + line_type[self.line_type]
