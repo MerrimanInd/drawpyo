@@ -1,0 +1,9 @@
+title = "Line Styles"
+
+solid = "0"
+small_dash = "1"
+medium_dash = "1;dashPattern=8 8"
+large_dash = "1;dashPattern=12 12"
+small_dot = "1;dashPattern=1 1"
+medium_dot = "1;dashPattern=1 2"
+large_dot = "1;dashPattern=1 4"

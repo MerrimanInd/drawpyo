@@ -1,5 +1,18 @@
 from ..xml_base import XMLBase
 
+
+
+def import_shape_databases(self):
+    # Import the shape and edge definitions
+    from sys import version_info
+    # toml path
+    
+    
+    if version_info.minor < 11:
+        import toml
+    else:
+        import tomllib
+
 __all__ = ['DiagramBase']
 
 class DiagramBase(XMLBase):
@@ -101,16 +114,20 @@ class DiagramBase(XMLBase):
         """
         style_str = ""
         base_styles = self.base_attribute_dict
-        del base_styles['']
+        if '' in base_styles:
+            del base_styles['']
         for attribute, value in self.style_attributes.items():
             if value is not None and not value == "":
                 style_str = style_str + "{0}={1};".format(attribute, value)
             elif attribute in base_styles:
                 style_str = style_str + base_styles.pop(attribute)
         for attribute in base_styles.values():
-            style_str = style_str + ';' + attribute
+            style_str = style_str + attribute + ';'
         return style_str
 
+    def style_str_from_dict(self, style_dict):
+        #return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items()])
+        return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items() if style != "" and style != None])
     
     @property
     def base_style_str(self):

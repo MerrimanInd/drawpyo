@@ -1,0 +1,152 @@
+title = "Default Draw.pyo Shapes"
+
+# These are the default shapes as defined in the Basic pane of the Draw.io interface
+
+[default]
+size = [120, 60]
+base_str = ""
+html = 1
+white_space = "wrap"
+rounded = 0
+
+[rectangle]
+inherit = "default"
+size = [120, 60]
+
+[rounded_rectangle]
+size = [120, 60]
+rounded = 1
+
+[text]
+size = [60, 20]
+base_str = "text"
+
+[ellipse]
+size = [120, 80]
+base_str = "ellipse"
+
+[square]
+size = [80, 80]
+aspect = "fixed"
+
+[circle]
+size = [80, 80]
+base_str = "ellipse"
+aspect = "fixed"
+
+[process]
+size = [120, 60]
+shape = "process"
+backgroundOutline = 1
+
+[diamond]
+size = [80, 80]
+base_str = "rhombus"
+
+[parallelogram]
+size = [120, 60]
+shape = "parallelogram"
+perimeter = "parelleogramPerimeter"
+fixedSize = 1
+
+[hexagon]
+size = [120, 80]
+shape = "hexagon"
+perimeter = "hexagonPerimeter2"
+fixedSize = 1
+
+[triangle]
+size = [60, 80]
+base_str = "triangle"
+
+[cylinder]
+size = [60, 80]
+shape = "cylinder3"
+boundedLbl = 1
+backgroundOutline = 1
+
+[cloud]
+size = [60, 80]
+base_str = "ellipse"
+shape = "cloud"
+
+[document]
+size = [120, 80]
+shape = "document"
+boundedLbl = 1
+
+[internal_storage]
+size = [80, 80]
+shape = "internalStorage"
+backgroundOutline = 1
+
+[cube]
+size = [120, 80]
+shape = "cube"
+boundedLbl = 1
+backgroundOutline = 1
+darkOpacity = 0.05
+darkOpacity2 = 0.1
+
+[step]
+size = [120, 80]
+shape = "step"
+perimeter = "stepPerimeter"
+
+[trapezoid]
+size = [120, 60]
+shape = "trapezoid"
+perimeter = "trapezoidPerimeter"
+
+[tape]
+size = [120, 100]
+shape = "tape"
+
+[note]
+size = [80, 100]
+shape = "note"
+backgroundOutline = 1
+darkOpacity = 0.05
+
+[card]
+size = [80, 100]
+shape = "card"
+
+[callout]
+size = [120, 80]
+shape = "callout"
+perimeter = "calloutPerimeter"
+
+[actor]
+size = [30, 60]
+shape = "umlActor"
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+outlineConnect = 0
+
+[or]
+size = [60, 80]
+shape = "xor"
+
+[and]
+size = [60, 80]
+shape = "or"
+
+[data_storage]
+size = [100, 80]
+shape = "dataStorage"
+fixedSize = 1
+
+[container]
+size = [200, 200]
+base_str = "swimlane"
+startSize = 0
+
+[labeled_container]
+size = [200, 200]
+base_str = "swimlane"
+
+[labeled_horizontal_container]
+size = [200, 200]
+base_str = "swimlane"
+horizontal = 0

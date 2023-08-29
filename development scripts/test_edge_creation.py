@@ -5,11 +5,11 @@ file.file_path = r"C:\drawpyo\Test Draw.io Charts"
 file.file_name = "Test Generated Edges.drawio"
 page = drawpyo.Page(file=file)
 
-line_shapes = [None, "straight", "orthogonal", "vertical", "horizontal", "isometric", "isometric_vertical", "curved", "entity_relation"]
+waypoints = [None, "straight", "orthogonal", "vertical", "horizontal", "isometric", "isometric_vertical", "curved", "entity_relation"]
 
-line_types = [None, "line", "link", "arrow", "simple_arrow"]
+connections = [None, "line", "link", "arrow", "simple_arrow"]
 
-line_styles = [None, "solid", "dashed_small", "dashed_medium", "dashed_large", "dotted_small", "dotted_medium", "dotted_large"]
+patterns = [None, "solid", "dashed_small", "dashed_medium", "dashed_large", "dotted_small", "dotted_medium", "dotted_large"]
 
 line_ends = [
     None,
@@ -39,36 +39,36 @@ line_ends = [
     "doubleBlock"]
 
 origin = (0,0)
-for shape in line_shapes:
-    item_1 = drawpyo.diagram.BasicObject(page=page, value="line_shapes")
+for waypoint in waypoints:
+    item_1 = drawpyo.diagram.BasicObject(page=page, value="wapyoints")
     item_1.position = origin
-    item_2 = drawpyo.diagram.BasicObject(page=page, value=shape)
+    item_2 = drawpyo.diagram.BasicObject(page=page, value=waypoint)
     item_2.position = (origin[0]+100, origin[1]+100)
     
-    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, line_shape=shape)
+    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, waypoints=waypoint)
     
     origin = (origin[0], origin[1]+200)
 
 origin = (300, 0)
-for typ in line_types:
-    item_1 = drawpyo.diagram.BasicObject(page=page, value="line_types")
+for connection in connections:
+    item_1 = drawpyo.diagram.BasicObject(page=page, value="connections")
     item_1.position = origin
-    item_2 = drawpyo.diagram.BasicObject(page=page, value=typ)
+    item_2 = drawpyo.diagram.BasicObject(page=page, value=connection)
     item_2.position = (origin[0]+100, origin[1]+100)
     
-    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, line_type=typ)
+    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, connection=connection)
     
     origin = (origin[0], origin[1]+200)
     
 
 origin = (600, 0)
-for style in line_styles:
-    item_1 = drawpyo.diagram.BasicObject(page=page, value="line_styles")
+for pattern in patterns:
+    item_1 = drawpyo.diagram.BasicObject(page=page, value="patterns")
     item_1.position = origin
-    item_2 = drawpyo.diagram.BasicObject(page=page, value=style)
+    item_2 = drawpyo.diagram.BasicObject(page=page, value=pattern)
     item_2.position = (origin[0]+100, origin[1]+100)
     
-    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, line_style=style)
+    link = drawpyo.diagram.BasicEdge(page=page, source=item_1, target=item_2, pattern=pattern)
     
     origin = (origin[0], origin[1]+200)
     

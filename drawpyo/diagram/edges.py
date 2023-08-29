@@ -3,62 +3,37 @@ from .base_diagram import DiagramBase
 
 __all__ = ['BasicEdge']
 
-line_shape = {
-    None: "",
-    "straight": "",
-    "orthogonal": "edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;",
-    "vertical": "edgeStyle=elbowEdgeStyle;",
-    "horizontal": "edgeStyle=elbowEdgeStyle;elbow=vertical;",
-    "isometric": "edgeStyle=isometricEdgeStyle;",
-    "isometric_vertical": "edgeStyle=isometricEdgeStyle;elbow=vertical;",
-    "curved": "edgeStyle=orthogonalEdgeStyle;elbow=vertical;curved=1;",
-    "entity_relation": "edgeStyle=entityRelationEdgeStyle;elbow=vertical;"}
+# Import the shape and edge definitions
+from sys import version_info
+from os import path
+# toml path
 
-line_type = {
-    None: "",
-    "line": "",
-    "link": "shape=link;",
-    "arrow": "shape=flexArrow;",
-    "simple_arrow": "shape=arrow;"}
+dirname = path.dirname(__file__)
+dirname = path.split(dirname)[0]
+filename = path.join(dirname, 'formatting_database\\edge_styles.toml')
 
-line_style = {
-    None: "",
-    "solid": "",
-    "dashed_small": "dashed=1;",
-    "dashed_medium": "dashed=1;dashPattern=8 8;",
-    "dashed_large": "dashed=1;dashPattern=12 12;",
-    "dotted_small": "dashed=1;dashPattern=1 1;",
-    "dotted_medium": "dashed=1;dashPattern=1 2;",
-    "dotted_large": "dashed=1;dashPattern=1 4;"}
-
-# first argument is the style name, second is whether it's fillable
-line_ends = {
-    None:False,
-    "":False,
-    "classic":True,
-    "classicThin":True,
-    "open":False,
-    "openThin":False,
-    "openAsync":False,
-    "block":True,
-    "blockThin":True,
-    "async":True,
-    "oval":True,
-    "diamond":True,
-    "diamondThin":True,
-    "dash":False,
-    "halfCircle":False,
-    "cross":False,
-    "circlePlus":False,
-    "circle":False,
-    "baseDash":False,
-    "ERone":False,
-    "ERmandOne":False,
-    "ERmany":False,
-    "ERoneToMany":False,
-    "ERzeroToOne":False,
-    "ERzeroToMany":False,
-    "doubleBlock":True}
+if version_info.minor < 11:
+    import toml
+    # TODO write an importer for Python versions prior to the Python 3.11
+    # inclusion of tomllib as a base library
+    
+else:
+    import tomllib
+    with open(filename, "rb") as f:
+        data = tomllib.load(f)
+    connection_db = data['connection']
+    connection_db[None] = {"shape": ""}
+    
+    pattern_db = data['pattern']
+    pattern_db[None] = {}
+    
+    waypoints_db = data['waypoints']
+    waypoints_db[None] = {}
+    
+    line_ends_db = data['line_ends']
+    line_ends_db[None] = {'fillable': False}
+    line_ends_db[""] = {'fillable': False}
+        
 
 ###########################################################
 # Edges
@@ -70,12 +45,12 @@ class BasicEdge(DiagramBase):
         self.xml_class = "mxCell"
 
         # Style
-        #self.default_style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;"
         self.extra_styles = kwargs.get("style", None)
         
-        self.line_shape = kwargs.get("line_shape", "orthogonal")
-        self.line_type = kwargs.get("line_type", "line")
-        self.line_style = kwargs.get("line_style", "solid")
+        self.waypoints = kwargs.get("waypoints", "orthogonal")
+        self.connection = kwargs.get("connection", "line")
+        self.pattern = kwargs.get("pattern", "solid")
+        
         self.line_end_target = kwargs.get("line_end_target", None)
         self.line_end_source = kwargs.get("line_end_source", None)
         self.end_fill_target = kwargs.get("end_fill_target", False)
@@ -109,6 +84,7 @@ class BasicEdge(DiagramBase):
             "source": self.source_id,
             "target": self.target_id}
 
+    
     ###########################################################
     # Source and Target Linking
     ###########################################################
@@ -183,10 +159,17 @@ class BasicEdge(DiagramBase):
     
     @property
     def base_style_str(self):
-        style_str = ""
-        style_str = style_str + line_shape[self.line_shape]
-        style_str = style_str + line_type[self.line_type]
-        style_str = style_str + line_style[self.line_style]
+        
+        shape_str = self.style_str_from_dict(connection_db[self.connection])
+        style_str = shape_str
+     
+        waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
+        if waypoint_style is not None:
+            style_str = style_str + ';' + waypoint_style
+        
+        pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
+        if pattern_style is not None:
+            style_str = style_str + ';' + pattern_style
         return style_str
     
     @property
@@ -195,7 +178,7 @@ class BasicEdge(DiagramBase):
     
     @property
     def start_fill(self):
-        if line_ends[self.line_end_source]:
+        if line_ends_db[self.line_end_source]['fillable']:
             return self.end_fill_source
         else:
             return None
@@ -206,10 +189,48 @@ class BasicEdge(DiagramBase):
     
     @property
     def end_fill(self):
-        if line_ends[self.line_end_target]:
+        if line_ends_db[self.line_end_target]['fillable']:
             return self.end_fill_target
         else:
             return None
+    
+    # Base Line Style
+    
+    # Waypoints
+    @property
+    def waypoints(self):
+        return self._waypoints
+    
+    @waypoints.setter
+    def waypoints(self, value):
+        if value in waypoints_db.keys():
+            self._waypoints = value
+        else:
+            raise ValueError("{0} is not an allowed value of waypoints")
+         
+    # Connection
+    @property
+    def connection(self):
+        return self._connection
+    
+    @connection.setter
+    def connection(self, value):
+        if value in connection_db.keys():
+            self._connection = value
+        else:
+            raise ValueError("{0} is not an allowed value of connection".format(value))
+    
+    # Pattern
+    @property
+    def pattern(self):
+        return self._pattern
+    
+    @pattern.setter
+    def pattern(self, value):
+        if value in pattern_db.keys():
+            self._pattern = value
+        else:
+            raise ValueError("{0} is not an allowed value of pattern")    
     
     ###########################################################
     # XML Generation
