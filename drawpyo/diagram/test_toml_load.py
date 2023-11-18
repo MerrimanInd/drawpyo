@@ -5,7 +5,7 @@ Created on Sat Aug 26 14:34:26 2023
 @author: xande
 """
 
-import tomllib
+from sys import version_info
 from os import path
 
 
@@ -15,7 +15,20 @@ tml_file = r"C:\Users\xande\GitHub\drawpyo\drawpyo\formatting_database\edge_styl
 
 dirname = path.dirname(__file__)
 dirname = path.split(dirname)[0]
-filename = path.join(dirname, 'shape_libraries\\general.toml')
+filename = path.join(dirname, 'shape_libraries\\general_w_inherit.toml')
 
-with open(filename, "rb") as f:
-    data = tomllib.load(f)
+
+
+if version_info.minor < 11:
+    import toml
+    data = toml.load(filename)
+
+else:
+    import tomllib
+    with open(filename, "rb") as f:
+        data = tomllib.load(f)
+
+processed_data = {}
+for obj in data.values():
+    if "inherit" in obj:
+        obj.update(data[obj["inherit"]])

@@ -1,17 +1,31 @@
 from ..xml_base import XMLBase
+from os import path
 
 
 
-def import_shape_databases(self):
+def import_shape_databases(filename):
     # Import the shape and edge definitions
     from sys import version_info
     # toml path
-    
-    
+    dirname = path.dirname(__file__)
+    dirname = path.split(dirname)[0]
+    file_name = path.join(dirname, filename)
+
+
     if version_info.minor < 11:
         import toml
+        data = toml.load(file_name)
     else:
         import tomllib
+        with open(file_name, "rb") as f:
+            data = tomllib.load(f)
+
+    for obj in data.values():
+        if "inherit" in obj:
+            obj.update(data[obj["inherit"]])
+
+
+    return data
 
 __all__ = ['DiagramBase']
 
@@ -20,7 +34,11 @@ class DiagramBase(XMLBase):
         super().__init__(**kwargs)
         self.page = kwargs.get("page", None)
         self.parent = kwargs.get("parent", None)
-        
+
+    @classmethod
+    def create_from_library(cls, library, obj):
+        return cls
+
     @property
     def base_styles(self):
         return {
@@ -94,13 +112,13 @@ class DiagramBase(XMLBase):
         """
         return {
             "html": self.html}
-    
+
     @property
     def style(self):
         """
         This function returns the style string of the object to be appending
         into the style XML attribute.
-        
+
         First it searches the object properties called out in
         self.style_attributes. If the property is initialized to something
         that isn't None or an empty string, it will add it. Otherwise it
@@ -128,7 +146,7 @@ class DiagramBase(XMLBase):
     def style_str_from_dict(self, style_dict):
         #return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items()])
         return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items() if style != "" and style != None])
-    
+
     @property
     def base_style_str(self):
         """
@@ -143,7 +161,7 @@ class DiagramBase(XMLBase):
 
         """
         return self.base_styles[self.base_style]
-    
+
     def attribute_from_base(self, attribute):
         """
         This function returns a single attribute string from the base_style
@@ -164,14 +182,14 @@ class DiagramBase(XMLBase):
         """
         base_attribs = self.base_style_str.split(';')
         return next((attrib for attrib in base_attribs if attribute == attrib.split("=")[0]), None)
-        
+
     @property
     def base_attribute_dict(self):
         """
         This function returns a dictionary of the base_style attributes. The
         dict keys will be the attribute names and the values will be the names
         plus the value.
-        
+
         base_attribute_dict{"attribute": "attribute=value"}
 
         Returns
@@ -183,7 +201,7 @@ class DiagramBase(XMLBase):
         attr_strings = self.base_style_str.split(';')
         attr_keys = [attr_string.split('=')[0] for attr_string in attr_strings]
         return dict(zip(attr_keys, attr_strings))
-            
+
     def apply_style_string(self, style_str):
         """
         This function will apply a passed in style string to the object. It
@@ -211,9 +229,9 @@ class DiagramBase(XMLBase):
                         a_value = int(a_value)
                 elif a_value == "True" or a_value == "False":
                     a_value = bool(a_value)
-                    
+
                 setattr(self, a_name, a_value)
-                
+
     @classmethod
     def from_style_string(cls, style_string):
         """

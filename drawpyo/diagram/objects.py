@@ -1,7 +1,17 @@
-from .base_diagram import DiagramBase
+from .base_diagram import DiagramBase, import_shape_databases
 
 
 __all__ = ["BasicObject", "Group"]
+
+general = import_shape_databases(filename='shape_libraries\\general_w_inherit.toml')
+line_styles = import_shape_databases(filename='formatting_database\\line_styles.toml')
+
+text_directions = {None: None, "horizontal": 1, "vertical": 0}
+
+container = {None: None, "vertical_container": None}
+
+"""
+TODO: Delete once rework is complete
 
 # Dash pattern property
 line_styles = {
@@ -15,9 +25,6 @@ line_styles = {
     "large_dot": "1;dashPattern=1 4",
 }
 
-text_directions = {None: None, "horizontal": 1, "vertical": 0}
-
-container = {None: None, "vertical_container": None}
 
 base_styles = {
     None: "",
@@ -85,7 +92,7 @@ default_sizes = {
     "labeled container": (200, 200),
     "labeled horizontal container": (200, 200),
 }
-
+"""
 
 ###########################################################
 # Objects
@@ -96,12 +103,13 @@ class BasicObject(DiagramBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.base_style = kwargs.get("base_style", None)
-        
+        # TODO: Delete once rework is complete
+        # self.base_style = kwargs.get("base_style", None)
+
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
-        self.size = kwargs.get("size", default_sizes[self.base_style])
+        self.size = kwargs.get("size", [120, 80])
         self.vertex = kwargs.get("vertex", 1)
 
         # TODO enumerate to fixed
@@ -111,10 +119,10 @@ class BasicObject(DiagramBase):
         self.value = kwargs.get("value", "")
 
         # Style
-        
+
         # self.default_style = "rounded=0;whiteSpace=wrap;html=1;"
         # self.style = kwargs.get("style", self.default_style)
-        
+
         self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
         self.white_space = kwargs.get("white_space", "wrap")
@@ -144,7 +152,7 @@ class BasicObject(DiagramBase):
         self.bold_font = kwargs.get("bold_font", False)
         self.italic_font = kwargs.get("italic_font", False)
         self.underline_font = kwargs.get("underline_font", False)
-        
+
         # Base style declaration comes last since it overwrites the defaults
         # set by all kwargs.get lines above
         #self.parse_style_string(base_styles[self.base_style])
@@ -153,7 +161,7 @@ class BasicObject(DiagramBase):
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
-        
+
 
     def __repr__(self):
         if self.value is not None:
@@ -185,23 +193,26 @@ class BasicObject(DiagramBase):
     @property
     def line_styles(self):
         return line_styles
-    
+
     @property
     def text_directions(self):
         return text_directions
-    
+
     @property
     def container(self):
         return container
-    
+
+    """
+    TODO: Delete once rework is complete
     @property
     def base_styles(self):
         return base_styles
-    
+
     @property
     def default_sizes(self):
         return default_sizes
-    
+    """
+
     ###########################################################
     # Style properties
     ###########################################################
