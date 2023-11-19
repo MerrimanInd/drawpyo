@@ -39,10 +39,6 @@ class DiagramBase(XMLBase):
     def create_from_library(cls, library, obj):
         return cls
 
-    @property
-    def base_styles(self):
-        return {
-            None: ""}
 
     # Parent property
     @property
@@ -110,8 +106,8 @@ class DiagramBase(XMLBase):
         attributes of the subclass.
 
         """
-        return {
-            "html": self.html}
+        return ["html"]
+    
 
     @property
     def style(self):
@@ -130,77 +126,87 @@ class DiagramBase(XMLBase):
             The style string of the object.
 
         """
+        # style_str = ""
+        # base_styles = self.base_attribute_dict
+        # if '' in base_styles:
+        #     del base_styles['']
+        # for attribute, value in self.style_attributes.items():
+        #     if value is not None and not value == "":
+        #         style_str = style_str + "{0}={1};".format(attribute, value)
+        #     elif attribute in base_styles:
+        #         style_str = style_str + base_styles.pop(attribute)
+        # for attribute in base_styles.values():
+        #     style_str = style_str + attribute + ';'
+        # return style_str
+    
         style_str = ""
-        base_styles = self.base_attribute_dict
-        if '' in base_styles:
-            del base_styles['']
-        for attribute, value in self.style_attributes.items():
-            if value is not None and not value == "":
-                style_str = style_str + "{0}={1};".format(attribute, value)
-            elif attribute in base_styles:
-                style_str = style_str + base_styles.pop(attribute)
-        for attribute in base_styles.values():
-            style_str = style_str + attribute + ';'
+        if hasattr(self, "baseStyle") and getattr(self, "baseStyle") is not None:
+            style_str = getattr(self, "baseStyle")
+        
+        for attribute in self.style_attributes:
+            if hasattr(self, attribute) and getattr(self, attribute) is not None:
+                attr_val = getattr(self, attribute)
+                style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
 
     def style_str_from_dict(self, style_dict):
         #return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items()])
         return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items() if style != "" and style != None])
 
-    @property
-    def base_style_str(self):
-        """
-        This property returns the style string of the assigned base_style.
-        This string will be in the format:
-            attribute=value;attribute2=value
+    # @property
+    # def base_style_str(self):
+    #     """
+    #     This property returns the style string of the assigned base_style.
+    #     This string will be in the format:
+    #         attribute=value;attribute2=value
 
-        Returns
-        -------
-        string
-            The base style string.
+    #     Returns
+    #     -------
+    #     string
+    #         The base style string.
 
-        """
-        return self.base_styles[self.base_style]
+    #     """
+    #     return self.base_styles[self.base_style]
 
-    def attribute_from_base(self, attribute):
-        """
-        This function returns a single attribute string from the base_style
-        string. The attribute will be a string name nad the return will be that
-        string name plus the assigned attribute:
-            attribute returns "attribute=val"
+    # def attribute_from_base(self, attribute):
+    #     """
+    #     This function returns a single attribute string from the base_style
+    #     string. The attribute will be a string name nad the return will be that
+    #     string name plus the assigned attribute:
+    #         attribute returns "attribute=val"
 
-        Parameters
-        ----------
-        attribute : string
-            The name of the attribute to return.
+    #     Parameters
+    #     ----------
+    #     attribute : string
+    #         The name of the attribute to return.
 
-        Returns
-        -------
-        string
-            Attribute assignment string.
+    #     Returns
+    #     -------
+    #     string
+    #         Attribute assignment string.
 
-        """
-        base_attribs = self.base_style_str.split(';')
-        return next((attrib for attrib in base_attribs if attribute == attrib.split("=")[0]), None)
+    #     """
+    #     base_attribs = self.base_style_str.split(';')
+    #     return next((attrib for attrib in base_attribs if attribute == attrib.split("=")[0]), None)
 
-    @property
-    def base_attribute_dict(self):
-        """
-        This function returns a dictionary of the base_style attributes. The
-        dict keys will be the attribute names and the values will be the names
-        plus the value.
+    # @property
+    # def base_attribute_dict(self):
+    #     """
+    #     This function returns a dictionary of the base_style attributes. The
+    #     dict keys will be the attribute names and the values will be the names
+    #     plus the value.
 
-        base_attribute_dict{"attribute": "attribute=value"}
+    #     base_attribute_dict{"attribute": "attribute=value"}
 
-        Returns
-        -------
-        dict
-            A dict of the base_style attributes.
+    #     Returns
+    #     -------
+    #     dict
+    #         A dict of the base_style attributes.
 
-        """
-        attr_strings = self.base_style_str.split(';')
-        attr_keys = [attr_string.split('=')[0] for attr_string in attr_strings]
-        return dict(zip(attr_keys, attr_strings))
+    #     """
+    #     attr_strings = self.base_style_str.split(';')
+    #     attr_keys = [attr_string.split('=')[0] for attr_string in attr_strings]
+    #     return dict(zip(attr_keys, attr_strings))
 
     def apply_style_string(self, style_str):
         """

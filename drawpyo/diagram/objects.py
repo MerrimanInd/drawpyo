@@ -125,30 +125,30 @@ class BasicObject(DiagramBase):
 
         self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
-        self.white_space = kwargs.get("white_space", "wrap")
-        self.fill_color = kwargs.get("fill_color", None)
-        self.font_color = kwargs.get("font_color", None)
+        self.whiteSpace = kwargs.get("whiteSpace", "wrap")
+        self.fillColor = kwargs.get("fillColor", None)
+        self.fontColor = kwargs.get("fontColor", None)
         self.opacity = kwargs.get("opacity", None)
-        self.stroke_color = kwargs.get("stroke_color", None)
+        self.strokeColor = kwargs.get("strokeColor", None)
         self.glass = kwargs.get("glass", None)
         self.shadow = kwargs.get("shadow", None)
         self.comic = kwargs.get("comic", None)
-        self.line_pattern = kwargs.get("line_pattern", None)
+        self.linePattern = kwargs.get("linePattern", "solid")
 
-        self.font_family = kwargs.get("font_family", None)
-        self.font_size = kwargs.get("font_size", None)
+        self.fontFamily = kwargs.get("fontFamily", None)
+        self.fontSize = kwargs.get("fontSize", None)
         self.align = kwargs.get("align", None)
-        self.vertical_align = kwargs.get("vertical_align", None)
-        self.label_position = kwargs.get("label_position", None)
-        self.label_bg_color = kwargs.get("label_bg_color", None)
-        self.label_border_color = kwargs.get("label_border_color", None)
+        self.verticalAlign = kwargs.get("verticalAlign", None)
+        self.labelPosition = kwargs.get("labelPosition", None)
+        self.labelBackgroundColor = kwargs.get("labelBackgroundColor", None)
+        self.labelBorderColor = kwargs.get("labelBorderColor", None)
 
         # These need to be enumerated
         self.text_direction = kwargs.get("font_direction", None)
         # This is actually horizontal. 0 means vertical text, 1 or not present
         # means horizontal
 
-        self.text_opacity = kwargs.get("text_opacity", None)
+        self.textOpacity = kwargs.get("textOpacity", None)
         self.bold_font = kwargs.get("bold_font", False)
         self.italic_font = kwargs.get("italic_font", False)
         self.underline_font = kwargs.get("underline_font", False)
@@ -219,41 +219,50 @@ class BasicObject(DiagramBase):
 
     @property
     def style_attributes(self):
-        return {
-            "html": self.html,
-            "whiteSpace": self.white_space,
-            "rounded": self.rounded,
-            "fillColor": self.fill_color,
-            "fontColor": self.font_color,
-            "strokeColor": self.stroke_color,
-            "glass": self.glass,
-            "shadow": self.shadow,
-            "comic": self.comic,
-            "fontFamily": self.font_family,
-            "align": self.align,
-            "verticalAlign": self.vertical_align,
-            "labelPosition": self.label_position,
-            "labelBackgroundColor": self.label_bg_color,
-            "labelBorderColor": self.label_border_color,
-            "fontSize": self.font_size,
-            "horizontal": self.horizontal,
-            "textOpacity": self.text_opacity,
-            "opacity": self.opacity,
-            "dashed": self.dashed,
-        }
-
-    @property
-    def base_style(self):
-        return self._base_style
-
-    @base_style.setter
-    def base_style(self, value):
-        if value in base_styles.keys():
-            self._base_style = value
-        else:
-            raise ValueError(
-                "{0} is not an allowed value of base_style".format(value)
-            )
+        # return {
+        #     "html": self.html,
+        #     "whiteSpace": self.whiteSpace,
+        #     "rounded": self.rounded,
+        #     "fillColor": self.fillColor,
+        #     "fontColor": self.fontColor,
+        #     "strokeColor": self.strokeColor,
+        #     "glass": self.glass,
+        #     "shadow": self.shadow,
+        #     "comic": self.comic,
+        #     "fontFamily": self.fontFamily,
+        #     "align": self.align,
+        #     "verticalAlign": self.verticalAlign,
+        #     "labelPosition": self.labelPosition,
+        #     "labelBackgroundColor": self.labelBackgroundColor,
+        #     "labelBorderColor": self.labelBorderColor,
+        #     "fontSize": self.fontSize,
+        #     "horizontal": self.horizontal,
+        #     "textOpacity": self.textOpacity,
+        #     "opacity": self.opacity,
+        #     "dashed": self.dashed,
+        # }
+        return [
+            "html",
+            "whiteSpace",
+            "rounded",
+            "fillColor",
+            "fontColor",
+            "strokeColor",
+            "glass",
+            "shadow",
+            "comic",
+            "fontFamily",
+            "align",
+            "verticalAlign",
+            "labelPosition",
+            "labelBackgroundColor",
+            "labelBorderColor",
+            "fontSize",
+            "horizontal",
+            "textOpacity",
+            "opacity",
+            "dashed"
+        ]
 
     @property
     def horizontal(self):
@@ -308,19 +317,19 @@ class BasicObject(DiagramBase):
 
     @property
     def dashed(self):
-        return line_styles[self._line_pattern]
+        return line_styles[self._linePattern]
 
     @property
-    def line_pattern(self):
-        return self._line_pattern
+    def linePattern(self):
+        return self._linePattern
 
-    @line_pattern.setter
-    def line_pattern(self, value):
+    @linePattern.setter
+    def linePattern(self, value):
         if value in line_styles.keys():
-            self._line_pattern = value
+            self._linePattern = value
         else:
             raise ValueError(
-                "{0} is not an allowed value of line_pattern".format(value)
+                "{0} is not an allowed value of linePattern".format(value)
             )
 
     ###########################################################

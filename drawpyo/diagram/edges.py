@@ -37,10 +37,10 @@ class BasicEdge(DiagramBase):
 
         self.line_end_target = kwargs.get("line_end_target", None)
         self.line_end_source = kwargs.get("line_end_source", None)
-        self.end_fill_target = kwargs.get("end_fill_target", False)
-        self.end_fill_source = kwargs.get("end_fill_source", False)
+        self.endFill_target = kwargs.get("endFill_target", False)
+        self.endFill_source = kwargs.get("endFill_source", False)
 
-        self.jetty_size = kwargs.get("jetty_size", "auto")
+        self.jettySize = kwargs.get("jettySize", "auto")
         self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
 
@@ -49,14 +49,14 @@ class BasicEdge(DiagramBase):
         self.source = kwargs.get("source", None)
         self.target = kwargs.get("target", None)
         self.geometry = EdgeGeometry()
-        self.entry_x = kwargs.get("entry_x", None)
-        self.entry_y = kwargs.get("entry_y", None)
-        self.entry_dx = kwargs.get("entry_dx", None)
-        self.entry_dy = kwargs.get("entry_dy", None)
-        self.exit_x = kwargs.get("exit_x", None)
-        self.exit_y = kwargs.get("exit_y", None)
-        self.exit_dx = kwargs.get("exit_dx", None)
-        self.exit_dy = kwargs.get("exit_dy", None)
+        self.entryX = kwargs.get("entryX", None)
+        self.entryY = kwargs.get("entryY", None)
+        self.entryDx = kwargs.get("entryDx", None)
+        self.entryDy = kwargs.get("entryDy", None)
+        self.exitX = kwargs.get("exitX", None)
+        self.exitY = kwargs.get("exitY", None)
+        self.exitDx = kwargs.get("exitDx", None)
+        self.exitDy = kwargs.get("exitDy", None)
 
     @property
     def attributes(self):
@@ -123,58 +123,73 @@ class BasicEdge(DiagramBase):
 
     @property
     def style_attributes(self):
-        return {
-            "html": self.html,
-            "rounded": self.rounded,
-            "jettySize": self.jetty_size,
-            "entryX": self.entry_x,
-            "entryY": self.entry_y,
-            "entryDx": self.entry_dx,
-            "entryDy": self.entry_dy,
-            "exitX": self.exit_x,
-            "exitY": self.exit_y,
-            "exitDx": self.exit_dx,
-            "exitDy": self.exit_dy,
-            "startArrow": self.start_arrow,
-            "endArrow": self.end_arrow,
-            "startFill": self.start_fill,
-            "endFill": self.end_fill
-        }
+        # return {
+        #     "html": self.html,
+        #     "rounded": self.rounded,
+        #     "jettySize": self.jettySize,
+        #     "entryX": self.entryX,
+        #     "entryY": self.entryY,
+        #     "entryDx": self.entryDx,
+        #     "entryDy": self.entryDy,
+        #     "exitX": self.exitX,
+        #     "exitY": self.exitY,
+        #     "exitDx": self.exitDx,
+        #     "exitDy": self.exitDy,
+        #     "startArrow": self.startArrow,
+        #     "endArrow": self.endArrow,
+        #     "startFill": self.startFill,
+        #     "endFill": self.endFill
+        # }
+        return ["html",
+                "rounded",
+                "jettySize",
+                "entryX",
+                "entryY",
+                "entryDx",
+                "entryDy",
+                "exitX",
+                "exitY",
+                "exitDx",
+                "exitDy",
+                "startArrow",
+                "endArrow",
+                "startFill",
+                "endFill"]
+
+    # @property
+    # def base_style_str(self):
+
+    #     shape_str = self.style_str_from_dict(connection_db[self.connection])
+    #     style_str = shape_str
+
+    #     waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
+    #     if waypoint_style is not None:
+    #         style_str = style_str + ';' + waypoint_style
+
+    #     pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
+    #     if pattern_style is not None:
+    #         style_str = style_str + ';' + pattern_style
+    #     return style_str
 
     @property
-    def base_style_str(self):
-
-        shape_str = self.style_str_from_dict(connection_db[self.connection])
-        style_str = shape_str
-
-        waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
-        if waypoint_style is not None:
-            style_str = style_str + ';' + waypoint_style
-
-        pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
-        if pattern_style is not None:
-            style_str = style_str + ';' + pattern_style
-        return style_str
-
-    @property
-    def start_arrow(self):
+    def startArrow(self):
         return self.line_end_source
 
     @property
-    def start_fill(self):
+    def startFill(self):
         if line_ends_db[self.line_end_source]['fillable']:
-            return self.end_fill_source
+            return self.endFill_source
         else:
             return None
 
     @property
-    def end_arrow(self):
+    def endArrow(self):
         return self.line_end_target
 
     @property
-    def end_fill(self):
+    def endFill(self):
         if line_ends_db[self.line_end_target]['fillable']:
-            return self.end_fill_target
+            return self.endFill_target
         else:
             return None
 
@@ -244,12 +259,12 @@ class EdgeGeometry(DiagramBase):
 
     @property
     def attributes(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "relative": self.relative,
-            "as": self.as_attribute
-        }
+        return [
+            "x",
+            "y",
+            "relative",
+            "as"
+        ]
 
 class EdgeLabel(DiagramBase):
     def __init__(self, **kwargs):
@@ -265,7 +280,7 @@ class EdgeLabel(DiagramBase):
 
     @property
     def attributes(self):
-        return {}
+        return []
 
 
 class Point(DiagramBase):
@@ -279,8 +294,8 @@ class Point(DiagramBase):
 
     @property
     def attributes(self):
-        return {
-            "x": self.x,
-            "y": self.y
-        }
+        return [
+            "x",
+            "y"
+        ]
 
