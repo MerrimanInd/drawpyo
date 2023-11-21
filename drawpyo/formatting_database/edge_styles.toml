@@ -1,0 +1,147 @@
+title = "Default Draw.pyo Edges"
+
+# These are the default edges available in the Draw.io interface
+
+[connection]
+	[connection.line]
+	# shape = ""
+
+	[connection.link]
+	shape = "link"
+
+	[connection.arrow]
+	shape = "flexArrow"
+
+	[connection.simple_arrow]
+	shape = "arrow"
+
+[waypoints]
+	[waypoints.straight]
+
+	[waypoints.orthogonal]
+	edgeStyle = "orthogonalEdgeStyle"
+	orthogonalLoop = 1
+
+	[waypoints.vertical]
+	edgeStyle = "elbowEdgeStyle"
+
+	[waypoints.horizontal]
+	edgeStyle = "elbowEdgeStyle"
+	elbow = "vertical"
+
+	[waypoints.isometric]
+	edgeStyle = "isometricEdgeStyle"
+
+	[waypoints.isometric_vertical]
+	edgeStyle = "isometricEdgeStyle"
+	elbow = "vertical"
+	curved = 1
+
+	[waypoints.curved]
+	edgeStyle = "orthogonalEdgeStyle"
+	elbow = "vertical"
+	curved = 1
+
+	[waypoints.entity_relation]
+	edgeStyle = "entityRelationEdgeStyle"
+	elbow = "vertical"
+
+
+[pattern]
+	[pattern.solid]
+
+	[pattern.dashed_small]
+	dashed = 1
+
+	[pattern.dashed_medium]
+	dashed = 1
+	dashPattern = "8 8"
+
+	[pattern.dashed_large]
+	dashed = 1
+	dashPattern = "12 12"
+
+	[pattern.dotted_small]
+	dashed = 1
+	dashPattern = "1 1"
+
+	[pattern.dotted_medium]
+	dashed = 1
+	dashPattern = "1 2"
+
+	[pattern.dotted_large]
+	dashed = 1
+	dashPattern = "1 4"
+
+[line_ends]
+	[line_ends.classic]
+	fillable = true
+
+	[line_ends.classicThin]
+	fillable = true
+
+	[line_ends.open]
+	fillable = false
+
+	[line_ends.openThin]
+	fillable = false
+
+	[line_ends.openAsync]
+	fillable = false
+
+	[line_ends.block]
+	fillable = true
+
+	[line_ends.blockThin]
+	fillable = true
+
+	[line_ends.async]
+	fillable = true
+
+	[line_ends.oval]
+	fillable = true
+
+	[line_ends.diamond]
+	fillable = true
+
+	[line_ends.diamondThin]
+	fillable = true
+
+	[line_ends.dash]
+	fillable = false
+
+	[line_ends.halfCircle]
+	fillable = false
+
+	[line_ends.cross]
+	fillable = false
+
+	[line_ends.circlePlus]
+	fillable = false
+
+	[line_ends.circle]
+	fillable = false
+
+	[line_ends.baseDash]
+	fillable = false
+
+	[line_ends.ERone]
+	fillable = false
+
+	[line_ends.ERmandOne]
+	fillable = false
+
+	[line_ends.ERmany]
+	fillable = false
+
+	[line_ends.ERoneToMany]
+	fillable = false
+
+	[line_ends.ERzeroToOne]
+	fillable = false
+
+	[line_ends.ERzeroToMany]
+	fillable = false
+
+	[line_ends.doubleBlock]
+	fillable = true

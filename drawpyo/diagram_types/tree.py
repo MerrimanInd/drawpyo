@@ -1,7 +1,7 @@
 from ..file import File
 from ..page import Page
 from ..diagram.objects import BasicObject, Group
-from ..diagram.edges import EdgeBase
+from ..diagram.edges import BasicEdge
 
 
 class LeafObject(BasicObject):
@@ -11,6 +11,7 @@ class LeafObject(BasicObject):
         self.branches = kwargs.get("branches", [])
         self.trunk = kwargs.get("trunk", None)
         self.level = kwargs.get("level", None)
+        self.peers = kwargs.get("peers", [])
 
     @property
     def tree(self):
@@ -35,6 +36,12 @@ class LeafObject(BasicObject):
     def add_branch(self, obj):
         self.branches.append(obj)
         obj._trunk = self
+
+    def add_peer(self, obj):
+        if obj not in self.peers:
+            self.peers.append(obj)
+        if self not in obj.peers:
+            obj.peers.append(self)
 
     @property
     def size_of_level(self):
@@ -67,8 +74,22 @@ class TreeGroup(Group):
     def trunk_object(self, value):
         if value is not None:
             self.add_object(value)
-            self._trunk_object = value
+        self._trunk_object = value
 
+    def center_trunk(self):
+        branches_grp = TreeGroup(tree=self.tree)
+        for obj in self.objects:
+            if obj is not self.trunk_object:
+                branches_grp.add_object(obj)
+        pos = branches_grp.center_position
+
+        level_space = (
+            branches_grp.size_of_level / 2
+            + self.tree.level_spacing
+            + self.trunk_object.size_of_level / 2
+        )
+        pos = self.tree.move_between_levels(pos, -level_space)
+        self.trunk_object.center_position = pos
 
     # I don't love that these are copy-pasted from LeafObject but the multiple
     # inheritance was too much of a pain to have TreeGroup inherit.
@@ -96,7 +117,7 @@ class TreeDiagram:
         self.item_spacing = kwargs.get("item_spacing", 15)
         self.group_spacing = kwargs.get("group_spacing", 30)
         self.direction = kwargs.get("direction", "down")
-        self.link_style = kwargs.get("link_style", "right_angle")
+        self.link_style = kwargs.get("link_style", "ortho")
         self.padding = kwargs.get("padding", 10)
 
         # Set up the File and Page objects
@@ -144,22 +165,6 @@ class TreeDiagram:
             raise ValueError(
                 "{0} is not a valid entry for direction. Must be {1}.".format(
                     d, ", ".join(directions)
-                )
-            )
-
-    @property
-    def link_style(self):
-        return self._link_style
-
-    @link_style.setter
-    def link_style(self, d):
-        link_styles = ["right_angle", "straight", "curved"]
-        if d in link_styles:
-            self._link_style = d
-        else:
-            raise ValueError(
-                "{0} is not a valid entry for link_style. Must be {1}.".format(
-                    d, ", ".join(link_styles)
                 )
             )
 
@@ -224,6 +229,37 @@ class TreeDiagram:
             raise ValueError("No direction defined!")
 
     ###########################################################
+    # Style Properties
+    ###########################################################
+
+    @property
+    def link_style(self):
+        return self._link_style
+
+    @link_style.setter
+    def link_style(self, d):
+        link_styles = ["ortho", "straight", "curved"]
+        if d in link_styles:
+            self._link_style = d
+        else:
+            raise ValueError(
+                "{0} is not a valid entry for link_style. Must be {1}.".format(
+                    d, ", ".join(link_styles)
+                )
+            )
+
+    @property
+    def link_style_dict(self):
+        if self.link_style == "orthogonal":
+            return {'waypoints': 'orthogonal'}
+        elif self.link_style == "straight":
+            return {'waypoints': 'straight'}
+        elif self.link_style == "curved":
+            return {'waypoints': 'curved'}
+
+
+
+    ###########################################################
     # Object Linking and Sorting
     ###########################################################
 
@@ -240,11 +276,12 @@ class TreeDiagram:
 
     @property
     def roots(self):
-        return [x for x in self.page.objects[2:] if x.trunk is None]
+        return [x for x in self.objects if x.trunk is None]
 
     def auto_layout(self):
         def layout_branch(trunk):
             grp = TreeGroup(tree=self)
+            grp.trunk_object = trunk
             if len(trunk.branches) > 0:
                 # has branches, go through each leaf and check its branches
                 for leaf in trunk.branches:
@@ -256,41 +293,40 @@ class TreeDiagram:
                         grp.add_object(leaf)
 
                 # layout the row
-                # top align
-                if len(grp.objects) > 0:
-                    grp = layout_group(grp)
-                    grp = add_trunk(grp, trunk)
-                    
+                grp = layout_group(grp)
+                #grp = add_trunk(grp, trunk)
+                grp.center_trunk()
             return grp
-        
+
         def layout_group(grp, pos=self.origin):
             pos = self.origin
 
             for leaf in grp.objects:
-                leaf.position = pos
-                pos = self.move_in_level(
-                    pos, leaf.size_in_level + self.item_spacing
-                )
+                if leaf is not grp.trunk_object:
+                    leaf.position = pos
+                    pos = self.move_in_level(
+                        pos, leaf.size_in_level + self.item_spacing
+                    )
             return grp
-        
-        def add_trunk(grp, trunk):
-            pos = grp.center_position
-            level_space = (
-                grp.size_of_level / 2
-                + self.level_spacing
-                + trunk.size_of_level / 2
-            )
-            pos = self.move_between_levels(pos, -level_space)
-            trunk.center_position = pos
-            # add the trunk_object
-            grp.trunk_object = trunk
-            return grp
-        
+
+        # def add_trunk(grp, trunk):
+        #     pos = grp.center_position
+        #     level_space = (
+        #         grp.size_of_level / 2
+        #         + self.level_spacing
+        #         + trunk.size_of_level / 2
+        #     )
+        #     pos = self.move_between_levels(pos, -level_space)
+        #     trunk.center_position = pos
+        #     # add the trunk_object
+        #     grp.trunk_object = trunk
+        #     return grp
+
         top_group = TreeGroup(tree=self)
-        
+
         for root in self.roots:
             top_group.add_object(layout_branch(root))
-        
+
         if len(top_group.objects) > 0:
             # Position top group
             top_group = layout_group(top_group)
@@ -299,23 +335,70 @@ class TreeDiagram:
             pos = self.move_between_levels(pos, top_group.size_of_level / 2)
             top_group.center_position = pos
 
+        # lastly add peer links
+        self.connect_peers()
+
         return top_group
 
+    def connect_peers(self):
+        peer_style = {'endArrow':'none',
+                      'dashed':1,
+                      'html':1,
+                      'rounded':0,
+                      'exitX':1,
+                      'exitY':0.5,
+                      'exitDx':0,
+                      'exitDy':0,
+                      'entryX':0,
+                      'entryY':0.5,
+                      'entryDx':0,
+                      'entryDx':0,
+                      'edgeStyle':'orthogonalEdgeStyle'
+                      }
+        for obj in self.objects:
+            for peer in obj.peers:
+                link_exists = False
+                for link in self.links:
+                    if link.source == obj and link.target == peer:
+                        link_exists = True
+                    elif link.source == peer and link.target == obj:
+                        link_exists = True
+                if not link_exists:
+                    edge = BasicEdge(page=self.page, source=obj, target=peer)
+                    edge.apply_attribute_dict(peer_style)
+                    self.links.append(edge)
+
     def connect(self, source, target):
-        edge = EdgeBase(page=self.page, source=source, target=target)
+        edge = BasicEdge(page=self.page, source=source, target=target)
+        edge.apply_attribute_dict(self.link_style_dict)
         if self.direction == "down":
-            trunk_style = "exitX=0.5;exitY=1;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exitX = 0.5
+            edge.exitY = 1
+            # branch style
+            edge.entryX = 0.5
+            edge.entryY = 0
         elif self.direction == "up":
-            trunk_style = "exitX=0.5;exitY=0;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0.5;entryY=1;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exitX = 0.5
+            edge.exitY = 0
+            # branch style
+            edge.entryX = 0.5
+            edge.entryY = 1
         elif self.direction == "left":
-            trunk_style = "exitX=0;exitY=0.5;exitDx=0;exitDy=0;"
-            branch_style = "entryX=1;entryY=0.5;entryDx=0;entryDy=0;"
+            # trunk style
+            edge.exitX = 0
+            edge.exitY = 0.5
+            # branch style
+            edge.entryX = 1
+            edge.entryY = 0.5
         elif self.direction == "right":
-            trunk_style = "exitX=1;exitY=0.5;exitDx=0;exitDy=0;"
-            branch_style = "entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
-        edge.style = edge.style + trunk_style + branch_style
+            # trunk style
+            edge.exitX = 1
+            edge.exitY = 0.5
+            # branch style
+            edge.entryX = 0
+            edge.entryY = 0.5
         self.links.append(edge)
 
     def draw_connections(self):

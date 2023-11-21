@@ -1,24 +1,68 @@
-from .base_diagram import DiagramBase
+from .base_diagram import DiagramBase, import_shape_database, style_str_from_dict
 
 
-__all__ = ['EdgeBase']
+__all__ = ['BasicEdge']
+
+data = import_shape_database(file_name='formatting_database\\edge_styles.toml', relative=True)
+
+connection_db = data['connection']
+connection_db[None] = {"shape": ""}
+
+pattern_db = data['pattern']
+pattern_db[None] = {}
+
+waypoints_db = data['waypoints']
+waypoints_db[None] = {}
+
+line_ends_db = data['line_ends']
+line_ends_db[None] = {'fillable': False}
+line_ends_db[""] = {'fillable': False}
+
 
 ###########################################################
 # Edges
 ###########################################################
 
-class EdgeBase(DiagramBase):
+class BasicEdge(DiagramBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.xml_class = "mxCell"
 
-        self.default_style = "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;"
-        self.style = kwargs.get("style", self.default_style)
+        # Style
 
+        self.waypoints = kwargs.get("waypoints", "orthogonal")
+        self.connection = kwargs.get("connection", "line")
+        self.pattern = kwargs.get("pattern", "solid")
+
+        self.line_end_target = kwargs.get("line_end_target", None)
+        self.line_end_source = kwargs.get("line_end_source", None)
+        self.endFill_target = kwargs.get("endFill_target", False)
+        self.endFill_source = kwargs.get("endFill_source", False)
+
+        self.jettySize = kwargs.get("jettySize", "auto")
+        self.html = kwargs.get("html", 1)
+        self.rounded = kwargs.get("rounded", 0)
+
+        # Connection and geometry
         self.edge = kwargs.get("edge", 1)
         self.source = kwargs.get("source", None)
         self.target = kwargs.get("target", None)
         self.geometry = EdgeGeometry()
+        self.entryX = kwargs.get("entryX", None)
+        self.entryY = kwargs.get("entryY", None)
+        self.entryDx = kwargs.get("entryDx", None)
+        self.entryDy = kwargs.get("entryDy", None)
+        self.exitX = kwargs.get("exitX", None)
+        self.exitY = kwargs.get("exitY", None)
+        self.exitDx = kwargs.get("exitDx", None)
+        self.exitDy = kwargs.get("exitDy", None)
+
+    def __repr__(self):
+        name_str = "{0} edge from {1} to {2}".format(self.__class__.__name__, self.source, self.target)
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
 
     @property
     def attributes(self):
@@ -29,6 +73,7 @@ class EdgeBase(DiagramBase):
             "parent": self.parent_id,
             "source": self.source_id,
             "target": self.target_id}
+
 
     ###########################################################
     # Source and Target Linking
@@ -79,6 +124,108 @@ class EdgeBase(DiagramBase):
             return 1
 
     ###########################################################
+    # Style properties
+    ###########################################################
+
+    @property
+    def style_attributes(self):
+        return ["html",
+                "rounded",
+                "jettySize",
+                "entryX",
+                "entryY",
+                "entryDx",
+                "entryDy",
+                "exitX",
+                "exitY",
+                "exitDx",
+                "exitDy",
+                "startArrow",
+                "endArrow",
+                "startFill",
+                "endFill"]
+
+    @property
+    def baseStyle(self):
+        style_str = []
+        connection_style = style_str_from_dict(connection_db[self.connection])
+        if connection_style is not None and connection_style != "":
+            style_str.append(connection_style)
+
+        waypoint_style = style_str_from_dict(waypoints_db[self.waypoints])
+        if waypoint_style is not None and waypoint_style != "":
+            style_str.append(waypoint_style)
+
+        pattern_style = style_str_from_dict(pattern_db[self.pattern])
+        if pattern_style is not None and pattern_style != "":
+            style_str.append(pattern_style)
+
+        if len(style_str) == 0:
+            return None
+        else:
+            return ";".join(style_str)
+
+    @property
+    def startArrow(self):
+        return self.line_end_source
+
+    @property
+    def startFill(self):
+        if line_ends_db[self.line_end_source]['fillable']:
+            return self.endFill_source
+        else:
+            return None
+
+    @property
+    def endArrow(self):
+        return self.line_end_target
+
+    @property
+    def endFill(self):
+        if line_ends_db[self.line_end_target]['fillable']:
+            return self.endFill_target
+        else:
+            return None
+
+    # Base Line Style
+
+    # Waypoints
+    @property
+    def waypoints(self):
+        return self._waypoints
+
+    @waypoints.setter
+    def waypoints(self, value):
+        if value in waypoints_db.keys():
+            self._waypoints = value
+        else:
+            raise ValueError("{0} is not an allowed value of waypoints")
+
+    # Connection
+    @property
+    def connection(self):
+        return self._connection
+
+    @connection.setter
+    def connection(self, value):
+        if value in connection_db.keys():
+            self._connection = value
+        else:
+            raise ValueError("{0} is not an allowed value of connection".format(value))
+
+    # Pattern
+    @property
+    def pattern(self):
+        return self._pattern
+
+    @pattern.setter
+    def pattern(self, value):
+        if value in pattern_db.keys():
+            self._pattern = value
+        else:
+            raise ValueError("{0} is not an allowed value of pattern")
+
+    ###########################################################
     # XML Generation
     ###########################################################
 
@@ -127,7 +274,7 @@ class EdgeLabel(DiagramBase):
 
     @property
     def attributes(self):
-        return {}
+        return []
 
 
 class Point(DiagramBase):
