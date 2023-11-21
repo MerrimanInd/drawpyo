@@ -1,98 +1,36 @@
-from .base_diagram import DiagramBase, import_shape_databases
+from .base_diagram import (
+    DiagramBase,
+    import_shape_database,
+    style_str_from_dict,
+)
 
+__all__ = ["BasicObject", "Group", "object_from_library"]
 
-__all__ = ["BasicObject", "Group"]
+general = import_shape_database(
+    filename="shape_libraries\\general.toml"
+)
+line_styles = import_shape_database(
+    filename="formatting_database\\line_styles.toml"
+)
 
-general = import_shape_databases(filename='shape_libraries\\general_w_inherit.toml')
-line_styles = import_shape_databases(filename='formatting_database\\line_styles.toml')
+base_libraries = {"general": general}
 
 text_directions = {None: None, "horizontal": 1, "vertical": 0}
+text_directions_inv = {v: k for k, v in text_directions.items()}
 
 container = {None: None, "vertical_container": None}
 
-"""
-TODO: Delete once rework is complete
+def import_shape_library(library_path, name):
+    data = import_shape_database(
+        filename=library_path
+    )
+    base_libraries[name] = data
 
-# Dash pattern property
-line_styles = {
-    None: None,
-    "solid": "0",
-    "small_dash": "1",
-    "medium_dash": "1;dashPattern=8 8",
-    "large_dash": "1;dashPattern=12 12",
-    "small_dot": "1;dashPattern=1 1",
-    "medium_dot": "1;dashPattern=1 2",
-    "large_dot": "1;dashPattern=1 4",
-}
+def object_from_library(library, obj_name, **kwargs):
+    new_obj = BasicObject(**kwargs)
+    new_obj.format_as_library_object(library, obj_name)
+    return new_obj
 
-
-base_styles = {
-    None: "",
-    "rectanle": "",
-    "rounded rectangle": "rounded=1;",
-    "text": "text;",
-    "ellipse": "ellipse;",
-    "square": "aspect=fixed;",
-    "circle": "ellipse;aspect=fixed;",
-    "process": "shape=process;backgroundOutline=1;",
-    "diamond": "rhombus;",
-    "parallelogram": "shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;",
-    "hexagon": "shape=hexagon;perimeter=hexagonPerimeter2;fixedSize=1;",
-    "triangle": "triangle;",
-    "cylinder": "shape=cylinder3;boundedLbl=1;backgroundOutline=1;",
-    "cloud": "ellipse;shape=cloud;",
-    "document": "shape=document;boundedLbl=1;",
-    "internal storage": "shape=internalStorage;backgroundOutline=1;",
-    "cube": "shape=cube;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;",
-    "step": "shape=step;perimeter=stepPerimeter;",
-    "trapezoid": "shape=trapezoid;perimeter=trapezoidPerimeter;",
-    "tape": "shape=tape;",
-    "note": "shape=note;backgroundOutline=1;darkOpacity=0.05;",
-    "card": "shape=card;",
-    "callout": "shape=callout;perimeter=calloutPerimeter;",
-    "actor": "shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;",
-    "or": "shape=xor;",
-    "and": "shape=or;",
-    "data storage": "shape=dataStorage;fixedSize=1;",
-    "container": "swimlane;startSize=0;",
-    "labeled container": "swimlane;",
-    "labeled horizontal container": "swimlane;horizontal=0;",
-}
-
-
-default_sizes = {
-    None: (120, 60),
-    "rectangle": (120, 60),
-    "rounded rectangle": (120, 60),
-    "text": (60, 20),
-    "ellipse": (120, 80),
-    "square": (80, 80),
-    "circle": (80, 80),
-    "process": (120, 60),
-    "diamond": (80, 80),
-    "parallelogram": (120, 60),
-    "hexagon": (120, 80),
-    "triangle": (60, 80),
-    "cylinder": (60, 80),
-    "cloud": (120, 80),
-    "document": (120, 80),
-    "internal storage": (80, 80),
-    "cube": (120, 80),
-    "step": (120, 80),
-    "trapezoid": (120, 60),
-    "tape": (120, 100),
-    "note": (80, 100),
-    "card": (80, 100),
-    "callout": (120, 80),
-    "actor": (30, 60),
-    "or": (60, 80),
-    "and": (60, 80),
-    "data storage": (100, 80),
-    "container": (200, 200),
-    "labeled container": (200, 200),
-    "labeled horizontal container": (200, 200),
-}
-"""
 
 ###########################################################
 # Objects
@@ -100,8 +38,33 @@ default_sizes = {
 
 
 class BasicObject(DiagramBase):
+    ###########################################################
+    # Initialization Functions
+    ###########################################################
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.style_attributes = [
+            "html",
+            "whiteSpace",
+            "rounded",
+            "fillColor",
+            "fontColor",
+            "strokeColor",
+            "glass",
+            "shadow",
+            "comic",
+            "fontFamily",
+            "align",
+            "verticalAlign",
+            "labelPosition",
+            "labelBackgroundColor",
+            "labelBorderColor",
+            "fontSize",
+            "horizontal",
+            "textOpacity",
+            "opacity",
+            "dashed",
+        ]
 
         # TODO: Delete once rework is complete
         # self.base_style = kwargs.get("base_style", None)
@@ -122,6 +85,7 @@ class BasicObject(DiagramBase):
 
         # self.default_style = "rounded=0;whiteSpace=wrap;html=1;"
         # self.style = kwargs.get("style", self.default_style)
+        self.baseStyle = kwargs.get("baseStyle", None)
 
         self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
@@ -153,18 +117,45 @@ class BasicObject(DiagramBase):
         self.italic_font = kwargs.get("italic_font", False)
         self.underline_font = kwargs.get("underline_font", False)
 
-        # Base style declaration comes last since it overwrites the defaults
-        # set by all kwargs.get lines above
-        #self.parse_style_string(base_styles[self.base_style])
-
         self.out_edges = kwargs.get("out_edges", [])
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
 
+    @classmethod
+    def create_from_style_string(cls, style_string):
+        cls.apply_style_from_string(style_string)
+        return cls
+
+    @classmethod
+    def create_from_library(cls, library, obj_name):
+        new_obj = cls()
+        new_obj.format_as_library_object(library, obj_name)
+        return new_obj
+
+    def format_as_library_object(self, library, obj_name):
+        if type(library) == str:
+            if library in base_libraries:
+                library_dict = base_libraries[library]
+                if obj_name in library_dict:
+                    obj_dict = library_dict[obj_name]
+                    self.apply_attribute_dict(obj_dict)
+                else:
+                    raise ValueError(
+                        "Object {0} not in Library {1}".format(obj_name, library)
+                    )
+            else:
+                raise ValueError(
+                    "Library {0} not in base_libraries".format(library)
+                )
+        elif type(library) == dict:
+            obj_dict = library[obj_name]
+            self.apply_attribute_dict(obj_dict)
+        else:
+            raise ValueError("Unparseable libary passed in.")
 
     def __repr__(self):
-        if self.value is not None:
+        if self.value != "":
             name_str = "{0} object with value {1}".format(
                 self.__class__.__name__, self.value
             )
@@ -185,7 +176,6 @@ class BasicObject(DiagramBase):
             "parent": self.parent_id,
         }
 
-
     ###########################################################
     # Style templates
     ###########################################################
@@ -202,71 +192,34 @@ class BasicObject(DiagramBase):
     def container(self):
         return container
 
-    """
-    TODO: Delete once rework is complete
-    @property
-    def base_styles(self):
-        return base_styles
-
-    @property
-    def default_sizes(self):
-        return default_sizes
-    """
-
     ###########################################################
     # Style properties
     ###########################################################
+    def add_style_attribute(self, style_attr):
+        self._style_attributes.append(style_attr)
 
     @property
     def style_attributes(self):
-        # return {
-        #     "html": self.html,
-        #     "whiteSpace": self.whiteSpace,
-        #     "rounded": self.rounded,
-        #     "fillColor": self.fillColor,
-        #     "fontColor": self.fontColor,
-        #     "strokeColor": self.strokeColor,
-        #     "glass": self.glass,
-        #     "shadow": self.shadow,
-        #     "comic": self.comic,
-        #     "fontFamily": self.fontFamily,
-        #     "align": self.align,
-        #     "verticalAlign": self.verticalAlign,
-        #     "labelPosition": self.labelPosition,
-        #     "labelBackgroundColor": self.labelBackgroundColor,
-        #     "labelBorderColor": self.labelBorderColor,
-        #     "fontSize": self.fontSize,
-        #     "horizontal": self.horizontal,
-        #     "textOpacity": self.textOpacity,
-        #     "opacity": self.opacity,
-        #     "dashed": self.dashed,
-        # }
-        return [
-            "html",
-            "whiteSpace",
-            "rounded",
-            "fillColor",
-            "fontColor",
-            "strokeColor",
-            "glass",
-            "shadow",
-            "comic",
-            "fontFamily",
-            "align",
-            "verticalAlign",
-            "labelPosition",
-            "labelBackgroundColor",
-            "labelBorderColor",
-            "fontSize",
-            "horizontal",
-            "textOpacity",
-            "opacity",
-            "dashed"
-        ]
+        return self._style_attributes
 
+    @style_attributes.setter
+    def style_attributes(self, value):
+        self._style_attributes = value
+
+    # The direction of the text is encoded as 'horizontal' in Draw.io. This is
+    # unintuitive so I provided a text_direction alternate syntax.
     @property
     def horizontal(self):
         return text_directions[self._text_direction]
+
+    @horizontal.setter
+    def horizontal(self, value):
+        if value in text_directions_inv.keys():
+            self._text_direction = text_directions_inv[value]
+        else:
+            raise ValueError(
+                "{0} is not an allowed value of horizontal".format(value)
+            )
 
     @property
     def text_direction(self):
@@ -495,10 +448,6 @@ class Group:
         delta_y = new_center[1] - current_center[1]
         for obj in self.objects:
             obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-            # obj.geometry.x = obj.geometry.x + delta_x
-            # obj.geometry.y = obj.geometry.y + delta_y
-        # self.geometry.x = new_center[0] + self.width / 2
-        # self.geometry.y = new_center[1] + self.height / 2
         self.update_geometry()
 
     @property
@@ -512,8 +461,4 @@ class Group:
         delta_y = new_position[1] - current_position[1]
         for obj in self.objects:
             obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-            # obj.geometry.x = obj.geometry.x + delta_x
-            # obj.geometry.y = obj.geometry.y + delta_y
-        # self.geometry.x = new_position[0]
-        # self.geometry.y = new_position[1]
         self.update_geometry()

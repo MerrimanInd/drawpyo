@@ -2,32 +2,85 @@ from ..xml_base import XMLBase
 from os import path
 
 
+__all__ = ["DiagramBase", "style_str_from_dict", "import_shape_database"]
 
-def import_shape_databases(filename):
+
+def import_shape_database(filename):
+    """
+    This function imports a TOML shape database and returns a dictionary of the
+    shapes defined therein. It supports inheritance, meaning that if there is
+    an inherit value in any of the shape dictionaries it will attempt to go
+    find the inherited master shape and use it as a starting format, but
+    overwriting any styles defined in both with the style defined in the child
+    object.
+
+    Parameters
+    ----------
+    filename : str
+        The path to a TOML file containing a style library database.
+
+    Returns
+    -------
+    data : dict
+        A database of shapes defined in the TOML file.
+
+    """
     # Import the shape and edge definitions
     from sys import version_info
+
     # toml path
     dirname = path.dirname(__file__)
     dirname = path.split(dirname)[0]
     file_name = path.join(dirname, filename)
 
-
     if version_info.minor < 11:
         import toml
+
         data = toml.load(file_name)
     else:
         import tomllib
+
         with open(file_name, "rb") as f:
             data = tomllib.load(f)
 
     for obj in data.values():
         if "inherit" in obj:
-            obj.update(data[obj["inherit"]])
-
+            obj = data[obj["inherit"]].update(obj)
 
     return data
 
-__all__ = ['DiagramBase']
+
+def style_str_from_dict(style_dict):
+    """
+    This function returns a concatenated style string from a style dictionary.
+    This format is:
+            baseStr;attr1=value;attr2=value
+    It will concatenate the key:value pairs with the appropriate semicolons and
+    equals except for the baseStr, which it will prepend to the front with no
+    equals sign.
+
+    Parameters
+    ----------
+    style_dict : dict
+        A dictionary of style:value pairs.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+
+    """
+    if "baseStr" in style_dict:
+        style_str = [style_dict.pop("baseStr")]
+    else:
+        style_str = []
+    style_str = style_str + [
+        "{0}={1}".format(att, style)
+        for (att, style) in style_dict.items()
+        if style != "" and style != None
+    ]
+    return ";".join(style_str)
+
 
 class DiagramBase(XMLBase):
     def __init__(self, **kwargs):
@@ -39,7 +92,6 @@ class DiagramBase(XMLBase):
     def create_from_library(cls, library, obj):
         return cls
 
-
     # Parent property
     @property
     def parent_id(self):
@@ -47,7 +99,6 @@ class DiagramBase(XMLBase):
             return self.parent.id
         else:
             return 1
-
 
     # Parent object linking
     @property
@@ -66,8 +117,6 @@ class DiagramBase(XMLBase):
     def parent(self):
         self._parent.remove_object(self)
         self._parent = None
-
-
 
     # Page property
     @property
@@ -95,7 +144,6 @@ class DiagramBase(XMLBase):
         self._page.remove_object(self)
         self._page = None
 
-
     ###########################################################
     # Style properties
     ###########################################################
@@ -107,7 +155,6 @@ class DiagramBase(XMLBase):
 
         """
         return ["html"]
-    
 
     @property
     def style(self):
@@ -126,87 +173,21 @@ class DiagramBase(XMLBase):
             The style string of the object.
 
         """
-        # style_str = ""
-        # base_styles = self.base_attribute_dict
-        # if '' in base_styles:
-        #     del base_styles['']
-        # for attribute, value in self.style_attributes.items():
-        #     if value is not None and not value == "":
-        #         style_str = style_str + "{0}={1};".format(attribute, value)
-        #     elif attribute in base_styles:
-        #         style_str = style_str + base_styles.pop(attribute)
-        # for attribute in base_styles.values():
-        #     style_str = style_str + attribute + ';'
-        # return style_str
-    
         style_str = ""
-        if hasattr(self, "baseStyle") and getattr(self, "baseStyle") is not None:
-            style_str = getattr(self, "baseStyle")
-        
+        if (
+            hasattr(self, "baseStyle")
+            and getattr(self, "baseStyle") is not None
+        ):
+            style_str = getattr(self, "baseStyle") + ";"
+
         for attribute in self.style_attributes:
-            if hasattr(self, attribute) and getattr(self, attribute) is not None:
+            if (
+                hasattr(self, attribute)
+                and getattr(self, attribute) is not None
+            ):
                 attr_val = getattr(self, attribute)
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
-
-    def style_str_from_dict(self, style_dict):
-        #return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items()])
-        return ";".join(["{0}={1}".format(att,style) for (att,style) in style_dict.items() if style != "" and style != None])
-
-    # @property
-    # def base_style_str(self):
-    #     """
-    #     This property returns the style string of the assigned base_style.
-    #     This string will be in the format:
-    #         attribute=value;attribute2=value
-
-    #     Returns
-    #     -------
-    #     string
-    #         The base style string.
-
-    #     """
-    #     return self.base_styles[self.base_style]
-
-    # def attribute_from_base(self, attribute):
-    #     """
-    #     This function returns a single attribute string from the base_style
-    #     string. The attribute will be a string name nad the return will be that
-    #     string name plus the assigned attribute:
-    #         attribute returns "attribute=val"
-
-    #     Parameters
-    #     ----------
-    #     attribute : string
-    #         The name of the attribute to return.
-
-    #     Returns
-    #     -------
-    #     string
-    #         Attribute assignment string.
-
-    #     """
-    #     base_attribs = self.base_style_str.split(';')
-    #     return next((attrib for attrib in base_attribs if attribute == attrib.split("=")[0]), None)
-
-    # @property
-    # def base_attribute_dict(self):
-    #     """
-    #     This function returns a dictionary of the base_style attributes. The
-    #     dict keys will be the attribute names and the values will be the names
-    #     plus the value.
-
-    #     base_attribute_dict{"attribute": "attribute=value"}
-
-    #     Returns
-    #     -------
-    #     dict
-    #         A dict of the base_style attributes.
-
-    #     """
-    #     attr_strings = self.base_style_str.split(';')
-    #     attr_keys = [attr_string.split('=')[0] for attr_string in attr_strings]
-    #     return dict(zip(attr_keys, attr_strings))
 
     def apply_style_string(self, style_str):
         """
@@ -224,12 +205,12 @@ class DiagramBase(XMLBase):
         None.
 
         """
-        for attrib in style_str.split(';'):
+        for attrib in style_str.split(";"):
             if "=" in attrib:
-                a_name = attrib.split('=')[0]
-                a_value = attrib.split('=')[1]
+                a_name = attrib.split("=")[0]
+                a_value = attrib.split("=")[1]
                 if a_value.isdigit():
-                    if "."  in a_value:
+                    if "." in a_value:
                         a_value = float(a_value)
                     else:
                         a_value = int(a_value)
@@ -237,6 +218,36 @@ class DiagramBase(XMLBase):
                     a_value = bool(a_value)
 
                 setattr(self, a_name, a_value)
+            else:
+                self.baseStyle = attrib
+
+    def apply_attribute_dict(self, attr_dict):
+        """
+        This function takes in a dictionary of attributes and applies them
+        to the object. These attributes can be style or properties. If the
+        attribute isn't already defined as a property of the class it's
+        assumed to be a style attribute. It will then be added as a property
+        and also appended to the .style_attributes list.
+
+        Parameters
+        ----------
+        attr_dict : dict
+            A dictionary of attributes to set or add to the object.
+
+        Returns
+        -------
+        None.
+
+        """
+        for attr, val in attr_dict.items():
+            if hasattr(self, attr):
+                # if the style attribute exists, add it
+                setattr(self, attr, val)
+            else:
+                # If the style attribute doesn't exist, add it and add to the
+                # style dict
+                setattr(self, attr, val)
+                self.add_style_attribute(attr)
 
     @classmethod
     def from_style_string(cls, style_string):

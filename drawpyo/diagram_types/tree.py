@@ -1,6 +1,6 @@
 from ..file import File
 from ..page import Page
-from ..diagram.objects import BasicObject, Group, base_styles
+from ..diagram.objects import BasicObject, Group
 from ..diagram.edges import BasicEdge
 
 
@@ -36,7 +36,7 @@ class LeafObject(BasicObject):
     def add_branch(self, obj):
         self.branches.append(obj)
         obj._trunk = self
-        
+
     def add_peer(self, obj):
         if obj not in self.peers:
             self.peers.append(obj)
@@ -82,7 +82,7 @@ class TreeGroup(Group):
             if obj is not self.trunk_object:
                 branches_grp.add_object(obj)
         pos = branches_grp.center_position
-        
+
         level_space = (
             branches_grp.size_of_level / 2
             + self.tree.level_spacing
@@ -227,7 +227,7 @@ class TreeDiagram:
             return (start[0], position)
         else:
             raise ValueError("No direction defined!")
-            
+
     ###########################################################
     # Style Properties
     ###########################################################
@@ -256,8 +256,8 @@ class TreeDiagram:
             return "rounded=0;orthogonalLoop=1;jettySize=auto;"
         elif self.link_style == "curved":
             return "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;curved=1;"
-        
-        
+
+
 
     ###########################################################
     # Object Linking and Sorting
@@ -297,7 +297,7 @@ class TreeDiagram:
                 #grp = add_trunk(grp, trunk)
                 grp.center_trunk()
             return grp
-        
+
         def layout_group(grp, pos=self.origin):
             pos = self.origin
 
@@ -308,7 +308,7 @@ class TreeDiagram:
                         pos, leaf.size_in_level + self.item_spacing
                     )
             return grp
-        
+
         # def add_trunk(grp, trunk):
         #     pos = grp.center_position
         #     level_space = (
@@ -321,12 +321,12 @@ class TreeDiagram:
         #     # add the trunk_object
         #     grp.trunk_object = trunk
         #     return grp
-        
+
         top_group = TreeGroup(tree=self)
-        
+
         for root in self.roots:
             top_group.add_object(layout_branch(root))
-        
+
         if len(top_group.objects) > 0:
             # Position top group
             top_group = layout_group(top_group)
@@ -337,7 +337,7 @@ class TreeDiagram:
 
         # lastly add peer links
         self.connect_peers()
-        
+
         return top_group
 
     def connect_peers(self):

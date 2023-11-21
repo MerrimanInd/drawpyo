@@ -123,23 +123,6 @@ class BasicEdge(DiagramBase):
 
     @property
     def style_attributes(self):
-        # return {
-        #     "html": self.html,
-        #     "rounded": self.rounded,
-        #     "jettySize": self.jettySize,
-        #     "entryX": self.entryX,
-        #     "entryY": self.entryY,
-        #     "entryDx": self.entryDx,
-        #     "entryDy": self.entryDy,
-        #     "exitX": self.exitX,
-        #     "exitY": self.exitY,
-        #     "exitDx": self.exitDx,
-        #     "exitDy": self.exitDy,
-        #     "startArrow": self.startArrow,
-        #     "endArrow": self.endArrow,
-        #     "startFill": self.startFill,
-        #     "endFill": self.endFill
-        # }
         return ["html",
                 "rounded",
                 "jettySize",
@@ -156,20 +139,26 @@ class BasicEdge(DiagramBase):
                 "startFill",
                 "endFill"]
 
-    # @property
-    # def base_style_str(self):
+    @property
+    def baseStyle(self):
 
-    #     shape_str = self.style_str_from_dict(connection_db[self.connection])
-    #     style_str = shape_str
+        style_str = []
+        connection_style = self.style_str_from_dict(connection_db[self.connection])
+        if connection_style is not None and connection_style != "":
+            style_str.append(connection_style)
 
-    #     waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
-    #     if waypoint_style is not None:
-    #         style_str = style_str + ';' + waypoint_style
+        waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
+        if waypoint_style is not None and waypoint_style != "":
+            style_str.append(waypoint_style)
 
-    #     pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
-    #     if pattern_style is not None:
-    #         style_str = style_str + ';' + pattern_style
-    #     return style_str
+        pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
+        if pattern_style is not None and pattern_style != "":
+            style_str.append(pattern_style)
+
+        if len(style_str) == 0:
+            return None
+        else:
+            return ";".join(style_str)
 
     @property
     def startArrow(self):
@@ -259,12 +248,12 @@ class EdgeGeometry(DiagramBase):
 
     @property
     def attributes(self):
-        return [
-            "x",
-            "y",
-            "relative",
-            "as"
-        ]
+        return {
+            "x": self.x,
+            "y": self.y,
+            "relative": self.relative,
+            "as": self.as_attribute
+        }
 
 class EdgeLabel(DiagramBase):
     def __init__(self, **kwargs):
@@ -294,8 +283,8 @@ class Point(DiagramBase):
 
     @property
     def attributes(self):
-        return [
-            "x",
-            "y"
-        ]
+        return {
+            "x": self.x,
+            "y": self.y
+        }
 
