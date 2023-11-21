@@ -7,10 +7,10 @@ from .base_diagram import (
 __all__ = ["BasicObject", "Group", "object_from_library"]
 
 general = import_shape_database(
-    filename="shape_libraries\\general.toml"
+    file_name="shape_libraries\\general.toml", relative=True
 )
 line_styles = import_shape_database(
-    filename="formatting_database\\line_styles.toml"
+    file_name="formatting_database\\line_styles.toml", relative=True
 )
 
 base_libraries = {"general": general}
@@ -43,7 +43,7 @@ class BasicObject(DiagramBase):
     ###########################################################
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.style_attributes = [
+        self._style_attributes = [
             "html",
             "whiteSpace",
             "rounded",
@@ -154,17 +154,6 @@ class BasicObject(DiagramBase):
         else:
             raise ValueError("Unparseable libary passed in.")
 
-    def __repr__(self):
-        if self.value != "":
-            name_str = "{0} object with value {1}".format(
-                self.__class__.__name__, self.value
-            )
-        else:
-            name_str = "{0} object".format(self.__class__.__name__)
-        return name_str
-
-    def __str_(self):
-        return self.__repr__()
 
     @property
     def attributes(self):

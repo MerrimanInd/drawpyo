@@ -1,9 +1,9 @@
-from .base_diagram import DiagramBase, import_shape_databases
+from .base_diagram import DiagramBase, import_shape_database, style_str_from_dict
 
 
 __all__ = ['BasicEdge']
 
-data = import_shape_databases(filename='formatting_database\\edge_styles.toml')
+data = import_shape_database(file_name='formatting_database\\edge_styles.toml', relative=True)
 
 connection_db = data['connection']
 connection_db[None] = {"shape": ""}
@@ -29,7 +29,6 @@ class BasicEdge(DiagramBase):
         self.xml_class = "mxCell"
 
         # Style
-        self.extra_styles = kwargs.get("style", None)
 
         self.waypoints = kwargs.get("waypoints", "orthogonal")
         self.connection = kwargs.get("connection", "line")
@@ -57,6 +56,13 @@ class BasicEdge(DiagramBase):
         self.exitY = kwargs.get("exitY", None)
         self.exitDx = kwargs.get("exitDx", None)
         self.exitDy = kwargs.get("exitDy", None)
+
+    def __repr__(self):
+        name_str = "{0} edge from {1} to {2}".format(self.__class__.__name__, self.source, self.target)
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
 
     @property
     def attributes(self):
@@ -141,17 +147,16 @@ class BasicEdge(DiagramBase):
 
     @property
     def baseStyle(self):
-
         style_str = []
-        connection_style = self.style_str_from_dict(connection_db[self.connection])
+        connection_style = style_str_from_dict(connection_db[self.connection])
         if connection_style is not None and connection_style != "":
             style_str.append(connection_style)
 
-        waypoint_style = self.style_str_from_dict(waypoints_db[self.waypoints])
+        waypoint_style = style_str_from_dict(waypoints_db[self.waypoints])
         if waypoint_style is not None and waypoint_style != "":
             style_str.append(waypoint_style)
 
-        pattern_style = self.style_str_from_dict(pattern_db[self.pattern])
+        pattern_style = style_str_from_dict(pattern_db[self.pattern])
         if pattern_style is not None and pattern_style != "":
             style_str.append(pattern_style)
 

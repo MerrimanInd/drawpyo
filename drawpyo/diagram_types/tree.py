@@ -249,13 +249,13 @@ class TreeDiagram:
             )
 
     @property
-    def link_style_string(self):
-        if self.link_style == "ortho":
-            return "rounded=0;orthogonalLoop=1;jettySize=auto;edgeStyle=orthogonalEdgeStyle;"
+    def link_style_dict(self):
+        if self.link_style == "orthogonal":
+            return {'waypoints': 'orthogonal'}
         elif self.link_style == "straight":
-            return "rounded=0;orthogonalLoop=1;jettySize=auto;"
+            return {'waypoints': 'straight'}
         elif self.link_style == "curved":
-            return "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;curved=1;"
+            return {'waypoints': 'curved'}
 
 
 
@@ -341,7 +341,20 @@ class TreeDiagram:
         return top_group
 
     def connect_peers(self):
-        peer_style = "endArrow=none;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;"
+        peer_style = {'endArrow':'none',
+                      'dashed':1,
+                      'html':1,
+                      'rounded':0,
+                      'exitX':1,
+                      'exitY':0.5,
+                      'exitDx':0,
+                      'exitDy':0,
+                      'entryX':0,
+                      'entryY':0.5,
+                      'entryDx':0,
+                      'entryDx':0,
+                      'edgeStyle':'orthogonalEdgeStyle'
+                      }
         for obj in self.objects:
             for peer in obj.peers:
                 link_exists = False
@@ -352,39 +365,40 @@ class TreeDiagram:
                         link_exists = True
                 if not link_exists:
                     edge = BasicEdge(page=self.page, source=obj, target=peer)
-                    edge.extra_styles = peer_style
+                    edge.apply_attribute_dict(peer_style)
                     self.links.append(edge)
 
     def connect(self, source, target):
-        edge = BasicEdge(page=self.page, source=source, target=target, style=self.link_style_string)
+        edge = BasicEdge(page=self.page, source=source, target=target)
+        edge.apply_attribute_dict(self.link_style_dict)
         if self.direction == "down":
             # trunk style
-            edge.exit_x = 0.5
-            edge.exit_y = 1
+            edge.exitX = 0.5
+            edge.exitY = 1
             # branch style
-            edge.entry_x = 0.5
-            edge.entry_y = 0
+            edge.entryX = 0.5
+            edge.entryY = 0
         elif self.direction == "up":
             # trunk style
-            edge.exit_x = 0.5
-            edge.exit_y = 0
+            edge.exitX = 0.5
+            edge.exitY = 0
             # branch style
-            edge.entry_x = 0.5
-            edge.entry_y = 1
+            edge.entryX = 0.5
+            edge.entryY = 1
         elif self.direction == "left":
             # trunk style
-            edge.exit_x = 0
-            edge.exit_y = 0.5
+            edge.exitX = 0
+            edge.exitY = 0.5
             # branch style
-            edge.entry_x = 1
-            edge.entry_y = 0.5
+            edge.entryX = 1
+            edge.entryY = 0.5
         elif self.direction == "right":
             # trunk style
-            edge.exit_x = 1
-            edge.exit_y = 0.5
+            edge.exitX = 1
+            edge.exitY = 0.5
             # branch style
-            edge.entry_x = 0
-            edge.entry_y = 0.5
+            edge.entryX = 0
+            edge.entryY = 0.5
         self.links.append(edge)
 
     def draw_connections(self):

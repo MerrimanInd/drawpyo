@@ -5,7 +5,7 @@ from os import path
 __all__ = ["DiagramBase", "style_str_from_dict", "import_shape_database"]
 
 
-def import_shape_database(filename):
+def import_shape_database(file_name, relative=False):
     """
     This function imports a TOML shape database and returns a dictionary of the
     shapes defined therein. It supports inheritance, meaning that if there is
@@ -28,10 +28,11 @@ def import_shape_database(filename):
     # Import the shape and edge definitions
     from sys import version_info
 
-    # toml path
-    dirname = path.dirname(__file__)
-    dirname = path.split(dirname)[0]
-    file_name = path.join(dirname, filename)
+    if relative:
+        # toml path
+        dirname = path.dirname(__file__)
+        dirname = path.split(dirname)[0]
+        file_name = path.join(dirname, file_name)
 
     if version_info.minor < 11:
         import toml
@@ -54,9 +55,9 @@ def style_str_from_dict(style_dict):
     """
     This function returns a concatenated style string from a style dictionary.
     This format is:
-            baseStr;attr1=value;attr2=value
+            baseStyle;attr1=value;attr2=value
     It will concatenate the key:value pairs with the appropriate semicolons and
-    equals except for the baseStr, which it will prepend to the front with no
+    equals except for the baseStyle, which it will prepend to the front with no
     equals sign.
 
     Parameters
@@ -66,12 +67,12 @@ def style_str_from_dict(style_dict):
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
+    str
+        A string with the style_dicts values concatenated correctly.
 
     """
-    if "baseStr" in style_dict:
-        style_str = [style_dict.pop("baseStr")]
+    if "baseStyle" in style_dict:
+        style_str = [style_dict.pop("baseStyle")]
     else:
         style_str = []
     style_str = style_str + [
@@ -206,7 +207,9 @@ class DiagramBase(XMLBase):
 
         """
         for attrib in style_str.split(";"):
-            if "=" in attrib:
+            if attrib == '':
+                pass
+            elif "=" in attrib:
                 a_name = attrib.split("=")[0]
                 a_value = attrib.split("=")[1]
                 if a_value.isdigit():
