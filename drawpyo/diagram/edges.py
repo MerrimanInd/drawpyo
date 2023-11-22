@@ -17,6 +17,7 @@ waypoints_db[None] = {}
 line_ends_db = data['line_ends']
 line_ends_db[None] = {'fillable': False}
 line_ends_db[""] = {'fillable': False}
+line_ends_db["none"] = {'fillable': False}
 
 
 ###########################################################
@@ -169,6 +170,10 @@ class BasicEdge(DiagramBase):
     def startArrow(self):
         return self.line_end_source
 
+    @startArrow.setter
+    def startArrow(self, val):
+        self._line_end_source = val
+
     @property
     def startFill(self):
         if line_ends_db[self.line_end_source]['fillable']:
@@ -180,6 +185,10 @@ class BasicEdge(DiagramBase):
     def endArrow(self):
         return self.line_end_target
 
+    @endArrow.setter
+    def endArrow(self, val):
+        self._line_end_target = val
+        
     @property
     def endFill(self):
         if line_ends_db[self.line_end_target]['fillable']:

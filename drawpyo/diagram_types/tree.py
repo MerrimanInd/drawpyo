@@ -117,7 +117,7 @@ class TreeDiagram:
         self.item_spacing = kwargs.get("item_spacing", 15)
         self.group_spacing = kwargs.get("group_spacing", 30)
         self.direction = kwargs.get("direction", "down")
-        self.link_style = kwargs.get("link_style", "ortho")
+        self.link_style = kwargs.get("link_style", "orthogonal")
         self.padding = kwargs.get("padding", 10)
 
         # Set up the File and Page objects
@@ -238,7 +238,7 @@ class TreeDiagram:
 
     @link_style.setter
     def link_style(self, d):
-        link_styles = ["ortho", "straight", "curved"]
+        link_styles = ["orthogonal", "straight", "curved"]
         if d in link_styles:
             self._link_style = d
         else:

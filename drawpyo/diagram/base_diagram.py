@@ -86,6 +86,7 @@ def style_str_from_dict(style_dict):
 class DiagramBase(XMLBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._style_attributes = ["html"]
         self.page = kwargs.get("page", None)
         self.parent = kwargs.get("parent", None)
 
@@ -148,15 +149,17 @@ class DiagramBase(XMLBase):
     ###########################################################
     # Style properties
     ###########################################################
+    def add_style_attribute(self, style_attr):
+        self._style_attributes.append(style_attr)
+
     @property
     def style_attributes(self):
-        """
-        This is a placeholder that should be replaced by the defined style
-        attributes of the subclass.
+        return self._style_attributes
 
-        """
-        return ["html"]
-
+    @style_attributes.setter
+    def style_attributes(self, value):
+        self._style_attributes = value
+        
     @property
     def style(self):
         """

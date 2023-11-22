@@ -184,16 +184,6 @@ class BasicObject(DiagramBase):
     ###########################################################
     # Style properties
     ###########################################################
-    def add_style_attribute(self, style_attr):
-        self._style_attributes.append(style_attr)
-
-    @property
-    def style_attributes(self):
-        return self._style_attributes
-
-    @style_attributes.setter
-    def style_attributes(self, value):
-        self._style_attributes = value
 
     # The direction of the text is encoded as 'horizontal' in Draw.io. This is
     # unintuitive so I provided a text_direction alternate syntax.
