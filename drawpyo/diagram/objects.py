@@ -20,11 +20,11 @@ text_directions_inv = {v: k for k, v in text_directions.items()}
 
 container = {None: None, "vertical_container": None}
 
+
 def import_shape_library(library_path, name):
-    data = import_shape_database(
-        filename=library_path
-    )
+    data = import_shape_database(filename=library_path)
     base_libraries[name] = data
+
 
 def object_from_library(library, obj_name, **kwargs):
     new_obj = BasicObject(**kwargs)
@@ -41,6 +41,19 @@ class BasicObject(DiagramBase):
     ###########################################################
     # Initialization Functions
     ###########################################################
+
+    def __repr__(self):
+        if self.value != "":
+            name_str = "{0} object with value {1}".format(
+                self.__class__.__name__, self.value
+            )
+        else:
+            name_str = "{0} object".format(self.__class__.__name__)
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._style_attributes = [
@@ -66,9 +79,6 @@ class BasicObject(DiagramBase):
             "dashed",
         ]
 
-        # TODO: Delete once rework is complete
-        # self.base_style = kwargs.get("base_style", None)
-
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
@@ -82,9 +92,6 @@ class BasicObject(DiagramBase):
         self.value = kwargs.get("value", "")
 
         # Style
-
-        # self.default_style = "rounded=0;whiteSpace=wrap;html=1;"
-        # self.style = kwargs.get("style", self.default_style)
         self.baseStyle = kwargs.get("baseStyle", None)
 
         self.html = kwargs.get("html", 1)
@@ -122,6 +129,10 @@ class BasicObject(DiagramBase):
 
         self.xml_class = "mxCell"
 
+        if "template_object" in kwargs:
+            self.template_object = kwargs.get("template_object")
+            self.apply_style_from_template(self.template_object)
+
     @classmethod
     def create_from_style_string(cls, style_string):
         cls.apply_style_from_string(style_string)
@@ -142,7 +153,9 @@ class BasicObject(DiagramBase):
                     self.apply_attribute_dict(obj_dict)
                 else:
                     raise ValueError(
-                        "Object {0} not in Library {1}".format(obj_name, library)
+                        "Object {0} not in Library {1}".format(
+                            obj_name, library
+                        )
                     )
             else:
                 raise ValueError(
@@ -153,7 +166,6 @@ class BasicObject(DiagramBase):
             self.apply_attribute_dict(obj_dict)
         else:
             raise ValueError("Unparseable libary passed in.")
-
 
     @property
     def attributes(self):
@@ -247,10 +259,10 @@ class BasicObject(DiagramBase):
         elif bld and ita and unl:
             return 7
 
-    @property
-    def dashed(self):
-        return line_styles[self._linePattern]
-
+    # I enumerated two properties together into linePattern, dashed and
+    # dashPattern. But I also needed a way to set these two style_attributes
+    # externally and bypass the enumeration. The setter for each disables the
+    # other.
     @property
     def linePattern(self):
         return self._linePattern
@@ -263,6 +275,30 @@ class BasicObject(DiagramBase):
             raise ValueError(
                 "{0} is not an allowed value of linePattern".format(value)
             )
+
+    @property
+    def dashed(self):
+        if self._linePattern is None:
+            return self._dashed
+        else:
+            return line_styles[self._linePattern]
+
+    @dashed.setter
+    def dashed(self, value):
+        self._linePattern = None
+        self._dashed = value
+
+    @property
+    def dashPattern(self):
+        if self._linePattern is None:
+            return self._dashed
+        else:
+            return line_styles[self._linePattern]
+
+    @dashPattern.setter
+    def dashPattern(self, value):
+        self._linePattern = None
+        self._dashPattern = value
 
     ###########################################################
     # Geometry properties

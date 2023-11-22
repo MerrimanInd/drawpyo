@@ -3,7 +3,8 @@ from drawpyo.diagram_types import TreeDiagram, LeafObject
 tree = TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
                    file_name = "Coffee Grinders.drawio",
                    direction = "down",
-                   link_style = "orthogonal")
+                   link_style = "orthogonal"
+                   )
 
 # Top object
 grinders = LeafObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")

@@ -1,30 +1,46 @@
-from .base_diagram import DiagramBase, import_shape_database, style_str_from_dict
+from .base_diagram import (
+    DiagramBase,
+    import_shape_database,
+    style_str_from_dict,
+)
 
 
-__all__ = ['BasicEdge']
+__all__ = ["BasicEdge"]
 
-data = import_shape_database(file_name='formatting_database\\edge_styles.toml', relative=True)
+data = import_shape_database(
+    file_name="formatting_database\\edge_styles.toml", relative=True
+)
 
-connection_db = data['connection']
+connection_db = data["connection"]
 connection_db[None] = {"shape": ""}
 
-pattern_db = data['pattern']
+pattern_db = data["pattern"]
 pattern_db[None] = {}
 
-waypoints_db = data['waypoints']
+waypoints_db = data["waypoints"]
 waypoints_db[None] = {}
 
-line_ends_db = data['line_ends']
-line_ends_db[None] = {'fillable': False}
-line_ends_db[""] = {'fillable': False}
-line_ends_db["none"] = {'fillable': False}
+line_ends_db = data["line_ends"]
+line_ends_db[None] = {"fillable": False}
+line_ends_db[""] = {"fillable": False}
+line_ends_db["none"] = {"fillable": False}
 
 
 ###########################################################
 # Edges
 ###########################################################
 
+
 class BasicEdge(DiagramBase):
+    def __repr__(self):
+        name_str = "{0} edge from {1} to {2}".format(
+            self.__class__.__name__, self.source, self.target
+        )
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.xml_class = "mxCell"
@@ -58,13 +74,6 @@ class BasicEdge(DiagramBase):
         self.exitDx = kwargs.get("exitDx", None)
         self.exitDy = kwargs.get("exitDy", None)
 
-    def __repr__(self):
-        name_str = "{0} edge from {1} to {2}".format(self.__class__.__name__, self.source, self.target)
-        return name_str
-
-    def __str_(self):
-        return self.__repr__()
-
     @property
     def attributes(self):
         return {
@@ -73,8 +82,8 @@ class BasicEdge(DiagramBase):
             "edge": self.edge,
             "parent": self.parent_id,
             "source": self.source_id,
-            "target": self.target_id}
-
+            "target": self.target_id,
+        }
 
     ###########################################################
     # Source and Target Linking
@@ -130,21 +139,23 @@ class BasicEdge(DiagramBase):
 
     @property
     def style_attributes(self):
-        return ["html",
-                "rounded",
-                "jettySize",
-                "entryX",
-                "entryY",
-                "entryDx",
-                "entryDy",
-                "exitX",
-                "exitY",
-                "exitDx",
-                "exitDy",
-                "startArrow",
-                "endArrow",
-                "startFill",
-                "endFill"]
+        return [
+            "html",
+            "rounded",
+            "jettySize",
+            "entryX",
+            "entryY",
+            "entryDx",
+            "entryDy",
+            "exitX",
+            "exitY",
+            "exitDx",
+            "exitDy",
+            "startArrow",
+            "endArrow",
+            "startFill",
+            "endFill",
+        ]
 
     @property
     def baseStyle(self):
@@ -176,7 +187,7 @@ class BasicEdge(DiagramBase):
 
     @property
     def startFill(self):
-        if line_ends_db[self.line_end_source]['fillable']:
+        if line_ends_db[self.line_end_source]["fillable"]:
             return self.endFill_source
         else:
             return None
@@ -188,10 +199,10 @@ class BasicEdge(DiagramBase):
     @endArrow.setter
     def endArrow(self, val):
         self._line_end_target = val
-        
+
     @property
     def endFill(self):
-        if line_ends_db[self.line_end_target]['fillable']:
+        if line_ends_db[self.line_end_target]["fillable"]:
             return self.endFill_target
         else:
             return None
@@ -220,7 +231,9 @@ class BasicEdge(DiagramBase):
         if value in connection_db.keys():
             self._connection = value
         else:
-            raise ValueError("{0} is not an allowed value of connection".format(value))
+            raise ValueError(
+                "{0} is not an allowed value of connection".format(value)
+            )
 
     # Pattern
     @property
@@ -249,6 +262,7 @@ class BasicEdge(DiagramBase):
         )
         return tag
 
+
 class EdgeGeometry(DiagramBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -266,8 +280,9 @@ class EdgeGeometry(DiagramBase):
             "x": self.x,
             "y": self.y,
             "relative": self.relative,
-            "as": self.as_attribute
+            "as": self.as_attribute,
         }
+
 
 class EdgeLabel(DiagramBase):
     def __init__(self, **kwargs):
@@ -297,8 +312,4 @@ class Point(DiagramBase):
 
     @property
     def attributes(self):
-        return {
-            "x": self.x,
-            "y": self.y
-        }
-
+        return {"x": self.x, "y": self.y}
