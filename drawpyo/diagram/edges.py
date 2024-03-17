@@ -1,3 +1,5 @@
+from os import path
+
 from .base_diagram import (
     DiagramBase,
     import_shape_database,
@@ -8,7 +10,7 @@ from .base_diagram import (
 __all__ = ["BasicEdge"]
 
 data = import_shape_database(
-    file_name="formatting_database\\edge_styles.toml", relative=True
+    file_name=path.join("formatting_database","edge_styles.toml"), relative=True
 )
 
 connection_db = data["connection"]

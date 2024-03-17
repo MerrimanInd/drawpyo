@@ -1,7 +1,8 @@
 import drawpyo
+from os import path
 
 file = drawpyo.File()
-file.file_path = r"C:\drawpyo\Test Draw.io Charts"
+file.file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts")
 file.file_name = "Test Generated Objects.drawio"
 page = drawpyo.Page(file=file)
 

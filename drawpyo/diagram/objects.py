@@ -1,3 +1,5 @@
+from os import path
+
 from .base_diagram import (
     DiagramBase,
     import_shape_database,
@@ -7,10 +9,10 @@ from .base_diagram import (
 __all__ = ["BasicObject", "Group", "object_from_library"]
 
 general = import_shape_database(
-    file_name="shape_libraries\\general.toml", relative=True
+    file_name=path.join("shape_libraries","general.toml"), relative=True
 )
 line_styles = import_shape_database(
-    file_name="formatting_database\\line_styles.toml", relative=True
+    file_name=path.join("formatting_database","line_styles.toml"), relative=True
 )
 
 base_libraries = {"general": general}
