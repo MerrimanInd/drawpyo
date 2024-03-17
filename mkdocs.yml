@@ -17,7 +17,8 @@ nav:
   - About: about.md
   - Basic Diagrams:
     - Usage: usage/basic_usage.md
-    - Styling: usage/styling.md
+    - Objects: usage/objects.md
+    - Edges: usage/edges.md
     - Shape Libraries: usage/shape_libs.md
   - Custom Diagram Types:
     - Tree Diagrams: diagram_types/tree_diagrams.md

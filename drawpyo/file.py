@@ -1,9 +1,6 @@
 from .xml_base import XMLBase
 from datetime import datetime
-from os import path, makedirs, getcwd, sys
-
-base_paths = {'win32': r"C:/",
-              'linux': '/~/Drawpyo Charts'}
+from os import path, makedirs
 
 class File(XMLBase):
     def __init__(self, **kwargs):
@@ -12,7 +9,7 @@ class File(XMLBase):
             "file_name", "Draw.pyo Generated page.drawio"
         )
         self.file_path = kwargs.get(
-            "file_path", base_paths[sys.platform]
+            "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
         )
         self.pages = kwargs.get("pages", [])
 

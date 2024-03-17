@@ -117,7 +117,7 @@ class BasicObject(DiagramBase):
         self.labelBorderColor = kwargs.get("labelBorderColor", None)
 
         # These need to be enumerated
-        self.text_direction = kwargs.get("font_direction", None)
+        self.text_direction = kwargs.get("text_direction", None)
         # This is actually horizontal. 0 means vertical text, 1 or not present
         # means horizontal
 
