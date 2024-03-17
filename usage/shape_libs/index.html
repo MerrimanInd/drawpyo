@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Xander Cesari" /><link rel="canonical" href="https://merrimanind.github.io/drawpyo/usage/shape_libs/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Shape Libraries - Drawpyo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Shape Libraries";
+        var mkdocs_page_input_path = "usage/shape_libs.md";
+        var mkdocs_page_url = "/drawpyo/usage/shape_libs/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Drawpyo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../about/">About</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Basic Diagrams</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../basic_usage/">Usage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../objects/">Objects</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../edges/">Edges</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Shape Libraries</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#built-in-shape-libaries">Built-In Shape Libaries</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-shape-libaries">Custom Shape Libaries</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-a-shape-library">Creating a Shape Library</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#style-attribute-types">Style Attribute Types</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#drawpyo-attributes-snake_case">Drawpyo attributes (snake_case)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#predefined-style-attributes">Predefined style attributes</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#any-new-style-attributes">Any new style attributes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#using-a-custom-library">Using a Custom Library</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Custom Diagram Types</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagram_types/tree_diagrams/">Tree Diagrams</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Drawpyo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Basic Diagrams</li>
+      <li class="breadcrumb-item active">Shape Libraries</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/MerrimanInd/drawpyo/edit/master/docs/usage/shape_libs.md">Edit on MerrimanInd/drawpyo</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="shape-libraries">Shape Libraries</h1>
+<p>The Draw.io app has a lot of built-in shape libraries available. The basic library contains shapes and building blocks but there are increasingly more specific libraries such as flowcharts, wiring diagrams, and org charts. You can also export and import shape libraries into Draw.io.</p>
+<p>To replicate this feature for drawpyo, I created a library format based on TOML. Draw.io's libraries are XML which isn't as human readable or writable and is more specification than necessary.</p>
+<blockquote>
+<p>Supporting Draw.io's XML based library is a planned feature.</p>
+</blockquote>
+<h2 id="built-in-shape-libaries">Built-In Shape Libaries</h2>
+<p>Drawpyo uses these TOML shape libraries to store the default libaries. Currently the only library that ships with drawpyo is the general library but more will come. The default libraries are in /drawpyo/shape_libraries.</p>
+<p>There is also a set of TOML databases for other formats, like all of the various combinations of edge styles and the line styles. These are stored in /drawpyo/formatting_database.</p>
+<h2 id="custom-shape-libaries">Custom Shape Libaries</h2>
+<p>This functionality is available to the user so you can define your own custom libraries! TOML was selected because it's a very simple and human-readable config file format. <a href="https://toml.io/">the TOML project website</a> has a very nice high level overview. But drawpyo is hardly scratching the surface of what TOML is capable of so little expertise is needed.</p>
+<h3 id="creating-a-shape-library">Creating a Shape Library</h3>
+<p>To define a shape library create a .toml file. Current convention is to start with a title tag for clarity.</p>
+<pre><code class="language-toml">title = &quot;Custom drawpyo shapes&quot;
+</code></pre>
+<p>You can then define a custom object by naming the object in square brackets and adding whichever attributes you want:</p>
+<pre><code class="language-toml">[square]
+size = [80, 80]
+aspect = &quot;fixed&quot;
+</code></pre>
+<p>You can also have any shape inherit another and then either modify or extend its style:</p>
+<pre><code class="language-toml">[perfect_circle]
+inherit = &quot;square&quot;
+baseStyle = &quot;ellipse&quot;
+</code></pre>
+<p>This <code>perfect_circle</code> will now inherit the fixed aspect and size attributes from <code>square</code> but with the ellipse baseStyle.</p>
+<h3 id="style-attribute-types">Style Attribute Types</h3>
+<p>The attributes in the TOML file can come from three sets:</p>
+<h4 id="drawpyo-attributes-snake_case">Drawpyo attributes (snake_case)</h4>
+<p>These are the attributes that drawpyo uses to abstract some complicated style strings, such as <code>size</code> instead of the Draw.io parameters of <code>width</code> and <code>height</code>.</p>
+<h4 id="predefined-style-attributes">Predefined style attributes</h4>
+<p>Such as any of the attributes listed in the Styling section of <a href="/usage/objects.md">Objects</a>. These will simply be overwritten with the values in the TOML file.</p>
+<h4 id="any-new-style-attributes">Any new style attributes</h4>
+<p>If you want to add a rare style attribute that drawpyo hasn't defined or worked with yet, no worries! When you import the TOML library if there are new style attributes defined then they'll get added to the BasicObject and exported into the Draw.io file.</p>
+<h3 id="using-a-custom-library">Using a Custom Library</h3>
+<p>To use a custom shape library it just needs to be imported then passed to the object definition function:</p>
+<pre><code class="language-python">custom_library = drawpyo.diagram.import_shape_database(
+    file_name=r&quot;path/to/toml_lib&quot;
+    )
+
+new_obj = drawpyo.diagram.object_from_library(
+    library = custom_library,
+    obj_name = 'object_name_from_lib',
+    page=page,
+    )
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../edges/" class="btn btn-neutral float-left" title="Edges"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../diagram_types/tree_diagrams/" class="btn btn-neutral float-right" title="Tree Diagrams">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../edges/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../diagram_types/tree_diagrams/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
