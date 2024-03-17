@@ -1,0 +1,9 @@
+site_name: Drawpyo
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - Home: index.md
+  - About: about.md
