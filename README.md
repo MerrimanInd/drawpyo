@@ -8,6 +8,12 @@ I love Draw.io! Compared to expensive and heavy commercial options like Visio an
 
 When I had a need to generate heirarchical tree diagrams of requirement structures I was surprised to find there wasn't even a single existing Python library for working with these files. I took the project home and spent a weekend building the initial functionality. I've been adding functionality, robustness, and documentation intermittently since.
 
+# Full Documentation
+
+Available here!
+
+https://merrimanind.github.io/drawpyo/
+
 # Basic Usage
 
 The basic mode of interacting with drawpyo is to manually create, style, and place objects just like you would using the Draw.io UI. There are a number of ways to style objects and you can write your own functionality for automatically handling style or placement.
@@ -74,7 +80,7 @@ Create a new tree diagram:
 from drawpyo.diagram_types import TreeDiagram, LeafObject
 
 tree = TreeDiagram(
-	file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
+    file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
     file_name = "Coffee Grinders.drawio",
     direction = "down",
     link_style = "orthogonal",

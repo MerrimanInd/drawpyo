@@ -1,5 +1,15 @@
-# History/Justification
+# Basic Diagrams
 
-I love Draw.io! Compared to expensive and heavy commercial options like Visio and Miro, Draw.io's free and lightweight app allows wider and more universal distribution of diagrams. Because the files are stored in plaintext they can be versioned alongside code in a repository as documentation. The XML-based file format makes these diagrams semi-portable, and could easily be ported to other applications if Draw.io ever failed you. For these reason, I think it's one of the best options for documentation diagrams.
+Drawpyo's basic functionality provides the same features as using the Draw.io app. You can create files with one or more pages, add objects to them, and position those objects. You can style objects from built-in shape libraries, manually, or from style strings. Those objects can be shapes, containers, or edges to connect them. Finally you can save your diagrams where they can be opened with the Draw.io app.
 
-When I had a need to generate heirarchical tree diagrams of requirement structures I was surprised to find there wasn't even a single existing Python library for working with these files. I took the project home and spent a weekend building the initial functionality. I've been adding functionality, robustness, and documentation intermittently since.
+See the full documentation for these functions in [Basic Diagrams - Usage](../usage/basic_usage.md).
+
+# Extended Functionality
+
+Drawpyo extends the basic functionality of the Draw.io app with custom diagram types. These custom diagrams have automated styling and layouting to make common or complex diagrams easier to generate.
+
+## TreeDiagram
+
+This diagram makes creating directed tree graphs easy. Define trees, nodes, and the apply an auto layout.
+
+[Documentation](../diagram_types/tree_diagrams)
