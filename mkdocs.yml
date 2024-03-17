@@ -1,0 +1,34 @@
+site_name: Drawpyo
+site_url: https://merrimanind.github.io/drawpyo/
+site_author: Xander Cesari
+
+# Repository
+repo_name: MerrimanInd/drawpyo
+repo_url: https://github.com/MerrimanInd/drawpyo
+
+theme: readthedocs
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Basic Diagrams:
+    - Usage: usage/basic_usage.md
+    - Objects: usage/objects.md
+    - Edges: usage/edges.md
+    - Shape Libraries: usage/shape_libs.md
+  - Custom Diagram Types:
+    - Tree Diagrams: diagram_types/tree_diagrams.md
+  # - API:
+  #   - Basic:
+  #     - File: api/file.md
+  #     - Page: api/page.md
+  #     - Edges: api/edges.md
+  #     - Objects: api/objects.md
+  #   - Custom Diagram Types:
+  #     - Tree Diagram:
+  #       - TreeDiagram: api/treediagram.md
+  #       - LeafObject: api/leafobject.md
