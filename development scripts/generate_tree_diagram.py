@@ -1,9 +1,11 @@
 from drawpyo.diagram_types import TreeDiagram, LeafObject
+from os import path
 
-tree = TreeDiagram(file_path = r"C:\drawpyo\Test Draw.io Charts",
+tree = TreeDiagram(file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
                    file_name = "Coffee Grinders.drawio",
                    direction = "down",
-                   link_style = "orthogonal")
+                   link_style = "orthogonal"
+                   )
 
 # Top object
 grinders = LeafObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")

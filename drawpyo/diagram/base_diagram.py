@@ -86,6 +86,7 @@ def style_str_from_dict(style_dict):
 class DiagramBase(XMLBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._style_attributes = ["html"]
         self.page = kwargs.get("page", None)
         self.parent = kwargs.get("parent", None)
 
@@ -148,14 +149,17 @@ class DiagramBase(XMLBase):
     ###########################################################
     # Style properties
     ###########################################################
+    def add_style_attribute(self, style_attr):
+        if style_attr not in self._style_attributes:
+            self._style_attributes.append(style_attr)
+
     @property
     def style_attributes(self):
-        """
-        This is a placeholder that should be replaced by the defined style
-        attributes of the subclass.
+        return self._style_attributes
 
-        """
-        return ["html"]
+    @style_attributes.setter
+    def style_attributes(self, value):
+        self._style_attributes = value
 
     @property
     def style(self):
@@ -190,6 +194,14 @@ class DiagramBase(XMLBase):
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
 
+    def add_and_set_style_attrib(self, attrib, value):
+
+        if hasattr(self, attrib):
+            setattr(self, attrib, value)
+        else:
+            setattr(self, attrib, value)
+            self.add_style_attribute(attrib)
+
     def apply_style_string(self, style_str):
         """
         This function will apply a passed in style string to the object. It
@@ -220,9 +232,15 @@ class DiagramBase(XMLBase):
                 elif a_value == "True" or a_value == "False":
                     a_value = bool(a_value)
 
-                setattr(self, a_name, a_value)
+                self.add_and_set_style_attrib(a_name, a_value)
             else:
                 self.baseStyle = attrib
+
+    def apply_style_from_template(self, template):
+        for attrib in template.style_attributes:
+            value = getattr(template, attrib)
+            self.add_and_set_style_attrib(attrib, value)
+
 
     def apply_attribute_dict(self, attr_dict):
         """
@@ -243,14 +261,7 @@ class DiagramBase(XMLBase):
 
         """
         for attr, val in attr_dict.items():
-            if hasattr(self, attr):
-                # if the style attribute exists, add it
-                setattr(self, attr, val)
-            else:
-                # If the style attribute doesn't exist, add it and add to the
-                # style dict
-                setattr(self, attr, val)
-                self.add_style_attribute(attr)
+            self.add_and_set_style_attrib(attr, val)
 
     @classmethod
     def from_style_string(cls, style_string):

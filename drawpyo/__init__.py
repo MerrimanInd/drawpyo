@@ -3,4 +3,4 @@ from .file import File
 from .page import Page
 
 from drawpyo import diagram
-# from drawpyo import diagram_types
+from drawpyo import diagram_types
