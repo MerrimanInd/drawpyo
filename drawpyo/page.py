@@ -1,6 +1,9 @@
 from .xml_base import XMLBase
 
 class Page:
+    """
+    This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
+    """
     def __init__(self, **kwargs):
         super().__init__()
         self.id = id(self)

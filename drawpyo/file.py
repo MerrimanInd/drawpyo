@@ -3,6 +3,9 @@ from datetime import datetime
 from os import path, makedirs
 
 class File(XMLBase):
+    """
+    The File class defines a Draw.io file, its properties, and the methods required for saving it.
+    """
     def __init__(self, **kwargs):
         super().__init__()
         self.file_name = kwargs.get(
@@ -31,9 +34,22 @@ class File(XMLBase):
         }
 
     def add_page(self, page):
+        """
+        Add a page to the file.
+
+        Args:
+            page (drawpyo.diagram.Page): A Page object
+        """
         self.pages.append(page)
 
+    # TODO make this take a page number, name as string, or object
     def remove_page(self, page):
+        """
+        Remove a page from the file.
+
+        Args:
+            page (drawpyo.diagram.Page): A Page object that's currently contained in the file
+        """
         self.pages.remove(page)
 
     ###########################################################
@@ -47,7 +63,7 @@ class File(XMLBase):
     @property
     def agent(self):
         # TODO return Python and Draw.pyo version
-        return "Python v3.10, Draw.pyo 0.1"
+        return "Python v3.10, Drawpyo 0.1"
 
     @property
     def etag(self):
@@ -60,6 +76,12 @@ class File(XMLBase):
 
     @property
     def xml(self):
+        """
+        This function goes through each page in the file, retrieves its XML, and appends it to a list, then wraps that list in the file's open and close tags.
+
+        Returns:
+            str: The XML data for the file and all the pages in it
+        """
         xml_string = self.xml_open_tag
         for diag in self.pages:
             xml_string = xml_string + "\n  " + diag.xml
@@ -70,6 +92,14 @@ class File(XMLBase):
     # File Handling
     ###########################################################
     def write(self, **kwargs):
+        """
+        This function write the file to disc at the path and name specified.
+        
+        Args:
+            file_path (str, opt): The path to save the file in
+            file_name (str, opt): The name of the file
+            overwrite (bool, opt): Whether to overwrite an existing file or not
+        """
 
         # Check if file_path or file_name were passed in, or are preexisting
         self.file_path = kwargs.get(

@@ -84,6 +84,9 @@ def style_str_from_dict(style_dict):
 
 
 class DiagramBase(XMLBase):
+    """
+    This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._style_attributes = ["html"]
@@ -155,6 +158,12 @@ class DiagramBase(XMLBase):
 
     @property
     def style_attributes(self):
+        """
+        The style attributes are the list of style tags that should be printed into the style XML attribute. This is a subset of the attributes defined on the object method.
+
+        Returns:
+            list: A list of the names of the style_attributes.
+        """
         return self._style_attributes
 
     @style_attributes.setter
@@ -164,20 +173,18 @@ class DiagramBase(XMLBase):
     @property
     def style(self):
         """
-        This function returns the style string of the object to be appending
-        into the style XML attribute.
+        This function returns the style string of the object to be appended into the style XML attribute.
 
         First it searches the object properties called out in
         self.style_attributes. If the property is initialized to something
         that isn't None or an empty string, it will add it. Otherwise it
         searches the base_style defined by the object template.
 
-        Returns
-        -------
-        style_str : str
-            The style string of the object.
+        Returns:
+            str: The style string of the object.
 
         """
+
         style_str = ""
         if (
             hasattr(self, "baseStyle")
@@ -194,8 +201,7 @@ class DiagramBase(XMLBase):
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
 
-    def add_and_set_style_attrib(self, attrib, value):
-
+    def _add_and_set_style_attrib(self, attrib, value):
         if hasattr(self, attrib):
             setattr(self, attrib, value)
         else:
@@ -204,19 +210,10 @@ class DiagramBase(XMLBase):
 
     def apply_style_string(self, style_str):
         """
-        This function will apply a passed in style string to the object. It
-        will iterate through the attributes in the style string and assign
-        the corresponding property the value.
+        This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.
 
-        Parameters
-        ----------
-        style_str : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        None.
-
+        Args:
+            style_str (str): A Draw.io style string
         """
         for attrib in style_str.split(";"):
             if attrib == '':
@@ -232,14 +229,14 @@ class DiagramBase(XMLBase):
                 elif a_value == "True" or a_value == "False":
                     a_value = bool(a_value)
 
-                self.add_and_set_style_attrib(a_name, a_value)
+                self._add_and_set_style_attrib(a_name, a_value)
             else:
                 self.baseStyle = attrib
 
-    def apply_style_from_template(self, template):
+    def _apply_style_from_template(self, template):
         for attrib in template.style_attributes:
             value = getattr(template, attrib)
-            self.add_and_set_style_attrib(attrib, value)
+            self._add_and_set_style_attrib(attrib, value)
 
 
     def apply_attribute_dict(self, attr_dict):
@@ -261,7 +258,8 @@ class DiagramBase(XMLBase):
 
         """
         for attr, val in attr_dict.items():
-            self.add_and_set_style_attrib(attr, val)
+            self._add_and_set_style_attrib(attr, val)
+
 
     @classmethod
     def from_style_string(cls, style_string):
@@ -271,16 +269,11 @@ class DiagramBase(XMLBase):
         out of an object in their UI. This string can then be copied into the
         Python environment and further objects created that match the style.
 
-        Parameters
-        ----------
-        style_string : TYPE
-            DESCRIPTION.
+        Args:
+            style_string (str): A Draw.io style string
 
-        Returns
-        -------
-        new_obj : TYPE
-            DESCRIPTION.
-
+        Returns:
+            BaseDiagram: A BaseDiagram or subclass instantiated with the style from the Draw.io string
         """
         new_obj = cls()
         new_obj.apply_style_string(style_string)

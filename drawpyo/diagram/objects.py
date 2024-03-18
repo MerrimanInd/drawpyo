@@ -38,8 +38,24 @@ def object_from_library(library, obj_name, **kwargs):
 # Objects
 ###########################################################
 
-
 class BasicObject(DiagramBase):
+    """
+    The BasicObject class is the base object.
+
+    Args:
+        DiagramBase (_type_): _description_
+
+    Raises:
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+        ValueError: _description_
+
+    Returns:
+        _type_: _description_
+    """
     ###########################################################
     # Initialization Functions
     ###########################################################
@@ -133,7 +149,7 @@ class BasicObject(DiagramBase):
 
         if "template_object" in kwargs:
             self.template_object = kwargs.get("template_object")
-            self.apply_style_from_template(self.template_object)
+            self._apply_style_from_template(self.template_object)
 
     @classmethod
     def create_from_style_string(cls, style_string):

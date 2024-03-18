@@ -22,13 +22,14 @@ nav:
     - Shape Libraries: usage/shape_libs.md
   - Custom Diagram Types:
     - Tree Diagrams: diagram_types/tree_diagrams.md
-  # - API:
-  #   - Basic:
-  #     - File: api/file.md
-  #     - Page: api/page.md
-  #     - Edges: api/edges.md
-  #     - Objects: api/objects.md
-  #   - Custom Diagram Types:
-  #     - Tree Diagram:
-  #       - TreeDiagram: api/treediagram.md
-  #       - LeafObject: api/leafobject.md
+  - API:
+    - Architecture: api/architecture.md
+    - Basic Diagrams:
+      - File: api/file.md
+      - Page: api/page.md
+      - Edges: api/edges.md
+      - Objects: api/objects.md
+    - Custom Diagram Types:
+      - Tree Diagram:
+        - TreeDiagram: api/tree_diagram/treediagram.md
+        - LeafObject: api/tree_diagram/leafobject.md
