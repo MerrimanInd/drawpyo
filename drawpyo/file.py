@@ -3,21 +3,32 @@ from datetime import datetime
 from os import path, makedirs
 
 class File(XMLBase):
+    """The File class defines a Draw.io file, its properties, and the methods required for saving it.
     """
-    The File class defines a Draw.io file, its properties, and the methods required for saving it.
-    """
-    def __init__(self, **kwargs):
+
+    def __init__(self, file_name="Drawpyo Diagram.drawio", file_path=path.join(path.expanduser('~'), "Drawpyo Charts")):
+        """To initiate a File object, pass in a name and path or leave it to the defaults.
+
+        Args:
+            file_name (str, optional): The name of the file.
+            file_path (str, optional): The location where the file will be saved.
+        """
+
+
         super().__init__()
-        self.file_name = kwargs.get(
-            "file_name", "Draw.pyo Generated page.drawio"
-        )
-        self.file_path = kwargs.get(
-            "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
-        )
-        self.pages = kwargs.get("pages", [])
+        # self.file_name = kwargs.get(
+        #     "file_name", "Draw.pyo Generated page.drawio"
+        # )
+        # self.file_path = kwargs.get(
+        #     "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
+        # )
+        # self.pages = kwargs.get("pages", [])
+
+        self.file_name = file_name
+        self.file_path = file_path
 
         # Attributes
-        self.host = "Draw.pyo"
+        self.host = "Drawpyo"
         self.type = "device"
         self.version = "21.6.5"
         self.xml_class = "mxfile"
@@ -34,8 +45,7 @@ class File(XMLBase):
         }
 
     def add_page(self, page):
-        """
-        Add a page to the file.
+        """Add a page to the file.
 
         Args:
             page (drawpyo.diagram.Page): A Page object
