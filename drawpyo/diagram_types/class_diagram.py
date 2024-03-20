@@ -1,4 +1,4 @@
-from .tree import LeafObject, TreeGroup, TreeDiagram
+from .tree import NodeObject, TreeGroup, TreeDiagram
 import inspect
 
 class ClassDiagram(TreeDiagram):
@@ -13,7 +13,7 @@ class ClassDiagram(TreeDiagram):
         include_private = kwargs.get("include_private", False)
         
         # Create top object
-        module = LeafObject(tree=tree, value=module.__name__)
+        module = NodeObject(tree=tree, value=module.__name__)
         
         objects_names = dir(module)
         for obj_name in objects_names:

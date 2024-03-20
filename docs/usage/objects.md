@@ -122,7 +122,7 @@ These attributes mostly apply to most shape/baseStyle combinations and can be se
 - glass
 - shadow
 - comic
-- linePattern
+- line_pattern
 
 ### Further Styling Attributes
 

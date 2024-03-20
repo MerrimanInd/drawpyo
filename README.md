@@ -77,7 +77,7 @@ The only diagram type that's released is the tree diagram. Varying level of conc
 Create a new tree diagram:
 
 ```python
-from drawpyo.diagram_types import TreeDiagram, LeafObject
+from drawpyo.diagram_types import TreeDiagram, NodeObject
 
 tree = TreeDiagram(
     file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
@@ -89,32 +89,32 @@ tree = TreeDiagram(
 
 The direction property sets which way the leaf nodes grow from the root: up, down, left, or right. The link_style can be orthogonal, straight, or curved.
 
-Create some LeafObjects:
+Create some NodeObjects:
 
 ```python
 # Top object
-grinders = LeafObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
+grinders = NodeObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
 
 # Main categories
-blade_grinders = LeafObject(tree=tree, value="Blade Grinders", trunk=grinders)
-burr_grinders = LeafObject(tree=tree, value="Burr Grinders", trunk=grinders)
-blunt_objects = LeafObject(tree=tree, value="Blunt Objects", trunk=grinders)
+blade_grinders = NodeObject(tree=tree, value="Blade Grinders", parent=grinders)
+burr_grinders = NodeObject(tree=tree, value="Burr Grinders", parent=grinders)
+blunt_objects = NodeObject(tree=tree, value="Blunt Objects", parent=grinders)
 ```
 
-Note that the base_style was manually declared for the first object. But LeafObjects will default to "rounded rectangle" so it's not necessary for every one. Any LeafObject can be a parent, so you can keep adding objects down the tree:
+Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a parent, so you can keep adding objects down the tree:
 
 ```python
 # Other
-elec_blade = LeafObject(tree=tree, value="Electric Blade Grinder", trunk=blade_grinders)
-mnp = LeafObject(tree=tree, value="Mortar and Pestle", trunk=blunt_objects)
+elec_blade = NodeObject(tree=tree, value="Electric Blade Grinder", parent=blade_grinders)
+mnp = NodeObject(tree=tree, value="Mortar and Pestle", parent=blunt_objects)
 
 # Conical Burrs
-conical = LeafObject(tree=tree, value="Conical Burrs", trunk=burr_grinders)
-elec_conical = LeafObject(tree=tree, value="Electric", trunk=conical)
-manual_conical = LeafObject(tree=tree, value="Manual", trunk=conical)
+conical = NodeObject(tree=tree, value="Conical Burrs", parent=burr_grinders)
+elec_conical = NodeObject(tree=tree, value="Electric", parent=conical)
+manual_conical = NodeObject(tree=tree, value="Manual", parent=conical)
 ```
 
-> **Important Note:** TreeDiagrams do not currently support LeafObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.
+> **Important Note:** TreeDiagrams do not currently support NodeObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.
 
 Finally, before writing the diagram you'll want to run the magic penultimate step: auto layout.
 

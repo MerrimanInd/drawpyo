@@ -1,4 +1,4 @@
-from drawpyo.diagram_types import TreeDiagram, LeafObject
+from drawpyo.diagram_types import TreeDiagram, NodeObject
 from os import path
 
 tree = TreeDiagram(file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
@@ -8,37 +8,37 @@ tree = TreeDiagram(file_path = path.join(path.expanduser('~'), "Test Drawpyo Cha
                    )
 
 # Top object
-grinders = LeafObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
+grinders = NodeObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
 
 # Main categories
-blade_grinders = LeafObject(tree=tree, value="Blade Grinders", trunk=grinders)
-burr_grinders = LeafObject(tree=tree, value="Burr Grinders", trunk=grinders)
-blunt_objects = LeafObject(tree=tree, value="Blunt Objects", trunk=grinders)
+blade_grinders = NodeObject(tree=tree, value="Blade Grinders", parent=grinders)
+burr_grinders = NodeObject(tree=tree, value="Burr Grinders", parent=grinders)
+blunt_objects = NodeObject(tree=tree, value="Blunt Objects", parent=grinders)
 
 # Other
-elec_blade = LeafObject(tree=tree, value="Electric Blade Grinder", trunk=blade_grinders)
-mnp = LeafObject(tree=tree, value="Mortar and Pestle", trunk=blunt_objects)
+elec_blade = NodeObject(tree=tree, value="Electric Blade Grinder", parent=blade_grinders)
+mnp = NodeObject(tree=tree, value="Mortar and Pestle", parent=blunt_objects)
 
 # Conical Burrs
-conical = LeafObject(tree=tree, value="Conical Burrs", trunk=burr_grinders)
-elec_conical = LeafObject(tree=tree, value="Electric", trunk=conical)
-manual_conical = LeafObject(tree=tree, value="Manual", trunk=conical)
+conical = NodeObject(tree=tree, value="Conical Burrs", parent=burr_grinders)
+elec_conical = NodeObject(tree=tree, value="Electric", parent=conical)
+manual_conical = NodeObject(tree=tree, value="Manual", parent=conical)
 
-HarioSkerton = LeafObject(tree=tree, value="Hario Skerton", trunk=manual_conical)
-Comandante = LeafObject(tree=tree, value="Comandante", trunk=manual_conical)
-JZpresso = LeafObject(tree=tree, value="ZJpresso JX-Pro", trunk=manual_conical)
-weberHG2 = LeafObject(tree=tree, value="Weber HG-2", trunk=manual_conical)
+HarioSkerton = NodeObject(tree=tree, value="Hario Skerton", parent=manual_conical)
+Comandante = NodeObject(tree=tree, value="Comandante", parent=manual_conical)
+JZpresso = NodeObject(tree=tree, value="ZJpresso JX-Pro", parent=manual_conical)
+weberHG2 = NodeObject(tree=tree, value="Weber HG-2", parent=manual_conical)
 
-BaratzaEnc = LeafObject(tree=tree, value="Baratza Encore", trunk=elec_conical)
-Niche = LeafObject(tree=tree, value="Niche Zero", trunk=elec_conical)
-WeberKey = LeafObject(tree=tree, value="Weber Key", trunk=elec_conical)
+BaratzaEnc = NodeObject(tree=tree, value="Baratza Encore", parent=elec_conical)
+Niche = NodeObject(tree=tree, value="Niche Zero", parent=elec_conical)
+WeberKey = NodeObject(tree=tree, value="Weber Key", parent=elec_conical)
 
 # Flat Burrs
-flat = LeafObject(tree=tree, value="Flat Burrs", trunk=burr_grinders)
+flat = NodeObject(tree=tree, value="Flat Burrs", parent=burr_grinders)
 
-DF64 = LeafObject(tree=tree, value="Turin DF64", trunk=flat)
-FellowOde = LeafObject(tree=tree, value="Fellow Ode", trunk=flat)
-LagomP64 = LeafObject(tree=tree, value="Lagom P64", trunk=flat)
+DF64 = NodeObject(tree=tree, value="Turin DF64", parent=flat)
+FellowOde = NodeObject(tree=tree, value="Fellow Ode", parent=flat)
+LagomP64 = NodeObject(tree=tree, value="Lagom P64", parent=flat)
 
-grp = tree.auto_layout()
+# grp = tree.auto_layout()
 tree.write()

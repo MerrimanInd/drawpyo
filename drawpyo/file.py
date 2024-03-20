@@ -24,10 +24,10 @@ class File(XMLBase):
         # self.file_path = kwargs.get(
         #     "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
         # )
-        # self.pages = kwargs.get("pages", [])
 
         self.file_name = file_name
         self.file_path = file_path
+        self.pages = []
 
         # Attributes
         self.host = "Drawpyo"
