@@ -54,8 +54,7 @@ class File(XMLBase):
 
     # TODO make this take a page number, name as string, or object
     def remove_page(self, page):
-        """
-        Remove a page from the file.
+        """Remove a page from the file.
 
         Args:
             page (drawpyo.diagram.Page): A Page object that's currently contained in the file
@@ -86,8 +85,7 @@ class File(XMLBase):
 
     @property
     def xml(self):
-        """
-        This function goes through each page in the file, retrieves its XML, and appends it to a list, then wraps that list in the file's open and close tags.
+        """This function goes through each page in the file, retrieves its XML, and appends it to a list, then wraps that list in the file's open and close tags.
 
         Returns:
             str: The XML data for the file and all the pages in it
@@ -102,8 +100,7 @@ class File(XMLBase):
     # File Handling
     ###########################################################
     def write(self, **kwargs):
-        """
-        This function write the file to disc at the path and name specified.
+        """This function write the file to disc at the path and name specified.
         
         Args:
             file_path (str, opt): The path to save the file in

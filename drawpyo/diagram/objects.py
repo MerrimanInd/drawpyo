@@ -29,6 +29,17 @@ def import_shape_library(library_path, name):
 
 
 def object_from_library(library, obj_name, **kwargs):
+    """This function generates a BasicObject from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+
+    Any keyword arguments that can be passed in to a BasicObject creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
+
+    Args:
+        library (str or dict): The library containing the object
+        obj_name (str): The name of the object in the library to generate
+
+    Returns:
+        BasicObject: An object with the style from the library
+    """
     new_obj = BasicObject(**kwargs)
     new_obj.format_as_library_object(library, obj_name)
     return new_obj
@@ -40,39 +51,49 @@ def object_from_library(library, obj_name, **kwargs):
 
 class BasicObject(DiagramBase):
     """
-    The BasicObject class is the base object.
-
-    Args:
-        DiagramBase (_type_): _description_
-
-    Raises:
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-        ValueError: _description_
-
-    Returns:
-        _type_: _description_
+    The BasicObject class is the base object for all shapes in Draw.io.
+    
+    More information about objects are in the Usage documents at [Usage - Objects](../../usage/objects).
     """
     ###########################################################
     # Initialization Functions
     ###########################################################
 
-    def __repr__(self):
-        if self.value != "":
-            name_str = "{0} object with value {1}".format(
-                self.__class__.__name__, self.value
-            )
-        else:
-            name_str = "{0} object".format(self.__class__.__name__)
-        return name_str
 
-    def __str_(self):
-        return self.__repr__()
+    def __init__(self, value="", size=(120, 80), position=(0, 0), **kwargs):
+        """A BasicObject can be initialized with as many or as few of its styling attributes as is desired.
 
-    def __init__(self, **kwargs):
+        Args:
+            value (str, optional): The text to fill the object with. Defaults to "".
+            size (tuple, optional): The size of the object in pixels, in (W, H). Defaults to (120, 80).
+            position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
+        
+        Keyword Args:
+            template_object (BasicObject, optional): Another object to copy the style_attributes from
+            aspect
+            rounded (int, optional): Whether to round the corners of the shape
+            whiteSpace (str, optional): white space
+            fillColor (str, optional): The object fill color in a hex color code (#ffffff)
+            opacity  (int, optional): The object's opacity, 0-100
+            strokeColor: The object stroke color in a hex color code (#ffffff)
+            glass (int, optional): Apply glass styling to  the object
+            shadow (int, optional): Add a shadow to the object
+            comic (int, optional): Add comic styling to the object
+            linePattern (str, optional): The stroke style of the object.
+            fontColor (int, optional): The color of the text in the object (#ffffff)
+            fontFamily (str, optional): The typeface of the text in the object (see Draw.io for available fonts)
+            fontSize (int, optional): The size of the text in the object in points
+            align (str, optional): The horizontal alignment of the text in the object ('left', 'center', or 'right')
+            verticalAlign (str, optional): The vertical alignment of the text in the object ('top', 'middle', 'bottom')
+            textOpacity (int, optional): The opacity of the text in the object
+            text_direction (str, optional): The direction to print the text ('vertical', 'horizontal')
+            bold_font (bool, optional): Whether the text in the object should be bold
+            italic_font (bool, optional): Whether the text in the object should be italic
+            underline_font (bool, optional): Whether the text in the object should be underlined
+            labelPosition (str, optional): The position of the object label ('left', 'center', or 'right')
+            labelBackgroundColor (str, optional): The background color of the object label (#ffffff)
+            labelBorderColor (str, optional): The border color of the object label (#ffffff)
+        """
         super().__init__(**kwargs)
         self._style_attributes = [
             "html",
@@ -107,7 +128,7 @@ class BasicObject(DiagramBase):
         self.aspect = kwargs.get("aspect", None)
 
         # Content
-        self.value = kwargs.get("value", "")
+        self.value = value
 
         # Style
         self.baseStyle = kwargs.get("baseStyle", None)
@@ -151,18 +172,55 @@ class BasicObject(DiagramBase):
             self.template_object = kwargs.get("template_object")
             self._apply_style_from_template(self.template_object)
 
+    def __repr__(self):
+        if self.value != "":
+            name_str = "{0} object with value {1}".format(
+                self.__class__.__name__, self.value
+            )
+        else:
+            name_str = "{0} object".format(self.__class__.__name__)
+        return name_str
+
+    def __str_(self):
+        return self.__repr__()
+    
     @classmethod
     def create_from_style_string(cls, style_string):
+        """BasicObjects can be instantiated from a style string. These strings are most easily found in the Draw.io app, by styling an object as desired then right-clicking and selecting "Edit Style". Copying that text into this function will generate an object styled the same.
+
+        Args:
+            style_string (str): A Draw.io generated style string.
+
+        Returns:
+            BasicObject: An object formatted with the style string
+        """
         cls.apply_style_from_string(style_string)
         return cls
 
     @classmethod
     def create_from_library(cls, library, obj_name):
+        """This function generates a BasicObject from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+
+        Any keyword arguments that can be passed in to a BasicObject creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
+
+        Args:
+            library (str or dict): The library containing the object
+            obj_name (str): The name of the object in the library to generate
+
+        Returns:
+            BasicObject: An object with the style from the library
+        """
         new_obj = cls()
         new_obj.format_as_library_object(library, obj_name)
         return new_obj
 
     def format_as_library_object(self, library, obj_name):
+        """This function applies the style from a library to an existing object. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+
+        Args:
+            library (str or dict): The library containing the object
+            obj_name (str): The name of the object in the library to generate
+        """
         if type(library) == str:
             if library in base_libraries:
                 library_dict = base_libraries[library]
@@ -245,6 +303,8 @@ class BasicObject(DiagramBase):
 
     @property
     def font_style(self):
+        '''The font_style is a numeric format that corresponds to a combination of three other attributes: bold_font, italic_font, and underline_font. Any combination of them can be true.
+        '''    
         # TODO there HAS to be a better way to do this
         # it's basically an enumerated truth table
         bld = self.bold_font
@@ -277,12 +337,16 @@ class BasicObject(DiagramBase):
         elif bld and ita and unl:
             return 7
 
-    # I enumerated two properties together into linePattern, dashed and
-    # dashPattern. But I also needed a way to set these two style_attributes
-    # externally and bypass the enumeration. The setter for each disables the
-    # other.
+    # TODO change linePattern to line_pattern to match convention
     @property
     def linePattern(self):
+        """Two properties are enumerated together into linePattern: dashed and dashPattern. linePattern simplifies this with an external database that contains the dropdown options from the Draw.io app then outputs the correct combination of dashed and dashPattern.
+        
+        However in some cases dashed and dashpattern need to be set individually, such as when formatting from a style string. In that case, the setters for those two attributes will disable the other.
+
+        Returns:
+            str: The line style
+        """
         return self._linePattern
 
     @linePattern.setter
@@ -296,6 +360,11 @@ class BasicObject(DiagramBase):
 
     @property
     def dashed(self):
+        """This is one of the properties that defines the line style. Along with dashPattern, it can be overriden by setting linePattern or set directly.
+
+        Returns:
+            str: Whether the object stroke is dashed.
+        """
         if self._linePattern is None:
             return self._dashed
         else:
@@ -308,6 +377,11 @@ class BasicObject(DiagramBase):
 
     @property
     def dashPattern(self):
+        """This is one of the properties that defines the line style. Along with dashed, it can be overriden by setting linePattern or set directly.
+
+        Returns:
+            str: What style the object stroke is dashed with.
+        """
         if self._linePattern is None:
             return self._dashed
         else:
@@ -325,6 +399,13 @@ class BasicObject(DiagramBase):
     # Position property
     @property
     def position(self):
+        """The position of the object on the page. This is the top left corner. It's set with a tuple of ints, X and Y respectively.
+        
+        (X, Y)
+
+        Returns:
+            tuple: A tuple of ints describing the top left corner position of the object
+        """
         return (self.geometry.x, self.geometry.y)
 
     @position.setter
@@ -334,6 +415,13 @@ class BasicObject(DiagramBase):
 
     @property
     def center_position(self):
+        """The position of the object on the page. This is the center of the object. It's set with a tuple of ints, X and Y respectively.
+        
+        (X, Y)
+
+        Returns:
+            tuple: A tuple of ints describing the center position of the object
+        """
         x = self.geometry.x + self.geometry.width / 2
         y = self.geometry.y + self.geometry.height / 2
         return (x, y)
@@ -346,6 +434,13 @@ class BasicObject(DiagramBase):
     # Size property
     @property
     def size(self):
+        """The size of the object. It's set with a tuple of ints, width and height respectively.
+        
+        (width, height)
+
+        Returns:
+            tuple: A tuple of ints describing the size of the object
+        """
         return (self.geometry.width, self.geometry.height)
 
     @size.setter
@@ -358,15 +453,35 @@ class BasicObject(DiagramBase):
     ###########################################################
 
     def add_out_edge(self, edge):
+        """Add an edge out of the object. If an edge is created with this object set as the source this function will be called automatically.
+
+        Args:
+            edge (BasicEdge): An Edge object originating at this object
+        """
         self.out_edges.append(edge)
 
     def remove_out_edge(self, edge):
+        """Remove an edge out of the object. If an edge linked to this object has the source changed or removed this function will be called automatically.
+
+        Args:
+            edge (BasicEdge): An Edge object originating at this object
+        """
         self.out_edges.remove(edge)
 
     def add_in_edge(self, edge):
+        """Add an edge into the object. If an edge is created with this object set as the target this function will be called automatically.
+
+        Args:
+            edge (BasicEdge): An Edge object ending at this object
+        """
         self.in_edges.append(edge)
 
     def remove_in_edge(self, edge):
+        """Remove an edge into the object. If an edge linked to this object has the target changed or removed this function will be called automatically.
+
+        Args:
+            edge (BasicEdge): An Edge object ending at this object
+        """
         self.in_edges.remove(edge)
 
     ###########################################################
@@ -375,6 +490,15 @@ class BasicObject(DiagramBase):
 
     @property
     def xml(self):
+        """
+        Returns the XML object for the BasicObject: the opening tag with the style attributes, the value, and the closing tag.
+        
+        Example:
+        <class_name attribute_name=attribute_value>Text in object</class_name>
+        
+        Returns:
+            str: A single XML tag containing the object name, style attributes, and a closer.
+        """
         tag = (
             self.xml_open_tag
             + "\n  "
@@ -409,19 +533,30 @@ class ObjGeometry(DiagramBase):
 
 
 class Group:
+    """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.
+    
+    Currently this object doesn't replicate any of the functionality of groups in the Draw.io app but it may be extended to have that capability in the future.
+    """
     def __init__(self, **kwargs):
         self.objects = kwargs.get("objects", [])
         self.geometry = ObjGeometry()
 
-    def add_object(self, obj):
-        if not isinstance(obj, list):
-            obj = [obj]
-        for o in obj:
+    def add_object(self, object):
+        """Adds one or more objects to the group and updates the geometry of the group.
+
+        Args:
+            object (BasicObject or list): Object or list of objects to be added to the group
+        """
+        if not isinstance(object, list):
+            object = [object]
+        for o in object:
             if o not in self.objects:
                 self.objects.append(o)
         self.update_geometry()
 
     def update_geometry(self):
+        """Update the geometry of the group. This includes the left and top coordinates and the width and height of the entire group.
+        """
         self.geometry.x = self.left
         self.geometry.y = self.top
         self.geometry.width = self.width
@@ -433,34 +568,69 @@ class Group:
 
     @property
     def left(self):
+        """The leftmost X-coordinate of the objects in the group
+
+        Returns:
+            int: Left edge of the group
+        """
         return min([obj.geometry.x for obj in self.objects])
 
     @property
     def right(self):
+        """The rightmost X-coordinate of the objects in the group
+
+        Returns:
+            int: Right edge of the group
+        """
         return max(
             [obj.geometry.x + obj.geometry.width for obj in self.objects]
         )
 
     @property
     def top(self):
+        """The topmost Y-coordinate of the objects in the group
+
+        Returns:
+            int: Top edge of the group
+        """
         return min([obj.geometry.y for obj in self.objects])
 
     @property
     def bottom(self):
+        """The bottommost Y-coordinate of the objects in the group
+
+        Returns:
+            int: The bottom edge of the group
+        """
         return max(
             [obj.geometry.y + obj.geometry.height for obj in self.objects]
         )
 
     @property
     def width(self):
+        """The width of all the objects in the group
+
+        Returns:
+            int: Width of the group
+        """
         return self.right - self.left
 
     @property
     def height(self):
+        """The height of all the objects in the group
+
+        Returns:
+            int: Height of the group
+        """
         return self.bottom - self.top
 
     @property
     def size(self):
+        """The size of the group. Returns a tuple of ints, with the width and height.
+
+        Returns:
+            tuple: A tuple of ints (width, height)
+        """
         return (self.width, self.height)
 
     ###########################################################
@@ -469,6 +639,11 @@ class Group:
 
     @property
     def center_position(self):
+        """The center position of the group. Returns a tuple of ints, with the X and Y coordinate. When this property is set, the coordinates of every object in the group are updated.
+        
+        Returns:
+            tuple: A tuple of ints (X, Y)
+        """
         return (self.left + self.width / 2, self.top + self.height / 2)
 
     @center_position.setter
@@ -485,6 +660,11 @@ class Group:
 
     @property
     def position(self):
+        """The top left position of the group. Returns a tuple of ints, with the X and Y coordinate. When this property is set, the coordinates of every object in the group are updated.
+
+        Returns:
+            tuple: A tuple of ints (X, Y)
+        """
         return (self.left, self.top)
 
     @position.setter

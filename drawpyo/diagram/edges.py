@@ -32,11 +32,11 @@ line_ends_db["none"] = {"fillable": False}
 # Edges
 ###########################################################
 
-
+# TODO add a delete method that removes the edge links
 class BasicEdge(DiagramBase):
     """The BasicEdge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.
     
-    The three primarily styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it's not how the style string is assembled in the XML. To abstract this, the BasicEdge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The BasicEdge class then assembles the style strings on export.
+    The three primary styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it's not how the style string is assembled in the XML. To abstract this, the BasicEdge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The BasicEdge class then assembles the style strings on export.
     
     More information about edges are in the Usage documents at [Usage - Edges](../../usage/edges).
     """
@@ -246,6 +246,11 @@ class BasicEdge(DiagramBase):
 
     @property
     def startArrow(self):
+        """What graphic the edge should be rendered with at the source
+
+        Returns:
+            str: The source edge graphic
+        """
         return self.line_end_source
 
     @startArrow.setter
@@ -254,6 +259,11 @@ class BasicEdge(DiagramBase):
 
     @property
     def startFill(self):
+        """Whether the graphic at the source should be filled
+
+        Returns:
+            bool: The source graphic fill
+        """
         if line_ends_db[self.line_end_source]["fillable"]:
             return self.endFill_source
         else:
@@ -261,6 +271,11 @@ class BasicEdge(DiagramBase):
 
     @property
     def endArrow(self):
+        """What graphic the edge should be rendered with at the target
+
+        Returns:
+            str: The target edge graphic
+        """
         return self.line_end_target
 
     @endArrow.setter
@@ -269,6 +284,11 @@ class BasicEdge(DiagramBase):
 
     @property
     def endFill(self):
+        """Whether the graphic at the target should be filled
+
+        Returns:
+            bool: The target graphic fill
+        """
         if line_ends_db[self.line_end_target]["fillable"]:
             return self.endFill_target
         else:
@@ -351,7 +371,11 @@ class BasicEdge(DiagramBase):
 
 
 class EdgeGeometry(DiagramBase):
+    """This class stores the geometry associated with an edge. This is rendered as a subobject in the Draw.io file so it's convenient for it to have its own class.
+    """
     def __init__(self, **kwargs):
+        """This class is automatically instantiated by a BasicEdge object so the user should never need to create it.
+        """
         super().__init__(**kwargs)
         self.xml_class = "mxGeometry"
         self.parent_object = kwargs.get("parent_object", None)
