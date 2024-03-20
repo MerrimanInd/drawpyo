@@ -32,7 +32,6 @@ line_ends_db["none"] = {"fillable": False}
 # Edges
 ###########################################################
 
-# TODO add a delete method that removes the edge links
 class BasicEdge(DiagramBase):
     """The BasicEdge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.
     
@@ -40,14 +39,6 @@ class BasicEdge(DiagramBase):
     
     More information about edges are in the Usage documents at [Usage - Edges](../../usage/edges).
     """
-    def __repr__(self):
-        name_str = "{0} edge from {1} to {2}".format(
-            self.__class__.__name__, self.source, self.target
-        )
-        return name_str
-
-    def __str_(self):
-        return self.__repr__()
 
     def __init__(self, **kwargs):
         """BasicEdges can be initialized with almost all styling parameters as args.
@@ -64,7 +55,7 @@ class BasicEdge(DiagramBase):
             endFill_target (boolean): Whether the target graphic should be filled
             endFill_source (boolean): Whether the source graphic should be filled
             jettySize (str or int): Length of the straight sections at the end of the edge. "auto" or a number
-            rounded (int): Whether the corner of the line should be rounded
+            rounded (bool): Whether the corner of the line should be rounded
             entryX (int): From where along the X axis on the source object the edge originates (0-1)
             entryY (int): From where along the Y axis on the source object the edge originates (0-1)
             entryDx (int): Applies an offset in pixels to the X axis entry point
@@ -106,6 +97,21 @@ class BasicEdge(DiagramBase):
         self.exitDx = kwargs.get("exitDx", None)
         self.exitDy = kwargs.get("exitDy", None)
 
+    def __repr__(self):
+        name_str = "{0} edge from {1} to {2}".format(
+            self.__class__.__name__, self.source, self.target
+        )
+        return name_str
+
+    def __str__(self):
+        return self.__repr__()
+    
+    def __del__(self):
+        if self.source is not None:
+            self.source.remove_out_edge(self)
+        if self.target is not None:
+            self.target.remove_in_edge(self)
+    
     @property
     def attributes(self):
         """Returns the XML attributes to be added to the tag for the object

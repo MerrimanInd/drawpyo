@@ -4,11 +4,11 @@ class Page:
     """
     This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
     """
-    def __init__(self, **kwargs):
+    def __init__(self, file=None, **kwargs):
         super().__init__()
         self.id = id(self)
 
-        self.file = kwargs.get("file", None)
+        self.file = file
         self.objects = kwargs.get("objects", [])
 
         # There are two empty top level objects in every Draw.io diagram
@@ -17,9 +17,12 @@ class Page:
 
         # Properties
 
-        # TODO increment pages based on total pages in File object
-        self.name = kwargs.get("name", "Page-1")
-        self.page_num = kwargs.get("page", 1)
+        if self.file is not None:
+            page_num = len(self.file.pages)+1
+        else:
+            page_num = 1
+        self.name = kwargs.get("name", f"Page-{page_num}")
+        self.page_num = kwargs.get("page", page_num)
 
         self.dx = kwargs.get("dx", 2037)
         self.dy = kwargs.get("dy", 830)

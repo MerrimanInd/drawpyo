@@ -197,8 +197,10 @@ class DiagramBase(XMLBase):
                 hasattr(self, attribute)
                 and getattr(self, attribute) is not None
             ):
-                # TODO handle reformatting multiple datatypes. Bools to 0,1 and color code.
                 attr_val = getattr(self, attribute)
+                # reformat different datatypes to strings
+                if isinstance(attr_val, bool):
+                    attr_val = format(attr_val*1)
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
 

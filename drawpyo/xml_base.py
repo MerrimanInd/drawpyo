@@ -1,4 +1,3 @@
-# TODO this could probably be replaced with Python's built-in escaping functions.
 xmlize = {}
 xmlize[">"] = "&gt;"
 xmlize["<"] = "&gt;"
@@ -92,11 +91,4 @@ class XMLBase:
         return open_tag[:-1] + " />"
     
     def xml_ify(self, parameter_string):
-        return self.translate_txt(parameter_string, xmlize)
-    
-    @staticmethod
-    def translate_txt(string, replacement_dict):
-        # TODO: ffs replace this with the Python built in translate function.
-        for key, value in replacement_dict.items():
-            string = string.replace(key, str(value))
-        return string
+        return parameter_string.translate(xmlize)

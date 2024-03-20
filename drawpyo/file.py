@@ -1,6 +1,8 @@
 from .xml_base import XMLBase
 from datetime import datetime
 from os import path, makedirs
+from sys import version_info
+from .page import Page
 
 class File(XMLBase):
     """The File class defines a Draw.io file, its properties, and the methods required for saving it.
@@ -52,14 +54,21 @@ class File(XMLBase):
         """
         self.pages.append(page)
 
-    # TODO make this take a page number, name as string, or object
     def remove_page(self, page):
         """Remove a page from the file.
 
         Args:
             page (drawpyo.diagram.Page): A Page object that's currently contained in the file
         """
-        self.pages.remove(page)
+        if isinstance(page, int):
+            del self.pages[page]
+        elif isinstance(page, str):
+            # TODO test this
+            for pg in self.pages:
+                if pg.name == page:
+                    del pg
+        elif isinstance(page, Page):
+            self.pages.remove(page)
 
     ###########################################################
     # File Properties
@@ -71,12 +80,13 @@ class File(XMLBase):
 
     @property
     def agent(self):
-        # TODO return Python and Draw.pyo version
-        return "Python v3.10, Drawpyo 0.1"
+        python_version = f"{version_info.major}.{version_info.minor}"
+        drawpyo_version = f"0.01"
+        return f"Python {python_version}, Drawpyo {drawpyo_version}"
 
     @property
     def etag(self):
-        # TODO determine if I need to calculate an etag
+        # etag is in the Draw.io spec but not sure how it's used or if I need to create it
         return None
 
     ###########################################################
@@ -130,9 +140,3 @@ class File(XMLBase):
         f = open(path.join(self.file_path, self.file_name), write_mode, encoding="utf-8")
         f.write(self.xml)
         f.close
-
-    def read(self, file):
-        # TODO read a Drawio file into the Python object structure
-        # This function is a long way away as most or all of Draw.io's
-        # functionality will need to be supported in the library to work.
-        pass

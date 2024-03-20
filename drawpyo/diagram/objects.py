@@ -71,15 +71,15 @@ class BasicObject(DiagramBase):
         Keyword Args:
             template_object (BasicObject, optional): Another object to copy the style_attributes from
             aspect
-            rounded (int, optional): Whether to round the corners of the shape
+            rounded (bool, optional): Whether to round the corners of the shape
             whiteSpace (str, optional): white space
             fillColor (str, optional): The object fill color in a hex color code (#ffffff)
             opacity  (int, optional): The object's opacity, 0-100
             strokeColor: The object stroke color in a hex color code (#ffffff)
-            glass (int, optional): Apply glass styling to  the object
-            shadow (int, optional): Add a shadow to the object
-            comic (int, optional): Add comic styling to the object
-            linePattern (str, optional): The stroke style of the object.
+            glass (bool, optional): Apply glass styling to  the object
+            shadow (bool, optional): Add a shadow to the object
+            comic (bool, optional): Add comic styling to the object
+            line_pattern (str, optional): The stroke style of the object.
             fontColor (int, optional): The color of the text in the object (#ffffff)
             fontFamily (str, optional): The typeface of the text in the object (see Draw.io for available fonts)
             fontSize (int, optional): The size of the text in the object in points
@@ -143,7 +143,7 @@ class BasicObject(DiagramBase):
         self.glass = kwargs.get("glass", None)
         self.shadow = kwargs.get("shadow", None)
         self.comic = kwargs.get("comic", None)
-        self.linePattern = kwargs.get("linePattern", "solid")
+        self.line_pattern = kwargs.get("line_pattern", "solid")
 
         self.fontFamily = kwargs.get("fontFamily", None)
         self.fontSize = kwargs.get("fontSize", None)
@@ -304,9 +304,7 @@ class BasicObject(DiagramBase):
     @property
     def font_style(self):
         '''The font_style is a numeric format that corresponds to a combination of three other attributes: bold_font, italic_font, and underline_font. Any combination of them can be true.
-        '''    
-        # TODO there HAS to be a better way to do this
-        # it's basically an enumerated truth table
+        '''
         bld = self.bold_font
         ita = self.italic_font
         unl = self.underline_font
@@ -337,59 +335,58 @@ class BasicObject(DiagramBase):
         elif bld and ita and unl:
             return 7
 
-    # TODO change linePattern to line_pattern to match convention
     @property
-    def linePattern(self):
-        """Two properties are enumerated together into linePattern: dashed and dashPattern. linePattern simplifies this with an external database that contains the dropdown options from the Draw.io app then outputs the correct combination of dashed and dashPattern.
+    def line_pattern(self):
+        """Two properties are enumerated together into line_pattern: dashed and dashPattern. line_pattern simplifies this with an external database that contains the dropdown options from the Draw.io app then outputs the correct combination of dashed and dashPattern.
         
         However in some cases dashed and dashpattern need to be set individually, such as when formatting from a style string. In that case, the setters for those two attributes will disable the other.
 
         Returns:
             str: The line style
         """
-        return self._linePattern
+        return self._line_pattern
 
-    @linePattern.setter
-    def linePattern(self, value):
+    @line_pattern.setter
+    def line_pattern(self, value):
         if value in line_styles.keys():
-            self._linePattern = value
+            self._line_pattern = value
         else:
             raise ValueError(
-                "{0} is not an allowed value of linePattern".format(value)
+                "{0} is not an allowed value of line_pattern".format(value)
             )
 
     @property
     def dashed(self):
-        """This is one of the properties that defines the line style. Along with dashPattern, it can be overriden by setting linePattern or set directly.
+        """This is one of the properties that defines the line style. Along with dashPattern, it can be overriden by setting line_pattern or set directly.
 
         Returns:
             str: Whether the object stroke is dashed.
         """
-        if self._linePattern is None:
+        if self._line_pattern is None:
             return self._dashed
         else:
-            return line_styles[self._linePattern]
+            return line_styles[self._line_pattern]
 
     @dashed.setter
     def dashed(self, value):
-        self._linePattern = None
+        self._line_pattern = None
         self._dashed = value
 
     @property
     def dashPattern(self):
-        """This is one of the properties that defines the line style. Along with dashed, it can be overriden by setting linePattern or set directly.
+        """This is one of the properties that defines the line style. Along with dashed, it can be overriden by setting line_pattern or set directly.
 
         Returns:
             str: What style the object stroke is dashed with.
         """
-        if self._linePattern is None:
+        if self._line_pattern is None:
             return self._dashed
         else:
-            return line_styles[self._linePattern]
+            return line_styles[self._line_pattern]
 
     @dashPattern.setter
     def dashPattern(self, value):
-        self._linePattern = None
+        self._line_pattern = None
         self._dashPattern = value
 
     ###########################################################
