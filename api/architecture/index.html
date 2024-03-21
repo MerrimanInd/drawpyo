@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Xander Cesari" /><link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/architecture/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Architecture - Drawpyo</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Architecture";
+        var mkdocs_page_input_path = "api/architecture.md";
+        var mkdocs_page_url = "/drawpyo/api/architecture/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Drawpyo
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../about/">About</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Basic Diagrams</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../usage/basic_usage/">Usage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../usage/objects/">Objects</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../usage/edges/">Edges</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../usage/shape_libs/">Shape Libraries</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Custom Diagram Types</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagram_types/tree_diagrams/">Tree Diagrams</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Architecture</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#xmlbase">XMLBase</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase">XMLBase</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.attributes">attributes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.id">id</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml">xml</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml_close_tag">xml_close_tag</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml_open_tag">xml_open_tag</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#diagrambase">DiagramBase</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase">DiagramBase</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.style">style</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.style_attributes">style_attributes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict">apply_attribute_dict</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_style_string">apply_style_string</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.from_style_string">from_style_string</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Basic Diagrams</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../file/">File</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../page/">Page</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../edges/">Edges</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../objects/">Objects</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Custom Diagram Types</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#">Tree Diagram</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../tree_diagram/treediagram/">TreeDiagram</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../tree_diagram/nodeobject/">NodeObject</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Drawpyo</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API</li>
+      <li class="breadcrumb-item active">Architecture</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/MerrimanInd/drawpyo/edit/master/docs/api/architecture.md">Edit on MerrimanInd/drawpyo</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="architecture">Architecture</h1>
+<p>Drawpyo provides two high level classes to define critical methods and attributes for all  exportable Draw.io objects. Primarily they define the parent and id attributes as well as a series of methods and properties for generating XML and style strings.</p>
+<hr />
+<h2 id="xmlbase">XMLBase</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="drawpyo.xml_base.XMLBase"></a>
+  <div class="doc doc-contents first">
+
+  
+      <p>XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>drawpyo/xml_base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">XMLBase</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml_class</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;xml_class&quot;</span><span class="p">,</span> <span class="s2">&quot;xml_tag&quot;</span><span class="p">)</span>
+
+        <span class="c1"># There&#39;s only one situation where XMLBase is called directly: to</span>
+        <span class="c1"># create the two empty mxCell objects at the beginning of every</span>
+        <span class="c1"># Draw.io diagram. The following declarations should be overwritten</span>
+        <span class="c1"># in every other use case.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;xml_parent&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        id is a unique identifier. Draw.io generated diagrams use an ID many more characters but the app isn&#39;t picky when parsing so drawpyo just uses Python&#39;s built-in id() function as it guarantees unique identifiers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: A unique identifier for the Draw.io object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The most basic attributes of a Draw.io object. Extended by subclasses.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dict containing an &#39;id&#39; and &#39;xml_parent&#39; object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span><span class="p">}</span>
+
+    <span class="c1">###########################################################</span>
+    <span class="c1"># XML Tags</span>
+    <span class="c1">###########################################################</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml_open_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        &lt;class_name attribute_name=attribute_value&gt;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The opening tag of the object with all the attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">open_tag</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_class</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">xml_parameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_ify</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">open_tag</span> <span class="o">=</span> <span class="n">open_tag</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">att</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">xml_parameter</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
+        <span class="k">return</span> <span class="n">open_tag</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml_close_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The closing tag contains the name of the object wrapped in angle brackets.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        &lt;/class_name&gt;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The closing tag of the object with all the attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;/</span><span class="si">{0}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_class</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        All drawpyo exportable classes contain an xml property that returns the formatted string of their XML output.</span>
+
+<span class="sd">        This default version of the function assumes no inner value so it just returns the opening tag closed with a &#39;/&gt;&#39;. Subclasses that require more printing overload this function with their own implementation.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        &lt;class_name attribute_name=attribute_value/&gt;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A single XML tag containing the object name, style attributes, and a closer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">open_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_open_tag</span>
+        <span class="k">return</span> <span class="n">open_tag</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; /&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">xml_ify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">parameter_string</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">xmlize</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.xml_base.XMLBase.attributes" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">attributes</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The most basic attributes of a Draw.io object. Extended by subclasses.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>dict</code></b>            –
+            <div class="doc-md-description">
+              <p>A dict containing an 'id' and 'xml_parent' object.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.xml_base.XMLBase.id" class="doc doc-heading">
+          <code class="highlight language-python"><span class="nb">id</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>id is a unique identifier. Draw.io generated diagrams use an ID many more characters but the app isn't picky when parsing so drawpyo just uses Python's built-in id() function as it guarantees unique identifiers.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>int</code></b>            –
+            <div class="doc-md-description">
+              <p>A unique identifier for the Draw.io object</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.xml_base.XMLBase.xml" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">xml</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>All drawpyo exportable classes contain an xml property that returns the formatted string of their XML output.</p>
+<p>This default version of the function assumes no inner value so it just returns the opening tag closed with a '/&gt;'. Subclasses that require more printing overload this function with their own implementation.</p>
+<p>Example:
+<class_name attribute_name=attribute_value/></p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>            –
+            <div class="doc-md-description">
+              <p>A single XML tag containing the object name, style attributes, and a closer.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.xml_base.XMLBase.xml_close_tag" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">xml_close_tag</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The closing tag contains the name of the object wrapped in angle brackets.</p>
+<p>Example:
+</class_name></p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>            –
+            <div class="doc-md-description">
+              <p>The closing tag of the object with all the attributes.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.xml_base.XMLBase.xml_open_tag" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">xml_open_tag</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.</p>
+<p>Example:
+<class_name attribute_name=attribute_value></p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>            –
+            <div class="doc-md-description">
+              <p>The opening tag of the object with all the attributes.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+  </div>
+
+
+</div><hr />
+<h2 id="diagrambase">DiagramBase</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="drawpyo.diagram.base_diagram.DiagramBase"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="drawpyo.xml_base.XMLBase" href="#drawpyo.xml_base.XMLBase">XMLBase</a></code></p>
+
+  
+      <p>This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DiagramBase</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;html&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;page&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;xml_parent&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_from_library</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">library</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span>
+
+    <span class="c1"># XML_parent property</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml_parent_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="c1"># Parent object linking</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xml_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xml_parent</span>
+
+    <span class="nd">@xml_parent</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">xml_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xml_parent</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xml_parent</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@xml_parent</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">xml_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xml_parent</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xml_parent</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Page property</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">page_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="c1"># page object linking</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_page</span>
+
+    <span class="nd">@page</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_page</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_page</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@page</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_page</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_page</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1">###########################################################</span>
+    <span class="c1"># Style properties</span>
+    <span class="c1">###########################################################</span>
+    <span class="k">def</span> <span class="nf">add_style_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">style_attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style_attr</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">style_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The style attributes are the list of style tags that should be printed into the style XML attribute. This is a subset of the attributes defined on the object method.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of the names of the style_attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span>
+
+    <span class="nd">@style_attributes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">style_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">style</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function returns the style string of the object to be appended into the style XML attribute.</span>
+
+<span class="sd">        First it searches the object properties called out in</span>
+<span class="sd">        self.style_attributes. If the property is initialized to something</span>
+<span class="sd">        that isn&#39;t None or an empty string, it will add it. Otherwise it</span>
+<span class="sd">        searches the base_style defined by the object template.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The style string of the object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">style_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="n">style_str</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span>
+
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="n">attr_val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+                <span class="c1"># reformat different datatypes to strings</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr_val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                    <span class="n">attr_val</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">attr_val</span><span class="o">*</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">style_str</span> <span class="o">=</span> <span class="n">style_str</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">=</span><span class="si">{1}</span><span class="s2">;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">attr_val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">style_str</span>
+
+    <span class="k">def</span> <span class="nf">_add_and_set_style_attrib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrib</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_style_attribute</span><span class="p">(</span><span class="n">attrib</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            style_str (str): A Draw.io style string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="n">style_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
+                <span class="n">a_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">a_value</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">a_value</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">a_value</span><span class="p">:</span>
+                        <span class="n">a_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">a_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">a_value</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">or</span> <span class="n">a_value</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span><span class="p">:</span>
+                    <span class="n">a_value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">a_name</span><span class="p">,</span> <span class="n">a_value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">baseStyle</span> <span class="o">=</span> <span class="n">attrib</span>
+
+    <span class="k">def</span> <span class="nf">_apply_style_from_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">style_attributes</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">attrib</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function takes in a dictionary of attributes and applies them</span>
+<span class="sd">        to the object. These attributes can be style or properties. If the</span>
+<span class="sd">        attribute isn&#39;t already defined as a property of the class it&#39;s</span>
+<span class="sd">        assumed to be a style attribute. It will then be added as a property</span>
+<span class="sd">        and also appended to the .style_attributes list.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        attr_dict : dict</span>
+<span class="sd">            A dictionary of attributes to set or add to the object.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_style_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">style_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This classmethod allows the intantiation of an object from a style</span>
+<span class="sd">        string. This is useful since Draw.io allows copying the style string</span>
+<span class="sd">        out of an object in their UI. This string can then be copied into the</span>
+<span class="sd">        Python environment and further objects created that match the style.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            style_string (str): A Draw.io style string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            BaseDiagram: A BaseDiagram or subclass instantiated with the style from the Draw.io string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">new_obj</span><span class="o">.</span><span class="n">apply_style_string</span><span class="p">(</span><span class="n">style_string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_obj</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.diagram.base_diagram.DiagramBase.style" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">style</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function returns the style string of the object to be appended into the style XML attribute.</p>
+<p>First it searches the object properties called out in
+self.style_attributes. If the property is initialized to something
+that isn't None or an empty string, it will add it. Otherwise it
+searches the base_style defined by the object template.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>            –
+            <div class="doc-md-description">
+              <p>The style string of the object.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="drawpyo.diagram.base_diagram.DiagramBase.style_attributes" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">style_attributes</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The style attributes are the list of style tags that should be printed into the style XML attribute. This is a subset of the attributes defined on the object method.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>list</code></b>            –
+            <div class="doc-md-description">
+              <p>A list of the names of the style_attributes.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>  </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">apply_attribute_dict</span><span class="p">(</span><span class="n">attr_dict</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function takes in a dictionary of attributes and applies them
+to the object. These attributes can be style or properties. If the
+attribute isn't already defined as a property of the class it's
+assumed to be a style attribute. It will then be added as a property
+and also appended to the .style_attributes list.</p>
+<h4 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters">Parameters</h4>
+<p>attr_dict : dict
+    A dictionary of attributes to set or add to the object.</p>
+<h4 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns">Returns</h4>
+<p>None.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function takes in a dictionary of attributes and applies them</span>
+<span class="sd">    to the object. These attributes can be style or properties. If the</span>
+<span class="sd">    attribute isn&#39;t already defined as a property of the class it&#39;s</span>
+<span class="sd">    assumed to be a style attribute. It will then be added as a property</span>
+<span class="sd">    and also appended to the .style_attributes list.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    attr_dict : dict</span>
+<span class="sd">        A dictionary of attributes to set or add to the object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="drawpyo.diagram.base_diagram.DiagramBase.apply_style_string" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">apply_style_string</span><span class="p">(</span><span class="n">style_str</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>style_str</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>A Draw.io style string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        style_str (str): A Draw.io style string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="n">style_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
+            <span class="n">a_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">a_value</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">a_value</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">a_value</span><span class="p">:</span>
+                    <span class="n">a_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">a_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">a_value</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">or</span> <span class="n">a_value</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span><span class="p">:</span>
+                <span class="n">a_value</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">a_name</span><span class="p">,</span> <span class="n">a_value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">baseStyle</span> <span class="o">=</span> <span class="n">attrib</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="drawpyo.diagram.base_diagram.DiagramBase.from_style_string" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">from_style_string</span><span class="p">(</span><span class="n">style_string</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This classmethod allows the intantiation of an object from a style
+string. This is useful since Draw.io allows copying the style string
+out of an object in their UI. This string can then be copied into the
+Python environment and further objects created that match the style.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>style_string</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>A Draw.io style string</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>BaseDiagram</code></b>            –
+            <div class="doc-md-description">
+              <p>A BaseDiagram or subclass instantiated with the style from the Draw.io string</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">from_style_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">style_string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This classmethod allows the intantiation of an object from a style</span>
+<span class="sd">    string. This is useful since Draw.io allows copying the style string</span>
+<span class="sd">    out of an object in their UI. This string can then be copied into the</span>
+<span class="sd">    Python environment and further objects created that match the style.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        style_string (str): A Draw.io style string</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        BaseDiagram: A BaseDiagram or subclass instantiated with the style from the Draw.io string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+    <span class="n">new_obj</span><span class="o">.</span><span class="n">apply_style_string</span><span class="p">(</span><span class="n">style_string</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_obj</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../diagram_types/tree_diagrams/" class="btn btn-neutral float-left" title="Tree Diagrams"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../file/" class="btn btn-neutral float-right" title="File">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../diagram_types/tree_diagrams/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../file/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

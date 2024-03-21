@@ -70,6 +70,35 @@
     </ul>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/architecture/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Basic Diagrams</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/file/">File</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/page/">Page</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/edges/">Edges</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/objects/">Objects</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Custom Diagram Types</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#">Tree Diagram</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/treediagram/">TreeDiagram</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/nodeobject/">NodeObject</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -98,7 +127,7 @@
                 <h1 id="tree-diagrams">Tree Diagrams</h1>
 <p>These very useful diagram types are why drawpyo was written initially! The TreeDiagram module allows the easy creation of heirarchical directed trees, managing the parent and children relationships, then providing a convenient auto layout function.</p>
 <h2 id="create-a-tree">Create a Tree</h2>
-<p>The two main objects to work with in drawpyo's trees are TreeDiagrams and LeafObjects. To start, create a TreeDiagram:</p>
+<p>The two main objects to work with in drawpyo's trees are TreeDiagrams and NodeObjects. To start, create a TreeDiagram:</p>
 <pre><code class="language-python">import drawpyo.diagram_types import TreeDiagram
 
 tree = TreeDiagram(
@@ -144,29 +173,29 @@ tree = TreeDiagram(
 </tbody>
 </table>
 <h2 id="add-nodes">Add Nodes</h2>
-<p>The custom object type that defines the nodes on the tree are called LeafObjects. Create some LeafObjects:</p>
-<pre><code class="language-python">from drawpyo.diagram_types import LeafObject
+<p>The custom object type that defines the nodes on the tree are called NodeObjects. Create some NodeObjects:</p>
+<pre><code class="language-python">from drawpyo.diagram_types import NodeObject
 
 # Top object
-grinders = LeafObject(tree=tree, value=&quot;Appliances for Grinding Coffee&quot;, base_style=&quot;rounded rectangle&quot;)
+grinders = NodeObject(tree=tree, value=&quot;Appliances for Grinding Coffee&quot;, base_style=&quot;rounded rectangle&quot;)
 
 # Main categories
-blade_grinders = LeafObject(tree=tree, value=&quot;Blade Grinders&quot;, trunk=grinders)
-burr_grinders = LeafObject(tree=tree, value=&quot;Burr Grinders&quot;, trunk=grinders)
-blunt_objects = LeafObject(tree=tree, value=&quot;Blunt Objects&quot;, trunk=grinders)
+blade_grinders = NodeObject(tree=tree, value=&quot;Blade Grinders&quot;, parent=grinders)
+burr_grinders = NodeObject(tree=tree, value=&quot;Burr Grinders&quot;, parent=grinders)
+blunt_objects = NodeObject(tree=tree, value=&quot;Blunt Objects&quot;, parent=grinders)
 </code></pre>
-<p>Note that the base_style was manually declared for the first object. But LeafObjects will default to "rounded rectangle" so it's not necessary for every one. Any LeafObject can be a parent, so you can keep adding objects down the tree:</p>
+<p>Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a parent, so you can keep adding objects down the tree:</p>
 <pre><code class="language-python"># Other
-elec_blade = LeafObject(tree=tree, value=&quot;Electric Blade Grinder&quot;, trunk=blade_grinders)
-mnp = LeafObject(tree=tree, value=&quot;Mortar and Pestle&quot;, trunk=blunt_objects)
+elec_blade = NodeObject(tree=tree, value=&quot;Electric Blade Grinder&quot;, parent=blade_grinders)
+mnp = NodeObject(tree=tree, value=&quot;Mortar and Pestle&quot;, parent=blunt_objects)
 
 # Conical Burrs
-conical = LeafObject(tree=tree, value=&quot;Conical Burrs&quot;, trunk=burr_grinders)
-elec_conical = LeafObject(tree=tree, value=&quot;Electric&quot;, trunk=conical)
-manual_conical = LeafObject(tree=tree, value=&quot;Manual&quot;, trunk=conical)
+conical = NodeObject(tree=tree, value=&quot;Conical Burrs&quot;, parent=burr_grinders)
+elec_conical = NodeObject(tree=tree, value=&quot;Electric&quot;, parent=conical)
+manual_conical = NodeObject(tree=tree, value=&quot;Manual&quot;, parent=conical)
 </code></pre>
 <blockquote>
-<p><strong>Important Note:</strong> TreeDiagrams do not currently support LeafObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.</p>
+<p><strong>Important Note:</strong> TreeDiagrams do not currently support NodeObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.</p>
 </blockquote>
 <p>Finally, before writing the diagram you'll want to run the magic penultimate step: auto layout.</p>
 <pre><code class="language-python">tree.auto_layout()
@@ -177,6 +206,7 @@ tree.write()
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../../usage/shape_libs/" class="btn btn-neutral float-left" title="Shape Libraries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../api/architecture/" class="btn btn-neutral float-right" title="Architecture">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -201,6 +231,8 @@ tree.write()
     
       <span><a href="../../usage/shape_libs/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../../api/architecture/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

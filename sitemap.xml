@@ -11,6 +11,41 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/architecture/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/edges/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/file/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/objects/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/page/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/tree_diagram/nodeobject/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/tree_diagram/treediagram/</loc>
+         <lastmod>2024-03-21</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://merrimanind.github.io/drawpyo/diagram_types/tree_diagrams/</loc>
          <lastmod>2024-03-21</lastmod>
          <changefreq>daily</changefreq>

@@ -92,6 +92,35 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../diagram_types/tree_diagrams/">Tree Diagrams</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/architecture/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Basic Diagrams</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/file/">File</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/page/">Page</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/edges/">Edges</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/objects/">Objects</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Custom Diagram Types</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#">Tree Diagram</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/treediagram/">TreeDiagram</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/nodeobject/">NodeObject</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -118,9 +147,9 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="objects">Objects</h1>
-<p>Though some diagram types have their own object subclasses, the main class for creating objects is the BasicObject class.</p>
+<p>Though some diagram types have their own object subclasses, the main class for creating objects is the Object class.</p>
 <h2 id="creating-a-basic-object">Creating a basic object</h2>
-<pre><code class="language-python">base_obj = drawpyo.diagram.BasicObject(page=page)
+<pre><code class="language-python">base_obj = drawpyo.diagram.Object(page=page)
 </code></pre>
 <p>The default object type is a rounded corner rectangle with white background and a black border just like in the Draw.io app.</p>
 <p>The value attribute holds the text to display in the object.</p>
@@ -138,26 +167,26 @@
     page=page,
     )
 </code></pre>
-<p>This function returns a normal BasicObject but prestyled by the library. It can then be further styled or modified.</p>
+<p>This function returns a normal Object but prestyled by the library. It can then be further styled or modified.</p>
 <h2 id="object-geometry">Object Geometry</h2>
 <p>All objects contain a structure called ObjectGeometry that provides a layer of abstraction. Interacting directly with the geometry class is optional.</p>
 <h3 id="object-sizing">Object Sizing</h3>
 <p>The three parameters that affect object placement are size and aspect. Size can be set with a tuple containing the width then height.</p>
-<pre><code class="language-python">BasicObject.size = (120, 80)
-BasicObject.aspect = 'fixed'
+<pre><code class="language-python">Object.size = (120, 80)
+Object.aspect = 'fixed'
 </code></pre>
 <p>The <code>size</code> attribute is an abstraction of the ObjectGeometry object, so the width and height can also be accessed directly.</p>
-<pre><code class="language-python">BasicObject.geometry.height = 80
-BasicObject.geometry.width = 120
+<pre><code class="language-python">Object.geometry.height = 80
+Object.geometry.width = 120
 </code></pre>
 <h3 id="object-geometry-and-placement">Object Geometry and Placement</h3>
 <p>Repositioning objects is simple but there are a few convenience features to know about. There are two attributes available for setting the position by either the top left corner or the center:</p>
-<pre><code class="language-python">BasicObject.position = (0, 0)
-BasicObject.center_position = (0, 0)
+<pre><code class="language-python">Object.position = (0, 0)
+Object.center_position = (0, 0)
 </code></pre>
 <p>As with the size, the X and Y positions can be accessed directly in the geometry object.</p>
-<pre><code class="language-python">BasicObject.geometry.x = 0
-BasicObject.geometry.y = 0
+<pre><code class="language-python">Object.geometry.x = 0
+Object.geometry.y = 0
 </code></pre>
 <h2 id="styling-objects">Styling Objects</h2>
 <p>There are infinite permutations of object formatting and styling available. There are some higher order attributes that set the template for the object. What lower order styling attributes may or may not apply in combination. Then there are attributes like size and text formatting that apply in all cases. These interactions are difficult to predict in drawpyo alone so a good way to get familiar with all of the possible options and types of customizations is just to play with the Draw.io app directly to design formatting to your taste.</p>
@@ -203,7 +232,7 @@ BasicObject.geometry.y = 0
 <li>glass</li>
 <li>shadow</li>
 <li>comic</li>
-<li>linePattern</li>
+<li>line_pattern</li>
 </ul>
 <h3 id="further-styling-attributes">Further Styling Attributes</h3>
 <p>As mentioned above, not all of these attributes will apply to all object shapes and types. But some commonly called include:</p>
@@ -214,7 +243,7 @@ BasicObject.geometry.y = 0
 <li>perimeter</li>
 </ul>
 <h3 id="text-styling-attributes">Text Styling Attributes</h3>
-<p>The text set in the <code>value</code> attribute of the BasicObject class can also be styled with the expected text formatting tools.</p>
+<p>The text set in the <code>value</code> attribute of the Object class can also be styled with the expected text formatting tools.</p>
 <ul>
 <li>fontColor</li>
 <li>fontFamily</li>

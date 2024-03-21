@@ -86,6 +86,35 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../diagram_types/tree_diagrams/">Tree Diagrams</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/architecture/">Architecture</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Basic Diagrams</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/file/">File</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/page/">Page</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/edges/">Edges</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../api/objects/">Objects</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Custom Diagram Types</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#">Tree Diagram</a>
+    <ul>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/treediagram/">TreeDiagram</a>
+                </li>
+                <li class="toctree-l3"><a class="reference internal" href="../../api/tree_diagram/nodeobject/">NodeObject</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -144,7 +173,7 @@ baseStyle = &quot;ellipse&quot;
 <h4 id="predefined-style-attributes">Predefined style attributes</h4>
 <p>Such as any of the attributes listed in the Styling section of <a href="/usage/objects.md">Objects</a>. These will simply be overwritten with the values in the TOML file.</p>
 <h4 id="any-new-style-attributes">Any new style attributes</h4>
-<p>If you want to add a rare style attribute that drawpyo hasn't defined or worked with yet, no worries! When you import the TOML library if there are new style attributes defined then they'll get added to the BasicObject and exported into the Draw.io file.</p>
+<p>If you want to add a rare style attribute that drawpyo hasn't defined or worked with yet, no worries! When you import the TOML library if there are new style attributes defined then they'll get added to the Object and exported into the Draw.io file.</p>
 <h3 id="using-a-custom-library">Using a Custom Library</h3>
 <p>To use a custom shape library it just needs to be imported then passed to the object definition function:</p>
 <pre><code class="language-python">custom_library = drawpyo.diagram.import_shape_database(
