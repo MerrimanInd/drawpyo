@@ -123,7 +123,7 @@ class BasicEdge(DiagramBase):
             "id": self.id,
             "style": self.style,
             "edge": self.edge,
-            "parent": self.parent_id,
+            "parent": self.xml_parent_id,
             "source": self.source_id,
             "target": self.target_id,
         }

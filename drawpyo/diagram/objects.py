@@ -250,7 +250,7 @@ class BasicObject(DiagramBase):
             "value": self.value,
             "style": self.style,
             "vertex": self.vertex,
-            "parent": self.parent_id,
+            "parent": self.xml_parent_id,
         }
 
     ###########################################################

@@ -13,7 +13,7 @@ class Page:
 
         # There are two empty top level objects in every Draw.io diagram
         self.objects.append(XMLBase(id=0, xml_class="mxCell"))
-        self.objects.append(XMLBase(id=1, xml_class="mxCell", parent=0))
+        self.objects.append(XMLBase(id=1, xml_class="mxCell", xml_parent=0))
 
         # Properties
 

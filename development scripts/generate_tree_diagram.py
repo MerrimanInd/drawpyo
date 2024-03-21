@@ -40,5 +40,5 @@ DF64 = NodeObject(tree=tree, value="Turin DF64", parent=flat)
 FellowOde = NodeObject(tree=tree, value="Fellow Ode", parent=flat)
 LagomP64 = NodeObject(tree=tree, value="Lagom P64", parent=flat)
 
-# grp = tree.auto_layout()
+grp = tree.auto_layout()
 tree.write()

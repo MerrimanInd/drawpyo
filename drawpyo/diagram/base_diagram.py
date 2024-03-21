@@ -91,37 +91,37 @@ class DiagramBase(XMLBase):
         super().__init__(**kwargs)
         self._style_attributes = ["html"]
         self.page = kwargs.get("page", None)
-        self.parent = kwargs.get("parent", None)
+        self.xml_parent = kwargs.get("xml_parent", None)
 
     @classmethod
     def create_from_library(cls, library, obj):
         return cls
 
-    # Parent property
+    # XML_parent property
     @property
-    def parent_id(self):
-        if self.parent is not None:
-            return self.parent.id
+    def xml_parent_id(self):
+        if self.xml_parent is not None:
+            return self.xml_parent.id
         else:
             return 1
 
     # Parent object linking
     @property
-    def parent(self):
-        return self._parent
+    def xml_parent(self):
+        return self._xml_parent
 
-    @parent.setter
-    def parent(self, p):
+    @xml_parent.setter
+    def xml_parent(self, p):
         if p is not None:
             p.add_object(self)
-            self._parent = p
+            self._xml_parent = p
         else:
-            self._parent = None
+            self._xml_parent = None
 
-    @parent.deleter
-    def parent(self):
-        self._parent.remove_object(self)
-        self._parent = None
+    @xml_parent.deleter
+    def xml_parent(self):
+        self._xml_parent.remove_object(self)
+        self._xml_parent = None
 
     # Page property
     @property

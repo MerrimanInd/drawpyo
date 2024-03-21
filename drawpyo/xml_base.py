@@ -10,14 +10,14 @@ class XMLBase:
     XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.
     """
     def __init__(self, **kwargs):
-        self._id = id(self)
+        self._id = kwargs.get("id", id(self))
         self.xml_class = kwargs.get("xml_class", "xml_tag")
 
         # There's only one situation where XMLBase is called directly: to
         # create the two empty mxCell objects at the beginning of every
         # Draw.io diagram. The following declarations should be overwritten
         # in every other use case.
-        self.parent = kwargs.get("parent", None)
+        self.xml_parent = kwargs.get("xml_parent", None)
 
     @property
     def id(self):
@@ -36,9 +36,9 @@ class XMLBase:
         The most basic attributes of a Draw.io object. Extended by subclasses.
 
         Returns:
-            dict: A dict containing an 'id' and 'parent' object.
+            dict: A dict containing an 'id' and 'xml_parent' object.
         """
-        return {'id': self.id, 'parent': self.parent}
+        return {'id': self.id, 'parent': self.xml_parent}
 
     ###########################################################
     # XML Tags

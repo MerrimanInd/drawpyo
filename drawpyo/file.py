@@ -15,24 +15,17 @@ class File(XMLBase):
             file_name (str, optional): The name of the file.
             file_path (str, optional): The location where the file will be saved.
         """
-
-
+        
         super().__init__()
-        # self.file_name = kwargs.get(
-        #     "file_name", "Draw.pyo Generated page.drawio"
-        # )
-        # self.file_path = kwargs.get(
-        #     "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
-        # )
 
+        self.pages = []
         self.file_name = file_name
         self.file_path = file_path
-        self.pages = []
 
         # Attributes
         self.host = "Drawpyo"
         self.type = "device"
-        self.version = "21.6.5"
+        self.version = "21.6.5" # This is the version of the Draw.io spec
         self.xml_class = "mxfile"
 
     @property
