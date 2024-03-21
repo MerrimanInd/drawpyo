@@ -34,4 +34,4 @@ nav:
     - Custom Diagram Types:
       - Tree Diagram:
         - TreeDiagram: api/tree_diagram/treediagram.md
-        - LeafObject: api/tree_diagram/leafobject.md
+        - NodeObject: api/tree_diagram/nodeobject.md
