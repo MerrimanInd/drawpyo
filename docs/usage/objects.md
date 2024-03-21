@@ -1,11 +1,11 @@
 # Objects
 
-Though some diagram types have their own object subclasses, the main class for creating objects is the BasicObject class.
+Though some diagram types have their own object subclasses, the main class for creating objects is the Object class.
 
 ## Creating a basic object
 
 ```python
-base_obj = drawpyo.diagram.BasicObject(page=page)
+base_obj = drawpyo.diagram.Object(page=page)
 ```
 
 The default object type is a rounded corner rectangle with white background and a black border just like in the Draw.io app.
@@ -32,7 +32,7 @@ object = drawpyo.diagram.object_from_library(
     )
 ```
 
-This function returns a normal BasicObject but prestyled by the library. It can then be further styled or modified.
+This function returns a normal Object but prestyled by the library. It can then be further styled or modified.
 
 ## Object Geometry
 
@@ -43,15 +43,15 @@ All objects contain a structure called ObjectGeometry that provides a layer of a
 The three parameters that affect object placement are size and aspect. Size can be set with a tuple containing the width then height.
 
 ```python
-BasicObject.size = (120, 80)
-BasicObject.aspect = 'fixed'
+Object.size = (120, 80)
+Object.aspect = 'fixed'
 ```
 
 The `size` attribute is an abstraction of the ObjectGeometry object, so the width and height can also be accessed directly.
 
 ```python
-BasicObject.geometry.height = 80
-BasicObject.geometry.width = 120
+Object.geometry.height = 80
+Object.geometry.width = 120
 ```
 
 ### Object Geometry and Placement
@@ -59,15 +59,15 @@ BasicObject.geometry.width = 120
 Repositioning objects is simple but there are a few convenience features to know about. There are two attributes available for setting the position by either the top left corner or the center:
 
 ```python
-BasicObject.position = (0, 0)
-BasicObject.center_position = (0, 0)
+Object.position = (0, 0)
+Object.center_position = (0, 0)
 ```
 
 As with the size, the X and Y positions can be accessed directly in the geometry object.
 
 ```python
-BasicObject.geometry.x = 0
-BasicObject.geometry.y = 0
+Object.geometry.x = 0
+Object.geometry.y = 0
 ```
 
 ## Styling Objects
@@ -122,7 +122,7 @@ These attributes mostly apply to most shape/baseStyle combinations and can be se
 - glass
 - shadow
 - comic
-- linePattern
+- line_pattern
 
 ### Further Styling Attributes
 
@@ -135,7 +135,7 @@ As mentioned above, not all of these attributes will apply to all object shapes 
 
 ### Text Styling Attributes
 
-The text set in the `value` attribute of the BasicObject class can also be styled with the expected text formatting tools.
+The text set in the `value` attribute of the Object class can also be styled with the expected text formatting tools.
 
 - fontColor
 - fontFamily

@@ -4,10 +4,10 @@ Edges are the lines and arrows that connect objects in Draw.io. There's quite a 
 
 ## Creating a basic edge
 
-Like objects, there's a BasicEdge object that can be easily created:
+Like objects, there's a Edge object that can be easily created:
 
 ```python
-link = drawpyo.diagram.BasicEdge(
+link = drawpyo.diagram.Edge(
     page=page,
     source=item_1,
     target=item_2,

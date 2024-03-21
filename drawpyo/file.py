@@ -1,23 +1,35 @@
 from .xml_base import XMLBase
 from datetime import datetime
 from os import path, makedirs
+from sys import version_info
+from .page import Page
 
 class File(XMLBase):
-    def __init__(self, **kwargs):
+    """The File class defines a Draw.io file, its properties, and the methods required for saving it.
+    """
+
+    def __init__(self, file_name="Drawpyo Diagram.drawio", file_path=path.join(path.expanduser('~'), "Drawpyo Charts")):
+        """To initiate a File object, pass in a name and path or leave it to the defaults.
+
+        Args:
+            file_name (str, optional): The name of the file.
+            file_path (str, optional): The location where the file will be saved.
+        """
+        
         super().__init__()
-        self.file_name = kwargs.get(
-            "file_name", "Draw.pyo Generated page.drawio"
-        )
-        self.file_path = kwargs.get(
-            "file_path", path.join(path.expanduser('~'), "Drawpyo Charts")
-        )
-        self.pages = kwargs.get("pages", [])
+
+        self.pages = []
+        self.file_name = file_name
+        self.file_path = file_path
 
         # Attributes
-        self.host = "Draw.pyo"
+        self.host = "Drawpyo"
         self.type = "device"
-        self.version = "21.6.5"
+        self.version = "21.6.5" # This is the version of the Draw.io spec
         self.xml_class = "mxfile"
+        
+    def __repr__(self):
+        return f"drawpyo File - {self.file_name}"
 
     @property
     def attributes(self):
@@ -31,10 +43,27 @@ class File(XMLBase):
         }
 
     def add_page(self, page):
+        """Add a page to the file.
+
+        Args:
+            page (drawpyo.diagram.Page): A Page object
+        """
         self.pages.append(page)
 
     def remove_page(self, page):
-        self.pages.remove(page)
+        """Remove a page from the file. The page argument can be either a Page object, the integer number of the page, or the string name of the page.
+
+        Args:
+            page (drawpyo.diagram.Page or str or int): A Page object that's currently contained in the file
+        """
+        if isinstance(page, int):
+            del self.pages[page]
+        elif isinstance(page, str):
+            for pg in self.pages:
+                if pg.name == page:
+                    self.pages.remove(pg)
+        elif isinstance(page, Page):
+            self.pages.remove(page)
 
     ###########################################################
     # File Properties
@@ -46,12 +75,13 @@ class File(XMLBase):
 
     @property
     def agent(self):
-        # TODO return Python and Draw.pyo version
-        return "Python v3.10, Draw.pyo 0.1"
+        python_version = f"{version_info.major}.{version_info.minor}"
+        drawpyo_version = f"0.01"
+        return f"Python {python_version}, Drawpyo {drawpyo_version}"
 
     @property
     def etag(self):
-        # TODO determine if I need to calculate an etag
+        # etag is in the Draw.io spec but not sure how it's used or if I need to create it
         return None
 
     ###########################################################
@@ -60,6 +90,11 @@ class File(XMLBase):
 
     @property
     def xml(self):
+        """This function goes through each page in the file, retrieves its XML, and appends it to a list, then wraps that list in the file's open and close tags.
+
+        Returns:
+            str: The XML data for the file and all the pages in it
+        """
         xml_string = self.xml_open_tag
         for diag in self.pages:
             xml_string = xml_string + "\n  " + diag.xml
@@ -70,6 +105,13 @@ class File(XMLBase):
     # File Handling
     ###########################################################
     def write(self, **kwargs):
+        """This function write the file to disc at the path and name specified.
+        
+        Args:
+            file_path (str, opt): The path to save the file in
+            file_name (str, opt): The name of the file
+            overwrite (bool, opt): Whether to overwrite an existing file or not
+        """
 
         # Check if file_path or file_name were passed in, or are preexisting
         self.file_path = kwargs.get(
@@ -93,9 +135,3 @@ class File(XMLBase):
         f = open(path.join(self.file_path, self.file_name), write_mode, encoding="utf-8")
         f.write(self.xml)
         f.close
-
-    def read(self, file):
-        # TODO read a Drawio file into the Python object structure
-        # This function is a long way away as most or all of Draw.io's
-        # functionality will need to be supported in the library to work.
-        pass
