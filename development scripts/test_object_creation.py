@@ -42,7 +42,7 @@ items = []
 vert_space = 50
 vert_pos = 0
 for style in base_styles:
-    # item = drawpyo.diagram.BasicObject(
+    # item = drawpyo.diagram.Object(
     #     page=page, value=style, base_style=style
     # )
     item = drawpyo.diagram.object_from_library(library="general", obj_name=style, page=page)

@@ -56,7 +56,7 @@ Such as any of the attributes listed in the Styling section of [Objects](/usage/
 
 #### Any new style attributes
 
-If you want to add a rare style attribute that drawpyo hasn't defined or worked with yet, no worries! When you import the TOML library if there are new style attributes defined then they'll get added to the BasicObject and exported into the Draw.io file.
+If you want to add a rare style attribute that drawpyo hasn't defined or worked with yet, no worries! When you import the TOML library if there are new style attributes defined then they'll get added to the Object and exported into the Draw.io file.
 
 ### Using a Custom Library
 

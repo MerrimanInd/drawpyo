@@ -6,7 +6,7 @@ from .base_diagram import (
     style_str_from_dict,
 )
 
-__all__ = ["BasicObject", "Group", "object_from_library"]
+__all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
 general = import_shape_database(
     file_name=path.join("shape_libraries","general.toml"), relative=True
@@ -29,18 +29,18 @@ def import_shape_library(library_path, name):
 
 
 def object_from_library(library, obj_name, **kwargs):
-    """This function generates a BasicObject from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+    """This function generates a Object from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
 
-    Any keyword arguments that can be passed in to a BasicObject creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
+    Any keyword arguments that can be passed in to a Object creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
 
     Args:
         library (str or dict): The library containing the object
         obj_name (str): The name of the object in the library to generate
 
     Returns:
-        BasicObject: An object with the style from the library
+        Object: An object with the style from the library
     """
-    new_obj = BasicObject(**kwargs)
+    new_obj = Object(**kwargs)
     new_obj.format_as_library_object(library, obj_name)
     return new_obj
 
@@ -49,9 +49,9 @@ def object_from_library(library, obj_name, **kwargs):
 # Objects
 ###########################################################
 
-class BasicObject(DiagramBase):
+class Object(DiagramBase):
     """
-    The BasicObject class is the base object for all shapes in Draw.io.
+    The Object class is the base object for all shapes in Draw.io.
     
     More information about objects are in the Usage documents at [Usage - Objects](../../usage/objects).
     """
@@ -61,7 +61,7 @@ class BasicObject(DiagramBase):
 
 
     def __init__(self, value="", size=(120, 80), position=(0, 0), **kwargs):
-        """A BasicObject can be initialized with as many or as few of its styling attributes as is desired.
+        """A Object can be initialized with as many or as few of its styling attributes as is desired.
 
         Args:
             value (str, optional): The text to fill the object with. Defaults to "".
@@ -69,7 +69,7 @@ class BasicObject(DiagramBase):
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
         
         Keyword Args:
-            template_object (BasicObject, optional): Another object to copy the style_attributes from
+            template_object (Object, optional): Another object to copy the style_attributes from
             aspect
             rounded (bool, optional): Whether to round the corners of the shape
             whiteSpace (str, optional): white space
@@ -186,16 +186,16 @@ class BasicObject(DiagramBase):
     
     @classmethod
     def create_from_template_object(cls, template_object, value=None, position=None, page=None):
-        """BasicObject can be instantiated from another object. This will initialize the BasicObject with the same formatting, then set a new position and value.
+        """Object can be instantiated from another object. This will initialize the Object with the same formatting, then set a new position and value.
 
         Args:
-            template_object (BasicObject): Another drawpyo BasicObject to use as a template
+            template_object (Object): Another drawpyo Object to use as a template
             value (str, optional): The text contents of the object. Defaults to None.
             position (tuple, optional): The position where the object should be placed. Defaults to (0, 0).
             page (Page, optional): The Page object to place the object on. Defaults to None.
 
         Returns:
-            BasicObject: The newly created object
+            Object: The newly created object
         """
         new_obj = cls(value=value, page=page, size=template_object.size, template_object=template_object)
         if position is not None:
@@ -206,29 +206,29 @@ class BasicObject(DiagramBase):
         
     @classmethod
     def create_from_style_string(cls, style_string):
-        """BasicObjects can be instantiated from a style string. These strings are most easily found in the Draw.io app, by styling an object as desired then right-clicking and selecting "Edit Style". Copying that text into this function will generate an object styled the same.
+        """Objects can be instantiated from a style string. These strings are most easily found in the Draw.io app, by styling an object as desired then right-clicking and selecting "Edit Style". Copying that text into this function will generate an object styled the same.
 
         Args:
             style_string (str): A Draw.io generated style string.
 
         Returns:
-            BasicObject: An object formatted with the style string
+            Object: An object formatted with the style string
         """
         cls.apply_style_from_string(style_string)
         return cls
 
     @classmethod
     def create_from_library(cls, library, obj_name):
-        """This function generates a BasicObject from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+        """This function generates a Object from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
 
-        Any keyword arguments that can be passed in to a BasicObject creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
+        Any keyword arguments that can be passed in to a Object creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
 
         Args:
             library (str or dict): The library containing the object
             obj_name (str): The name of the object in the library to generate
 
         Returns:
-            BasicObject: An object with the style from the library
+            Object: An object with the style from the library
         """
         new_obj = cls()
         new_obj.format_as_library_object(library, obj_name)
@@ -473,7 +473,7 @@ class BasicObject(DiagramBase):
         """Add an edge out of the object. If an edge is created with this object set as the source this function will be called automatically.
 
         Args:
-            edge (BasicEdge): An Edge object originating at this object
+            edge (Edge): An Edge object originating at this object
         """
         self.out_edges.append(edge)
 
@@ -481,7 +481,7 @@ class BasicObject(DiagramBase):
         """Remove an edge out of the object. If an edge linked to this object has the source changed or removed this function will be called automatically.
 
         Args:
-            edge (BasicEdge): An Edge object originating at this object
+            edge (Edge): An Edge object originating at this object
         """
         self.out_edges.remove(edge)
 
@@ -489,7 +489,7 @@ class BasicObject(DiagramBase):
         """Add an edge into the object. If an edge is created with this object set as the target this function will be called automatically.
 
         Args:
-            edge (BasicEdge): An Edge object ending at this object
+            edge (Edge): An Edge object ending at this object
         """
         self.in_edges.append(edge)
 
@@ -497,7 +497,7 @@ class BasicObject(DiagramBase):
         """Remove an edge into the object. If an edge linked to this object has the target changed or removed this function will be called automatically.
 
         Args:
-            edge (BasicEdge): An Edge object ending at this object
+            edge (Edge): An Edge object ending at this object
         """
         self.in_edges.remove(edge)
 
@@ -508,7 +508,7 @@ class BasicObject(DiagramBase):
     @property
     def xml(self):
         """
-        Returns the XML object for the BasicObject: the opening tag with the style attributes, the value, and the closing tag.
+        Returns the XML object for the Object: the opening tag with the style attributes, the value, and the closing tag.
         
         Example:
         <class_name attribute_name=attribute_value>Text in object</class_name>
@@ -525,6 +525,8 @@ class BasicObject(DiagramBase):
         )
         return tag
 
+class BasicObject(Object):
+    pass
 
 class ObjGeometry(DiagramBase):
     def __init__(self, **kwargs):
@@ -562,7 +564,7 @@ class Group:
         """Adds one or more objects to the group and updates the geometry of the group.
 
         Args:
-            object (BasicObject or list): Object or list of objects to be added to the group
+            object (Object or list): Object or list of objects to be added to the group
         """
         if not isinstance(object, list):
             object = [object]

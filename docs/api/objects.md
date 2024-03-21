@@ -9,9 +9,9 @@
         show_root_heading: true
 
 -----
-## BasicObject
+## Object
 
-::: drawpyo.diagram.objects.BasicObject
+::: drawpyo.diagram.objects.Object
     options:
         show_root_heading: true
 

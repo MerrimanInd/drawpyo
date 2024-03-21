@@ -32,7 +32,7 @@ page = drawpy.Page(file=file)
 ## Add an object
 
 ```python
-item = drawpyo.diagram.BasicObject(page=page, value="new object")
+item = drawpyo.diagram.Object(page=page, value="new object")
 item.position = (0, 0)
 ```
 
@@ -50,7 +50,7 @@ item_from_lib = drawpyo.diagram.object_from_library(
 ## Style an object from a string
 
 ```python
-item_from_stylestr = drawpyo.diagram.BasicObject(page=page)
+item_from_stylestr = drawpyo.diagram.Object(page=page)
 item_from_stylestr.apply_style_string("rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#000000;gradientColor=#FF33FF;strokeWidth=4;")
 ```
 

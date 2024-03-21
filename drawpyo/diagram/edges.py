@@ -7,7 +7,7 @@ from .base_diagram import (
 )
 
 
-__all__ = ["BasicEdge"]
+__all__ = ["Edge", "BasicEdge"]
 
 data = import_shape_database(
     file_name=path.join("formatting_database","edge_styles.toml"), relative=True
@@ -32,16 +32,16 @@ line_ends_db["none"] = {"fillable": False}
 # Edges
 ###########################################################
 
-class BasicEdge(DiagramBase):
-    """The BasicEdge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.
+class Edge(DiagramBase):
+    """The Edge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.
     
-    The three primary styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it's not how the style string is assembled in the XML. To abstract this, the BasicEdge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The BasicEdge class then assembles the style strings on export.
+    The three primary styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it's not how the style string is assembled in the XML. To abstract this, the Edge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The Edge class then assembles the style strings on export.
     
     More information about edges are in the Usage documents at [Usage - Edges](../../usage/edges).
     """
 
     def __init__(self, **kwargs):
-        """BasicEdges can be initialized with almost all styling parameters as args.
+        """Edges can be initialized with almost all styling parameters as args.
         See [Usage - Edges](../../usage/edges) for more information and the options for each parameter.
         
         Args:
@@ -107,7 +107,7 @@ class BasicEdge(DiagramBase):
         return self.__repr__()
     
     def remove(self):
-        """This function removes references to the BasicEdge from its source and target objects then deletes the BasicEdge.
+        """This function removes references to the Edge from its source and target objects then deletes the Edge.
         """
         if self.source is not None:
             self.source.remove_out_edge(self)
@@ -378,12 +378,14 @@ class BasicEdge(DiagramBase):
         )
         return tag
 
+class BasicEdge(Edge):
+    pass
 
 class EdgeGeometry(DiagramBase):
     """This class stores the geometry associated with an edge. This is rendered as a subobject in the Draw.io file so it's convenient for it to have its own class.
     """
     def __init__(self, **kwargs):
-        """This class is automatically instantiated by a BasicEdge object so the user should never need to create it.
+        """This class is automatically instantiated by a Edge object so the user should never need to create it.
         """
         super().__init__(**kwargs)
         self.xml_class = "mxGeometry"

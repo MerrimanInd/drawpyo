@@ -7,7 +7,7 @@ file.file_name = "New Process Generation.drawio"
 page = drawpyo.Page(file=file)
 
 
-base_obj = drawpyo.diagram.BasicObject(page=page,
+base_obj = drawpyo.diagram.Object(page=page,
                                        rounded=1)
 
 

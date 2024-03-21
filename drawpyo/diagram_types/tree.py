@@ -1,11 +1,11 @@
 from ..file import File
 from ..page import Page
-from ..diagram.objects import BasicObject, Group
-from ..diagram.edges import BasicEdge
+from ..diagram.objects import Object, Group
+from ..diagram.edges import Edge
 
 
-class NodeObject(BasicObject):
-    """This class defines one of the nodes on a tree graph. It inherits from BasicObject and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc.
+class NodeObject(Object):
+    """This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc.
     """
     def __init__(self, tree=None, **kwargs):
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
@@ -525,12 +525,12 @@ class TreeDiagram:
                     elif link.source == peer and link.target == obj:
                         link_exists = True
                 if not link_exists:
-                    edge = BasicEdge(page=self.page, source=obj, target=peer)
+                    edge = Edge(page=self.page, source=obj, target=peer)
                     edge.apply_attribute_dict(peer_style)
                     self.links.append(edge)
 
     def connect(self, source, target):
-        edge = BasicEdge(page=self.page, source=source, target=target)
+        edge = Edge(page=self.page, source=source, target=target)
         edge.apply_attribute_dict(self.link_style_dict)
         if self.direction == "down":
             # parent style
