@@ -185,6 +185,26 @@ class BasicObject(DiagramBase):
         return self.__repr__()
     
     @classmethod
+    def create_from_template_object(cls, template_object, value=None, position=None, page=None):
+        """BasicObject can be instantiated from another object. This will initialize the BasicObject with the same formatting, then set a new position and value.
+
+        Args:
+            template_object (BasicObject): Another drawpyo BasicObject to use as a template
+            value (str, optional): The text contents of the object. Defaults to None.
+            position (tuple, optional): The position where the object should be placed. Defaults to (0, 0).
+            page (Page, optional): The Page object to place the object on. Defaults to None.
+
+        Returns:
+            BasicObject: The newly created object
+        """
+        new_obj = cls(value=value, page=page, size=template_object.size, template_object=template_object)
+        if position is not None:
+            new_obj.position = position
+        if value is not None:
+            new_obj.value = value
+        return new_obj
+        
+    @classmethod
     def create_from_style_string(cls, style_string):
         """BasicObjects can be instantiated from a style string. These strings are most easily found in the Draw.io app, by styling an object as desired then right-clicking and selecting "Edit Style". Copying that text into this function will generate an object styled the same.
 
