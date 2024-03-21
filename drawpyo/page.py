@@ -18,11 +18,11 @@ class Page:
         # Properties
 
         if self.file is not None:
-            page_num = len(self.file.pages)+1
+            page_num = len(self.file.pages)
         else:
             page_num = 1
         self.name = kwargs.get("name", f"Page-{page_num}")
-        self.page_num = kwargs.get("page", page_num)
+        self.page_num = kwargs.get("page_num", page_num)
 
         self.dx = kwargs.get("dx", 2037)
         self.dy = kwargs.get("dy", 830)
@@ -45,6 +45,16 @@ class Page:
         self.mxGraph = mxGraph(page=self)
         self.root = Root()
 
+    def __repr__(self):
+        return f"drawpyo Page - {self.name}"
+
+    def remove(self):
+        """This function removes the Page from its linked File object then deletes itself.
+        """
+        if self.file is not None:
+            self.file.remove_page(self)
+        del self
+    
     def add_object(self, obj):
         if obj not in self.objects:
             self.objects.append(obj)

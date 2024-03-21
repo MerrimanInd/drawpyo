@@ -27,6 +27,9 @@ class File(XMLBase):
         self.type = "device"
         self.version = "21.6.5" # This is the version of the Draw.io spec
         self.xml_class = "mxfile"
+        
+    def __repr__(self):
+        return f"drawpyo File - {self.file_name}"
 
     @property
     def attributes(self):
@@ -48,18 +51,17 @@ class File(XMLBase):
         self.pages.append(page)
 
     def remove_page(self, page):
-        """Remove a page from the file.
+        """Remove a page from the file. The page argument can be either a Page object, the integer number of the page, or the string name of the page.
 
         Args:
-            page (drawpyo.diagram.Page): A Page object that's currently contained in the file
+            page (drawpyo.diagram.Page or str or int): A Page object that's currently contained in the file
         """
         if isinstance(page, int):
             del self.pages[page]
         elif isinstance(page, str):
-            # TODO test this
             for pg in self.pages:
                 if pg.name == page:
-                    del pg
+                    self.pages.remove(pg)
         elif isinstance(page, Page):
             self.pages.remove(page)
 

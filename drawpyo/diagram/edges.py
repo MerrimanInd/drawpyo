@@ -106,11 +106,14 @@ class BasicEdge(DiagramBase):
     def __str__(self):
         return self.__repr__()
     
-    def __del__(self):
+    def remove(self):
+        """This function removes references to the BasicEdge from its source and target objects then deletes the BasicEdge.
+        """
         if self.source is not None:
             self.source.remove_out_edge(self)
         if self.target is not None:
             self.target.remove_in_edge(self)
+        del self
     
     @property
     def attributes(self):
