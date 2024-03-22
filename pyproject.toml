@@ -17,7 +17,7 @@ classifiers = [
 requires-python = ">=3.8"
 dynamic = ["version"]
 dependencies = [
-    "toml > 0.10.2",
+    "toml >= 0.10.2",
     "mkdocstrings[python]>=0.18",
     ]
 
