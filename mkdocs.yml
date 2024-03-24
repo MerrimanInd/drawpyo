@@ -6,9 +6,9 @@ site_author: Xander Cesari
 repo_name: MerrimanInd/drawpyo
 repo_url: https://github.com/MerrimanInd/drawpyo
 
-theme: readthedocs
-# theme:
-#   name: "material"
+# theme: readthedocs
+theme:
+  name: "material"
 
 plugins:
   - search
