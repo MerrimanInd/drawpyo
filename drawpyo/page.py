@@ -1,9 +1,11 @@
 from .xml_base import XMLBase
 
+
 class Page:
     """
     This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
     """
+
     def __init__(self, file=None, **kwargs):
         super().__init__()
         self.id = id(self)
@@ -41,7 +43,7 @@ class Page:
 
         # In the Draw.io file format, each page is actually three nested XML
         # tags. These are defined as XMLBase subclasses below
-        self.diagram = Diagram(name = self.name)
+        self.diagram = Diagram(name=self.name)
         self.mxGraph = mxGraph(page=self)
         self.root = Root()
 
@@ -49,12 +51,11 @@ class Page:
         return f"drawpyo Page - {self.name}"
 
     def remove(self):
-        """This function removes the Page from its linked File object then deletes itself.
-        """
+        """This function removes the Page from its linked File object then deletes itself."""
         if self.file is not None:
             self.file.remove_page(self)
         del self
-    
+
     def add_object(self, obj):
         if obj not in self.objects:
             self.objects.append(obj)
@@ -100,8 +101,9 @@ class Page:
 
     @property
     def xml_close_tag(self):
-        tag = ("      " +
-            self.root.xml_close_tag
+        tag = (
+            "      "
+            + self.root.xml_close_tag
             + "\n    "
             + self.mxGraph.xml_close_tag
             + "\n  "
@@ -109,24 +111,27 @@ class Page:
         )
         return tag
 
+
 ###########################################################
 # Formatting classes
 ###########################################################
+
 
 class Diagram(XMLBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = kwargs.get("name", "")
-        self.xml_class="diagram"
+        self.xml_class = "diagram"
 
     @property
     def attributes(self):
         return {"name": self.name, "id": self.id}
 
+
 class mxGraph(XMLBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.xml_class="mxGraphModel"
+        self.xml_class = "mxGraphModel"
         self.page = kwargs.get("page", None)
 
     @property
@@ -149,10 +154,11 @@ class mxGraph(XMLBase):
             "shadow": self.page.shadow,
         }
 
+
 class Root(XMLBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.xml_class="root"
+        self.xml_class = "root"
 
     @property
     def attributes(self):

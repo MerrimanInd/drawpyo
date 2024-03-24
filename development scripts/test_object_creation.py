@@ -2,7 +2,7 @@ import drawpyo
 from os import path
 
 file = drawpyo.File()
-file.file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts")
+file.file_path = path.join(path.expanduser("~"), "Test Drawpyo Charts")
 file.file_name = "Test Generated Objects.drawio"
 page = drawpyo.Page(file=file)
 
@@ -45,7 +45,9 @@ for style in base_styles:
     # item = drawpyo.diagram.Object(
     #     page=page, value=style, base_style=style
     # )
-    item = drawpyo.diagram.object_from_library(library="general", obj_name=style, page=page)
+    item = drawpyo.diagram.object_from_library(
+        library="general", obj_name=style, page=page
+    )
     item.value = style
     vert_pos = vert_pos + vert_space + item.geometry.height
     item.position = (0, vert_pos)

@@ -5,14 +5,14 @@ from ..diagram.edges import Edge
 
 
 class NodeObject(Object):
-    """This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc.
-    """
+    """This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc."""
+
     def __init__(self, tree=None, **kwargs):
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
 
         Args:
             tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.
-            
+
         Keyword Args:
             children (list, optional): A list of other NodeObjects
             parent (list, optional): The parent NodeObject
@@ -98,8 +98,8 @@ class NodeObject(Object):
 
 
 class TreeGroup(Group):
-    """This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they're grouped together for auto positioning. Each level of a TreeDiagram is a set of groups.
-    """
+    """This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they're grouped together for auto positioning. Each level of a TreeDiagram is a set of groups."""
+
     def __init__(self, tree=None, parent_object=None, **kwargs):
         """The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.
 
@@ -127,8 +127,7 @@ class TreeGroup(Group):
         self._parent_object = value
 
     def center_parent(self):
-        """This function centers the parent_objects along the group and then offsets it by the level spacing.
-        """
+        """This function centers the parent_objects along the group and then offsets it by the level spacing."""
         children_grp = TreeGroup(tree=self.tree)
         for obj in self.objects:
             if obj is not self.parent_object:
@@ -173,11 +172,11 @@ class TreeGroup(Group):
 
 
 class TreeDiagram:
-    """The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree.
-    """
+    """The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree."""
+
     def __init__(self, **kwargs):
         """The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.
-        
+
         Keyword Args:
             direction (str, optional): Direction that the tree grows from the root. Options are 'up', 'down', 'left', and 'right'. Defaults to 'down'.
             link_style (str, optional): Connection style of the edges. Options are 'orthogonal', 'straight', and 'curved'. Defaults to 'orthogonal'.
@@ -412,13 +411,11 @@ class TreeDiagram:
             dict: A dict with 'waypoint' as a key then the set link_style
         """
         if self.link_style == "orthogonal":
-            return {'waypoints': 'orthogonal'}
+            return {"waypoints": "orthogonal"}
         elif self.link_style == "straight":
-            return {'waypoints': 'straight'}
+            return {"waypoints": "straight"}
         elif self.link_style == "curved":
-            return {'waypoints': 'curved'}
-
-
+            return {"waypoints": "curved"}
 
     ###########################################################
     # Object Linking and Sorting
@@ -455,7 +452,7 @@ class TreeDiagram:
 
                 # layout the row
                 grp = layout_group(grp)
-                #grp = add_parent(grp, parent)
+                # grp = add_parent(grp, parent)
                 grp.center_parent()
             return grp
 
@@ -502,20 +499,21 @@ class TreeDiagram:
         return top_group
 
     def connect_peers(self):
-        peer_style = {'endArrow':'none',
-                      'dashed':1,
-                      'html':1,
-                      'rounded':0,
-                      'exitX':1,
-                      'exitY':0.5,
-                      'exitDx':0,
-                      'exitDy':0,
-                      'entryX':0,
-                      'entryY':0.5,
-                      'entryDx':0,
-                      'entryDx':0,
-                      'edgeStyle':'orthogonalEdgeStyle'
-                      }
+        peer_style = {
+            "endArrow": "none",
+            "dashed": 1,
+            "html": 1,
+            "rounded": 0,
+            "exitX": 1,
+            "exitY": 0.5,
+            "exitDx": 0,
+            "exitDy": 0,
+            "entryX": 0,
+            "entryY": 0.5,
+            "entryDx": 0,
+            "entryDx": 0,
+            "edgeStyle": "orthogonalEdgeStyle",
+        }
         for obj in self.objects:
             for peer in obj.peers:
                 link_exists = False

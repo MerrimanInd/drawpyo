@@ -9,10 +9,10 @@ from .base_diagram import (
 __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
 general = import_shape_database(
-    file_name=path.join("shape_libraries","general.toml"), relative=True
+    file_name=path.join("shape_libraries", "general.toml"), relative=True
 )
 line_styles = import_shape_database(
-    file_name=path.join("formatting_database","line_styles.toml"), relative=True
+    file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
 
 base_libraries = {"general": general}
@@ -49,16 +49,17 @@ def object_from_library(library, obj_name, **kwargs):
 # Objects
 ###########################################################
 
+
 class Object(DiagramBase):
     """
     The Object class is the base object for all shapes in Draw.io.
-    
+
     More information about objects are in the Usage documents at [Usage - Objects](../../usage/objects).
     """
+
     ###########################################################
     # Initialization Functions
     ###########################################################
-
 
     def __init__(self, value="", size=(120, 80), position=(0, 0), **kwargs):
         """A Object can be initialized with as many or as few of its styling attributes as is desired.
@@ -67,7 +68,7 @@ class Object(DiagramBase):
             value (str, optional): The text to fill the object with. Defaults to "".
             size (tuple, optional): The size of the object in pixels, in (W, H). Defaults to (120, 80).
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
-        
+
         Keyword Args:
             template_object (Object, optional): Another object to copy the style_attributes from
             aspect
@@ -183,9 +184,11 @@ class Object(DiagramBase):
 
     def __str_(self):
         return self.__repr__()
-    
+
     @classmethod
-    def create_from_template_object(cls, template_object, value=None, position=None, page=None):
+    def create_from_template_object(
+        cls, template_object, value=None, position=None, page=None
+    ):
         """Object can be instantiated from another object. This will initialize the Object with the same formatting, then set a new position and value.
 
         Args:
@@ -197,13 +200,18 @@ class Object(DiagramBase):
         Returns:
             Object: The newly created object
         """
-        new_obj = cls(value=value, page=page, size=template_object.size, template_object=template_object)
+        new_obj = cls(
+            value=value,
+            page=page,
+            size=template_object.size,
+            template_object=template_object,
+        )
         if position is not None:
             new_obj.position = position
         if value is not None:
             new_obj.value = value
         return new_obj
-        
+
     @classmethod
     def create_from_style_string(cls, style_string):
         """Objects can be instantiated from a style string. These strings are most easily found in the Draw.io app, by styling an object as desired then right-clicking and selecting "Edit Style". Copying that text into this function will generate an object styled the same.
@@ -249,14 +257,10 @@ class Object(DiagramBase):
                     self.apply_attribute_dict(obj_dict)
                 else:
                     raise ValueError(
-                        "Object {0} not in Library {1}".format(
-                            obj_name, library
-                        )
+                        "Object {0} not in Library {1}".format(obj_name, library)
                     )
             else:
-                raise ValueError(
-                    "Library {0} not in base_libraries".format(library)
-                )
+                raise ValueError("Library {0} not in base_libraries".format(library))
         elif type(library) == dict:
             obj_dict = library[obj_name]
             self.apply_attribute_dict(obj_dict)
@@ -304,9 +308,7 @@ class Object(DiagramBase):
         if value in text_directions_inv.keys():
             self._text_direction = text_directions_inv[value]
         else:
-            raise ValueError(
-                "{0} is not an allowed value of horizontal".format(value)
-            )
+            raise ValueError("{0} is not an allowed value of horizontal".format(value))
 
     @property
     def text_direction(self):
@@ -323,8 +325,7 @@ class Object(DiagramBase):
 
     @property
     def font_style(self):
-        '''The font_style is a numeric format that corresponds to a combination of three other attributes: bold_font, italic_font, and underline_font. Any combination of them can be true.
-        '''
+        """The font_style is a numeric format that corresponds to a combination of three other attributes: bold_font, italic_font, and underline_font. Any combination of them can be true."""
         bld = self.bold_font
         ita = self.italic_font
         unl = self.underline_font
@@ -358,7 +359,7 @@ class Object(DiagramBase):
     @property
     def line_pattern(self):
         """Two properties are enumerated together into line_pattern: dashed and dashPattern. line_pattern simplifies this with an external database that contains the dropdown options from the Draw.io app then outputs the correct combination of dashed and dashPattern.
-        
+
         However in some cases dashed and dashpattern need to be set individually, such as when formatting from a style string. In that case, the setters for those two attributes will disable the other.
 
         Returns:
@@ -417,7 +418,7 @@ class Object(DiagramBase):
     @property
     def position(self):
         """The position of the object on the page. This is the top left corner. It's set with a tuple of ints, X and Y respectively.
-        
+
         (X, Y)
 
         Returns:
@@ -433,7 +434,7 @@ class Object(DiagramBase):
     @property
     def center_position(self):
         """The position of the object on the page. This is the center of the object. It's set with a tuple of ints, X and Y respectively.
-        
+
         (X, Y)
 
         Returns:
@@ -452,7 +453,7 @@ class Object(DiagramBase):
     @property
     def size(self):
         """The size of the object. It's set with a tuple of ints, width and height respectively.
-        
+
         (width, height)
 
         Returns:
@@ -509,24 +510,20 @@ class Object(DiagramBase):
     def xml(self):
         """
         Returns the XML object for the Object: the opening tag with the style attributes, the value, and the closing tag.
-        
+
         Example:
         <class_name attribute_name=attribute_value>Text in object</class_name>
-        
+
         Returns:
             str: A single XML tag containing the object name, style attributes, and a closer.
         """
-        tag = (
-            self.xml_open_tag
-            + "\n  "
-            + self.geometry.xml
-            + "\n"
-            + self.xml_close_tag
-        )
+        tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         return tag
+
 
 class BasicObject(Object):
     pass
+
 
 class ObjGeometry(DiagramBase):
     def __init__(self, **kwargs):
@@ -553,9 +550,10 @@ class ObjGeometry(DiagramBase):
 
 class Group:
     """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.
-    
+
     Currently this object doesn't replicate any of the functionality of groups in the Draw.io app but it may be extended to have that capability in the future.
     """
+
     def __init__(self, **kwargs):
         self.objects = kwargs.get("objects", [])
         self.geometry = ObjGeometry()
@@ -574,8 +572,7 @@ class Group:
         self.update_geometry()
 
     def update_geometry(self):
-        """Update the geometry of the group. This includes the left and top coordinates and the width and height of the entire group.
-        """
+        """Update the geometry of the group. This includes the left and top coordinates and the width and height of the entire group."""
         self.geometry.x = self.left
         self.geometry.y = self.top
         self.geometry.width = self.width
@@ -601,9 +598,7 @@ class Group:
         Returns:
             int: Right edge of the group
         """
-        return max(
-            [obj.geometry.x + obj.geometry.width for obj in self.objects]
-        )
+        return max([obj.geometry.x + obj.geometry.width for obj in self.objects])
 
     @property
     def top(self):
@@ -621,9 +616,7 @@ class Group:
         Returns:
             int: The bottom edge of the group
         """
-        return max(
-            [obj.geometry.y + obj.geometry.height for obj in self.objects]
-        )
+        return max([obj.geometry.y + obj.geometry.height for obj in self.objects])
 
     @property
     def width(self):
@@ -659,7 +652,7 @@ class Group:
     @property
     def center_position(self):
         """The center position of the group. Returns a tuple of ints, with the X and Y coordinate. When this property is set, the coordinates of every object in the group are updated.
-        
+
         Returns:
             tuple: A tuple of ints (X, Y)
         """

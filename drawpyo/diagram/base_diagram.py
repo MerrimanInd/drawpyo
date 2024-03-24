@@ -87,6 +87,7 @@ class DiagramBase(XMLBase):
     """
     This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._style_attributes = ["html"]
@@ -186,21 +187,15 @@ class DiagramBase(XMLBase):
         """
 
         style_str = ""
-        if (
-            hasattr(self, "baseStyle")
-            and getattr(self, "baseStyle") is not None
-        ):
+        if hasattr(self, "baseStyle") and getattr(self, "baseStyle") is not None:
             style_str = getattr(self, "baseStyle") + ";"
 
         for attribute in self.style_attributes:
-            if (
-                hasattr(self, attribute)
-                and getattr(self, attribute) is not None
-            ):
+            if hasattr(self, attribute) and getattr(self, attribute) is not None:
                 attr_val = getattr(self, attribute)
                 # reformat different datatypes to strings
                 if isinstance(attr_val, bool):
-                    attr_val = format(attr_val*1)
+                    attr_val = format(attr_val * 1)
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
         return style_str
 
@@ -219,7 +214,7 @@ class DiagramBase(XMLBase):
             style_str (str): A Draw.io style string
         """
         for attrib in style_str.split(";"):
-            if attrib == '':
+            if attrib == "":
                 pass
             elif "=" in attrib:
                 a_name = attrib.split("=")[0]
@@ -241,7 +236,6 @@ class DiagramBase(XMLBase):
             value = getattr(template, attrib)
             self._add_and_set_style_attrib(attrib, value)
 
-
     def apply_attribute_dict(self, attr_dict):
         """
         This function takes in a dictionary of attributes and applies them
@@ -262,7 +256,6 @@ class DiagramBase(XMLBase):
         """
         for attr, val in attr_dict.items():
             self._add_and_set_style_attrib(attr, val)
-
 
     @classmethod
     def from_style_string(cls, style_string):

@@ -10,7 +10,7 @@ from .base_diagram import (
 __all__ = ["Edge", "BasicEdge"]
 
 data = import_shape_database(
-    file_name=path.join("formatting_database","edge_styles.toml"), relative=True
+    file_name=path.join("formatting_database", "edge_styles.toml"), relative=True
 )
 
 connection_db = data["connection"]
@@ -32,18 +32,19 @@ line_ends_db["none"] = {"fillable": False}
 # Edges
 ###########################################################
 
+
 class Edge(DiagramBase):
     """The Edge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.
-    
+
     The three primary styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it's not how the style string is assembled in the XML. To abstract this, the Edge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The Edge class then assembles the style strings on export.
-    
+
     More information about edges are in the Usage documents at [Usage - Edges](../../usage/edges).
     """
 
     def __init__(self, **kwargs):
         """Edges can be initialized with almost all styling parameters as args.
         See [Usage - Edges](../../usage/edges) for more information and the options for each parameter.
-        
+
         Args:
             source (DiagramBase): The Draw.io object that the edge originates from
             target (DiagramBase): The Draw.io object that the edge points to
@@ -105,16 +106,15 @@ class Edge(DiagramBase):
 
     def __str__(self):
         return self.__repr__()
-    
+
     def remove(self):
-        """This function removes references to the Edge from its source and target objects then deletes the Edge.
-        """
+        """This function removes references to the Edge from its source and target objects then deletes the Edge."""
         if self.source is not None:
             self.source.remove_out_edge(self)
         if self.target is not None:
             self.target.remove_in_edge(self)
         del self
-    
+
     @property
     def attributes(self):
         """Returns the XML attributes to be added to the tag for the object
@@ -337,9 +337,7 @@ class Edge(DiagramBase):
         if value in connection_db.keys():
             self._connection = value
         else:
-            raise ValueError(
-                "{0} is not an allowed value of connection".format(value)
-            )
+            raise ValueError("{0} is not an allowed value of connection".format(value))
 
     # Pattern
     @property
@@ -369,24 +367,19 @@ class Edge(DiagramBase):
         Returns:
             str: _description_
         """
-        tag = (
-            self.xml_open_tag
-            + "\n  "
-            + self.geometry.xml
-            + "\n"
-            + self.xml_close_tag
-        )
+        tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         return tag
+
 
 class BasicEdge(Edge):
     pass
 
+
 class EdgeGeometry(DiagramBase):
-    """This class stores the geometry associated with an edge. This is rendered as a subobject in the Draw.io file so it's convenient for it to have its own class.
-    """
+    """This class stores the geometry associated with an edge. This is rendered as a subobject in the Draw.io file so it's convenient for it to have its own class."""
+
     def __init__(self, **kwargs):
-        """This class is automatically instantiated by a Edge object so the user should never need to create it.
-        """
+        """This class is automatically instantiated by a Edge object so the user should never need to create it."""
         super().__init__(**kwargs)
         self.xml_class = "mxGeometry"
         self.parent_object = kwargs.get("parent_object", None)
@@ -411,7 +404,9 @@ class EdgeLabel(DiagramBase):
         super().__init__(**kwargs)
         self.xml_class = "mxCell"
 
-        self.default_style = "edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];"
+        self.default_style = (
+            "edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];"
+        )
 
         self.value = kwargs.get("value", "")
         self.style = kwargs.get("style", self.default_style)
