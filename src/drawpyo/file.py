@@ -52,6 +52,7 @@ class File(XMLBase):
         Args:
             page (drawpyo.diagram.Page): A Page object
         """
+        page._file = self
         self.pages.append(page)
 
     def remove_page(self, page):

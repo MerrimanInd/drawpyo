@@ -69,7 +69,8 @@ class Page:
 
     @file.setter
     def file(self, f):
-        f.add_page(self)
+        if f is not None:
+            f.add_page(self)
         self._file = f
 
     @file.deleter

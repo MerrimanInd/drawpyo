@@ -1,14 +1,5 @@
 import drawpyo
 
-# content of test_sample.py
-def inc(x):
-    return x + 1
-
-
-def test_answer():
-    assert inc(3) == 4
-
-
 def test_XMLBase_init():
     test_obj = drawpyo.XMLBase()
     assert test_obj.id == id(test_obj)
@@ -32,4 +23,4 @@ def test_XMLBase_xml_ify():
     assert test_obj.xml_ify('<') == "&lt;"
     assert test_obj.xml_ify('&') == "&amp;"
     assert test_obj.xml_ify('"') == "&quot;"
-    assert test_obj.xml_ify("'") == "&#39;"
+    assert test_obj.xml_ify("'") == "&apos;"
