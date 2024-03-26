@@ -1,10 +1,14 @@
 xmlize = {}
 xmlize[">"] = "&gt;"
-xmlize["<"] = "&gt;"
-xmlize['"'] = "&#34;"
-xmlize["&"] = "&#38;"
-xmlize["'"] = "&#39;"
+xmlize["<"] = "&lt;"
+xmlize["&"] = "&amp;"
+xmlize['"'] = "&quot;"
+xmlize["'"] = "&apos;"
 
+# When saving Draw.io uses this for single quotes and also has some funky XML character escaping (double escaping ampersands) but handles normal XML escapes (above) fine on loading
+# xmlize["'"] = "&#39;"
+# xmlize['"'] = "&#34;"
+# xmlize["&"] = "&#38;"
 
 class XMLBase:
     """
@@ -93,4 +97,14 @@ class XMLBase:
         return open_tag[:-1] + " />"
 
     def xml_ify(self, parameter_string):
-        return parameter_string.translate(xmlize)
+        return self.translate_txt(parameter_string, xmlize)
+    
+    @staticmethod
+    def translate_txt(string, replacement_dict):
+        new_str = ""
+        for char in string:
+            if char in replacement_dict:
+                new_str = new_str + replacement_dict[char]
+            else:
+                new_str = new_str + char
+        return new_str
