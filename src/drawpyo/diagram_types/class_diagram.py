@@ -1,20 +1,21 @@
 from .tree import NodeObject, TreeGroup, TreeDiagram
 import inspect
 
+
 class ClassDiagram(TreeDiagram):
     def __init__(self):
         super().__init__()
-        
+
     @classmethod
     def create_from_module(cls, module, **kwargs):
         pass
-    
+
     def process_module(module, tree, **kwargs):
         include_private = kwargs.get("include_private", False)
-        
+
         # Create top object
         module = NodeObject(tree=tree, value=module.__name__)
-        
+
         objects_names = dir(module)
         for obj_name in objects_names:
             obj = module.__dict__[obj_name]
