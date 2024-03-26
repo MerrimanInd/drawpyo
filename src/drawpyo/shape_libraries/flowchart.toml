@@ -1,0 +1,44 @@
+[annotation_1]
+strokeWidth = 2
+shape = "mxgraph.flowchart.annotation_1"
+align = "left"
+pointerEvents = 1
+size = [50, 100]
+
+[annotation_2]
+strokeWidth = 2
+shape = "mxgraph.flowchart.annotation_2"
+align = "left"
+labelPosition = "right"
+pointerEvents = 1
+size = [50, 100]
+
+[card]
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "card"
+whiteSpace = "wrap"
+# size = 20
+arcSize = 12
+size = [100, 60]
+
+[collate]
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "mxgraph.flowchart.collate"
+size = [100, 100]
+
+[data]
+shape = "parallelogram"
+strokeWidth = 2
+perimter = "parallelogramPerimeter"
+whiteSpace = "wrap"
+rounded = 1
+arcSize = 12
+# size = 0.23
+size = [100, 60]
+
+[database]
+strokeWidth = 2
+shape = "mxgraph.flowchart.database"
+whiteSpace = "wrap"

@@ -6,10 +6,10 @@ Drawpyo provides two high level classes to define critical methods and attribute
 
 ## XMLBase
 
-::: drawpyo.xml_base.XMLBase
+::: src.drawpyo.xml_base.XMLBase
 
 -----
 
 ## DiagramBase
 
-::: drawpyo.diagram.base_diagram.DiagramBase
+::: src.drawpyo.diagram.base_diagram.DiagramBase
