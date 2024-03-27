@@ -1,5 +1,6 @@
 import drawpyo
 from os import path
+import xml.etree.ElementTree as ET
 
 def test_file_init():
     user_path = path.join(path.expanduser("~"), "Drawpyo Charts")
@@ -40,3 +41,23 @@ def test_file_pages():
     
     page_4.remove()
     assert len(test_file.pages) == 0
+    
+def test_file_write(tmp_path):
+    d = tmp_path / "sub"
+    d.mkdir()
+    
+    # Create a File and Page object
+    test_file = drawpyo.File(
+        file_name = "test_file.drawio",
+        file_path = d,
+    )
+    page_1 = drawpyo.Page(file=test_file)
+    
+    # Write the File object
+    f = test_file.write()
+    assert path.isfile(f)
+    
+    with open(f) as test_file:    
+        tree = ET.parse(test_file)
+        root = tree.getroot()
+        assert root.tag == "mxfile"
