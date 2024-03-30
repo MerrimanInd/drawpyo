@@ -35,9 +35,9 @@ def import_shape_library(library_path, name):
 
 
 def object_from_library(library, obj_name, **kwargs):
-    """This function generates a Object from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
+    """This function generates an Object from a library. The library can either be custom imported from a TOML or the name of one of the built-in Draw.io libraries.
 
-    Any keyword arguments that can be passed in to a Object creation can be passed into this function and it will format the base object. However, the styling in the library will overwrite that formatting.
+    Any keyword arguments that can be passed in to a Object creation can be passed into this function and it will format the base object. These keyword arguments will overwrite any attributes defined in the library.
 
     Args:
         library (str or dict): The library containing the object
@@ -48,6 +48,7 @@ def object_from_library(library, obj_name, **kwargs):
     """
     new_obj = Object(**kwargs)
     new_obj.format_as_library_object(library, obj_name)
+    new_obj.apply_attribute_dict(kwargs)
     return new_obj
 
 
@@ -180,6 +181,8 @@ class Object(DiagramBase):
         if "template_object" in kwargs:
             self.template_object = kwargs.get("template_object")
             self._apply_style_from_template(self.template_object)
+            self.width = self.template_object.width
+            self.height = self.template_object.height
 
     def __repr__(self):
         if self.value != "":

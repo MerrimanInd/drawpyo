@@ -1,0 +1,184 @@
+<mxfile host="Electron" modified="2024-03-30T20:38:50.194Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="JJP_WhPf6Rshj46BAUNv" version="24.1.0" type="device">
+  <diagram name="Page-1" id="Vl3elJl44fblXGHzXYUc">
+    <mxGraphModel dx="976" dy="715" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-1" target="H2TuaZuCRH6PtF-Hsm47-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="422" y="10" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-3" target="H2TuaZuCRH6PtF-Hsm47-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-3" value="Retrieve beans" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.stored_data;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="406" y="250" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-4" target="H2TuaZuCRH6PtF-Hsm47-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-4" value="Wait for Brew Time" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.delay;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="410" y="1270" width="124" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-5" target="H2TuaZuCRH6PtF-Hsm47-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-5" value="Turn on water kettle" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=hexagon;perimeter=hexagonPerimeter2;arcSize=6;size=0.27;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="394" y="130" width="156" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-8" target="H2TuaZuCRH6PtF-Hsm47-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-8" value="Weigh beans" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="406" y="370" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-10" target="H2TuaZuCRH6PtF-Hsm47-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-10" value="Grind beans" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="406" y="485" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-13" target="H2TuaZuCRH6PtF-Hsm47-61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-13" value="Wait for drawdown" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="407" y="1520" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-45" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-14" target="H2TuaZuCRH6PtF-Hsm47-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-14" value="Bloom?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="422" y="990" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-36" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-15" target="H2TuaZuCRH6PtF-Hsm47-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-40" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-15" target="H2TuaZuCRH6PtF-Hsm47-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-15" value="Preheat cone?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="422" y="730" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-21" target="H2TuaZuCRH6PtF-Hsm47-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-21" value="Mass of beans (g)" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="214" y="375" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-23" target="H2TuaZuCRH6PtF-Hsm47-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-23" value="Grind size" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="214" y="490" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-25" target="H2TuaZuCRH6PtF-Hsm47-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="405" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-25" target="H2TuaZuCRH6PtF-Hsm47-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-25" target="H2TuaZuCRH6PtF-Hsm47-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-25" target="H2TuaZuCRH6PtF-Hsm47-64">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="1210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-25" value="Brewing recipe" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.document2;whiteSpace=wrap;size=0.25;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-28" target="H2TuaZuCRH6PtF-Hsm47-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-28" value="Water temperature" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-32" target="H2TuaZuCRH6PtF-Hsm47-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-32" value="Setup cone and filter on mug" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="406" y="600" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-34" target="H2TuaZuCRH6PtF-Hsm47-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-34" value="Pour hot water through filter" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="880" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-38" target="H2TuaZuCRH6PtF-Hsm47-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-38" value="Add coffee to filter" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="406" y="880" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-43" target="H2TuaZuCRH6PtF-Hsm47-56">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="472.05882352941194" y="1169" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-43" value="Pour ~2x coffee weight in water" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="590" y="1090" width="132" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-46" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-14" target="H2TuaZuCRH6PtF-Hsm47-56">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="472" y="1169" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-55" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-53" target="H2TuaZuCRH6PtF-Hsm47-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-58" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.007;entryY=0.769;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-53" target="H2TuaZuCRH6PtF-Hsm47-56">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="422" y="1425" as="sourcePoint" />
+            <mxPoint x="520" y="1234.98" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="600" y="1420" />
+              <mxPoint x="600" y="1226" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-53" value="All water poured?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="422" y="1370" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-56" value="Add pour quantity of hot water" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="422" y="1180" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-56" target="H2TuaZuCRH6PtF-Hsm47-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-59" value="Enjoy!" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="422" y="1700" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-61" target="H2TuaZuCRH6PtF-Hsm47-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-61" value="Remove filter and discard coffee" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="408" y="1610" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H2TuaZuCRH6PtF-Hsm47-64" target="H2TuaZuCRH6PtF-Hsm47-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="H2TuaZuCRH6PtF-Hsm47-64" value="Pour quantity/count" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+          <mxGeometry x="214" y="1180" width="140" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
