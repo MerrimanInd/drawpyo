@@ -48,6 +48,7 @@ class Edge(DiagramBase):
         Args:
             source (DiagramBase): The Draw.io object that the edge originates from
             target (DiagramBase): The Draw.io object that the edge points to
+            label (str): The text to place on the edge.
             waypoints (str): How the edge should be styled in Draw.io
             connection (str): What type of style the edge should be rendered with
             pattern (str): How the line of the edge should be rendered
@@ -70,7 +71,6 @@ class Edge(DiagramBase):
         self.xml_class = "mxCell"
 
         # Style
-
         self.waypoints = kwargs.get("waypoints", "orthogonal")
         self.connection = kwargs.get("connection", "line")
         self.pattern = kwargs.get("pattern", "solid")
@@ -97,6 +97,14 @@ class Edge(DiagramBase):
         self.exitY = kwargs.get("exitY", None)
         self.exitDx = kwargs.get("exitDx", None)
         self.exitDy = kwargs.get("exitDy", None)
+        
+        # Label
+        self.value = kwargs.get("value", None)
+        # _label = kwargs.get("label", None)
+        # if _label is not None:
+        #     self.label = EdgeLabel()
+        #     self.label.value = _label
+        
 
     def __repr__(self):
         name_str = "{0} edge from {1} to {2}".format(
@@ -122,7 +130,7 @@ class Edge(DiagramBase):
         Returns:
             dict: Dictionary of object attributes and their values
         """
-        return {
+        base_attr_dict = {
             "id": self.id,
             "style": self.style,
             "edge": self.edge,
@@ -130,6 +138,9 @@ class Edge(DiagramBase):
             "source": self.source_id,
             "target": self.target_id,
         }
+        if self.value is not None:
+            base_attr_dict['value'] = self.value
+        return base_attr_dict
 
     ###########################################################
     # Source and Target Linking
