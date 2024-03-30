@@ -11,11 +11,16 @@ __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 general = import_shape_database(
     file_name=path.join("shape_libraries", "general.toml"), relative=True
 )
+flowchart = import_shape_database(
+    file_name=path.join("shape_libraries", "flowchart.toml"), relative=True
+)
 line_styles = import_shape_database(
     file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
 
-base_libraries = {"general": general}
+base_libraries = {"general": general,
+                  "flowchart": flowchart,
+                  }
 
 text_directions = {None: None, "horizontal": 1, "vertical": 0}
 text_directions_inv = {v: k for k, v in text_directions.items()}
@@ -122,7 +127,6 @@ class Object(DiagramBase):
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
-        self.size = kwargs.get("size", [120, 80])
         self.width = kwargs.get("width", 120)
         self.height = kwargs.get("height", 80)
         self.vertex = kwargs.get("vertex", 1)
