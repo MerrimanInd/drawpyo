@@ -1,86 +1,100 @@
 [annotation_1]
+size = [50, 100]
+[annotation_1.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.annotation_1"
 align = "left"
 pointerEvents = 1
-size = [50, 100]
 
 [annotation_2]
+size = [50, 100]
+[annotation_2.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.annotation_2"
 align = "left"
 labelPosition = "right"
 pointerEvents = 1
-size = [50, 100]
 
 [card]
+size = [100, 60]
+[card.style]
+size = 20
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "card"
 whiteSpace = "wrap"
-# size = 20
 arcSize = 12
-size = [100, 60]
 
 [collate]
+size = [100, 100]
+[collate.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.collate"
-size = [100, 100]
 
 [data]
+size = [100, 60]
+[data.style]
 shape = "parallelogram"
 strokeWidth = 2
 perimter = "parallelogramPerimeter"
 whiteSpace = "wrap"
 rounded = 1
 arcSize = 12
-# size = 0.23
-size = [100, 60]
+size = 0.23
 
 [database]
+[database.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.database"
 whiteSpace = "wrap"
 
 [decision]
+[decision.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.decision"
 whiteSpace = "wrap"
 
 [delay]
+[delay.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.delay"
 whiteSpace = "wrap"
 
 [direct_data]
+[direct_data.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.direct_data"
 whiteSpace = "wrap"
 
 [display]
+[display.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.display"
 whiteSpace = "wrap"
 size = 0.25
 
 [document]
+[document.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.display2"
 whiteSpace = "wrap"
 size = 0.25
 
 [extract]
+[extract.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.extract_or_measurement"
 whiteSpace = "wrap"
 
 [measurement]
+[measurement.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.extract_or_measurement"
 whiteSpace = "wrap"
 
 [internal_storage]
+[internal_storage.style]
 shape = "internalStorage"
 whiteSpace = "wrap"
 dx = 15
@@ -90,11 +104,13 @@ arcSize = 8
 StrokeWidth = 2
 
 [loop_limit]
+[loop_limit.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.loop_limit"
 whiteSpace = "wrap"
 
 [manual_input]
+[manual_input.style]
 strokeWidth = 2
 shape = "manualInput"
 whiteSpace = "wrap"
@@ -103,6 +119,7 @@ size = 26
 arcSize = 11
 
 [manual_operation]
+[manual_operation.style]
 verticalLabelPosition = "middle"
 verticalAlign = "middle"
 shape = "trapezoid"
@@ -115,21 +132,25 @@ labelPosition = "center"
 align = "center"
 
 [merge]
+[merge.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.merge_or_storage"
 whiteSpace = "wrap"
 
 [storage]
+[storage.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.merge_or_storage"
 whiteSpace = "wrap"
 
 [multi_document]
+[multi_document.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.multi-document"
 whiteSpace = "wrap"
 
 [off_page_ref]
+[off_page_ref.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "offPageConnector"
@@ -137,28 +158,33 @@ rounded = 0
 size = 0.5
 
 [on_page_ref]
+[on_page_ref.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.on-page_reference"
 
 [or]
+[or.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.summing_function"
 
 [tape]
+[tape.style]
 shape = "tape"
 whiteSpace = "wrap"
 strokeWidth = 2
 size = 0.19
 
 [parallel_mode]
+[parallel_mode.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.parallel_mode"
 pointerEvents = 1
 
 [predefined_process]
+[predefined_process.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "process"
@@ -168,6 +194,7 @@ size = 0.14
 arcSize = 6
 
 [preparation]
+[preparation.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "hexagon"
@@ -176,6 +203,7 @@ arcSize = 6
 size = 0.27
 
 [process]
+[process.style]
 rounded = 1
 whiteSpace = "wrap"
 absoluteArcSize = 1
@@ -183,41 +211,49 @@ arcSize = 14
 strokeWidth = 2
 
 [sequential_data]
+[sequential_data.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.sequential_data"
 whiteSpace = "wrap"
 
 [sort]
+[sort.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.sort"
 
 [start_1]
+[start_1.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.start_1"
 whiteSpace = "wrap"
 
 [start_2]
+[start_2.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.start_2"
 whiteSpace = "wrap"
 
 [stored_data]
+[stored_data.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.stored_data"
 whiteSpace = "wrap"
 
 [summing_junction]
+[summing_function.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 shape = "mxgraph.flowchart.or"
 
 [terminator]
+[terminator.style]
 strokeWidth = 2
 shape = "mxgraph.flowchart.terminator"
 whiteSpace = "wrap"
 
 [transfer]
+[transfer.style]
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
 strokeWidth = 2

@@ -3,6 +3,7 @@ title = "Default Draw.pyo Shapes"
 # These are the default shapes as defined in the Basic pane of the Draw.io interface
 
 [default]
+[default.style]
 baseStyle = ""
 html = 1
 white_space = "wrap"
@@ -10,63 +11,75 @@ rounded = 0
 
 [rectangle]
 inherit = "default"
+[rectangle.style]
 
 [rounded_rectangle]
 inherit = "default"
+[rounded_rectangle.style]
 rounded = 1
 
 [text]
 inherit = "default"
 size = [60, 20]
+[text.style]
 baseStyle = "text"
 
 [ellipse]
 inherit = "default"
 size = [120, 80]
+[ellipse.style]
 baseStyle = "ellipse"
 
 [square]
 inherit = "default"
 size = [80, 80]
+[square.style]
 aspect = "fixed"
 
 [circle]
 inherit = "default"
 size = [80, 80]
-baseStyle = "ellipse"
+[circle.style]
 aspect = "fixed"
+baseStyle = "ellipse"
 
 [process]
 inherit = "default"
+[process.style]
 shape = "process"
 backgroundOutline = 1
 
 [diamond]
 inherit = "default"
 size = [80, 80]
+[diamond.style]
 baseStyle = "rhombus"
 
 [parallelogram]
 inherit = "default"
+fixedSize = 1
+[parallelogram.style]
 shape = "parallelogram"
 perimeter = "parelleogramPerimeter"
-fixedSize = 1
 
 [hexagon]
 inherit = "default"
 size = [120, 80]
+fixedSize = 1
+[hexagon.style]
 shape = "hexagon"
 perimeter = "hexagonPerimeter2"
-fixedSize = 1
 
 [triangle]
 inherit = "default"
 size = [60, 80]
+[triangle.style]
 baseStyle = "triangle"
 
 [cylinder]
 inherit = "default"
 size = [60, 80]
+[cylinder.style]
 shape = "cylinder3"
 boundedLbl = 1
 backgroundOutline = 1
@@ -74,24 +87,28 @@ backgroundOutline = 1
 [cloud]
 inherit = "default"
 size = [60, 80]
+[cloud.style]
 baseStyle = "ellipse"
 shape = "cloud"
 
 [document]
 inherit = "default"
 size = [120, 80]
+[document.style]
 shape = "document"
 boundedLbl = 1
 
 [internal_storage]
 inherit = "default"
 size = [80, 80]
+[internal_storage.style]
 shape = "internalStorage"
 backgroundOutline = 1
 
 [cube]
 inherit = "default"
 size = [120, 80]
+[cube.style]
 shape = "cube"
 boundedLbl = 1
 backgroundOutline = 1
@@ -101,22 +118,26 @@ darkOpacity2 = 0.1
 [step]
 inherit = "default"
 size = [120, 80]
+[step.perimeter]
 shape = "step"
 perimeter = "stepPerimeter"
 
 [trapezoid]
 inherit = "default"
+[trapezoid.style]
 shape = "trapezoid"
 perimeter = "trapezoidPerimeter"
 
 [tape]
 inherit = "default"
 size = [120, 100]
+[tape.style]
 shape = "tape"
 
 [note]
 inherit = "default"
 size = [80, 100]
+[note.style]
 shape = "note"
 backgroundOutline = 1
 darkOpacity = 0.05
@@ -124,17 +145,20 @@ darkOpacity = 0.05
 [card]
 inherit = "default"
 size = [80, 100]
+[card.style]
 shape = "card"
 
 [callout]
 inherit = "default"
 size = [120, 80]
+[callout.style]
 shape = "callout"
 perimeter = "calloutPerimeter"
 
 [actor]
 inherit = "default"
 size = [30, 60]
+[actor.style]
 shape = "umlActor"
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
@@ -143,32 +167,38 @@ outlineConnect = 0
 [or]
 inherit = "default"
 size = [60, 80]
+[or.style]
 shape = "xor"
 
 [and]
 inherit = "default"
 size = [60, 80]
+[and.style]
 shape = "or"
 
 [data_storage]
 inherit = "default"
 size = [100, 80]
-shape = "dataStorage"
 fixedSize = 1
+[data_storage.style]
+shape = "dataStorage"
 
 [container]
 inherit = "default"
 size = [200, 200]
+[container.style]
 baseStyle = "swimlane"
 startSize = 0
 
 [labeled_container]
 inherit = "default"
 size = [200, 200]
+[labeled_container.style]
 baseStyle = "swimlane"
 
 [labeled_horizontal_container]
 inherit = "default"
 size = [200, 200]
+[labeled_horizontal_container.style]
 baseStyle = "swimlane"
 horizontal = 0

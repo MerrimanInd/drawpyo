@@ -47,7 +47,7 @@ def import_shape_database(file_name, relative=False):
 
     for obj in data.values():
         if "inherit" in obj:
-            obj = data[obj["inherit"]].update(obj)
+            obj.update(data[obj['inherit']])
 
     return data
 
