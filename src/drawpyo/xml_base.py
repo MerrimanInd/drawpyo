@@ -10,6 +10,7 @@ xmlize["'"] = "&apos;"
 # xmlize['"'] = "&#34;"
 # xmlize["&"] = "&#38;"
 
+
 class XMLBase:
     """
     XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.
@@ -98,7 +99,7 @@ class XMLBase:
 
     def xml_ify(self, parameter_string):
         return self.translate_txt(parameter_string, xmlize)
-    
+
     @staticmethod
     def translate_txt(string, replacement_dict):
         new_str = ""
