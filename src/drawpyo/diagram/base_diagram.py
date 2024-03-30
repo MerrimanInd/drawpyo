@@ -46,7 +46,7 @@ def import_shape_database(file_name, relative=False):
 
     for obj in data.values():
         if "inherit" in obj:
-            obj = data[obj["inherit"]].update(obj)
+            obj.update(data[obj['inherit']])
 
     return data
 
@@ -187,7 +187,7 @@ class DiagramBase(XMLBase):
         """
 
         style_str = ""
-        if hasattr(self, "baseStyle") and getattr(self, "baseStyle") is not None:
+        if hasattr(self, "baseStyle") and getattr(self, "baseStyle") is not None and getattr(self, "baseStyle") != "":
             style_str = getattr(self, "baseStyle") + ";"
 
         for attribute in self.style_attributes:

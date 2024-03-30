@@ -17,22 +17,26 @@ rounded = 1
 
 [text]
 inherit = "default"
-size = [60, 20]
+width = 60
+height = 20
 baseStyle = "text"
 
 [ellipse]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 baseStyle = "ellipse"
 
 [square]
 inherit = "default"
-size = [80, 80]
+width = 80
+height = 80
 aspect = "fixed"
 
 [circle]
 inherit = "default"
-size = [80, 80]
+width = 80
+height = 80
 baseStyle = "ellipse"
 aspect = "fixed"
 
@@ -43,7 +47,8 @@ backgroundOutline = 1
 
 [diamond]
 inherit = "default"
-size = [80, 80]
+width = 80
+height = 80
 baseStyle = "rhombus"
 
 [parallelogram]
@@ -54,44 +59,51 @@ fixedSize = 1
 
 [hexagon]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 shape = "hexagon"
 perimeter = "hexagonPerimeter2"
 fixedSize = 1
 
 [triangle]
 inherit = "default"
-size = [60, 80]
+height = 80
+width = 60
 baseStyle = "triangle"
 
 [cylinder]
 inherit = "default"
-size = [60, 80]
+width = 60
+height = 80
 shape = "cylinder3"
 boundedLbl = 1
 backgroundOutline = 1
 
 [cloud]
 inherit = "default"
-size = [60, 80]
+width = 60
+height = 80
 baseStyle = "ellipse"
 shape = "cloud"
 
 [document]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 shape = "document"
 boundedLbl = 1
 
 [internal_storage]
 inherit = "default"
-size = [80, 80]
+width = 80
+height = 80
 shape = "internalStorage"
 backgroundOutline = 1
 
 [cube]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 shape = "cube"
 boundedLbl = 1
 backgroundOutline = 1
@@ -100,7 +112,8 @@ darkOpacity2 = 0.1
 
 [step]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 shape = "step"
 perimeter = "stepPerimeter"
 
@@ -111,30 +124,35 @@ perimeter = "trapezoidPerimeter"
 
 [tape]
 inherit = "default"
-size = [120, 100]
+width = 120
+height = 100
 shape = "tape"
 
 [note]
 inherit = "default"
-size = [80, 100]
+width = 80
+height = 100
 shape = "note"
 backgroundOutline = 1
 darkOpacity = 0.05
 
 [card]
 inherit = "default"
-size = [80, 100]
+width = 80
+height = 100
 shape = "card"
 
 [callout]
 inherit = "default"
-size = [120, 80]
+width = 120
+height = 80
 shape = "callout"
 perimeter = "calloutPerimeter"
 
 [actor]
 inherit = "default"
-size = [30, 60]
+width = 30
+height = 60
 shape = "umlActor"
 verticalLabelPosition = "bottom"
 verticalAlign = "top"
@@ -142,33 +160,36 @@ outlineConnect = 0
 
 [or]
 inherit = "default"
-size = [60, 80]
+width = 60
+height = 80
 shape = "xor"
 
 [and]
 inherit = "default"
-size = [60, 80]
+width = 60
+height = 80
 shape = "or"
 
 [data_storage]
 inherit = "default"
-size = [100, 80]
+width = 100
+height = 80
 shape = "dataStorage"
 fixedSize = 1
 
 [container]
-inherit = "default"
-size = [200, 200]
+width = 200
+height = 200
 baseStyle = "swimlane"
 startSize = 0
 
 [labeled_container]
-inherit = "default"
-size = [200, 200]
+width = 200
+height = 200
 baseStyle = "swimlane"
 
 [labeled_horizontal_container]
-inherit = "default"
-size = [200, 200]
+width = 200
+height = 200
 baseStyle = "swimlane"
 horizontal = 0

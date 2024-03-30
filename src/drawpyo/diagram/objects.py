@@ -123,6 +123,8 @@ class Object(DiagramBase):
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
         self.size = kwargs.get("size", [120, 80])
+        self.width = kwargs.get("width", 120)
+        self.height = kwargs.get("height", 80)
         self.vertex = kwargs.get("vertex", 1)
 
         # TODO enumerate to fixed
@@ -414,6 +416,27 @@ class Object(DiagramBase):
     # Geometry properties
     ###########################################################
 
+    
+    @property
+    def width(self):
+        """This property makes geometry.width available to the owning class for ease of access.
+        """
+        return self.geometry.width
+    
+    @width.setter
+    def width(self, value):
+        self.geometry.width = value
+        
+    @property
+    def height(self):
+        """This property makes geometry.height available to the owning class for ease of access.
+        """
+        return self.geometry.height
+    
+    @height.setter
+    def height(self, value):
+        self.geometry.height = value
+
     # Position property
     @property
     def position(self):
@@ -449,22 +472,6 @@ class Object(DiagramBase):
         self.geometry.x = position[0] - self.geometry.width / 2
         self.geometry.y = position[1] - self.geometry.height / 2
 
-    # Size property
-    @property
-    def size(self):
-        """The size of the object. It's set with a tuple of ints, width and height respectively.
-
-        (width, height)
-
-        Returns:
-            tuple: A tuple of ints describing the size of the object
-        """
-        return (self.geometry.width, self.geometry.height)
-
-    @size.setter
-    def size(self, value):
-        self.geometry.width = value[0]
-        self.geometry.height = value[1]
 
     ###########################################################
     # Edge Tracking
@@ -547,6 +554,22 @@ class ObjGeometry(DiagramBase):
             "as": self.as_attribute,
         }
 
+    # Size property
+    @property
+    def size(self):
+        """The size of the object. It's set with a tuple of ints, width and height respectively.
+
+        (width, height)
+
+        Returns:
+            tuple: A tuple of ints describing the size of the object
+        """
+        return (self.width, self.height)
+
+    @size.setter
+    def size(self, value):
+        self.width = value[0]
+        self.height = value[1]
 
 class Group:
     """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.
