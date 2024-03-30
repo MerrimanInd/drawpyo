@@ -11,11 +11,16 @@ __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 general = import_shape_database(
     file_name=path.join("shape_libraries", "general.toml"), relative=True
 )
+flowchart = import_shape_database(
+    file_name=path.join("shape_libraries", "flowchart.toml"), relative=True
+)
 line_styles = import_shape_database(
     file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
 
-base_libraries = {"general": general}
+base_libraries = {"general": general,
+                  "flowchart": flowchart,
+                  }
 
 text_directions = {None: None, "horizontal": 1, "vertical": 0}
 text_directions_inv = {v: k for k, v in text_directions.items()}
@@ -61,15 +66,16 @@ class Object(DiagramBase):
     # Initialization Functions
     ###########################################################
 
-    def __init__(self, value="", size=(120, 80), position=(0, 0), **kwargs):
+    def __init__(self, value="", position=(0, 0), **kwargs):
         """A Object can be initialized with as many or as few of its styling attributes as is desired.
 
         Args:
             value (str, optional): The text to fill the object with. Defaults to "".
-            size (tuple, optional): The size of the object in pixels, in (W, H). Defaults to (120, 80).
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
 
         Keyword Args:
+            width (int, optional): The width of the object in pixels. Defaults to 120.
+            height (int, optional): The height of the object in pixels. Defaults to 80.
             template_object (Object, optional): Another object to copy the style_attributes from
             aspect
             rounded (bool, optional): Whether to round the corners of the shape
@@ -122,7 +128,8 @@ class Object(DiagramBase):
         # Geometry
         self.geometry = ObjGeometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
-        self.size = kwargs.get("size", [120, 80])
+        self.width = kwargs.get("width", 120)
+        self.height = kwargs.get("height", 80)
         self.vertex = kwargs.get("vertex", 1)
 
         # TODO enumerate to fixed
@@ -203,7 +210,8 @@ class Object(DiagramBase):
         new_obj = cls(
             value=value,
             page=page,
-            size=template_object.size,
+            width=template_object.width,
+            height=template_object.height,
             template_object=template_object,
         )
         if position is not None:
@@ -414,6 +422,27 @@ class Object(DiagramBase):
     # Geometry properties
     ###########################################################
 
+    
+    @property
+    def width(self):
+        """This property makes geometry.width available to the owning class for ease of access.
+        """
+        return self.geometry.width
+    
+    @width.setter
+    def width(self, value):
+        self.geometry.width = value
+        
+    @property
+    def height(self):
+        """This property makes geometry.height available to the owning class for ease of access.
+        """
+        return self.geometry.height
+    
+    @height.setter
+    def height(self, value):
+        self.geometry.height = value
+
     # Position property
     @property
     def position(self):
@@ -449,22 +478,6 @@ class Object(DiagramBase):
         self.geometry.x = position[0] - self.geometry.width / 2
         self.geometry.y = position[1] - self.geometry.height / 2
 
-    # Size property
-    @property
-    def size(self):
-        """The size of the object. It's set with a tuple of ints, width and height respectively.
-
-        (width, height)
-
-        Returns:
-            tuple: A tuple of ints describing the size of the object
-        """
-        return (self.geometry.width, self.geometry.height)
-
-    @size.setter
-    def size(self, value):
-        self.geometry.width = value[0]
-        self.geometry.height = value[1]
 
     ###########################################################
     # Edge Tracking
@@ -547,6 +560,22 @@ class ObjGeometry(DiagramBase):
             "as": self.as_attribute,
         }
 
+    # Size property
+    @property
+    def size(self):
+        """The size of the object. It's set with a tuple of ints, width and height respectively.
+
+        (width, height)
+
+        Returns:
+            tuple: A tuple of ints describing the size of the object
+        """
+        return (self.width, self.height)
+
+    @size.setter
+    def size(self, value):
+        self.width = value[0]
+        self.height = value[1]
 
 class Group:
     """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.
