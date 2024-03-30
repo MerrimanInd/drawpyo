@@ -40,19 +40,15 @@ All objects contain a structure called ObjectGeometry that provides a layer of a
 
 ### Object Sizing
 
-The three parameters that affect object placement are size and aspect. Size can be set with a tuple containing the width then height.
+The three parameters that affect object placement are size and aspect. Size has to be set individually with the .width and .height attributes.
 
 ```python
-Object.size = (120, 80)
+Object.width = 120
+Object.height = 80
 Object.aspect = 'fixed'
 ```
 
-The `size` attribute is an abstraction of the ObjectGeometry object, so the width and height can also be accessed directly.
-
-```python
-Object.geometry.height = 80
-Object.geometry.width = 120
-```
+> In earlier versions there was a 'size' attribute. But then it was found that 'size' was also used as a style attribute for certain shapes so the geometry size attribute was removed in favor of using width and height directly.
 
 ### Object Geometry and Placement
 
@@ -63,7 +59,7 @@ Object.position = (0, 0)
 Object.center_position = (0, 0)
 ```
 
-As with the size, the X and Y positions can be accessed directly in the geometry object.
+The X and Y positions can also be accessed directly in the geometry object.
 
 ```python
 Object.geometry.x = 0

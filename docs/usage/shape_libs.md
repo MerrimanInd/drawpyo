@@ -8,7 +8,12 @@ To replicate this feature for drawpyo, I created a library format based on TOML.
 
 ## Built-In Shape Libaries
 
-Drawpyo uses these TOML shape libraries to store the default libaries. Currently the only library that ships with drawpyo is the general library but more will come. The default libraries are in /drawpyo/shape_libraries.
+Drawpyo uses these TOML shape libraries to store the default libaries. The default libraries are in /drawpyo/shape_libraries. These are the libraries that are available in the Draw.io app.
+
+Implemented default libraries:
+
+- General
+- Flowchart
 
 There is also a set of TOML databases for other formats, like all of the various combinations of edge styles and the line styles. These are stored in /drawpyo/formatting_database.
 
@@ -28,7 +33,8 @@ You can then define a custom object by naming the object in square brackets and 
 
 ```toml
 [square]
-size = [80, 80]
+width = 80
+height = 80
 aspect = "fixed"
 ```
 

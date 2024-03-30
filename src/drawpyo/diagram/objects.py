@@ -66,15 +66,16 @@ class Object(DiagramBase):
     # Initialization Functions
     ###########################################################
 
-    def __init__(self, value="", size=(120, 80), position=(0, 0), **kwargs):
+    def __init__(self, value="", position=(0, 0), **kwargs):
         """A Object can be initialized with as many or as few of its styling attributes as is desired.
 
         Args:
             value (str, optional): The text to fill the object with. Defaults to "".
-            size (tuple, optional): The size of the object in pixels, in (W, H). Defaults to (120, 80).
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
 
         Keyword Args:
+            width (int, optional): The width of the object in pixels. Defaults to 120.
+            height (int, optional): The height of the object in pixels. Defaults to 80.
             template_object (Object, optional): Another object to copy the style_attributes from
             aspect
             rounded (bool, optional): Whether to round the corners of the shape
@@ -209,7 +210,8 @@ class Object(DiagramBase):
         new_obj = cls(
             value=value,
             page=page,
-            size=template_object.size,
+            width=template_object.width,
+            height=template_object.height,
             template_object=template_object,
         )
         if position is not None:
