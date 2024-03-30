@@ -18,9 +18,10 @@ line_styles = import_shape_database(
     file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
 
-base_libraries = {"general": general,
-                  "flowchart": flowchart,
-                  }
+base_libraries = {
+    "general": general,
+    "flowchart": flowchart,
+}
 
 text_directions = {None: None, "horizontal": 1, "vertical": 0}
 text_directions_inv = {v: k for k, v in text_directions.items()}
@@ -422,23 +423,20 @@ class Object(DiagramBase):
     # Geometry properties
     ###########################################################
 
-    
     @property
     def width(self):
-        """This property makes geometry.width available to the owning class for ease of access.
-        """
+        """This property makes geometry.width available to the owning class for ease of access."""
         return self.geometry.width
-    
+
     @width.setter
     def width(self, value):
         self.geometry.width = value
-        
+
     @property
     def height(self):
-        """This property makes geometry.height available to the owning class for ease of access.
-        """
+        """This property makes geometry.height available to the owning class for ease of access."""
         return self.geometry.height
-    
+
     @height.setter
     def height(self, value):
         self.geometry.height = value
@@ -477,7 +475,6 @@ class Object(DiagramBase):
     def center_position(self, position):
         self.geometry.x = position[0] - self.geometry.width / 2
         self.geometry.y = position[1] - self.geometry.height / 2
-
 
     ###########################################################
     # Edge Tracking
@@ -576,6 +573,7 @@ class ObjGeometry(DiagramBase):
     def size(self, value):
         self.width = value[0]
         self.height = value[1]
+
 
 class Group:
     """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.

@@ -44,7 +44,7 @@ base_styles = [
     "stored_data",
     "summing_junction",
     "terminator",
-    "transfer"
+    "transfer",
 ]
 
 items = []

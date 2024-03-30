@@ -137,3 +137,5 @@ class File(XMLBase):
         )
         f.write(self.xml)
         f.close
+
+        return path.join(self.file_path, self.file_name)
