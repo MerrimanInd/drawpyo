@@ -3,6 +3,9 @@ from os import path
 from .base_diagram import (
     DiagramBase,
     import_shape_database,
+)
+from .style import (
+    Style,
     style_str_from_dict,
 )
 
@@ -96,7 +99,7 @@ class Object(DiagramBase):
             labelBorderColor (str, optional): The border color of the object label (#ffffff)
         """
         super().__init__(**kwargs)
-        self._style_attributes = [
+        self.style.attributes = [
             "html",
             "whiteSpace",
             "rounded",
@@ -132,46 +135,47 @@ class Object(DiagramBase):
         self.value = value
 
         # Style
-        self.baseStyle = kwargs.get("baseStyle", None)
+        self.style.baseStyle = kwargs.get("baseStyle", None)
 
-        self.html = kwargs.get("html", 1)
-        self.rounded = kwargs.get("rounded", 0)
-        self.whiteSpace = kwargs.get("whiteSpace", "wrap")
-        self.fillColor = kwargs.get("fillColor", None)
-        self.fontColor = kwargs.get("fontColor", None)
-        self.opacity = kwargs.get("opacity", None)
-        self.strokeColor = kwargs.get("strokeColor", None)
-        self.glass = kwargs.get("glass", None)
-        self.shadow = kwargs.get("shadow", None)
-        self.comic = kwargs.get("comic", None)
-        self.line_pattern = kwargs.get("line_pattern", "solid")
+        self.style.rounded = kwargs.get("rounded", 0)
+        self.style.html = kwargs.get("html", 1)
+        self.style.whiteSpace = kwargs.get("whiteSpace", "wrap")
+        self.style.fillColor = kwargs.get("fillColor", None)
+        self.style.fontColor = kwargs.get("fontColor", None)
+        self.style.opacity = kwargs.get("opacity", None)
+        self.style.strokeColor = kwargs.get("strokeColor", None)
+        self.style.glass = kwargs.get("glass", None)
+        self.style.shadow = kwargs.get("shadow", None)
+        self.style.comic = kwargs.get("comic", None)
+        self.style.line_pattern = kwargs.get("line_pattern", "solid")
 
-        self.fontFamily = kwargs.get("fontFamily", None)
-        self.fontSize = kwargs.get("fontSize", None)
-        self.align = kwargs.get("align", None)
-        self.verticalAlign = kwargs.get("verticalAlign", None)
-        self.labelPosition = kwargs.get("labelPosition", None)
-        self.labelBackgroundColor = kwargs.get("labelBackgroundColor", None)
-        self.labelBorderColor = kwargs.get("labelBorderColor", None)
+        self.style.fontFamily = kwargs.get("fontFamily", None)
+        self.style.fontSize = kwargs.get("fontSize", None)
+        self.style.align = kwargs.get("align", None)
+        self.style.verticalAlign = kwargs.get("verticalAlign", None)
+        self.style.labelPosition = kwargs.get("labelPosition", None)
+        self.style.labelBackgroundColor = kwargs.get("labelBackgroundColor", None)
+        self.style.labelBorderColor = kwargs.get("labelBorderColor", None)
 
         # These need to be enumerated
-        self.text_direction = kwargs.get("text_direction", None)
+        self.style.text_direction = kwargs.get("text_direction", None)
         # This is actually horizontal. 0 means vertical text, 1 or not present
         # means horizontal
 
-        self.textOpacity = kwargs.get("textOpacity", None)
-        self.bold_font = kwargs.get("bold_font", False)
-        self.italic_font = kwargs.get("italic_font", False)
-        self.underline_font = kwargs.get("underline_font", False)
+        self.style.textOpacity = kwargs.get("textOpacity", None)
+        self.style.bold_font = kwargs.get("bold_font", False)
+        self.style.italic_font = kwargs.get("italic_font", False)
+        self.style.underline_font = kwargs.get("underline_font", False)
 
         self.out_edges = kwargs.get("out_edges", [])
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
 
-        if "template_object" in kwargs:
-            self.template_object = kwargs.get("template_object")
-            self._apply_style_from_template(self.template_object)
+        # TODO rework template object
+        # if "template_object" in kwargs:
+        #     self.template_object = kwargs.get("template_object")
+        #     self._apply_style_from_template(self.template_object)
 
     def __repr__(self):
         if self.value != "":
@@ -222,7 +226,7 @@ class Object(DiagramBase):
         Returns:
             Object: An object formatted with the style string
         """
-        cls.apply_style_from_string(style_string)
+        cls.style.apply_style_from_string(style_string)
         return cls
 
     @classmethod
@@ -249,6 +253,7 @@ class Object(DiagramBase):
             library (str or dict): The library containing the object
             obj_name (str): The name of the object in the library to generate
         """
+        #TODO make this function apply Base, Style, and maybe Geometry separately
         if type(library) == str:
             if library in base_libraries:
                 library_dict = base_libraries[library]

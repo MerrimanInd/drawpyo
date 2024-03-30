@@ -3,6 +3,9 @@ from os import path
 from .base_diagram import (
     DiagramBase,
     import_shape_database,
+)
+from .style import (
+    Style,
     style_str_from_dict,
 )
 
@@ -67,36 +70,37 @@ class Edge(DiagramBase):
             exitDy (int): 	Applies an offset in pixels to the Y axis exit point
         """
         super().__init__(**kwargs)
+        self.style = EdgeStyle()
         self.xml_class = "mxCell"
 
         # Style
 
-        self.waypoints = kwargs.get("waypoints", "orthogonal")
-        self.connection = kwargs.get("connection", "line")
-        self.pattern = kwargs.get("pattern", "solid")
+        self.style.waypoints = kwargs.get("waypoints", "orthogonal")
+        self.style.connection = kwargs.get("connection", "line")
+        self.style.pattern = kwargs.get("pattern", "solid")
 
-        self.line_end_target = kwargs.get("line_end_target", None)
-        self.line_end_source = kwargs.get("line_end_source", None)
-        self.endFill_target = kwargs.get("endFill_target", False)
-        self.endFill_source = kwargs.get("endFill_source", False)
+        self.style.line_end_target = kwargs.get("line_end_target", None)
+        self.style.line_end_source = kwargs.get("line_end_source", None)
+        self.style.endFill_target = kwargs.get("endFill_target", False)
+        self.style.endFill_source = kwargs.get("endFill_source", False)
 
-        self.jettySize = kwargs.get("jettySize", "auto")
-        self.html = kwargs.get("html", 1)
-        self.rounded = kwargs.get("rounded", 0)
+        self.style.jettySize = kwargs.get("jettySize", "auto")
+        self.style.html = kwargs.get("html", 1)
+        self.style.rounded = kwargs.get("rounded", 0)
 
         # Connection and geometry
         self.edge = kwargs.get("edge", 1)
         self.source = kwargs.get("source", None)
         self.target = kwargs.get("target", None)
         self.geometry = EdgeGeometry()
-        self.entryX = kwargs.get("entryX", None)
-        self.entryY = kwargs.get("entryY", None)
-        self.entryDx = kwargs.get("entryDx", None)
-        self.entryDy = kwargs.get("entryDy", None)
-        self.exitX = kwargs.get("exitX", None)
-        self.exitY = kwargs.get("exitY", None)
-        self.exitDx = kwargs.get("exitDx", None)
-        self.exitDy = kwargs.get("exitDy", None)
+        self.style.entryX = kwargs.get("entryX", None)
+        self.style.entryY = kwargs.get("entryY", None)
+        self.style.entryDx = kwargs.get("entryDx", None)
+        self.style.entryDy = kwargs.get("entryDy", None)
+        self.style.exitX = kwargs.get("exitX", None)
+        self.style.exitY = kwargs.get("exitY", None)
+        self.style.exitDx = kwargs.get("exitDx", None)
+        self.style.exitDy = kwargs.get("exitDy", None)
 
     def __repr__(self):
         name_str = "{0} edge from {1} to {2}".format(
@@ -228,6 +232,26 @@ class Edge(DiagramBase):
             "endFill",
         ]
 
+    ###########################################################
+    # XML Generation
+    ###########################################################
+
+    @property
+    def xml(self):
+        """The opening and closing XML tags with the styling attributes included.
+
+        Returns:
+            str: _description_
+        """
+        tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
+        return tag
+
+
+class BasicEdge(Edge):
+    pass
+
+class EdgeStyle(Style):
+    
     @property
     def baseStyle(self):
         """Generates the baseStyle string from the connection style, waypoint style, pattern style, and base style string.
@@ -356,23 +380,6 @@ class Edge(DiagramBase):
         else:
             raise ValueError("{0} is not an allowed value of pattern")
 
-    ###########################################################
-    # XML Generation
-    ###########################################################
-
-    @property
-    def xml(self):
-        """The opening and closing XML tags with the styling attributes included.
-
-        Returns:
-            str: _description_
-        """
-        tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
-        return tag
-
-
-class BasicEdge(Edge):
-    pass
 
 
 class EdgeGeometry(DiagramBase):
