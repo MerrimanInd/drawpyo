@@ -87,6 +87,7 @@ class Object(DiagramBase):
             strokeColor: The object stroke color in a hex color code (#ffffff)
             glass (bool, optional): Apply glass styling to  the object
             shadow (bool, optional): Add a shadow to the object
+            sketch (bool, optional): Add sketch styling to the object
             comic (bool, optional): Add comic styling to the object
             line_pattern (str, optional): The stroke style of the object.
             fontColor (int, optional): The color of the text in the object (#ffffff)
@@ -114,6 +115,7 @@ class Object(DiagramBase):
             "glass",
             "shadow",
             "comic",
+            "sketch",
             "fontFamily",
             "align",
             "verticalAlign",
@@ -153,6 +155,7 @@ class Object(DiagramBase):
         self.glass = kwargs.get("glass", None)
         self.shadow = kwargs.get("shadow", None)
         self.comic = kwargs.get("comic", None)
+        self.sketch = kwargs.get("sketch", None)
         self.line_pattern = kwargs.get("line_pattern", "solid")
 
         self.fontFamily = kwargs.get("fontFamily", None)

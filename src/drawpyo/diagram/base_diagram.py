@@ -2,7 +2,23 @@ from ..xml_base import XMLBase
 from os import path
 
 
-__all__ = ["DiagramBase", "style_str_from_dict", "import_shape_database"]
+__all__ = [
+    "DiagramBase",
+    "style_str_from_dict",
+    "import_shape_database",
+    "color_input_check",
+]
+
+
+def color_input_check(color_str):
+    if color_str == None:
+        return None
+    elif color_str == "none":
+        return color_str
+    elif color_str == "default":
+        return color_str
+    elif color_str[0] == "#" and len(color_str) == 7:
+        return color_str
 
 
 def import_shape_database(file_name, relative=False):

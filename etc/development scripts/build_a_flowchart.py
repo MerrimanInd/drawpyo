@@ -103,9 +103,7 @@ grind = drawpyo.diagram.Object(
     page=page,
 )
 grind.center_position = (main_column_pos, row_margin + row_h * row_n)
-grind_size = drawpyo.diagram.Object(
-    template_object=data, value="Grind size", page=page
-)
+grind_size = drawpyo.diagram.Object(template_object=data, value="Grind size", page=page)
 grind_size.center_position = (left_column_pos, row_margin + row_h * row_n)
 
 ## Setup the brewer
@@ -141,9 +139,7 @@ add_coffee.center_position = (main_column_pos, row_margin + row_h * row_n)
 
 ## Bloom
 row_n = row_n + 1
-bloom_opt = drawpyo.diagram.Object(
-    template_object=decision, value="Bloom?", page=page
-)
+bloom_opt = drawpyo.diagram.Object(template_object=decision, value="Bloom?", page=page)
 bloom_opt.center_position = (main_column_pos, row_margin + row_h * row_n)
 
 row_n = row_n + 1
@@ -230,7 +226,7 @@ recipe_1_a = drawpyo.diagram.Edge(
     source=temp,
     target=kettle,
     page=page,
-    )
+)
 recipe_2 = drawpyo.diagram.Edge(
     source=recipe,
     target=grind_size,
@@ -244,7 +240,7 @@ recipe_2_a = drawpyo.diagram.Edge(
     source=grind_size,
     target=grind,
     page=page,
-    )
+)
 recipe_3 = drawpyo.diagram.Edge(
     source=recipe,
     target=bean_mass,
@@ -257,7 +253,8 @@ recipe_3 = drawpyo.diagram.Edge(
 recipe_3_a = drawpyo.diagram.Edge(
     source=bean_mass,
     target=weigh,
-    page=page,)
+    page=page,
+)
 recipe_4 = drawpyo.diagram.Edge(
     source=recipe,
     target=pour_quant,
@@ -278,107 +275,107 @@ edge_1 = drawpyo.diagram.Edge(
     source=start,
     target=kettle,
     page=page,
-    )
+)
 edge_2 = drawpyo.diagram.Edge(
     source=kettle,
     target=beans,
     page=page,
-    )
+)
 edge_3 = drawpyo.diagram.Edge(
     source=beans,
     target=weigh,
     page=page,
-    )
+)
 edge_4 = drawpyo.diagram.Edge(
     source=weigh,
     target=grind,
     page=page,
-    )
+)
 edge_5 = drawpyo.diagram.Edge(
     source=grind,
     target=setup,
     page=page,
-    )
+)
 edge_6 = drawpyo.diagram.Edge(
     source=setup,
     target=preheat_opt,
     page=page,
-    )
+)
 preheat_yes = drawpyo.diagram.Edge(
     source=preheat_opt,
     target=preheat,
     value="Yes",
     page=page,
-    )
+)
 preheat_no = drawpyo.diagram.Edge(
     source=preheat_opt,
     target=add_coffee,
     value="No",
     page=page,
-    )
+)
 preheat_end = drawpyo.diagram.Edge(
     source=preheat,
     target=add_coffee,
     page=page,
-    )
+)
 edge_7 = drawpyo.diagram.Edge(
     source=add_coffee,
     target=bloom_opt,
     page=page,
-    )
+)
 bloom_no = drawpyo.diagram.Edge(
     source=bloom_opt,
     target=pour,
-    value="No",
+    label="No",
     page=page,
-    )
+)
 bloom_yes = drawpyo.diagram.Edge(
     source=bloom_opt,
     target=bloom,
-    value="Yes",
+    label="Yes",
     page=page,
-    )
+)
 edge_8 = drawpyo.diagram.Edge(
     source=bloom,
     target=pour,
     page=page,
-    )
+)
 edge_9 = drawpyo.diagram.Edge(
     source=pour,
     target=wait,
     page=page,
-    )
+)
 edge_10 = drawpyo.diagram.Edge(
     source=wait,
     target=done_opt,
     page=page,
-    )
+)
 done_yes = drawpyo.diagram.Edge(
     source=done_opt,
     target=drawdown,
-    value="Yes",
+    label="Yes",
     page=page,
-    )
+)
 done_no = drawpyo.diagram.Edge(
     source=done_opt,
     target=pour,
-    value="No",
+    label="No",
     exitX=0,
     exitY=0.5,
     entryX=0,
     entryY=0.75,
     page=page,
-    )
+)
 edge_11 = drawpyo.diagram.Edge(
     source=drawdown,
     target=cleanup,
     page=page,
-    )
+)
 edge_12 = drawpyo.diagram.Edge(
     source=cleanup,
     target=end,
     page=page,
-    )
+)
 
 # Write the file
 file.write()
