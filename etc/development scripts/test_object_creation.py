@@ -9,7 +9,7 @@ page = drawpyo.Page(file=file)
 object_types = []
 
 base_styles = [
-    # "text",
+    "text",
     "ellipse",
     "square",
     "circle",

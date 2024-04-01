@@ -6,7 +6,7 @@ def test_obj_from_str():
     page = drawpyo.Page(file=file)
 
     # style string
-    test_style_str = "html=1;whiteSpace=wrap;rounded=1;fillColor=#6a00ff;strokeColor=#000000;dashed=0;fontColor=#ffffff;gradientColor=#FF33FF;strokeWidth=4;"
+    test_style_str = "whiteSpace=wrap;rounded=1;fillColor=#6a00ff;strokeColor=#000000;dashed=0;html=1;fontColor=#ffffff;gradientColor=#FF33FF;strokeWidth=4;"
 
     # Create a new object and apply the style string
     style_str_obj = drawpyo.diagram.Object(page=page)

@@ -299,3 +299,43 @@ class DiagramBase(XMLBase):
         new_obj = cls()
         new_obj.apply_style_string(style_string)
         return new_obj
+
+
+class Geometry(DiagramBase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.xml_class = "mxGeometry"
+
+        self.parent_object = kwargs.get("parent_object", None)
+        self.x = kwargs.get("x", 0)
+        self.y = kwargs.get("y", 0)
+        self.width = kwargs.get("width", 120)
+        self.height = kwargs.get("height", 60)
+        self.as_attribute = kwargs.get("as_attribute", "geometry")
+
+    @property
+    def attributes(self):
+        return {
+            "x": self.x,
+            "y": self.y,
+            "width": self.width,
+            "height": self.height,
+            "as": self.as_attribute,
+        }
+
+    # Size property
+    @property
+    def size(self):
+        """The size of the object. It's set with a tuple of ints, width and height respectively.
+
+        (width, height)
+
+        Returns:
+            tuple: A tuple of ints describing the size of the object
+        """
+        return (self.width, self.height)
+
+    @size.setter
+    def size(self, value):
+        self.width = value[0]
+        self.height = value[1]

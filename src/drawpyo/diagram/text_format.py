@@ -7,8 +7,7 @@ directions_inv = {v: k for k, v in directions.items()}
 
 
 class TextFormat(DiagramBase):
-    """The TextFormat class handles all of the formatting specifically around a text box or label.
-    """
+    """The TextFormat class handles all of the formatting specifically around a text box or label."""
 
     def __init__(self, **kwargs):
         """TextFormat objects can be initialized with no properties or any of what's listed below:
@@ -79,8 +78,7 @@ class TextFormat(DiagramBase):
 
     @property
     def formattedText(self):
-        """formattedText wraps the Draw.io style attribute 'html'. This controls whether the text is rendered with HTML attributes or as plain text.
-        """
+        """formattedText wraps the Draw.io style attribute 'html'. This controls whether the text is rendered with HTML attributes or as plain text."""
         return self.html
 
     @formattedText.setter
@@ -106,8 +104,7 @@ class TextFormat(DiagramBase):
 
     @property
     def directions(self):
-        """The direction controls the direction of the text and can be either horizontal or vertical.
-        """
+        """The direction controls the direction of the text and can be either horizontal or vertical."""
         return directions
 
     @property
@@ -119,9 +116,7 @@ class TextFormat(DiagramBase):
         if value in directions.keys():
             self._direction = value
         else:
-            raise ValueError(
-                "{0} is not an allowed value of direction".format(value)
-            )
+            raise ValueError("{0} is not an allowed value of direction".format(value))
 
     @property
     def font_style(self):

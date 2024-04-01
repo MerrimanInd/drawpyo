@@ -2,6 +2,7 @@ from os import path
 
 from .base_diagram import (
     DiagramBase,
+    Geometry,
     import_shape_database,
     style_str_from_dict,
 )
@@ -104,7 +105,7 @@ class Object(DiagramBase):
         ]
 
         # Geometry
-        self.geometry = ObjGeometry(parent_object=self)
+        self.geometry = Geometry(parent_object=self)
         self.position = kwargs.get("position", (0, 0))
         self.width = kwargs.get("width", 120)
         self.height = kwargs.get("height", 80)
@@ -114,7 +115,7 @@ class Object(DiagramBase):
         self.aspect = kwargs.get("aspect", None)
 
         # Content
-        self.text_format = TextFormat()
+        self.text_format = kwargs.get("text_format", TextFormat())
         self.value = value
 
         # Style
@@ -433,46 +434,6 @@ class BasicObject(Object):
     pass
 
 
-class ObjGeometry(DiagramBase):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.xml_class = "mxGeometry"
-
-        self.parent_object = kwargs.get("parent_object", None)
-        self.x = kwargs.get("x", 0)
-        self.y = kwargs.get("y", 0)
-        self.width = kwargs.get("width", 120)
-        self.height = kwargs.get("height", 60)
-        self.as_attribute = kwargs.get("as_attribute", "geometry")
-
-    @property
-    def attributes(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "width": self.width,
-            "height": self.height,
-            "as": self.as_attribute,
-        }
-
-    # Size property
-    @property
-    def size(self):
-        """The size of the object. It's set with a tuple of ints, width and height respectively.
-
-        (width, height)
-
-        Returns:
-            tuple: A tuple of ints describing the size of the object
-        """
-        return (self.width, self.height)
-
-    @size.setter
-    def size(self, value):
-        self.width = value[0]
-        self.height = value[1]
-
-
 class Group:
     """This class allows objects to be grouped together. It then provides a number of geometry functions and properties to move the entire group around.
 
@@ -481,7 +442,7 @@ class Group:
 
     def __init__(self, **kwargs):
         self.objects = kwargs.get("objects", [])
-        self.geometry = ObjGeometry()
+        self.geometry = Geometry()
 
     def add_object(self, object):
         """Adds one or more objects to the group and updates the geometry of the group.

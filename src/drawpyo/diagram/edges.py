@@ -86,7 +86,7 @@ class Edge(DiagramBase):
         self.xml_class = "mxCell"
 
         # Style
-        self.text_format = TextFormat()
+        self.text_format = kwargs.get("text_format", TextFormat())
         self.waypoints = kwargs.get("waypoints", "orthogonal")
         self.connection = kwargs.get("connection", "line")
         self.pattern = kwargs.get("pattern", "solid")
