@@ -5,6 +5,7 @@ from .base_diagram import (
     import_shape_database,
     style_str_from_dict,
 )
+from .text_format import TextFormat
 
 __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
@@ -22,9 +23,6 @@ base_libraries = {
     "general": general,
     "flowchart": flowchart,
 }
-
-text_directions = {None: None, "horizontal": 1, "vertical": 0}
-text_directions_inv = {v: k for k, v in text_directions.items()}
 
 container = {None: None, "vertical_container": None}
 
@@ -90,41 +88,17 @@ class Object(DiagramBase):
             sketch (bool, optional): Add sketch styling to the object
             comic (bool, optional): Add comic styling to the object
             line_pattern (str, optional): The stroke style of the object.
-            fontColor (int, optional): The color of the text in the object (#ffffff)
-            fontFamily (str, optional): The typeface of the text in the object (see Draw.io for available fonts)
-            fontSize (int, optional): The size of the text in the object in points
-            align (str, optional): The horizontal alignment of the text in the object ('left', 'center', or 'right')
-            verticalAlign (str, optional): The vertical alignment of the text in the object ('top', 'middle', 'bottom')
-            textOpacity (int, optional): The opacity of the text in the object
-            text_direction (str, optional): The direction to print the text ('vertical', 'horizontal')
-            bold_font (bool, optional): Whether the text in the object should be bold
-            italic_font (bool, optional): Whether the text in the object should be italic
-            underline_font (bool, optional): Whether the text in the object should be underlined
-            labelPosition (str, optional): The position of the object label ('left', 'center', or 'right')
-            labelBackgroundColor (str, optional): The background color of the object label (#ffffff)
-            labelBorderColor (str, optional): The border color of the object label (#ffffff)
         """
         super().__init__(**kwargs)
         self._style_attributes = [
-            "html",
             "whiteSpace",
             "rounded",
             "fillColor",
-            "fontColor",
             "strokeColor",
             "glass",
             "shadow",
             "comic",
             "sketch",
-            "fontFamily",
-            "align",
-            "verticalAlign",
-            "labelPosition",
-            "labelBackgroundColor",
-            "labelBorderColor",
-            "fontSize",
-            "horizontal",
-            "textOpacity",
             "opacity",
             "dashed",
         ]
@@ -140,41 +114,22 @@ class Object(DiagramBase):
         self.aspect = kwargs.get("aspect", None)
 
         # Content
+        self.text_format = TextFormat()
         self.value = value
 
         # Style
         self.baseStyle = kwargs.get("baseStyle", None)
 
-        self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
         self.whiteSpace = kwargs.get("whiteSpace", "wrap")
-        self.fillColor = kwargs.get("fillColor", None)
-        self.fontColor = kwargs.get("fontColor", None)
         self.opacity = kwargs.get("opacity", None)
         self.strokeColor = kwargs.get("strokeColor", None)
+        self.fillColor = kwargs.get("fillColor", None)
         self.glass = kwargs.get("glass", None)
         self.shadow = kwargs.get("shadow", None)
         self.comic = kwargs.get("comic", None)
         self.sketch = kwargs.get("sketch", None)
         self.line_pattern = kwargs.get("line_pattern", "solid")
-
-        self.fontFamily = kwargs.get("fontFamily", None)
-        self.fontSize = kwargs.get("fontSize", None)
-        self.align = kwargs.get("align", None)
-        self.verticalAlign = kwargs.get("verticalAlign", None)
-        self.labelPosition = kwargs.get("labelPosition", None)
-        self.labelBackgroundColor = kwargs.get("labelBackgroundColor", None)
-        self.labelBorderColor = kwargs.get("labelBorderColor", None)
-
-        # These need to be enumerated
-        self.text_direction = kwargs.get("text_direction", None)
-        # This is actually horizontal. 0 means vertical text, 1 or not present
-        # means horizontal
-
-        self.textOpacity = kwargs.get("textOpacity", None)
-        self.bold_font = kwargs.get("bold_font", False)
-        self.italic_font = kwargs.get("italic_font", False)
-        self.underline_font = kwargs.get("underline_font", False)
 
         self.out_edges = kwargs.get("out_edges", [])
         self.in_edges = kwargs.get("in_edges", [])
@@ -301,75 +256,12 @@ class Object(DiagramBase):
         return line_styles
 
     @property
-    def text_directions(self):
-        return text_directions
-
-    @property
     def container(self):
         return container
 
     ###########################################################
     # Style properties
     ###########################################################
-
-    # The direction of the text is encoded as 'horizontal' in Draw.io. This is
-    # unintuitive so I provided a text_direction alternate syntax.
-    @property
-    def horizontal(self):
-        return text_directions[self._text_direction]
-
-    @horizontal.setter
-    def horizontal(self, value):
-        if value in text_directions_inv.keys():
-            self._text_direction = text_directions_inv[value]
-        else:
-            raise ValueError("{0} is not an allowed value of horizontal".format(value))
-
-    @property
-    def text_direction(self):
-        return self._text_direction
-
-    @text_direction.setter
-    def text_direction(self, value):
-        if value in text_directions.keys():
-            self._text_direction = value
-        else:
-            raise ValueError(
-                "{0} is not an allowed value of text_direction".format(value)
-            )
-
-    @property
-    def font_style(self):
-        """The font_style is a numeric format that corresponds to a combination of three other attributes: bold_font, italic_font, and underline_font. Any combination of them can be true."""
-        bld = self.bold_font
-        ita = self.italic_font
-        unl = self.underline_font
-
-        # 0 = normal
-        # 1 = bold
-        # 2 = italic
-        # 3 = bold and italic
-        # 4 = underline
-        # 5 = bold and underlined
-        # 6 = italic and underlined
-        # 7 = bolt, italic, and underlined
-
-        if not bld and not ita and not unl:
-            return 0
-        elif bld and not ita and not unl:
-            return 1
-        elif not bld and ita and not unl:
-            return 2
-        elif bld and ita and not unl:
-            return 3
-        elif not bld and not ita and unl:
-            return 4
-        elif bld and not ita and unl:
-            return 5
-        elif not bld and ita and unl:
-            return 6
-        elif bld and ita and unl:
-            return 7
 
     @property
     def line_pattern(self):

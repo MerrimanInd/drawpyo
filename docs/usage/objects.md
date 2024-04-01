@@ -20,7 +20,7 @@ base_obj.value = "This Object's Name is Fred"
 
 Just like the built-in shape libraries in the Draw.io app, Drawpyo supports generating shapes from libraries. Currently the 'general' library from the Draw.io app is defined but more will be added in the future.
 
-> These libraries are defined in TOML files and drawpyo supports importing custom shape libraries! See [Shape Libraries][/usage/shape_libs.md] for more information.
+> These libraries are defined in TOML files and drawpyo supports importing custom shape libraries! See [Shape Libraries](/drawpyo/usage/shape_libs) for more information.
 
 To generate an object from a library:
 
@@ -71,6 +71,12 @@ Object.geometry.y = 0
 There are infinite permutations of object formatting and styling available. There are some higher order attributes that set the template for the object. What lower order styling attributes may or may not apply in combination. Then there are attributes like size and text formatting that apply in all cases. These interactions are difficult to predict in drawpyo alone so a good way to get familiar with all of the possible options and types of customizations is just to play with the Draw.io app directly to design formatting to your taste.
 
 Almost all styling attributes are optional (and drawpyo adds the non-optional ones automatically). If an attribute is unset or set to None then it won't be included in the file output. This will set that specific styling behavior to a default mode.
+
+### Text Styling
+
+The styling within an object is contained inside of a `TextFormat` object. All styling parameters can be accessed at the attribute `Object.text_format`, which contains a `TextFormat` object.
+
+For more information about styling text, see [Formatting Text](/drawpyo/usage/text_format) for mor information.
 
 ### BaseStyle and Shape
 
@@ -128,41 +134,3 @@ As mentioned above, not all of these attributes will apply to all object shapes 
 - darkOpacity2
 - backgroundOutline
 - perimeter
-
-### Text Styling Attributes
-
-The text set in the `value` attribute of the Object class can also be styled with the expected text formatting tools.
-
-- fontColor
-- fontFamily
-- fontSize
-- align
-- verticalAlign
-- labelPosition
-- labelBackgroundColor
-- labelBorderColor
-- textOpacity
-
-Due to complexities with the actual combination of styling strings used by Draw.io, there are some more that are abstracted by drawpyo to make them easy to work with:
-
-- text_direction
-- bold_font
-- italic_font
-- underline_font
-
-| Attribute               | Data Type                             |
-| ----------------------- | ------------------------------------- |
-| `fontColor`             | str (Hex Code: '#ffffff')             |
-| `fontFamily`            | str (see Draw.io for available fonts) |
-| `fontSize`              | int (size in pts)                     |
-| `align`                 | str ('left', 'center', or 'right')    |
-| `verticalAlign`         | str ('top', 'middle', 'bottom')       |
-| `labelPosition`         | str ('left', 'center', or 'right')    |
-| `verticalLabelPosition` | str ('top', 'middle', 'bottom')       |
-| `labelBackgroundColor`  | str (Hex Code: '#ffffff')             |
-| `labelBorderColor`      | str (Hex Code: '#ffffff')             |
-| `textOpacity`           | int (0-100)                           |
-| `text_direction`        |                                       |
-| `bold_font`             | bool                                  |
-| `italic_font`           | bool                                  |
-| `underline_font`        | bool                                  |

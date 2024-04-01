@@ -210,6 +210,7 @@ class DiagramBase(XMLBase):
         ):
             style_str = getattr(self, "baseStyle") + ";"
 
+        # Add style attributes
         for attribute in self.style_attributes:
             if hasattr(self, attribute) and getattr(self, attribute) is not None:
                 attr_val = getattr(self, attribute)
@@ -217,6 +218,10 @@ class DiagramBase(XMLBase):
                 if isinstance(attr_val, bool):
                     attr_val = format(attr_val * 1)
                 style_str = style_str + "{0}={1};".format(attribute, attr_val)
+
+        # Add style objects
+        if hasattr(self, "text_format") and self.text_format is not None:
+            style_str = style_str + self.text_format.style
         return style_str
 
     def _add_and_set_style_attrib(self, attrib, value):

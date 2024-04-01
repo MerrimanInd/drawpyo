@@ -54,6 +54,12 @@ Other attributes for controlling the general shape of the object are:
 
 Just about every edge styling option from the Draw.io app is implemented in Drawpyo. It's easiest to just play with all of the different line styling options in Draw.io to understand how they render but the major options are listed here.
 
+### Text Styling
+
+The styling within an an edge label is contained inside of a `TextFormat` object. All styling parameters can be accessed at the attribute `Edge.text_format`, which contains a `TextFormat` object.
+
+For more information about styling text, see [Formatting Text](/drawpyo/usage/text_format) for mor information.
+
 ### Color and Shading
 
 Edge coloring can be set with a stroke and fill color, though only the stroke applies to a simple edge.

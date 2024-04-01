@@ -6,7 +6,7 @@ from .base_diagram import (
     style_str_from_dict,
     color_input_check,
 )
-
+from .text_format import TextFormat
 
 __all__ = ["Edge", "BasicEdge"]
 
@@ -86,6 +86,7 @@ class Edge(DiagramBase):
         self.xml_class = "mxCell"
 
         # Style
+        self.text_format = TextFormat()
         self.waypoints = kwargs.get("waypoints", "orthogonal")
         self.connection = kwargs.get("connection", "line")
         self.pattern = kwargs.get("pattern", "solid")
@@ -101,12 +102,11 @@ class Edge(DiagramBase):
         self.endSize = kwargs.get("endSize", None)
         self.startSize = kwargs.get("startSize", None)
 
-        self.html = kwargs.get("html", 1)
         self.rounded = kwargs.get("rounded", 0)
         self.sketch = kwargs.get("sketch", None)
         self.shadow = kwargs.get("shadow", None)
         self.flowAnimation = kwargs.get("flowAnimation", None)
-        
+
         self.jumpStyle = kwargs.get("jumpStyle", None)
         self.jumpSize = kwargs.get("jumpSize", None)
 
@@ -249,7 +249,6 @@ class Edge(DiagramBase):
             list: A list of style attributes
         """
         return [
-            "html",
             "rounded",
             "sketch",
             "shadow",

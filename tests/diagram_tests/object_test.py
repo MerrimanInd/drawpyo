@@ -1,12 +1,12 @@
 import drawpyo
 
-
+# TODO rewrite this test so it's independent of the order of the style attributes
 def test_obj_from_str():
     file = drawpyo.File()
     page = drawpyo.Page(file=file)
 
     # style string
-    test_style_str = "html=1;whiteSpace=wrap;rounded=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#000000;dashed=0;gradientColor=#FF33FF;strokeWidth=4;"
+    test_style_str = "html=1;whiteSpace=wrap;rounded=1;fillColor=#6a00ff;strokeColor=#000000;dashed=0;fontColor=#ffffff;gradientColor=#FF33FF;strokeWidth=4;"
 
     # Create a new object and apply the style string
     style_str_obj = drawpyo.diagram.Object(page=page)
