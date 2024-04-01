@@ -1,160 +1,1195 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Xander Cesari" /><link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/architecture/" />
-      <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Architecture - Drawpyo</title>
-    <link rel="stylesheet" href="../../css/theme.css" />
-    <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Architecture";
-        var mkdocs_page_input_path = "api/architecture.md";
-        var mkdocs_page_url = "/drawpyo/api/architecture/";
-      </script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Xander Cesari">
+      
+      
+        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/architecture/">
+      
+      
+        <link rel="prev" href="../../diagram_types/tree_diagrams/">
+      
+      
+        <link rel="next" href="../file/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.14">
     
-    <!--[if lt IE 9]>
-      <script src="../../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-</head>
+    
+      
+        <title>Architecture - Drawpyo</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.10ba22f1.min.css">
+      
+      
 
-<body class="wy-body-for-nav" role="document">
 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href="../.." class="icon icon-home"> Drawpyo
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../../about/">About</a>
-                </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Basic Diagrams</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../usage/basic_usage/">Usage</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../usage/objects/">Objects</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../usage/edges/">Edges</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../usage/shape_libs/">Shape Libraries</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Custom Diagram Types</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../diagram_types/tree_diagrams/">Tree Diagrams</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">API</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Architecture</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#xmlbase">XMLBase</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase">XMLBase</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.attributes">attributes</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.id">id</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml">xml</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml_close_tag">xml_close_tag</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.xml_base.XMLBase.xml_open_tag">xml_open_tag</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#diagrambase">DiagramBase</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase">DiagramBase</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.style">style</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.style_attributes">style_attributes</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict">apply_attribute_dict</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters">Parameters</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns">Returns</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.apply_style_string">apply_style_string</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#drawpyo.diagram.base_diagram.DiagramBase.from_style_string">from_style_string</a>
-    </li>
-    </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="#">Basic Diagrams</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../file/">File</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../page/">Page</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../edges/">Edges</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../objects/">Objects</a>
-                </li>
-    </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="#">Custom Diagram Types</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="#">Tree Diagram</a>
-    <ul>
-                <li class="toctree-l3"><a class="reference internal" href="../tree_diagram/treediagram/">TreeDiagram</a>
-                </li>
-                <li class="toctree-l3"><a class="reference internal" href="../tree_diagram/nodeobject/">NodeObject</a>
-                </li>
-    </ul>
-                </li>
-    </ul>
-                  </li>
-              </ul>
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Drawpyo
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../..">Drawpyo</a>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
         
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
       </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">API</li>
-      <li class="breadcrumb-item active">Architecture</li>
-    <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/MerrimanInd/drawpyo/edit/master/docs/api/architecture.md">Edit on MerrimanInd/drawpyo</a>
-    </li>
-  </ul>
-  <hr/>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MerrimanInd/drawpyo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MerrimanInd/drawpyo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
               
-                <h1 id="architecture">Architecture</h1>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Drawpyo
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MerrimanInd/drawpyo" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MerrimanInd/drawpyo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Basic Diagrams
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Basic Diagrams
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/basic_usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/text_format/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Formatting Text
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/objects/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Objects
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/edges/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Edges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/shape_libs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Shape Libraries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Custom Diagram Types
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Custom Diagram Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../diagram_types/tree_diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tree Diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#xmlbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      XMLBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase" class="md-nav__link">
+    <span class="md-ellipsis">
+      XMLBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.id" class="md-nav__link">
+    <span class="md-ellipsis">
+      id
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml_close_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml_close_tag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml_open_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml_open_tag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagrambase" class="md-nav__link">
+    <span class="md-ellipsis">
+      DiagramBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase" class="md-nav__link">
+    <span class="md-ellipsis">
+      DiagramBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.style" class="md-nav__link">
+    <span class="md-ellipsis">
+      style
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.style_attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      style_attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_attribute_dict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="apply_attribute_dict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_style_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_style_string
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.from_style_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      from_style_string
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Basic Diagrams
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Basic Diagrams
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../page/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Page
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text_format/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Text Format
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../edges/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Edges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../objects/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Objects
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Custom Diagram Types
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Custom Diagram Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_1" id="__nav_5_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tree Diagram
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tree Diagram
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tree_diagram/treediagram/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TreeDiagram
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tree_diagram/nodeobject/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NodeObject
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#xmlbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      XMLBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase" class="md-nav__link">
+    <span class="md-ellipsis">
+      XMLBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.id" class="md-nav__link">
+    <span class="md-ellipsis">
+      id
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml_close_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml_close_tag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.xml_base.XMLBase.xml_open_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      xml_open_tag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagrambase" class="md-nav__link">
+    <span class="md-ellipsis">
+      DiagramBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase" class="md-nav__link">
+    <span class="md-ellipsis">
+      DiagramBase
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.style" class="md-nav__link">
+    <span class="md-ellipsis">
+      style
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.style_attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      style_attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_attribute_dict
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="apply_attribute_dict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.apply_style_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      apply_style_string
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram.base_diagram.DiagramBase.from_style_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      from_style_string
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="architecture">Architecture</h1>
 <p>Drawpyo provides two high level classes to define critical methods and attributes for all  exportable Draw.io objects. Primarily they define the parent and id attributes as well as a series of methods and properties for generating XML and style strings.</p>
 <hr />
 <h2 id="xmlbase">XMLBase</h2>
@@ -164,105 +1199,116 @@
 
 
 
-<a id="drawpyo.xml_base.XMLBase"></a>
+<a id="src.drawpyo.xml_base.XMLBase"></a>
   <div class="doc doc-contents first">
 
   
       <p>XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.</p>
 
             <details class="quote">
-              <summary>Source code in <code>drawpyo/xml_base.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">XMLBase</span><span class="p">:</span>
+              <summary>Source code in <code>src/drawpyo/xml_base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">XMLBase</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xml_class</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;xml_class&quot;</span><span class="p">,</span> <span class="s2">&quot;xml_tag&quot;</span><span class="p">)</span>
@@ -283,7 +1329,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -292,7 +1337,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A dict containing an &#39;id&#39; and &#39;xml_parent&#39; object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_parent</span><span class="p">}</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># XML Tags</span>
@@ -310,7 +1355,7 @@
 <span class="sd">            str: The opening tag of the object with all the attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">open_tag</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_class</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">att</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">xml_parameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_ify</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
                 <span class="n">open_tag</span> <span class="o">=</span> <span class="n">open_tag</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">att</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">xml_parameter</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
@@ -346,7 +1391,17 @@
         <span class="k">return</span> <span class="n">open_tag</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; /&gt;&quot;</span>
 
     <span class="k">def</span> <span class="nf">xml_ify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_string</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">parameter_string</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">xmlize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate_txt</span><span class="p">(</span><span class="n">parameter_string</span><span class="p">,</span> <span class="n">xmlize</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">translate_txt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">replacement_dict</span><span class="p">):</span>
+        <span class="n">new_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">replacement_dict</span><span class="p">:</span>
+                <span class="n">new_str</span> <span class="o">=</span> <span class="n">new_str</span> <span class="o">+</span> <span class="n">replacement_dict</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_str</span> <span class="o">=</span> <span class="n">new_str</span> <span class="o">+</span> <span class="n">char</span>
+        <span class="k">return</span> <span class="n">new_str</span>
 </code></pre></div></td></tr></table></div>
             </details>
 
@@ -364,7 +1419,7 @@
 
 
 
-<h2 id="drawpyo.xml_base.XMLBase.attributes" class="doc doc-heading">
+<h2 id="src.drawpyo.xml_base.XMLBase.attributes" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">attributes</span></code>
   
   <span class="doc doc-labels">
@@ -380,27 +1435,27 @@
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>dict</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>dict</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A dict containing an 'id' and 'xml_parent' object.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -408,7 +1463,7 @@
 
 
 
-<h2 id="drawpyo.xml_base.XMLBase.id" class="doc doc-heading">
+<h2 id="src.drawpyo.xml_base.XMLBase.id" class="doc doc-heading">
           <code class="highlight language-python"><span class="nb">id</span></code>
   
   <span class="doc doc-labels">
@@ -424,27 +1479,27 @@
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>int</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>int</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A unique identifier for the Draw.io object</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -452,7 +1507,7 @@
 
 
 
-<h2 id="drawpyo.xml_base.XMLBase.xml" class="doc doc-heading">
+<h2 id="src.drawpyo.xml_base.XMLBase.xml" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">xml</span></code>
   
   <span class="doc doc-labels">
@@ -471,27 +1526,27 @@
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>str</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>str</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A single XML tag containing the object name, style attributes, and a closer.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -499,7 +1554,7 @@
 
 
 
-<h2 id="drawpyo.xml_base.XMLBase.xml_close_tag" class="doc doc-heading">
+<h2 id="src.drawpyo.xml_base.XMLBase.xml_close_tag" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">xml_close_tag</span></code>
   
   <span class="doc doc-labels">
@@ -517,27 +1572,27 @@
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>str</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>str</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>The closing tag of the object with all the attributes.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -545,7 +1600,7 @@
 
 
 
-<h2 id="drawpyo.xml_base.XMLBase.xml_open_tag" class="doc doc-heading">
+<h2 id="src.drawpyo.xml_base.XMLBase.xml_open_tag" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">xml_open_tag</span></code>
   
   <span class="doc doc-labels">
@@ -563,27 +1618,27 @@
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>str</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>str</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>The opening tag of the object with all the attributes.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -604,33 +1659,17 @@
 
 
 
-<a id="drawpyo.diagram.base_diagram.DiagramBase"></a>
+<a id="src.drawpyo.diagram.base_diagram.DiagramBase"></a>
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
-            Bases: <code><a class="autorefs autorefs-internal" title="drawpyo.xml_base.XMLBase" href="#drawpyo.xml_base.XMLBase">XMLBase</a></code></p>
+            Bases: <code><a class="autorefs autorefs-internal" title="src.drawpyo.xml_base.XMLBase" href="#src.drawpyo.xml_base.XMLBase">XMLBase</a></code></p>
 
   
       <p>This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.</p>
 
             <details class="quote">
-              <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
+              <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
 <span class="normal">103</span>
 <span class="normal">104</span>
 <span class="normal">105</span>
@@ -811,10 +1850,29 @@
 <span class="normal">280</span>
 <span class="normal">281</span>
 <span class="normal">282</span>
-<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DiagramBase</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DiagramBase</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;html&quot;</span><span class="p">]</span>
@@ -917,19 +1975,22 @@
         <span class="k">if</span> <span class="p">(</span>
             <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span>
             <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
         <span class="p">):</span>
             <span class="n">style_str</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;baseStyle&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span>
 
+        <span class="c1"># Add style attributes</span>
         <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_attributes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">attr_val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
                 <span class="c1"># reformat different datatypes to strings</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr_val</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-                    <span class="n">attr_val</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">attr_val</span><span class="o">*</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">attr_val</span> <span class="o">=</span> <span class="nb">format</span><span class="p">(</span><span class="n">attr_val</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="n">style_str</span> <span class="o">=</span> <span class="n">style_str</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">=</span><span class="si">{1}</span><span class="s2">;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">attr_val</span><span class="p">)</span>
+
+        <span class="c1"># Add style objects</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;text_format&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">style_str</span> <span class="o">=</span> <span class="n">style_str</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">style</span>
         <span class="k">return</span> <span class="n">style_str</span>
 
     <span class="k">def</span> <span class="nf">_add_and_set_style_attrib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -947,7 +2008,7 @@
 <span class="sd">            style_str (str): A Draw.io style string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="n">style_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="k">elif</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
                 <span class="n">a_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -969,7 +2030,6 @@
             <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">attrib</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">attrib</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-
     <span class="k">def</span> <span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function takes in a dictionary of attributes and applies them</span>
@@ -990,7 +2050,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_and_set_style_attrib</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_style_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">style_string</span><span class="p">):</span>
@@ -1026,7 +2085,7 @@
 
 
 
-<h2 id="drawpyo.diagram.base_diagram.DiagramBase.style" class="doc doc-heading">
+<h2 id="src.drawpyo.diagram.base_diagram.DiagramBase.style" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">style</span></code>
   
   <span class="doc doc-labels">
@@ -1046,27 +2105,27 @@ searches the base_style defined by the object template.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>str</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>str</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>The style string of the object.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -1074,7 +2133,7 @@ searches the base_style defined by the object template.</p>
 
 
 
-<h2 id="drawpyo.diagram.base_diagram.DiagramBase.style_attributes" class="doc doc-heading">
+<h2 id="src.drawpyo.diagram.base_diagram.DiagramBase.style_attributes" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">style_attributes</span></code>
   
   <span class="doc doc-labels">
@@ -1091,27 +2150,27 @@ searches the base_style defined by the object template.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>list</code></b>            –
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>list</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A list of the names of the style_attributes.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>  </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
 
 </div>
 
@@ -1122,7 +2181,7 @@ searches the base_style defined by the object template.</p>
 
 
 
-<h2 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict" class="doc doc-heading">
+<h2 id="src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">apply_attribute_dict</span><span class="p">(</span><span class="n">attr_dict</span><span class="p">)</span></code>
 
 </h2>
@@ -1135,34 +2194,34 @@ to the object. These attributes can be style or properties. If the
 attribute isn't already defined as a property of the class it's
 assumed to be a style attribute. It will then be added as a property
 and also appended to the .style_attributes list.</p>
-<h4 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters">Parameters</h4>
+<h4 id="src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--parameters">Parameters</h4>
 <p>attr_dict : dict
     A dictionary of attributes to set or add to the object.</p>
-<h4 id="drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns">Returns</h4>
+<h4 id="src.drawpyo.diagram.base_diagram.DiagramBase.apply_attribute_dict--returns">Returns</h4>
 <p>None.</p>
 
           <details class="quote">
-            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">245</span>
-<span class="normal">246</span>
-<span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span>
-<span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
-<span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span>
-<span class="normal">263</span>
-<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+            <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes in a dictionary of attributes and applies them</span>
 <span class="sd">    to the object. These attributes can be style or properties. If the</span>
@@ -1193,7 +2252,7 @@ and also appended to the .style_attributes list.</p>
 
 
 
-<h2 id="drawpyo.diagram.base_diagram.DiagramBase.apply_style_string" class="doc doc-heading">
+<h2 id="src.drawpyo.diagram.base_diagram.DiagramBase.apply_style_string" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">apply_style_string</span><span class="p">(</span><span class="n">style_str</span><span class="p">)</span></code>
 
 </h2>
@@ -1205,55 +2264,60 @@ and also appended to the .style_attributes list.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>style_str</code></b>
-                  (<code>str</code>)
-              –
-              <div class="doc-md-description">
-                <p>A Draw.io style string</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>style_str</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A Draw.io style string</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
           <details class="quote">
-            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
-<span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
+            <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">234</span>
 <span class="normal">235</span>
 <span class="normal">236</span>
-<span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">):</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.</span>
 
@@ -1261,7 +2325,7 @@ and also appended to the .style_attributes list.</p>
 <span class="sd">        style_str (str): A Draw.io style string</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">attrib</span> <span class="ow">in</span> <span class="n">style_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">attrib</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">elif</span> <span class="s2">&quot;=&quot;</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
             <span class="n">a_name</span> <span class="o">=</span> <span class="n">attrib</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1288,7 +2352,7 @@ and also appended to the .style_attributes list.</p>
 
 
 
-<h2 id="drawpyo.diagram.base_diagram.DiagramBase.from_style_string" class="doc doc-heading">
+<h2 id="src.drawpyo.diagram.base_diagram.DiagramBase.from_style_string" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">from_style_string</span><span class="p">(</span><span class="n">style_string</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
@@ -1307,71 +2371,76 @@ Python environment and further objects created that match the style.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>style_string</code></b>
-                  (<code>str</code>)
-              –
-              <div class="doc-md-description">
-                <p>A Draw.io style string</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>style_string</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A Draw.io style string</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
-<b><code>BaseDiagram</code></b>            –
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+<th>Name</th>        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+<td><code>BaseDiagram</code></td>          <td>
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A BaseDiagram or subclass instantiated with the style from the Draw.io string</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
           <details class="quote">
-            <summary>Source code in <code>drawpyo/diagram/base_diagram.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span>
-<span class="normal">275</span>
-<span class="normal">276</span>
-<span class="normal">277</span>
-<span class="normal">278</span>
-<span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
-<span class="normal">282</span>
-<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+            <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_style_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">style_string</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This classmethod allows the intantiation of an object from a style</span>
@@ -1402,51 +2471,57 @@ Python environment and further objects created that match the style.</p>
 
 
 </div>
-              
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
             </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../diagram_types/tree_diagrams/" class="btn btn-neutral float-left" title="Tree Diagrams"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../file/" class="btn btn-neutral float-right" title="File">Next <span class="icon icon-circle-arrow-right"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
           
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-    
-      <span><a href="../../diagram_types/tree_diagrams/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-      <span><a href="../file/" style="color: #fcfcfc">Next &raquo;</a></span>
-    
-  </span>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
 </div>
-    <script src="../../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "../..";</script>
-    <script src="../../js/theme_extra.js"></script>
-    <script src="../../js/theme.js"></script>
-      <script src="../../search/main.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
-
-</body>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
+      
+    
+  </body>
 </html>
