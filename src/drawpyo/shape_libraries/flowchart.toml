@@ -1,0 +1,294 @@
+[annotation_1]
+width = 50
+height = 100
+strokeWidth = 2
+shape = "mxgraph.flowchart.annotation_1"
+align = "left"
+pointerEvents = 1
+
+[annotation_2]
+width = 50
+height = 100
+strokeWidth = 2
+shape = "mxgraph.flowchart.annotation_2"
+align = "left"
+labelPosition = "right"
+pointerEvents = 1
+
+[card]
+width = 100
+height = 60
+size = 20
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "card"
+whiteSpace = "wrap"
+arcSize = 12
+
+[collate]
+width = 100
+height = 100
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "mxgraph.flowchart.collate"
+
+[data]
+width = 100
+height = 60
+shape = "parallelogram"
+strokeWidth = 2
+perimter = "parallelogramPerimeter"
+whiteSpace = "wrap"
+rounded = 1
+arcSize = 12
+size = 0.23
+
+[database]
+strokeWidth = 2
+width = 60
+height = 60
+shape = "mxgraph.flowchart.database"
+whiteSpace = "wrap"
+
+[decision]
+strokeWidth = 2
+width = 100
+height = 100
+shape = "mxgraph.flowchart.decision"
+whiteSpace = "wrap"
+
+[delay]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "mxgraph.flowchart.delay"
+whiteSpace = "wrap"
+
+[direct_data]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "mxgraph.flowchart.direct_data"
+whiteSpace = "wrap"
+
+[display]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "mxgraph.flowchart.display"
+whiteSpace = "wrap"
+size = 0.25
+
+[document]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "mxgraph.flowchart.display2"
+whiteSpace = "wrap"
+size = 0.25
+
+[extract]
+strokeWidth = 2
+width = 95
+height = 60
+shape = "mxgraph.flowchart.extract_or_measurement"
+whiteSpace = "wrap"
+
+[measurement]
+strokeWidth = 2
+width = 95
+height = 60
+shape = "mxgraph.flowchart.extract_or_measurement"
+whiteSpace = "wrap"
+
+[internal_storage]
+shape = "internalStorage"
+width = 70
+height = 70
+whiteSpace = "wrap"
+dx = 15
+dy = 15
+rounded = 1
+arcSize = 8
+StrokeWidth = 2
+
+[loop_limit]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "mxgraph.flowchart.loop_limit"
+whiteSpace = "wrap"
+
+[manual_input]
+strokeWidth = 2
+width = 100
+height = 60
+shape = "manualInput"
+whiteSpace = "wrap"
+rounded = 1
+size = 26
+arcSize = 11
+
+[manual_operation]
+width = 100
+height = 60
+verticalLabelPosition = "middle"
+verticalAlign = "middle"
+shape = "trapezoid"
+perimeter = "trapezoidperimeter"
+whiteSpace = "wrap"
+size = 0.23
+arcSize = 10
+flipV = 1
+labelPosition = "center"
+align = "center"
+
+[merge]
+strokeWidth = 2
+width = 95
+height = 60
+shape = "mxgraph.flowchart.merge_or_storage"
+whiteSpace = "wrap"
+
+[storage]
+strokeWidth = 2
+width = 95
+height = 60
+shape = "mxgraph.flowchart.merge_or_storage"
+whiteSpace = "wrap"
+
+[multi_document]
+strokeWidth = 2
+width = 88
+height = 60
+shape = "mxgraph.flowchart.multi-document"
+whiteSpace = "wrap"
+
+[off_page_ref]
+verticalLabelPosition = "bottom"
+width = 60
+height = 60
+verticalAlign = "top"
+shape = "offPageConnector"
+rounded = 0
+size = 0.5
+
+[on_page_ref]
+verticalLabelPosition = "bottom"
+width = 60
+height = 60
+verticalAlign = "top"
+shape = "mxgraph.flowchart.on-page_reference"
+
+[or]
+verticalLabelPosition = "bottom"
+width = 70
+height = 70
+verticalAlign = "top"
+shape = "mxgraph.flowchart.summing_function"
+
+[tape]
+shape = "tape"
+width = 100
+height = 65
+whiteSpace = "wrap"
+strokeWidth = 2
+size = 0.19
+
+[parallel_mode]
+width = 95
+height = 40
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "mxgraph.flowchart.parallel_mode"
+pointerEvents = 1
+
+[predefined_process]
+width = 100
+height = 60
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "process"
+whiteSpace = "wrap"
+rounded = 1
+size = 0.14
+arcSize = 6
+
+[preparation]
+width = 100
+height = 60
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "hexagon"
+perimeter = "hexagonPerimeter2"
+arcSize = 6
+size = 0.27
+
+[process]
+width = 100
+height = 100
+rounded = 1
+whiteSpace = "wrap"
+absoluteArcSize = 1
+arcSize = 14
+strokeWidth = 2
+
+[sequential_data]
+strokeWidth = 2
+width = 100
+height = 100
+shape = "mxgraph.flowchart.sequential_data"
+whiteSpace = "wrap"
+
+[sort]
+width = 100
+height = 100
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "mxgraph.flowchart.sort"
+
+[start_1]
+width = 100
+height = 60
+strokeWidth = 2
+shape = "mxgraph.flowchart.start_1"
+whiteSpace = "wrap"
+
+[start_2]
+width = 100
+height = 100
+strokeWidth = 2
+shape = "mxgraph.flowchart.start_2"
+whiteSpace = "wrap"
+
+[stored_data]
+width = 100
+height = 60
+strokeWidth = 2
+shape = "mxgraph.flowchart.stored_data"
+whiteSpace = "wrap"
+
+[summing_junction]
+width = 70
+height = 70
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+shape = "mxgraph.flowchart.or"
+
+[terminator]
+width = 100
+height = 60
+strokeWidth = 2
+shape = "mxgraph.flowchart.terminator"
+whiteSpace = "wrap"
+
+[transfer]
+width = 100
+height = 70
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+strokeWidth = 2
+shape = "mxgraph.arrows2.arrow"
+dy = 0.6
+dx = 40
+notch = 0

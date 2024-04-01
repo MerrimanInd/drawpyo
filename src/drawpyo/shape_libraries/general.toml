@@ -1,0 +1,195 @@
+title = "Default Draw.pyo Shapes"
+
+# These are the default shapes as defined in the Basic pane of the Draw.io interface
+
+[default]
+baseStyle = ""
+html = 1
+white_space = "wrap"
+rounded = 0
+
+[rectangle]
+inherit = "default"
+
+[rounded_rectangle]
+inherit = "default"
+rounded = 1
+
+[text]
+inherit = "default"
+width = 60
+height = 20
+baseStyle = "text"
+
+[ellipse]
+inherit = "default"
+width = 120
+height = 80
+baseStyle = "ellipse"
+
+[square]
+inherit = "default"
+width = 80
+height = 80
+aspect = "fixed"
+
+[circle]
+inherit = "default"
+width = 80
+height = 80
+baseStyle = "ellipse"
+aspect = "fixed"
+
+[process]
+inherit = "default"
+shape = "process"
+backgroundOutline = 1
+
+[diamond]
+inherit = "default"
+width = 80
+height = 80
+baseStyle = "rhombus"
+
+[parallelogram]
+inherit = "default"
+shape = "parallelogram"
+perimeter = "parelleogramPerimeter"
+fixedSize = 1
+
+[hexagon]
+inherit = "default"
+width = 120
+height = 80
+shape = "hexagon"
+perimeter = "hexagonPerimeter2"
+fixedSize = 1
+
+[triangle]
+inherit = "default"
+height = 80
+width = 60
+baseStyle = "triangle"
+
+[cylinder]
+inherit = "default"
+width = 60
+height = 80
+shape = "cylinder3"
+boundedLbl = 1
+backgroundOutline = 1
+
+[cloud]
+inherit = "default"
+width = 60
+height = 80
+baseStyle = "ellipse"
+shape = "cloud"
+
+[document]
+inherit = "default"
+width = 120
+height = 80
+shape = "document"
+boundedLbl = 1
+
+[internal_storage]
+inherit = "default"
+width = 80
+height = 80
+shape = "internalStorage"
+backgroundOutline = 1
+
+[cube]
+inherit = "default"
+width = 120
+height = 80
+shape = "cube"
+boundedLbl = 1
+backgroundOutline = 1
+darkOpacity = 0.05
+darkOpacity2 = 0.1
+
+[step]
+inherit = "default"
+width = 120
+height = 80
+shape = "step"
+perimeter = "stepPerimeter"
+
+[trapezoid]
+inherit = "default"
+shape = "trapezoid"
+perimeter = "trapezoidPerimeter"
+
+[tape]
+inherit = "default"
+width = 120
+height = 100
+shape = "tape"
+
+[note]
+inherit = "default"
+width = 80
+height = 100
+shape = "note"
+backgroundOutline = 1
+darkOpacity = 0.05
+
+[card]
+inherit = "default"
+width = 80
+height = 100
+shape = "card"
+
+[callout]
+inherit = "default"
+width = 120
+height = 80
+shape = "callout"
+perimeter = "calloutPerimeter"
+
+[actor]
+inherit = "default"
+width = 30
+height = 60
+shape = "umlActor"
+verticalLabelPosition = "bottom"
+verticalAlign = "top"
+outlineConnect = 0
+
+[or]
+inherit = "default"
+width = 60
+height = 80
+shape = "xor"
+
+[and]
+inherit = "default"
+width = 60
+height = 80
+shape = "or"
+
+[data_storage]
+inherit = "default"
+width = 100
+height = 80
+shape = "dataStorage"
+fixedSize = 1
+
+[container]
+width = 200
+height = 200
+baseStyle = "swimlane"
+startSize = 0
+
+[labeled_container]
+width = 200
+height = 200
+baseStyle = "swimlane"
+
+[labeled_horizontal_container]
+width = 200
+height = 200
+baseStyle = "swimlane"
+horizontal = 0

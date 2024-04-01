@@ -17,11 +17,14 @@ classifiers = [
 requires-python = ">=3.8"
 dynamic = ["version"]
 dependencies = [
-    "toml >= 0.10.2",
-    "mkdocstrings[python]>=0.18",
-    ]
+    "toml >= 0.10.2; python_version < '3.11'",
+    "mkdocstrings[python] >= 0.18",
+    ]   
 
 [project.urls]
 Homepage = "https://github.com/MerrimanInd/drawpyo"
 Issues = "https://github.com/MerrimanInd/drawpyo/issues"
-Documentation = "https://merrimanind.github.io/drawpyo/"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",

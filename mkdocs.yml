@@ -6,9 +6,9 @@ site_author: Xander Cesari
 repo_name: MerrimanInd/drawpyo
 repo_url: https://github.com/MerrimanInd/drawpyo
 
-theme: readthedocs
-# theme:
-#   name: "material"
+# theme: readthedocs
+theme:
+  name: "material"
 
 plugins:
   - search
@@ -19,6 +19,7 @@ nav:
   - About: about.md
   - Basic Diagrams:
     - Usage: usage/basic_usage.md
+    - Formatting Text: usage/text_format.md
     - Objects: usage/objects.md
     - Edges: usage/edges.md
     - Shape Libraries: usage/shape_libs.md
@@ -29,6 +30,7 @@ nav:
     - Basic Diagrams:
       - File: api/file.md
       - Page: api/page.md
+      - Text Format: api/text_format.md
       - Edges: api/edges.md
       - Objects: api/objects.md
     - Custom Diagram Types:
