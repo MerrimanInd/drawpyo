@@ -62,3 +62,7 @@ Finally, before writing the diagram you'll want to run the magic penultimate ste
 tree.auto_layout()
 tree.write()
 ```
+
+With some more additions, the resulting diagram renders as:
+
+![coffee_grinders_tree](../img/tree_diagram/coffee_grinders_tree.png)

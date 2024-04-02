@@ -79,17 +79,3 @@ new_obj = drawpyo.diagram.object_from_library(
     page=page,
     )
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
