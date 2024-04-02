@@ -422,6 +422,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Edge Labels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#label-positions-rendered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Label Positions Rendered
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1010,6 +1025,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Edge Labels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#label-positions-rendered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Label Positions Rendered
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1166,6 +1196,8 @@
 </tr>
 </tbody>
 </table>
+<h4 id="label-positions-rendered">Label Positions Rendered</h4>
+<p><img alt="label_positions.png" src="../../img/edge_styles/label_positions.png" />    </p>
 <h2 id="edge-geometry">Edge Geometry</h2>
 <p>Besides the source and target, the edge geometry can be very finely tuned. There are eight parameters that control where and how the edge meets the source and target objects:</p>
 <table>
@@ -1219,6 +1251,10 @@
 </tbody>
 </table>
 <p>If these parameters are set to <code>None</code> then the Draw.io rendering engine will place the origination and direction of the edge wherever makes the most sense based on the layout of the objects. This is the same as the behavior in the app when an edge is dragged to the center of a shape (highlighting the whole object green) instead of to a specific node on the border (and seeing just that node highlighted in green).</p>
+<p>They can also be set to X and Y coordinates designating where on the source and target objects the edge will meet it. The rest of the routing will be handled automatically.</p>
+<p><img alt="coords_legend.png" src="../../img/edge_styles/coords_legend.png" /></p>
+<p>Some examples of different coordinate settings:</p>
+<p><img alt="coords_examples.png" src="../../img/edge_styles/coords_examples.png" /></p>
 <p>Other attributes for controlling the general shape of the object are:</p>
 <table>
 <thead>
@@ -1235,7 +1271,7 @@
 </tbody>
 </table>
 <h2 id="points">Points</h2>
-<p>You can also add points to Edges to further fine tune their routing. This isn't always necessary, usually setting the entry/exit parameters handles the auto routing correctly. However this is an option, using the <code>Edge.add_point()</code> and <code>Edge.add_point_pos()</code> functions.</p>
+<p>You can also add points to Edges to further fine tune their routing. This isn't always necessary, usually setting the entry/exit parameters handles the auto routing correctly. However this is an option, using the <code>Edge.add_point()</code> and <code>Edge.add_point_pos()</code> functions. The edge will then route through those points but auto layout otherwise.</p>
 <h2 id="styling-edges">Styling edges</h2>
 <p>Just about every edge styling option from the Draw.io app is implemented in Drawpyo. It's easiest to just play with all of the different line styling options in Draw.io to understand how they render but the major options are listed here.</p>
 <h3 id="text-styling">Text Styling</h3>

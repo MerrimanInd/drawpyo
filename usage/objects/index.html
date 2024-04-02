@@ -453,6 +453,25 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#generating-from-a-style-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating from a style string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#styling-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling Manually
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Styling Manually">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#text-styling" class="md-nav__link">
     <span class="md-ellipsis">
       Text Styling
@@ -485,6 +504,11 @@
       Further Styling Attributes
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1047,6 +1071,25 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#generating-from-a-style-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating from a style string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#styling-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling Manually
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Styling Manually">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#text-styling" class="md-nav__link">
     <span class="md-ellipsis">
       Text Styling
@@ -1086,6 +1129,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -1111,11 +1159,13 @@
 <pre><code class="language-python">base_obj = drawpyo.diagram.Object(page=page)
 </code></pre>
 <p>The default object type is a rounded corner rectangle with white background and a black border just like in the Draw.io app.</p>
+<p><img alt="object_default" src="../../img/object_styles/object_default.png" /></p>
 <p>The value attribute holds the text to display in the object.</p>
 <pre><code class="language-python">base_obj.value = &quot;This Object's Name is Fred&quot;
 </code></pre>
+<p><img alt="object_default_fred" src="../../img/object_styles/object_default_fred.png" /></p>
 <h3 id="creating-an-object-from-a-shape-library">Creating an object from a shape library</h3>
-<p>Just like the built-in shape libraries in the Draw.io app, Drawpyo supports generating shapes from libraries. Currently the 'general' library from the Draw.io app is defined but more will be added in the future.</p>
+<p>Just like the built-in shape libraries in the Draw.io app, Drawpyo supports generating shapes from libraries. Currently the 'general' and 'flowchart' libraries from the Draw.io app is defined but more will be added in the future.</p>
 <blockquote>
 <p>These libraries are defined in TOML files and drawpyo supports importing custom shape libraries! See <a href="/drawpyo/usage/shape_libs">Shape Libraries</a> for more information.</p>
 </blockquote>
@@ -1148,12 +1198,28 @@ Object.center_position = (0, 0)
 Object.geometry.y = 0
 </code></pre>
 <h2 id="styling-objects">Styling Objects</h2>
+<h3 id="generating-from-a-style-string">Generating from a style string</h3>
+<p>While styling an object from scratch in drawpyo is possible, you're probably using drawpyo because Draw.io exists and is a great UI so use it! The easiest workflow is to style objects in Draw.io, or at least play with the different parameters to understand how they'll render visually.</p>
+<p>Once you have an object styled in Draw.io how you like it, you can replicate the styling attributes you want manually or just copy the style string.</p>
+<p>To do this, first style an object as much as you want:</p>
+<p><img alt="stylestr_styled_object" src="../../img/object_styles/stylestr_styled_object.png" /></p>
+<p>Then right click on the object and select 'Edit Style:'. The following pop-up will show the exact style string:</p>
+<p><img alt="stylestr_edit_style" src="../../img/object_styles/stylestr_edit_style.png" /></p>
+<p>This style string can be copied into the drawpyo function <code>apply_style_string</code>:</p>
+<pre><code class="language-python">style_str_obj = drawpyo.diagram.Object(page=page)
+
+style_str_obj.apply_style_string(
+    &quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#63B6FF;glass=1;strokeWidth=5;shadow=1;&quot;
+)
+</code></pre>
+<p>The <code>style_str_obj</code> will now have all of the custom styled attributes. It can also be used as a template object for others.</p>
+<h3 id="styling-manually">Styling Manually</h3>
 <p>There are infinite permutations of object formatting and styling available. There are some higher order attributes that set the template for the object. What lower order styling attributes may or may not apply in combination. Then there are attributes like size and text formatting that apply in all cases. These interactions are difficult to predict in drawpyo alone so a good way to get familiar with all of the possible options and types of customizations is just to play with the Draw.io app directly to design formatting to your taste.</p>
 <p>Almost all styling attributes are optional (and drawpyo adds the non-optional ones automatically). If an attribute is unset or set to None then it won't be included in the file output. This will set that specific styling behavior to a default mode.</p>
-<h3 id="text-styling">Text Styling</h3>
+<h4 id="text-styling">Text Styling</h4>
 <p>The styling within an object is contained inside of a <code>TextFormat</code> object. All styling parameters can be accessed at the attribute <code>Object.text_format</code>, which contains a <code>TextFormat</code> object.</p>
-<p>For more information about styling text, see <a href="/drawpyo/usage/text_format">Formatting Text</a> for mor information.</p>
-<h3 id="basestyle-and-shape">BaseStyle and Shape</h3>
+<p>For more information about styling text, see <a href="/drawpyo/usage/text_format">Formatting Text</a> for more information.</p>
+<h4 id="basestyle-and-shape">BaseStyle and Shape</h4>
 <p>The highest order styling attribute in Draw.io for objects is <code>shape</code>. This sets how the object behaves and is rendered. Different values include:</p>
 <ul>
 <li>parallelogram</li>
@@ -1183,7 +1249,7 @@ Object.geometry.y = 0
 <li>swimlane</li>
 </ul>
 <p>It can be hard to predict how these two attributes will interact. To utilize them it's recommended to start in the Draw.io app, use their shape libraries or templates to get the desired style, then look at the style string to see what <code>shape</code> and <code>baseStyle</code> were used. When creating an object from a shape library these two attributes are handled automatically.</p>
-<h3 id="basic-styling-attributes">Basic Styling Attributes</h3>
+<h4 id="basic-styling-attributes">Basic Styling Attributes</h4>
 <p>These attributes mostly apply to most shape/baseStyle combinations and can be set on almost any object.</p>
 <ul>
 <li>rounded</li>
@@ -1196,7 +1262,7 @@ Object.geometry.y = 0
 <li>comic</li>
 <li>line_pattern</li>
 </ul>
-<h3 id="further-styling-attributes">Further Styling Attributes</h3>
+<h4 id="further-styling-attributes">Further Styling Attributes</h4>
 <p>As mentioned above, not all of these attributes will apply to all object shapes and types. But some commonly called include:</p>
 <ul>
 <li>darkOpacity</li>
