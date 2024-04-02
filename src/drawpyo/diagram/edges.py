@@ -8,7 +8,7 @@ from .base_diagram import (
 )
 from .text_format import TextFormat
 
-__all__ = ["Edge", "BasicEdge"]
+__all__ = ["Edge", "BasicEdge", "EdgeGeometry", "Point"]
 
 data = import_shape_database(
     file_name=path.join("formatting_database", "edge_styles.toml"), relative=True
@@ -185,8 +185,9 @@ class Edge(DiagramBase):
 
     @source.setter
     def source(self, f):
-        f.add_out_edge(self)
-        self._source = f
+        if f is not None:
+            f.add_out_edge(self)
+            self._source = f
 
     @source.deleter
     def source(self):
@@ -217,8 +218,9 @@ class Edge(DiagramBase):
 
     @target.setter
     def target(self, f):
-        f.add_in_edge(self)
-        self._target = f
+        if f is not None:
+            f.add_in_edge(self)
+            self._target = f
 
     @target.deleter
     def target(self):
@@ -236,6 +238,23 @@ class Edge(DiagramBase):
             return self.target.id
         else:
             return 1
+
+    def add_point(self, x, y):
+        """Add a point to the edge
+
+        Args:
+            x (int): The x coordinate of the point in pixels
+            y (int): The y coordinate of the point in pixels
+        """
+        self.geometry.points.append(Point(x=x, y=y))
+
+    def add_point_pos(self, position):
+        """Add a point to the edge by position tuple
+
+        Args:
+            position (tuple): A tuple of ints describing the x and y coordinates in pixels
+        """
+        self.geometry.points.append(Point(x=position[0], y=position[1]))
 
     ###########################################################
     # Style properties
@@ -513,12 +532,19 @@ class EdgeGeometry(DiagramBase):
         """This class is automatically instantiated by a Edge object so the user should never need to create it."""
         super().__init__(**kwargs)
         self.xml_class = "mxGeometry"
-        self.parent_object = kwargs.get("parent_object", None)
 
         self.relative = kwargs.get("relative", 1)
-        self.x = kwargs.get("x", None)
-        self.y = kwargs.get("y", None)
+        self.points = kwargs.get("points", [])
         self.as_attribute = kwargs.get("as_attribute", "geometry")
+
+    def add_point(self, x, y):
+        """Add a point to the edge geometry
+
+        Args:
+            x (int): The x coordinate of the point in pixels
+            y (int): The y coordinate of the point in pixels
+        """
+        self.points.append(Point(x=x, y=y))
 
     @property
     def attributes(self):
@@ -528,6 +554,19 @@ class EdgeGeometry(DiagramBase):
             "relative": self.relative,
             "as": self.as_attribute,
         }
+
+    @property
+    def xml(self):
+        if len(self.points) == 0:
+            return self.xml_open_tag[:-1] + " />"
+        else:
+            return (
+                self.xml_open_tag
+                + '\n<Array as="points">\n'
+                + "\n".join([pnt.xml for pnt in self.points])
+                + "\n</Array>\n"
+                + self.xml_close_tag
+            )
 
 
 class EdgeLabel(DiagramBase):
@@ -554,7 +593,6 @@ class Point(DiagramBase):
         super().__init__(**kwargs)
         self.xml_class = "mxPoint"
 
-        self.parent_object = self.kwargs.get("parent_object", None)
         self.x = kwargs.get("x", 0)
         self.y = kwargs.get("y", 0)
 
