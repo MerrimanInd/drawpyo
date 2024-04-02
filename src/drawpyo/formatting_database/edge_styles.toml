@@ -35,7 +35,6 @@ title = "Default Draw.pyo Edges"
 	[waypoints.isometric_vertical]
 	edgeStyle = "isometricEdgeStyle"
 	elbow = "vertical"
-	curved = 1
 
 	[waypoints.curved]
 	edgeStyle = "orthogonalEdgeStyle"
