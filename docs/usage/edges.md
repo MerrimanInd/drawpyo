@@ -50,6 +50,10 @@ Other attributes for controlling the general shape of the object are:
 | ----------- | ------------------------------------------------------------------------------------------------------------ |
 | `jettySize` | Defines the length of the straight line coming out of or into an object before the edge makes its first turn |
 
+## Points
+
+You can also add points to Edges to further fine tune their routing. This isn't always necessary, usually setting the entry/exit parameters handles the auto routing correctly. However this is an option, using the `Edge.add_point()` and `Edge.add_point_pos()` functions.
+
 ## Styling edges
 
 Just about every edge styling option from the Draw.io app is implemented in Drawpyo. It's easiest to just play with all of the different line styling options in Draw.io to understand how they render but the major options are listed here.

@@ -28,3 +28,4 @@ Issues = "https://github.com/MerrimanInd/drawpyo/issues"
 [tool.pytest.ini_options]
 addopts = [
     "--import-mode=importlib",
+]

@@ -94,8 +94,7 @@ class XMLBase:
         Returns:
             str: A single XML tag containing the object name, style attributes, and a closer.
         """
-        open_tag = self.xml_open_tag
-        return open_tag[:-1] + " />"
+        return self.xml_open_tag[:-1] + " />"
 
     def xml_ify(self, parameter_string):
         return self.translate_txt(parameter_string, xmlize)
