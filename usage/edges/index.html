@@ -434,6 +434,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#styling-edges" class="md-nav__link">
     <span class="md-ellipsis">
       Styling edges
@@ -1013,6 +1022,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#points" class="md-nav__link">
+    <span class="md-ellipsis">
+      Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#styling-edges" class="md-nav__link">
     <span class="md-ellipsis">
       Styling edges
@@ -1216,11 +1234,13 @@
 </tr>
 </tbody>
 </table>
+<h2 id="points">Points</h2>
+<p>You can also add points to Edges to further fine tune their routing. This isn't always necessary, usually setting the entry/exit parameters handles the auto routing correctly. However this is an option, using the <code>Edge.add_point()</code> and <code>Edge.add_point_pos()</code> functions.</p>
 <h2 id="styling-edges">Styling edges</h2>
 <p>Just about every edge styling option from the Draw.io app is implemented in Drawpyo. It's easiest to just play with all of the different line styling options in Draw.io to understand how they render but the major options are listed here.</p>
 <h3 id="text-styling">Text Styling</h3>
 <p>The styling within an an edge label is contained inside of a <code>TextFormat</code> object. All styling parameters can be accessed at the attribute <code>Edge.text_format</code>, which contains a <code>TextFormat</code> object.</p>
-<p>For more information about styling text, see <a href="/drawpyo/usage/text_format">Formatting Text</a> for mor information.</p>
+<p>For more information about styling text, see <a href="/drawpyo/usage/text_format">Formatting Text</a> for more information.</p>
 <h3 id="color-and-shading">Color and Shading</h3>
 <p>Edge coloring can be set with a stroke and fill color, though only the stroke applies to a simple edge.</p>
 <table>
@@ -1246,33 +1266,40 @@
 </tbody>
 </table>
 <h3 id="effects">Effects</h3>
-<p>Draw.io has four effects that can be set on an edge.</p>
+<p>Draw.io has four effects that can be set on an edge. They're all boolean valuable that can be enabled.</p>
 <table>
 <thead>
 <tr>
 <th>Paramater</th>
-<th>Effect</th>
+<th>Rendered</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>default (None)</td>
+<td><img alt="effects_default" src="../../img/edge_styles/effects_default.png" /></td>
+</tr>
+<tr>
 <td><code>rounded</code></td>
-<td>Sets whether the corners of a line are set to sharp or rounded off (bool)</td>
+<td><img alt="effects_rounded" src="../../img/edge_styles/effects_rounded.png" /></td>
 </tr>
 <tr>
 <td><code>shadow</code></td>
-<td>Add a shadow to the edge (bool)</td>
+<td><img alt="effects_shadow" src="../../img/edge_styles/effects_shadow.png" /></td>
 </tr>
 <tr>
 <td><code>sketch</code></td>
-<td>Renders the edge with a handsketch style (bool)</td>
+<td><img alt="effects_sketch" src="../../img/edge_styles/effects_sketch.png" /></td>
 </tr>
 <tr>
-<td><code>flowAnimation</code></td>
-<td>Add a marching ants animation along the edge from source to target (bool)</td>
+<td><code>flowAnimation</code>*</td>
+<td><img alt="effects_flow_animation" src="../../img/edge_styles/effects_flow_animation.png" /></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>*(this animates in Draw.io)</p>
+</blockquote>
 <h3 id="jumps">Jumps</h3>
 <p>By default, when an edge crosses another edge they'll just be rendered as a cross. You can also enable line jumps; the top edge will 'jump' over the bottom edge. There are different styles of line jumps and they can have variable sizes as well.</p>
 <table>
@@ -1293,6 +1320,37 @@
 </tr>
 </tbody>
 </table>
+<p>The different rendered jump styles are:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Rendered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default (None)</td>
+<td><img alt="line_jump_default" src="../../img/edge_styles/line_jump_default.png" /></td>
+</tr>
+<tr>
+<td><code>arc</code></td>
+<td><img alt="line_jump_arc" src="../../img/edge_styles/line_jump_arc.png" /></td>
+</tr>
+<tr>
+<td><code>gap</code></td>
+<td><img alt="line_jump_gap" src="../../img/edge_styles/line_jump_gap.png" /></td>
+</tr>
+<tr>
+<td><code>sharp</code></td>
+<td><img alt="line_jump_sharp" src="../../img/edge_styles/line_jump_sharp.png" /></td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td><img alt="line_jump_line" src="../../img/edge_styles/line_jump_line.png" /></td>
+</tr>
+</tbody>
+</table>
 <h3 id="waypoints">Waypoints</h3>
 <p>The <code>waypoint</code> parameter controls how the line is routed from the source to the target. For example, a straight line is just point to point. A curved line tries to maintain gentle curves and perpendicularity to the source and target objects. Options are:</p>
 <table>
@@ -1304,36 +1362,40 @@
 </thead>
 <tbody>
 <tr>
+<td>default (None)</td>
+<td><img alt="waypoints_default" src="../../img/edge_styles/waypoints_default.png" /></td>
+</tr>
+<tr>
 <td><code>straight</code></td>
-<td></td>
+<td><img alt="waypoints_straight" src="../../img/edge_styles/waypoints_straight.png" /></td>
 </tr>
 <tr>
 <td><code>orthogonal</code></td>
-<td></td>
+<td><img alt="waypoints_orthogonal" src="../../img/edge_styles/waypoints_orthogonal.png" /></td>
 </tr>
 <tr>
 <td><code>vertical</code></td>
-<td></td>
+<td><img alt="waypoints_vertical" src="../../img/edge_styles/waypoints_vertical.png" /></td>
 </tr>
 <tr>
 <td><code>horizontal</code></td>
-<td></td>
+<td><img alt="waypoints_horizontal" src="../../img/edge_styles/waypoints_horizontal.png" /></td>
 </tr>
 <tr>
 <td><code>isometric</code></td>
-<td></td>
+<td><img alt="waypoints_isometric" src="../../img/edge_styles/waypoints_isometric.png" /></td>
 </tr>
 <tr>
 <td><code>isometric_vertical</code></td>
-<td></td>
+<td><img alt="waypoints_isometric_vertical" src="../../img/edge_styles/waypoints_isometric_vertical.png" /></td>
 </tr>
 <tr>
 <td><code>curved</code></td>
-<td></td>
+<td><img alt="waypoints_curved" src="../../img/edge_styles/waypoints_curved.png" /></td>
 </tr>
 <tr>
 <td><code>entity_relation</code></td>
-<td></td>
+<td><img alt="waypoints_entity_relation" src="../../img/edge_styles/waypoints_entity_relation.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -1348,20 +1410,24 @@
 </thead>
 <tbody>
 <tr>
+<td>default (None)</td>
+<td><img alt="connections_default" src="../../img/edge_styles/connections_default.png" /></td>
+</tr>
+<tr>
 <td><code>line</code></td>
-<td></td>
+<td><img alt="connections_line" src="../../img/edge_styles/connections_line.png" /></td>
 </tr>
 <tr>
 <td><code>link</code></td>
-<td></td>
+<td><img alt="connections_link" src="../../img/edge_styles/connections_link.png" /></td>
 </tr>
 <tr>
 <td><code>arrow</code></td>
-<td></td>
+<td><img alt="connections_arrow" src="../../img/edge_styles/connections_arrow.png" /></td>
 </tr>
 <tr>
 <td><code>simple_arrow</code></td>
-<td></td>
+<td><img alt="connections_simple_arrow" src="../../img/edge_styles/connections_simple_arrow.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -1376,32 +1442,36 @@
 </thead>
 <tbody>
 <tr>
+<td>default (None)</td>
+<td><img alt="patterns_default" src="../../img/edge_styles/patterns_default.png" /></td>
+</tr>
+<tr>
 <td><code>solid</code></td>
-<td></td>
+<td><img alt="patterns_solid" src="../../img/edge_styles/patterns_solid.png" /></td>
 </tr>
 <tr>
 <td><code>dashed_small</code></td>
-<td></td>
+<td><img alt="patterns_dashed_small" src="../../img/edge_styles/patterns_dashed_small.png" /></td>
 </tr>
 <tr>
 <td><code>dashed_medium</code></td>
-<td></td>
+<td><img alt="patterns_dashed_medium" src="../../img/edge_styles/patterns_dashed_medium.png" /></td>
 </tr>
 <tr>
 <td><code>dashed_large</code></td>
-<td></td>
+<td><img alt="patterns_dashed_large" src="../../img/edge_styles/patterns_dashed_large.png" /></td>
 </tr>
 <tr>
 <td><code>dotted_small</code></td>
-<td></td>
+<td><img alt="patterns_dotted_small" src="../../img/edge_styles/patterns_dotted_small.png" /></td>
 </tr>
 <tr>
 <td><code>dotted_medium</code></td>
-<td></td>
+<td><img alt="patterns_dotted_medium" src="../../img/edge_styles/patterns_dotted_medium.png" /></td>
 </tr>
 <tr>
 <td><code>dotted_large</code></td>
-<td></td>
+<td><img alt="patterns_dotted_large" src="../../img/edge_styles/patterns_dotted_large.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -1418,124 +1488,129 @@
 </thead>
 <tbody>
 <tr>
+<td>default (None)</td>
+<td><img alt="line_end_default" src="../../img/edge_styles/line_end_default.png" /></td>
+<td><em>na</em></td>
+</tr>
+<tr>
 <td><code>classic</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_classic" src="../../img/edge_styles/line_end_classic.png" /></td>
+<td><img alt="line_end_classic_filled" src="../../img/edge_styles/line_end_classic_filled.png" /></td>
 </tr>
 <tr>
 <td><code>classicThin</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_classicThin" src="../../img/edge_styles/line_end_classicThin.png" /></td>
+<td><img alt="line_end_classicThin_filled" src="../../img/edge_styles/line_end_classicThin_filled.png" /></td>
 </tr>
 <tr>
 <td><code>open</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_open" src="../../img/edge_styles/line_end_open.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>openThin</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_openThin" src="../../img/edge_styles/line_end_openThin.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>openAsync</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_openAsync" src="../../img/edge_styles/line_end_openAsync.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>block</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_block" src="../../img/edge_styles/line_end_block.png" /></td>
+<td><img alt="line_end_block_filled" src="../../img/edge_styles/line_end_block_filled.png" /></td>
 </tr>
 <tr>
 <td><code>blockThin</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_blockThin" src="../../img/edge_styles/line_end_blockThin.png" /></td>
+<td><img alt="line_end_blockThin_filled" src="../../img/edge_styles/line_end_blockThin_filled.png" /></td>
 </tr>
 <tr>
 <td><code>async</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_async" src="../../img/edge_styles/line_end_async.png" /></td>
+<td><img alt="line_end_async_filled" src="../../img/edge_styles/line_end_async_filled.png" /></td>
 </tr>
 <tr>
 <td><code>oval</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_oval" src="../../img/edge_styles/line_end_oval.png" /></td>
+<td><img alt="line_end_oval_filled" src="../../img/edge_styles/line_end_oval_filled.png" /></td>
 </tr>
 <tr>
 <td><code>diamond</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_diamond" src="../../img/edge_styles/line_end_diamond.png" /></td>
+<td><img alt="line_end_diamond_filled" src="../../img/edge_styles/line_end_diamond_filled.png" /></td>
 </tr>
 <tr>
 <td><code>diamondThin</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_diamondThin" src="../../img/edge_styles/line_end_diamondThin.png" /></td>
+<td><img alt="line_end_diamondThin_filled" src="../../img/edge_styles/line_end_diamondThin_filled.png" /></td>
 </tr>
 <tr>
 <td><code>dash</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_dash" src="../../img/edge_styles/line_end_dash.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>halfCircle</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_halfCircle" src="../../img/edge_styles/line_end_halfCircle.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>cross</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_cross" src="../../img/edge_styles/line_end_cross.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>circlePlus</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_circlePlus" src="../../img/edge_styles/line_end_circlePlus.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>circle</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_circle" src="../../img/edge_styles/line_end_circle.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>baseDash</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_baseDash" src="../../img/edge_styles/line_end_baseDash.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERone</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERone" src="../../img/edge_styles/line_end_ERone.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERmandOne</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERmandOne" src="../../img/edge_styles/line_end_ERmandOne.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERmany</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERmany" src="../../img/edge_styles/line_end_ERmany.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERoneToMany</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERoneToMany" src="../../img/edge_styles/line_end_ERoneToMany.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERzeroToOne</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERzeroToOne" src="../../img/edge_styles/line_end_ERzeroToOne.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>ERzeroToMany</code></td>
-<td></td>
-<td>na</td>
+<td><img alt="line_end_ERzeroToMany" src="../../img/edge_styles/line_end_ERzeroToMany.png" /></td>
+<td><em>na</em></td>
 </tr>
 <tr>
 <td><code>doubleBlock</code></td>
-<td></td>
-<td></td>
+<td><img alt="line_end_doubleBlock" src="../../img/edge_styles/line_end_doubleBlock.png" /></td>
+<td><img alt="line_end_doubleBlock_filled" src="../../img/edge_styles/line_end_doubleBlock_filled.png" /></td>
 </tr>
 </tbody>
 </table>
