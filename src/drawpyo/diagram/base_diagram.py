@@ -62,7 +62,12 @@ def import_shape_database(file_name, relative=False):
 
     for obj in data.values():
         if "inherit" in obj:
-            obj.update(data[obj["inherit"]])
+            # To make the inheritor styles take precedence the inherited
+            # object needs to be updated not the other way around. The copy is
+            # created, updated, and replaced.
+            new_obj = data[obj["inherit"]]
+            new_obj.update(obj)
+            obj = new_obj
 
     return data
 
