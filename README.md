@@ -22,11 +22,11 @@ The basic mode of interacting with drawpyo is to manually create, style, and pla
 
 ```python
 import drawpyo
-diagram = drawpyo.File()
+file = drawpyo.File()
 file.file_path = r"C:\drawpyo"
 file.file_name = "Test Generated Edges.drawio"
 # Add a page
-page = drawpy.Page(file=file)
+page = drawpyo.Page(file=file)
 ```
 
 ## Add an object
