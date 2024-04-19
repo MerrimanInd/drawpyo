@@ -84,6 +84,7 @@ Edge coloring can be set with a stroke and fill color, though only the stroke ap
 | ------------- | -------------------------------------------------------------------------------------------------- |
 | `opacity`     | The opacity of the edge (0-100)                                                                    |
 | `strokeColor` | The color of the edge or the stroke around the edge shape ('default', 'none', or a hex color code) |
+| `strokeWidth` | The width of the edge or the stroke around the edge shape (1-999) |
 | `fillColor`   | The fill color of the edge shape ('default', 'none', or a hex color code)                          |
 
 ### Effects
