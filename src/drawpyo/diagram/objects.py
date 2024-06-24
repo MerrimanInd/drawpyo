@@ -412,6 +412,14 @@ class Object(DiagramBase):
         self.in_edges.remove(edge)
 
     ###########################################################
+    # Subobjects
+    ###########################################################
+    
+    # def add_subobject(self, **kwargs):
+    #     value = kwargs.get("value", "")
+    # TODO add tracking for subobjects that track relative position.
+    
+    ###########################################################
     # XML Generation
     ###########################################################
 

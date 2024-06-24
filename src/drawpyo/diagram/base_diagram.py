@@ -170,6 +170,9 @@ class DiagramBase(XMLBase):
     def page(self):
         self._page.remove_object(self)
         self._page = None
+        
+    def add_object(self, obj):
+        self.page.add_object(obj)
 
     ###########################################################
     # Style properties
