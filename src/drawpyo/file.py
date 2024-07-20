@@ -132,10 +132,9 @@ class File(XMLBase):
         if not path.exists(self.file_path):
             makedirs(self.file_path)
 
-        f = open(
+        with open(
             path.join(self.file_path, self.file_name), write_mode, encoding="utf-8"
-        )
-        f.write(self.xml)
-        f.close
+        ) as f:
+            f.write(self.xml)
 
         return path.join(self.file_path, self.file_name)
