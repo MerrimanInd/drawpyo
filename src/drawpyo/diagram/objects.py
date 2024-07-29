@@ -106,7 +106,7 @@ class Object(DiagramBase):
 
         # Geometry
         self.geometry = Geometry(parent_object=self)
-        self.position = kwargs.get("position", (0, 0))
+        self.position = position
         self.width = kwargs.get("width", 120)
         self.height = kwargs.get("height", 80)
         self.vertex = kwargs.get("vertex", 1)
