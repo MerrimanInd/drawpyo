@@ -21,6 +21,7 @@ nav:
     - Usage: usage/basic_usage.md
     - Formatting Text: usage/text_format.md
     - Objects: usage/objects.md
+    - Parent and Child Objects: usage/parent_child_objects.md
     - Edges: usage/edges.md
     - Shape Libraries: usage/shape_libs.md
   - Custom Diagram Types:

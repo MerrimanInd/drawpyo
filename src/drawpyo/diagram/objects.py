@@ -80,8 +80,9 @@ class Object(DiagramBase):
             height (int, optional): The height of the object in pixels. Defaults to 80.
             parent (Object, optional): The parent object (container, etc) of this object. Defaults to None. # TODO document
             children (array of Objects, optional): The subobjects to add to this object as a parent. Defaults to []. # TODO document
-            autoexpand (bool, optional): Whether to autoexpand when child objects are added. Defaults to true. # TODO document
-            autoexpand_margin (int, optional): What margin in pixels to leave around the child objects. Defaults to 10px. # TODO document
+            autosize_to_children (bool, optional): Whether to autoexpand when child objects are added. Defaults to false. # TODO document
+            autocontract (bool, optional): Whether to contract to fit the child objects. Defaults to false.
+            autosize_margin (int, optional): What margin in pixels to leave around the child objects. Defaults to 20px. # TODO document
             template_object (Object, optional): Another object to copy the style_attributes from
             aspect # TODO ?
             rounded (bool, optional): Whether to round the corners of the shape
@@ -122,8 +123,9 @@ class Object(DiagramBase):
         else:
             self.parent = None
         self.children = kwargs.get("children", [])
-        self.autoexpand = kwargs.get("autoexpand", True)
-        self.autoexpand_margin = kwargs.get("autoexpand_margin", 10)
+        self.autosize_to_children = kwargs.get("autosize_to_children", False)
+        self.autocontract = kwargs.get("autocontract", False)
+        self.autosize_margin = kwargs.get("autosize_margin", 20)
 
         # Geometry
         self.position = position
@@ -469,7 +471,7 @@ class Object(DiagramBase):
         """
         child_object._parent = self  # Bypass the setter to prevent a loop
         self.children.append(child_object)
-        if self.autoexpand:
+        if self.autosize_to_children:
             self.resize_to_children()
 
     def remove_object(self, child_object):
@@ -480,7 +482,7 @@ class Object(DiagramBase):
         """
         child_object._parent = None  # Bypass the setter to prevent a loop
         self.children.remove(child_object)
-        if self.autoexpand:
+        if self.autosize_to_children:
             self.resize_to_children()
 
     def update_parent(self):
@@ -490,12 +492,12 @@ class Object(DiagramBase):
         if (
             hasattr(self, "_parent")
             and self.parent is not None
-            and self.parent.autoexpand
+            and self.parent.autosize_to_children
         ):
             # if the parent is autoexpanding, call the autoexpand function
             self.parent.resize_to_children()
 
-    def resize_to_children(self, contract=False):
+    def resize_to_children(self):
         """If the object contains children (is a container, parent, etc) then expand the size and position to fit all of the children.
 
         By default this function will never shrink the size of the object, only expand it. The contract input can be set for that behavior.
@@ -506,7 +508,7 @@ class Object(DiagramBase):
         # Get current extents
         if len(self.children) == 0:
             return
-        if contract:
+        if self.autocontract:
             topmost = 65536
             bottommost = -65536
             leftmost = 65536
@@ -519,15 +521,15 @@ class Object(DiagramBase):
 
         # Check all child objects for extents
         for child_object in self.children:
-            topmost = min(topmost, child_object.position[1] - self.autoexpand_margin)
+            topmost = min(topmost, child_object.position[1] - self.autosize_margin)
             bottommost = max(
                 bottommost,
-                child_object.position[1] + child_object.height + self.autoexpand_margin,
+                child_object.position[1] + child_object.height + self.autosize_margin,
             )
-            leftmost = min(leftmost, child_object.position[0] - self.autoexpand_margin)
+            leftmost = min(leftmost, child_object.position[0] - self.autosize_margin)
             rightmost = max(
                 rightmost,
-                child_object.position[0] + child_object.width + self.autoexpand_margin,
+                child_object.position[0] + child_object.width + self.autosize_margin,
             )
 
         # Set self extents to furthest positions
@@ -543,8 +545,8 @@ class Object(DiagramBase):
         """
         # Disable autoexpand to avoid recursion from child_objects
         # attempting to update their autoexpanding parent upon a move
-        old_autoexpand = self.autoexpand
-        self.autoexpand = False
+        old_autoexpand = self.autosize_to_children
+        self.autosize_to_children = False
 
         # Move children to counter upcoming parent move
         pos_delta = [
@@ -558,7 +560,7 @@ class Object(DiagramBase):
 
         # Set new position and re-enable autoexpand
         self.position = position
-        self.autoexpand = old_autoexpand
+        self.autosize_to_children = old_autoexpand
 
     ###########################################################
     # Edge Tracking
