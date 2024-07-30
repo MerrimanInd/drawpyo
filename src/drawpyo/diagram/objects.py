@@ -117,7 +117,7 @@ class Object(DiagramBase):
         # autoexpanding until position is set
         if "parent" in kwargs:
             parent = kwargs.get("parent")
-            old_parent_autoexpand = parent.autoexpand
+            old_parent_autosize = parent.autosize_to_children
             parent.autoexpand = False
             self.parent = parent
         else:
@@ -170,7 +170,7 @@ class Object(DiagramBase):
 
         # If a parent was passed in, reactivate the parents autoexpanding and update it
         if "parent" in kwargs:
-            self.parent.autoexpand = old_parent_autoexpand
+            self.parent.autosize_to_children = old_parent_autosize
             self.update_parent()
 
     def __repr__(self):
