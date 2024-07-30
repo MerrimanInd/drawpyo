@@ -75,10 +75,15 @@ class Object(DiagramBase):
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
 
         Keyword Args:
+            position_rel_to_parent (tuple, optional): The position of the object relative to the parent in pixels, in (X, Y). # TODO document
             width (int, optional): The width of the object in pixels. Defaults to 120.
             height (int, optional): The height of the object in pixels. Defaults to 80.
+            parent (Object, optional): The parent object (container, etc) of this object. Defaults to None. # TODO document
+            children (array of Objects, optional): The subobjects to add to this object as a parent. Defaults to []. # TODO document
+            autoexpand (bool, optional): Whether to autoexpand when child objects are added. Defaults to true. # TODO document
+            autoexpand_margin (int, optional): What margin in pixels to leave around the child objects. Defaults to 10px. # TODO document
             template_object (Object, optional): Another object to copy the style_attributes from
-            aspect
+            aspect # TODO ?
             rounded (bool, optional): Whether to round the corners of the shape
             whiteSpace (str, optional): white space
             fillColor (str, optional): The object fill color in a hex color code (#ffffff)
@@ -104,9 +109,27 @@ class Object(DiagramBase):
             "dashed",
         ]
 
-        # Geometry
         self.geometry = Geometry(parent_object=self)
+
+        # Subobjecting
+        # If there is a parent passed in, disable that parents
+        # autoexpanding until position is set
+        if "parent" in kwargs:
+            parent = kwargs.get("parent")
+            old_parent_autoexpand = parent.autoexpand
+            parent.autoexpand = False
+            self.parent = parent
+        else:
+            self.parent = None
+        self.children = kwargs.get("children", [])
+        self.autoexpand = kwargs.get("autoexpand", True)
+        self.autoexpand_margin = kwargs.get("autoexpand_margin", 10)
+
+        # Geometry
         self.position = position
+        # Since the position is already set to either a passed in arg or the default this will
+        # either override that default position or redundantly reset the position to the same value
+        self.position_rel_to_parent = kwargs.get("position_rel_to_parent", position)
         self.width = kwargs.get("width", 120)
         self.height = kwargs.get("height", 80)
         self.vertex = kwargs.get("vertex", 1)
@@ -142,6 +165,11 @@ class Object(DiagramBase):
             self._apply_style_from_template(self.template_object)
             self.width = self.template_object.width
             self.height = self.template_object.height
+
+        # If a parent was passed in, reactivate the parents autoexpanding and update it
+        if "parent" in kwargs:
+            self.parent.autoexpand = old_parent_autoexpand
+            self.update_parent()
 
     def __repr__(self):
         if self.value != "":
@@ -330,6 +358,7 @@ class Object(DiagramBase):
     @width.setter
     def width(self, value):
         self.geometry.width = value
+        self.update_parent()
 
     @property
     def height(self):
@@ -339,6 +368,7 @@ class Object(DiagramBase):
     @height.setter
     def height(self, value):
         self.geometry.height = value
+        self.update_parent()
 
     # Position property
     @property
@@ -350,12 +380,40 @@ class Object(DiagramBase):
         Returns:
             tuple: A tuple of ints describing the top left corner position of the object
         """
+        if self.parent is not None:
+            return (
+                self.geometry.x + self.parent.position[0],
+                self.geometry.y + self.parent.position[1],
+            )
         return (self.geometry.x, self.geometry.y)
 
     @position.setter
     def position(self, value):
+        if self.parent is not None:
+            self.geometry.x = value[0] - self.parent.position[0]
+            self.geometry.y = value[1] - self.parent.position[1]
+        else:
+            self.geometry.x = value[0]
+            self.geometry.y = value[1]
+        self.update_parent()
+
+    # Position Rel to Parent
+    @property
+    def position_rel_to_parent(self):
+        """The position of the object relative to its parent (container). If there's no parent this will be relative to the page. This is the top left corner. It's set with a tuple of ints, X and Y respectively.
+
+        (X, Y)
+
+        Returns:
+            tuple: A tuple of ints describing the top left corner position of the object
+        """
+        return (self.geometry.x, self.geometry.y)
+
+    @position_rel_to_parent.setter
+    def position_rel_to_parent(self, value):
         self.geometry.x = value[0]
         self.geometry.y = value[1]
+        self.update_parent()
 
     @property
     def center_position(self):
@@ -374,6 +432,133 @@ class Object(DiagramBase):
     def center_position(self, position):
         self.geometry.x = position[0] - self.geometry.width / 2
         self.geometry.y = position[1] - self.geometry.height / 2
+
+    ###########################################################
+    # Subobjects
+    ###########################################################
+    # TODO add to documentation
+
+    @property
+    def xml_parent_id(self):
+        if self.parent is not None:
+            return self.parent.id
+        return 1
+
+    @property
+    def parent(self):
+        """The parent object that owns this object. This is usually a container of some kind but can be any other object.
+
+        Returns:
+            Object: the parent object.
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, value):
+        if isinstance(value, Object):
+            # value.add_object(self)
+            value.children.append(self)
+            self.update_parent()
+        self._parent = value
+
+    def add_object(self, child_object):
+        """Adds a child object to this object, sets the child objects parent, and autoexpands this object if set to.
+
+        Args:
+            child_object (Object): object to add as a child
+        """
+        child_object._parent = self  # Bypass the setter to prevent a loop
+        self.children.append(child_object)
+        if self.autoexpand:
+            self.resize_to_children()
+
+    def remove_object(self, child_object):
+        """Removes a child object from this object, clears the child objects parent, and autoexpands this object if set to.
+
+        Args:
+            child_object (Object): object to remove as a child
+        """
+        child_object._parent = None  # Bypass the setter to prevent a loop
+        self.children.remove(child_object)
+        if self.autoexpand:
+            self.resize_to_children()
+
+    def update_parent(self):
+        """If a parent object is set and the parent is set to autoexpand, then autoexpand it."""
+        # This function needs to be callable prior to the parent being set during init,
+        # hence the hasattr() check.
+        if (
+            hasattr(self, "_parent")
+            and self.parent is not None
+            and self.parent.autoexpand
+        ):
+            # if the parent is autoexpanding, call the autoexpand function
+            self.parent.resize_to_children()
+
+    def resize_to_children(self, contract=False):
+        """If the object contains children (is a container, parent, etc) then expand the size and position to fit all of the children.
+
+        By default this function will never shrink the size of the object, only expand it. The contract input can be set for that behavior.
+
+        Args:
+            contract (bool, optional): Contract the parent object to hug the children. Defaults to False.
+        """
+        # Get current extents
+        if len(self.children) == 0:
+            return
+        if contract:
+            topmost = 65536
+            bottommost = -65536
+            leftmost = 65536
+            rightmost = -65536
+        else:
+            topmost = self.position[1]
+            bottommost = self.position[1] + self.height
+            leftmost = self.position[0]
+            rightmost = self.position[0] + self.width
+
+        # Check all child objects for extents
+        for child_object in self.children:
+            topmost = min(topmost, child_object.position[1] - self.autoexpand_margin)
+            bottommost = max(
+                bottommost,
+                child_object.position[1] + child_object.height + self.autoexpand_margin,
+            )
+            leftmost = min(leftmost, child_object.position[0] - self.autoexpand_margin)
+            rightmost = max(
+                rightmost,
+                child_object.position[0] + child_object.width + self.autoexpand_margin,
+            )
+
+        # Set self extents to furthest positions
+        self.move_wo_children((leftmost, topmost))
+        self.width = rightmost - leftmost
+        self.height = bottommost - topmost
+
+    def move_wo_children(self, position):
+        """Move the parent object relative to the page without moving the children relative to the page.
+
+        Args:
+            position (Tuple of Ints): The target position for the parent object.
+        """
+        # Disable autoexpand to avoid recursion from child_objects
+        # attempting to update their autoexpanding parent upon a move
+        old_autoexpand = self.autoexpand
+        self.autoexpand = False
+
+        # Move children to counter upcoming parent move
+        pos_delta = [
+            old_pos - new_pos for old_pos, new_pos in zip(self.position, position)
+        ]
+        for child_object in self.children:
+            child_object.position = [
+                curr_pos + container_move
+                for curr_pos, container_move in zip(child_object.position, pos_delta)
+            ]
+
+        # Set new position and re-enable autoexpand
+        self.position = position
+        self.autoexpand = old_autoexpand
 
     ###########################################################
     # Edge Tracking
@@ -411,14 +596,6 @@ class Object(DiagramBase):
         """
         self.in_edges.remove(edge)
 
-    ###########################################################
-    # Subobjects
-    ###########################################################
-    
-    # def add_subobject(self, **kwargs):
-    #     value = kwargs.get("value", "")
-    # TODO add tracking for subobjects that track relative position.
-    
     ###########################################################
     # XML Generation
     ###########################################################

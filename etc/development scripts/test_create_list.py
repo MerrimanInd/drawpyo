@@ -10,7 +10,6 @@ new_list = drawpyo.diagram.object_from_library(
     library="general", obj_name="list", page=page
 )
 new_list.value = "New List"
-new_list.height = 240
 
 
 list_objects = ["Item 1", "Item 2", "Item 3"]
@@ -20,7 +19,7 @@ for obj in list_objects:
         library="general", obj_name="list_item", page=page
     )
     list_obj.value = obj
-    list_obj.geometry.y = item_num*list_obj.height
+    list_obj.geometry.y = item_num * list_obj.height
     list_obj.xml_parent = new_list
     item_num += 1
 

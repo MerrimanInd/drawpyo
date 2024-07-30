@@ -170,7 +170,7 @@ class DiagramBase(XMLBase):
     def page(self):
         self._page.remove_object(self)
         self._page = None
-        
+
     def add_object(self, obj):
         self.page.add_object(obj)
 
@@ -320,6 +320,22 @@ class Geometry(DiagramBase):
         self.width = kwargs.get("width", 120)
         self.height = kwargs.get("height", 60)
         self.as_attribute = kwargs.get("as_attribute", "geometry")
+
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        self._x = value
+
+    @property
+    def y(self):
+        return self._y
+
+    @y.setter
+    def y(self, value):
+        self._y = value
 
     @property
     def attributes(self):
