@@ -193,3 +193,37 @@ width = 200
 height = 200
 baseStyle = "swimlane"
 horizontal = 0
+
+[list]
+baseStyle = "swimlane"
+width = 140
+height = 80
+fontStyle = 0
+childLayout = "stackLayout"
+startSize = 30
+horizontalStack = 0
+horizontal = 1
+resizeParent = 1
+resizeParentMax = 0
+resizeLast = 0
+collapsible = 1
+marginButtom = 0
+whiteSpace = "wrap"
+html = 1
+
+[list_item]
+baseStyle = "text"
+width = 140
+height = 30
+strokeColor = "none"
+fillColor = "none"
+align = "left"
+verticalAlign = "middle"
+spacingLeft = 4
+spacingRight = 4
+overflow = "hidden"
+points = "[[0,0.5],[1,0.5]]"
+portConstraint = "eastwest"
+rotatable = 0
+whiteSpace = "wrap"
+html = 1

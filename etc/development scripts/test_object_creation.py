@@ -36,6 +36,8 @@ base_styles = [
     "container",
     "labeled_container",
     "labeled_horizontal_container",
+    "list",
+    "list_item"
 ]
 
 items = []
@@ -46,8 +48,8 @@ for style in base_styles:
         library="general", obj_name=style, page=page
     )
     item.value = style
-    vert_pos = vert_pos + vert_space + item.geometry.height
     item.position = (0, vert_pos)
+    vert_pos = vert_pos + vert_space + item.geometry.height
     items.append(item)
 
 file.write()
