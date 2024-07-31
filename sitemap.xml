@@ -2,82 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://merrimanind.github.io/drawpyo/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/about/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/architecture/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/edges/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/api/extended_objects/</loc>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/file/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/objects/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/page/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/text_format/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/tree_diagram/nodeobject/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/api/tree_diagram/treediagram/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/diagram_types/tree_diagrams/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/usage/basic_usage/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/usage/edges/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/usage/extended_objects/</loc>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/usage/objects/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://merrimanind.github.io/drawpyo/usage/parent_child_objects/</loc>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/usage/shape_libs/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://merrimanind.github.io/drawpyo/usage/text_format/</loc>
-         <lastmod>2024-04-02</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
