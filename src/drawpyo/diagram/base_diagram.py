@@ -7,6 +7,7 @@ __all__ = [
     "style_str_from_dict",
     "import_shape_database",
     "color_input_check",
+    "width_input_check",
 ]
 
 
@@ -19,6 +20,19 @@ def color_input_check(color_str):
         return color_str
     elif color_str[0] == "#" and len(color_str) == 7:
         return color_str
+
+
+def width_input_check(width):
+    if not width or (isinstance(width, str) and not width.isdigit()):
+        return None
+
+    width = int(width)
+    if width < 1:
+        return 1
+    elif width > 999:
+        return 999
+    else:
+        return width
 
 
 def import_shape_database(file_name, relative=False):

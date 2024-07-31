@@ -6,9 +6,9 @@ To replicate this feature for drawpyo, I created a library format based on TOML.
 
 > Supporting Draw.io's XML based library is a planned feature.
 
-## Built-In Shape Libaries
+## Built-In Shape Libraries
 
-Drawpyo uses these TOML shape libraries to store the default libaries. The default libraries are in /drawpyo/shape_libraries. These are the libraries that are available in the Draw.io app.
+Drawpyo uses these TOML shape libraries to store the default libraries. The default libraries are in /drawpyo/shape_libraries. These are the libraries that are available in the Draw.io app.
 
 Implemented default libraries:
 
@@ -17,7 +17,7 @@ Implemented default libraries:
 
 There is also a set of TOML databases for other formats, like all of the various combinations of edge styles and the line styles. These are stored in /drawpyo/formatting_database.
 
-## Custom Shape Libaries
+## Custom Shape Libraries
 
 This functionality is available to the user so you can define your own custom libraries! TOML was selected because it's a very simple and human-readable config file format. [the TOML project website](https://toml.io/) has a very nice high level overview. But drawpyo is hardly scratching the surface of what TOML is capable of so little expertise is needed.
 

@@ -5,6 +5,7 @@ from .base_diagram import (
     import_shape_database,
     style_str_from_dict,
     color_input_check,
+    width_input_check,
 )
 from .text_format import TextFormat
 
@@ -77,6 +78,7 @@ class Edge(DiagramBase):
             exitDx (int): Applies an offset in pixels to the X axis exit point
             exitDy (int): Applies an offset in pixels to the Y axis exit point
             strokeColor (str): The color of the border of the edge ('none', 'default', or hex color code)
+            strokeWidth (int): The width of the border of the the edge within range (1-999)
             fillColor (str): The color of the fill of the edge ('none', 'default', or hex color code)
             jumpStyle (str): The line jump style ('arc', 'gap', 'sharp', 'line')
             jumpSize (int): The size of the line jumps in points.
@@ -92,6 +94,7 @@ class Edge(DiagramBase):
         self.pattern = kwargs.get("pattern", "solid")
         self.opacity = kwargs.get("opacity", None)
         self.strokeColor = kwargs.get("strokeColor", None)
+        self.strokeWidth = kwargs.get("strokeWidth", None)
         self.fillColor = kwargs.get("fillColor", None)
 
         # Line end
@@ -286,6 +289,7 @@ class Edge(DiagramBase):
             "startFill",
             "endFill",
             "strokeColor",
+            "strokeWidth",
             "fillColor",
             "jumpStyle",
             "jumpSize",
@@ -437,6 +441,19 @@ class Edge(DiagramBase):
     @strokeColor.deleter
     def strokeColor(self):
         self._strokeColor = None
+
+    ## strokeWidth
+    @property
+    def strokeWidth(self):
+        return self._strokeWidth
+
+    @strokeWidth.setter
+    def strokeWidth(self, value):
+        self._strokeWidth = width_input_check(value)
+
+    @strokeWidth.deleter
+    def strokeWidth(self):
+        self._strokeWidth = None
 
     # fillColor
     @property
