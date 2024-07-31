@@ -22,6 +22,7 @@ nav:
     - Formatting Text: usage/text_format.md
     - Objects: usage/objects.md
     - Parent and Child Objects: usage/parent_child_objects.md
+    - Extended Objects: usage/extended_objects.md
     - Edges: usage/edges.md
     - Shape Libraries: usage/shape_libs.md
   - Custom Diagram Types:
@@ -34,6 +35,7 @@ nav:
       - Text Format: api/text_format.md
       - Edges: api/edges.md
       - Objects: api/objects.md
+      - Extended Objects: api/extended_objects.md
     - Custom Diagram Types:
       - Tree Diagram:
         - TreeDiagram: api/tree_diagram/treediagram.md

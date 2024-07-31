@@ -182,8 +182,11 @@ class Object(DiagramBase):
             name_str = "{0} object".format(self.__class__.__name__)
         return name_str
 
-    def __str_(self):
+    def __str__(self):
         return self.__repr__()
+    
+    def __delete__(self):
+        self.page.remove_object(self)
 
     @classmethod
     def create_from_template_object(
