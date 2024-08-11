@@ -243,7 +243,7 @@ class DiagramBase(XMLBase):
 
         # Add style objects
         if hasattr(self, "text_format") and self.text_format is not None:
-            style_str = style_str + self.text_format.style
+            style_str = style_str + self.text_format.style + f"fontStyle={self.text_format.font_style};"
         return style_str
 
     def _add_and_set_style_attrib(self, attrib, value):
