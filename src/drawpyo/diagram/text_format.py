@@ -59,6 +59,7 @@ class TextFormat(DiagramBase):
         self._style_attributes = [
             "html",
             "fontFamily",
+            "fontStyle",
             "fontSize",
             "fontColor",
             "labelBorderColor",
@@ -150,3 +151,9 @@ class TextFormat(DiagramBase):
             return 6
         elif bld and ita and unl:
             return 7
+
+    @property
+    def fontStyle(self):
+        if self.font_style != 0:
+            return self.font_style
+        return None
