@@ -1405,8 +1405,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>src/drawpyo/diagram/edges.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 37</span>
-<span class="normal"> 38</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 38</span>
 <span class="normal"> 39</span>
 <span class="normal"> 40</span>
 <span class="normal"> 41</span>
@@ -1889,7 +1888,24 @@
 <span class="normal">518</span>
 <span class="normal">519</span>
 <span class="normal">520</span>
-<span class="normal">521</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Edge</span><span class="p">(</span><span class="n">DiagramBase</span><span class="p">):</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Edge</span><span class="p">(</span><span class="n">DiagramBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The Edge class is the simplest class for defining an edge or an arrow in a Draw.io diagram.</span>
 
 <span class="sd">    The three primary styling inputs are the waypoints, connections, and pattern. These are how edges are styled in the Draw.io app, with dropdown menus for each one. But it&#39;s not how the style string is assembled in the XML. To abstract this, the Edge class loads a database called edge_styles.toml. The database maps the options in each dropdown to the style strings they correspond to. The Edge class then assembles the style strings on export.</span>
@@ -1932,6 +1948,7 @@
 <span class="sd">            exitDx (int): Applies an offset in pixels to the X axis exit point</span>
 <span class="sd">            exitDy (int): Applies an offset in pixels to the Y axis exit point</span>
 <span class="sd">            strokeColor (str): The color of the border of the edge (&#39;none&#39;, &#39;default&#39;, or hex color code)</span>
+<span class="sd">            strokeWidth (int): The width of the border of the the edge within range (1-999)</span>
 <span class="sd">            fillColor (str): The color of the fill of the edge (&#39;none&#39;, &#39;default&#39;, or hex color code)</span>
 <span class="sd">            jumpStyle (str): The line jump style (&#39;arc&#39;, &#39;gap&#39;, &#39;sharp&#39;, &#39;line&#39;)</span>
 <span class="sd">            jumpSize (int): The size of the line jumps in points.</span>
@@ -1947,6 +1964,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pattern&quot;</span><span class="p">,</span> <span class="s2">&quot;solid&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opacity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;opacity&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strokeColor&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strokeWidth</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strokeWidth&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fillColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fillColor&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="c1"># Line end</span>
@@ -2141,6 +2159,7 @@
             <span class="s2">&quot;startFill&quot;</span><span class="p">,</span>
             <span class="s2">&quot;endFill&quot;</span><span class="p">,</span>
             <span class="s2">&quot;strokeColor&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;strokeWidth&quot;</span><span class="p">,</span>
             <span class="s2">&quot;fillColor&quot;</span><span class="p">,</span>
             <span class="s2">&quot;jumpStyle&quot;</span><span class="p">,</span>
             <span class="s2">&quot;jumpSize&quot;</span><span class="p">,</span>
@@ -2292,6 +2311,19 @@
     <span class="nd">@strokeColor</span><span class="o">.</span><span class="n">deleter</span>
     <span class="k">def</span> <span class="nf">strokeColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_strokeColor</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1">## strokeWidth</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">strokeWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strokeWidth</span>
+
+    <span class="nd">@strokeWidth</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">strokeWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_strokeWidth</span> <span class="o">=</span> <span class="n">width_input_check</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@strokeWidth</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">strokeWidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_strokeWidth</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># fillColor</span>
     <span class="nd">@property</span>
@@ -3559,6 +3591,20 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
             </td>
           </tr>
           <tr class="doc-section-item">
+            <td><code>strokeWidth</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The width of the border of the the edge within range (1-999)</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
             <td><code>fillColor</code></td>
             <td>
                   <code>str</code>
@@ -3619,8 +3665,7 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 
             <details class="quote">
               <summary>Source code in <code>src/drawpyo/diagram/edges.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 45</span>
-<span class="normal"> 46</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 46</span>
 <span class="normal"> 47</span>
 <span class="normal"> 48</span>
 <span class="normal"> 49</span>
@@ -3708,7 +3753,10 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 <span class="normal">131</span>
 <span class="normal">132</span>
 <span class="normal">133</span>
-<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Edges can be initialized with almost all styling parameters as args.</span>
 <span class="sd">    See [Usage - Edges](../../usage/edges) for more information and the options for each parameter.</span>
 
@@ -3743,6 +3791,7 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 <span class="sd">        exitDx (int): Applies an offset in pixels to the X axis exit point</span>
 <span class="sd">        exitDy (int): Applies an offset in pixels to the Y axis exit point</span>
 <span class="sd">        strokeColor (str): The color of the border of the edge (&#39;none&#39;, &#39;default&#39;, or hex color code)</span>
+<span class="sd">        strokeWidth (int): The width of the border of the the edge within range (1-999)</span>
 <span class="sd">        fillColor (str): The color of the fill of the edge (&#39;none&#39;, &#39;default&#39;, or hex color code)</span>
 <span class="sd">        jumpStyle (str): The line jump style (&#39;arc&#39;, &#39;gap&#39;, &#39;sharp&#39;, &#39;line&#39;)</span>
 <span class="sd">        jumpSize (int): The size of the line jumps in points.</span>
@@ -3758,6 +3807,7 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
     <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pattern&quot;</span><span class="p">,</span> <span class="s2">&quot;solid&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">opacity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;opacity&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strokeColor&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">strokeWidth</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strokeWidth&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fillColor</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fillColor&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="c1"># Line end</span>
@@ -3862,14 +3912,14 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 
             <details class="quote">
               <summary>Source code in <code>src/drawpyo/diagram/edges.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">245</span>
 <span class="normal">246</span>
 <span class="normal">247</span>
 <span class="normal">248</span>
-<span class="normal">249</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a point to the edge</span>
 
 <span class="sd">    Args:</span>
@@ -3927,13 +3977,13 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 
             <details class="quote">
               <summary>Source code in <code>src/drawpyo/diagram/edges.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">254</span>
 <span class="normal">255</span>
 <span class="normal">256</span>
-<span class="normal">257</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_point_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_point_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a point to the edge by position tuple</span>
 
 <span class="sd">    Args:</span>
@@ -3961,13 +4011,13 @@ See <a href="../../usage/edges">Usage - Edges</a> for more information and the o
 
             <details class="quote">
               <summary>Source code in <code>src/drawpyo/diagram/edges.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">148</span>
 <span class="normal">149</span>
 <span class="normal">150</span>
-<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function removes references to the Edge from its source and target objects then deletes the Edge.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">remove_out_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>

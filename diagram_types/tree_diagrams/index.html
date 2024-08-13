@@ -989,7 +989,7 @@
 
 
 <h1 id="tree-diagrams">Tree Diagrams</h1>
-<p>These very useful diagram types are why drawpyo was written initially! The TreeDiagram module allows the easy creation of heirarchical directed trees, managing the parent and children relationships, then providing a convenient auto layout function.</p>
+<p>These very useful diagram types are why drawpyo was written initially! The TreeDiagram module allows the easy creation of heirarchical directed trees, managing the tree parent and children relationships, then providing a convenient auto layout function.</p>
 <h2 id="create-a-tree">Create a Tree</h2>
 <p>The two main objects to work with in drawpyo's trees are TreeDiagrams and NodeObjects. To start, create a TreeDiagram:</p>
 <pre><code class="language-python">import drawpyo.diagram_types import TreeDiagram
@@ -1044,22 +1044,22 @@ tree = TreeDiagram(
 grinders = NodeObject(tree=tree, value=&quot;Appliances for Grinding Coffee&quot;, base_style=&quot;rounded rectangle&quot;)
 
 # Main categories
-blade_grinders = NodeObject(tree=tree, value=&quot;Blade Grinders&quot;, parent=grinders)
-burr_grinders = NodeObject(tree=tree, value=&quot;Burr Grinders&quot;, parent=grinders)
-blunt_objects = NodeObject(tree=tree, value=&quot;Blunt Objects&quot;, parent=grinders)
+blade_grinders = NodeObject(tree=tree, value=&quot;Blade Grinders&quot;, tree_parent=grinders)
+burr_grinders = NodeObject(tree=tree, value=&quot;Burr Grinders&quot;, tree_parent=grinders)
+blunt_objects = NodeObject(tree=tree, value=&quot;Blunt Objects&quot;, tree_parent=grinders)
 </code></pre>
-<p>Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a parent, so you can keep adding objects down the tree:</p>
+<p>Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a tree parent, so you can keep adding objects down the tree:</p>
 <pre><code class="language-python"># Other
-elec_blade = NodeObject(tree=tree, value=&quot;Electric Blade Grinder&quot;, parent=blade_grinders)
-mnp = NodeObject(tree=tree, value=&quot;Mortar and Pestle&quot;, parent=blunt_objects)
+elec_blade = NodeObject(tree=tree, value=&quot;Electric Blade Grinder&quot;, tree_parent=blade_grinders)
+mnp = NodeObject(tree=tree, value=&quot;Mortar and Pestle&quot;, tree_parent=blunt_objects)
 
 # Conical Burrs
-conical = NodeObject(tree=tree, value=&quot;Conical Burrs&quot;, parent=burr_grinders)
-elec_conical = NodeObject(tree=tree, value=&quot;Electric&quot;, parent=conical)
-manual_conical = NodeObject(tree=tree, value=&quot;Manual&quot;, parent=conical)
+conical = NodeObject(tree=tree, value=&quot;Conical Burrs&quot;, tree_parent=burr_grinders)
+elec_conical = NodeObject(tree=tree, value=&quot;Electric&quot;, tree_parent=conical)
+manual_conical = NodeObject(tree=tree, value=&quot;Manual&quot;, tree_parent=conical)
 </code></pre>
 <blockquote>
-<p><strong>Important Note:</strong> TreeDiagrams do not currently support NodeObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.</p>
+<p><strong>Important Note:</strong> TreeDiagrams do not currently support NodeObjects with multiple tree parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.</p>
 </blockquote>
 <p>Finally, before writing the diagram you'll want to run the magic penultimate step: auto layout.</p>
 <pre><code class="language-python">tree.auto_layout()

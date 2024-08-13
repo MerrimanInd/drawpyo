@@ -1241,7 +1241,14 @@
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TextFormat</span><span class="p">(</span><span class="n">DiagramBase</span><span class="p">):</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">TextFormat</span><span class="p">(</span><span class="n">DiagramBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The TextFormat class handles all of the formatting specifically around a text box or label.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1294,6 +1301,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s2">&quot;html&quot;</span><span class="p">,</span>
             <span class="s2">&quot;fontFamily&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fontStyle&quot;</span><span class="p">,</span>
             <span class="s2">&quot;fontSize&quot;</span><span class="p">,</span>
             <span class="s2">&quot;fontColor&quot;</span><span class="p">,</span>
             <span class="s2">&quot;labelBorderColor&quot;</span><span class="p">,</span>
@@ -1385,6 +1393,12 @@
             <span class="k">return</span> <span class="mi">6</span>
         <span class="k">elif</span> <span class="n">bld</span> <span class="ow">and</span> <span class="n">ita</span> <span class="ow">and</span> <span class="n">unl</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">7</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fontStyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_style</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_style</span>
+        <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1713,7 +1727,8 @@
 <span class="normal">74</span>
 <span class="normal">75</span>
 <span class="normal">76</span>
-<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;TextFormat objects can be initialized with no properties or any of what&#39;s listed below:</span>
 
 <span class="sd">    Keyword Args:</span>
@@ -1763,6 +1778,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;html&quot;</span><span class="p">,</span>
         <span class="s2">&quot;fontFamily&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fontStyle&quot;</span><span class="p">,</span>
         <span class="s2">&quot;fontSize&quot;</span><span class="p">,</span>
         <span class="s2">&quot;fontColor&quot;</span><span class="p">,</span>
         <span class="s2">&quot;labelBorderColor&quot;</span><span class="p">,</span>
