@@ -96,22 +96,22 @@ Create some NodeObjects:
 grinders = NodeObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
 
 # Main categories
-blade_grinders = NodeObject(tree=tree, value="Blade Grinders", parent=grinders)
-burr_grinders = NodeObject(tree=tree, value="Burr Grinders", parent=grinders)
-blunt_objects = NodeObject(tree=tree, value="Blunt Objects", parent=grinders)
+blade_grinders = NodeObject(tree=tree, value="Blade Grinders", tree_parent=grinders)
+burr_grinders = NodeObject(tree=tree, value="Burr Grinders", tree_parent=grinders)
+blunt_objects = NodeObject(tree=tree, value="Blunt Objects", tree_parent=grinders)
 ```
 
 Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a parent, so you can keep adding objects down the tree:
 
 ```python
 # Other
-elec_blade = NodeObject(tree=tree, value="Electric Blade Grinder", parent=blade_grinders)
-mnp = NodeObject(tree=tree, value="Mortar and Pestle", parent=blunt_objects)
+elec_blade = NodeObject(tree=tree, value="Electric Blade Grinder", tree_parent=blade_grinders)
+mnp = NodeObject(tree=tree, value="Mortar and Pestle", tree_parent=blunt_objects)
 
 # Conical Burrs
-conical = NodeObject(tree=tree, value="Conical Burrs", parent=burr_grinders)
-elec_conical = NodeObject(tree=tree, value="Electric", parent=conical)
-manual_conical = NodeObject(tree=tree, value="Manual", parent=conical)
+conical = NodeObject(tree=tree, value="Conical Burrs", tree_parent=burr_grinders)
+elec_conical = NodeObject(tree=tree, value="Electric", tree_parent=conical)
+manual_conical = NodeObject(tree=tree, value="Manual", tree_parent=conical)
 ```
 
 > **Important Note:** TreeDiagrams do not currently support NodeObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.

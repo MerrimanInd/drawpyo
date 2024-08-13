@@ -14,13 +14,13 @@ class NodeObject(Object):
             tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.
 
         Keyword Args:
-            children (list, optional): A list of other NodeObjects
+            tree_children (list, optional): A list of other NodeObjects
             parent (list, optional): The parent NodeObject
         """
         super().__init__(**kwargs)
         self.tree = tree
-        self.children = kwargs.get("children", [])
-        self.parent = kwargs.get("parent", None)
+        self.tree_children = kwargs.get("tree_children", [])
+        self.tree_parent = kwargs.get("tree_parent", None)
         self.peers = []
         # self.level = kwargs.get("level", None)
         # self.peers = kwargs.get("peers", [])
@@ -41,19 +41,19 @@ class NodeObject(Object):
         self._tree = value
 
     @property
-    def parent(self):
-        """The parent NodeObject
+    def tree_parent(self):
+        """The parent NodeObject in the tree
 
         Returns:
             NodeObject
         """
-        return self._parent
+        return self._tree_parent
 
-    @parent.setter
-    def parent(self, value):
+    @tree_parent.setter
+    def tree_parent(self, value):
         if value is not None:
-            value.children.append(self)
-        self._parent = value
+            value.tree_children.append(self)
+        self._tree_parent = value
 
     def add_child(self, obj):
         """Add a new child to the object
@@ -61,8 +61,8 @@ class NodeObject(Object):
         Args:
             obj (NodeObject)
         """
-        self.children.append(obj)
-        obj._parent = self
+        self.tree_children.append(obj)
+        obj._tree_parent = self
 
     def add_peer(self, obj):
         if obj not in self.peers:
@@ -424,8 +424,8 @@ class TreeDiagram:
     def add_object(self, obj, **kwargs):
         if obj not in self.objects:
             obj.page = self.page
-            if "parent" in kwargs:
-                obj.parent = kwargs.get("parent")
+            if "tree_parent" in kwargs:
+                obj.tree_parent = kwargs.get("tree_parent")
             self.objects.append(obj)
 
     ###########################################################
@@ -434,21 +434,21 @@ class TreeDiagram:
 
     @property
     def roots(self):
-        return [x for x in self.objects if x.parent is None]
+        return [x for x in self.objects if x.tree_parent is None]
 
     def auto_layout(self):
-        def layout_child(parent):
+        def layout_child(tree_parent):
             grp = TreeGroup(tree=self)
-            grp.parent_object = parent
-            if len(parent.children) > 0:
-                # has children, go through each leaf and check its children
-                for leaf in parent.children:
-                    self.connect(parent, leaf)
-                    if len(leaf.children) > 0:
-                        # If this leaf has its own children then recursive call
-                        grp.add_object(layout_child(leaf))
+            grp.parent_object = tree_parent
+            if len(tree_parent.tree_children) > 0:
+                # has children, go through each child and check its children
+                for child in tree_parent.tree_children:
+                    self.connect(tree_parent, child)
+                    if len(child.tree_children) > 0:
+                        # If this child has its own children then recursive call
+                        grp.add_object(layout_child(child))
                     else:
-                        grp.add_object(leaf)
+                        grp.add_object(child)
 
                 # layout the row
                 grp = layout_group(grp)
@@ -459,12 +459,10 @@ class TreeDiagram:
         def layout_group(grp, pos=self.origin):
             pos = self.origin
 
-            for leaf in grp.objects:
-                if leaf is not grp.parent_object:
-                    leaf.position = pos
-                    pos = self.move_in_level(
-                        pos, leaf.size_in_level + self.item_spacing
-                    )
+            for obj in grp.objects:
+                if obj is not grp.parent_object:
+                    obj.position = pos
+                    pos = self.move_in_level(pos, obj.size_in_level + self.item_spacing)
             return grp
 
         # def add_parent(grp, parent):
@@ -472,7 +470,7 @@ class TreeDiagram:
         #     level_space = (
         #         grp.size_of_level / 2
         #         + self.level_spacing
-        #         + parent.size_of_level / 2
+        #         + tree_parent.size_of_level / 2
         #     )
         #     pos = self.move_between_levels(pos, -level_space)
         #     parent.center_position = pos
@@ -564,8 +562,8 @@ class TreeDiagram:
         # Draw connections
         for lvl in self.objects.values():
             for obj in lvl:
-                if obj.parent is not None:
-                    self.connect(source=obj.parent, target=obj)
+                if obj.tree_parent is not None:
+                    self.connect(source=obj.tree_parent, target=obj)
 
     def write(self, **kwargs):
         self.file.write(**kwargs)

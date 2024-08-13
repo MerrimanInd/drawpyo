@@ -25,7 +25,7 @@ class List(Object):
             list of strings: The list items
         """
         return [child.value for child in self.children]
-    
+
     @list_items.setter
     def list_items(self, value):
         if not isinstance(value, list):
@@ -33,7 +33,7 @@ class List(Object):
         self.children = []
         for item in value:
             self.add_item(item)
-    
+
     def add_item(self, item_text):
         """This function creates a new Draw.io text item and adds it to the end of the list.
 
@@ -65,8 +65,7 @@ class List(Object):
             self.autosize()
 
     def autosize(self):
-        """This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.
-        """
+        """This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items."""
         y_pos = self.startSize
         for child in self.children:
             child.geometry.y = y_pos
@@ -82,11 +81,10 @@ class List(Object):
             _type_: _description_
         """
         return self.geometry.width
-    
+
     @width.setter
     def width(self, value):
         for child in self.children:
             child.width = value
         self.geometry.width = value
         self.update_parent()
-        

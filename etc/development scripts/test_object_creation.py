@@ -37,7 +37,7 @@ base_styles = [
     "labeled_container",
     "labeled_horizontal_container",
     "list",
-    "list_item"
+    "list_item",
 ]
 
 items = []
