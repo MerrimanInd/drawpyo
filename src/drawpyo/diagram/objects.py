@@ -184,7 +184,7 @@ class Object(DiagramBase):
 
     def __str__(self):
         return self.__repr__()
-    
+
     def __delete__(self):
         self.page.remove_object(self)
 

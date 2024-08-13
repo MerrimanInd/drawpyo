@@ -462,9 +462,7 @@ class TreeDiagram:
             for obj in grp.objects:
                 if obj is not grp.parent_object:
                     obj.position = pos
-                    pos = self.move_in_level(
-                        pos, obj.size_in_level + self.item_spacing
-                    )
+                    pos = self.move_in_level(pos, obj.size_in_level + self.item_spacing)
             return grp
 
         # def add_parent(grp, parent):
