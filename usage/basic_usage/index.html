@@ -1094,12 +1094,29 @@ file.file_path = r&quot;C:\drawpyo&quot;
 file.file_name = &quot;Test Generated Edges.drawio&quot;
 </code></pre>
 <h3 id="write-a-file">Write a file</h3>
-<p>Files can be written simply with the write() function. This function takes a few parameters to make it more flexible:
-| Parameter | Setting |
-| - | - |
-| <code>file_path</code> | This will overwrite the previously set file_path. |
-| <code>file_name</code> | This will overwrite the previously set file_name. Like file_path, useful in creating multiple copies of a diagram with slight variations |
-| <code>overwrite</code> | This boolean parameter controls whether an existing diagram should be overwritten or not. |</p>
+<p>Files can be written simply with the write() function. This function takes a few parameters to make it more flexible:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file_path</code></td>
+<td>This will overwrite the previously set file_path.</td>
+</tr>
+<tr>
+<td><code>file_name</code></td>
+<td>This will overwrite the previously set file_name. Like file_path, useful in creating multiple copies of a diagram with slight variations</td>
+</tr>
+<tr>
+<td><code>overwrite</code></td>
+<td>This boolean parameter controls whether an existing diagram should be overwritten or not.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="pages">Pages</h2>
 <h2 id="add-a-page">Add a page</h2>
 <p>The Page object represents the different diagram pages that you can create in Draw.io. A Page can be created without linking it to a File but it won't be writable without a File object.</p>
