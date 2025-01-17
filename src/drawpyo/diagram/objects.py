@@ -161,6 +161,9 @@ class Object(DiagramBase):
         self.in_edges = kwargs.get("in_edges", [])
 
         self.xml_class = "mxCell"
+        
+        # For drawio tags to group objects together
+        self.tag = kwargs.get("tag", [])
 
         if "template_object" in kwargs:
             self.template_object = kwargs.get("template_object")
@@ -616,7 +619,11 @@ class Object(DiagramBase):
         Returns:
             str: A single XML tag containing the object name, style attributes, and a closer.
         """
-        tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
+        
+        if self.tag:
+            tag = self.tagged_xml_open_tag + "\n" + self.geometry.xml + "\n" + self.tagged_xml_close_tag
+        else:
+            tag = self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         return tag
 
 
