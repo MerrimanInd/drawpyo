@@ -26,6 +26,8 @@ class XMLBase:
         # in every other use case.
         self.xml_parent = kwargs.get("xml_parent", None)
 
+        self.tag = kwargs.get("tag", None)
+
     @property
     def id(self):
         """
@@ -55,12 +57,27 @@ class XMLBase:
         """
         The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.
 
+        When the "tag" attribute tag is provided, a tags attribute is applied to the object. This allows for selecting, hiding, or displaying multiple elements in the diagram. When using tags, the open_tag value and id are shifted to the <UserObject> tag.
+
+
         Example:
         <class_name attribute_name=attribute_value>
 
         Returns:
             str: The opening tag of the object with all the attributes.
         """
+        if self.tag:
+            open_user_object_tag = (
+                f'<UserObject label="{self.value}" tags="{self.tag}" id="{self.id}">'
+            )
+            open_tag = "<" + self.xml_class
+            for att, value in self.attributes.items():
+                if att == "id" or att == "value":
+                    continue
+                if value is not None:
+                    xml_parameter = self.xml_ify(str(value))
+                    open_tag = open_tag + " " + att + '="' + xml_parameter + '"'
+            return open_user_object_tag + "\n" + open_tag + ">"
         open_tag = "<" + self.xml_class
         for att, value in self.attributes.items():
             if value is not None:
@@ -79,6 +96,8 @@ class XMLBase:
         Returns:
             str: The closing tag of the object with all the attributes.
         """
+        if self.tag:
+            return "</{0}>\n</UserObject>".format(self.xml_class)
         return "</{0}>".format(self.xml_class)
 
     @property
