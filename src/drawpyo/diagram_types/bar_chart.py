@@ -131,6 +131,11 @@ class BarChart:
 
     # ------------------------------------------------------------------
 
+    def add_to_page(self, page):
+        """Add all objects in this chart to a Drawpyo Page."""
+        for obj in self.group.objects:
+            page.add_object(obj)
+
     def to_group(self) -> Group:
         """Return the Group containing all bar objects."""
         return self.group
