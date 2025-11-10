@@ -33,7 +33,7 @@ class BarChart:
             bar_spacing (int): Space between bars. Default: 20
             max_bar_height (int): Height of the largest bar. Default: 200
             bar_colors (str | list[str]): Single color or list of colors. Default: "#66ccff"
-            direction (str): 'up' or 'right'. Default: 'up'
+            label_mode (str): 'none', 'label' or 'inside'. Default: 'label'
             label_font_size (int): Font size for bar labels. Default: 12
             label_formatter (Callable[[str, float], str]): Custom label formatter. Default: "{label}\n{value}"
             title (str): Optional chart title. Default: None
@@ -61,12 +61,11 @@ class BarChart:
         self._bar_spacing = kwargs.get("bar_spacing", self.DEFAULT_BAR_SPACING)
         self._max_bar_height = kwargs.get("max_bar_height", self.DEFAULT_MAX_BAR_HEIGHT)
         
-        # Direction
-        direction = kwargs.get("direction", "up")
-        if direction not in ("up", "right"):
-            raise ValueError(f"direction must be 'up' or 'right', got '{direction}'")
-        self._direction = direction
-        
+        # Label mode
+        self._label_mode = kwargs.get("label_mode", "label")
+        if self._label_mode not in ("label", "inside", "none"):
+            raise ValueError("label_mode must be either 'label' or 'inside'")
+
         # Text formatting
         self._label_font_size = kwargs.get("label_font_size", self.DEFAULT_LABEL_FONT_SIZE)
         self._label_formatter = kwargs.get("label_formatter", self._default_label_formatter)
@@ -233,20 +232,13 @@ class BarChart:
             (width, height) tuple.
         """
         num_bars = len(self._data)
-        
-        if self._direction == "up":
-            width = num_bars * self._bar_width + (num_bars - 1) * self._bar_spacing
-            height = self._max_bar_height
-        else:  # right
-            width = self._max_bar_height
-            height = num_bars * self._bar_width + (num_bars - 1) * self._bar_spacing
+
+        width = num_bars * self._bar_width + (num_bars - 1) * self._bar_spacing
+        height = self._max_bar_height
         
         # Add space for labels
-        if self._direction == "up":
-            height += self._label_font_size + self.LABEL_TOP_MARGIN
-        else:
-            width += self.LABEL_WIDTH_HORIZONTAL + self.LABEL_SIDE_MARGIN
-        
+        height += self._label_font_size + self.LABEL_TOP_MARGIN
+
         # Add space for title
         if self._title:
             height += self._title_font_size + self.TITLE_BOTTOM_MARGIN
@@ -331,16 +323,10 @@ class BarChart:
         color = self._bar_fill_color or self._bar_colors[index]
         
         # Calculate bar position
-        if self._direction == "up":
-            bar_x = x + index * (self._bar_width + self._bar_spacing)
-            bar_y = content_y + (self._max_bar_height - bar_height)
-            bar_width = self._bar_width
-            bar_display_height = bar_height
-        else:  # right
-            bar_x = x
-            bar_y = content_y + index * (self._bar_width + self._bar_spacing)
-            bar_width = bar_height
-            bar_display_height = self._bar_width
+        bar_x = x + index * (self._bar_width + self._bar_spacing)
+        bar_y = content_y + (self._max_bar_height - bar_height)
+        bar_width = self._bar_width
+        bar_display_height = bar_height
         
         # Create bar
         bar = Object(
@@ -353,31 +339,38 @@ class BarChart:
         )
         self._group.add_object(bar)
         
+        if self._label_mode == "none":
+            return
+        
         # Create label
         formatted_label = self._label_formatter(label, value)
-        
-        if self._direction == "up":
-            label_x = bar_x
-            label_y = content_y + self._max_bar_height + self.LABEL_TOP_MARGIN
-            label_width = self._bar_width
-            label_align = "center"
-        else:  # right
-            label_x = x + self._max_bar_height + self.LABEL_SIDE_MARGIN
-            label_y = bar_y
-            label_width = self.LABEL_WIDTH_HORIZONTAL
-            label_align = "left"
-        
+
         label_obj = Object(
             value=formatted_label,
-            position=(label_x, label_y),
-            width=label_width,
-            height=self._label_font_size + 10,
             fillColor="none",
             strokeColor="none",
         )
         label_obj.text_format.fontSize = self._label_font_size
-        label_obj.text_format.align = label_align
+
+        if self._label_mode == "inside":
+            label_obj.position = (bar_x, bar_y)
+            label_obj.width = bar_width
+            label_obj.height = bar_display_height
+            label_obj.text_format.align = "left"
+            label_obj.text_format.valign = "middle"
+            label_obj.text_format.horizontal = 0
+            
+        elif self._label_mode == "label":
+            label_obj.position = (
+                bar_x,
+                content_y + self._max_bar_height + self.LABEL_TOP_MARGIN,
+            )
+            label_obj.width = self._bar_width
+            label_obj.height = self._label_font_size + 10
+            label_obj.text_format.align = "center"
+            
         self._group.add_object(label_obj)
+
 
     # ------------------------------------------------------------------
     # Dunder methods
