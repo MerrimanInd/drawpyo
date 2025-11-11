@@ -90,7 +90,7 @@ class Object(DiagramBase):
             fillColor (str, optional): The object fill color in a hex color code (#ffffff)
             opacity  (int, optional): The object's opacity, 0-100
             strokeColor: The object stroke color in a hex color code (#ffffff)
-            glass (bool, optional): Apply glass styling to  the object
+            glass (bool, optional): Apply glass styling to the object
             shadow (bool, optional): Add a shadow to the object
             sketch (bool, optional): Add sketch styling to the object
             comic (bool, optional): Add comic styling to the object
