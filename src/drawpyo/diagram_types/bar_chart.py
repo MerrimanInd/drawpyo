@@ -1,5 +1,7 @@
-from typing import Callable, Optional, Union
+from typing import Callable
+from copy import deepcopy
 from ..diagram.objects import Object, Group
+from ..diagram.text_format import TextFormat
 
 
 class BarChart:
@@ -12,14 +14,10 @@ class BarChart:
     DEFAULT_BAR_WIDTH = 40
     DEFAULT_BAR_SPACING = 20
     DEFAULT_MAX_BAR_HEIGHT = 200
-    DEFAULT_LABEL_FONT_SIZE = 12
-    DEFAULT_TITLE_FONT_SIZE = 16
-    
+
     # Spacing constants
     TITLE_BOTTOM_MARGIN = 10
     LABEL_TOP_MARGIN = 5
-    LABEL_SIDE_MARGIN = 10
-    LABEL_WIDTH_HORIZONTAL = 80
     BACKGROUND_PADDING = 20
 
     def __init__(self, data: dict[str, float], **kwargs):
@@ -29,15 +27,15 @@ class BarChart:
             
         Keyword Args:
             position (tuple[int, int]): Chart top-left position. Default: (0, 0)
+            bar_object (Object): Optional template Object for bar styling. Default: None
             bar_width (int): Width of each bar. Default: 40
             bar_spacing (int): Space between bars. Default: 20
             max_bar_height (int): Height of the largest bar. Default: 200
             bar_colors (str | list[str]): Single color or list of colors. Default: "#66ccff"
             label_mode (str): 'none', 'label' or 'inside'. Default: 'label'
-            label_font_size (int): Font size for bar labels. Default: 12
             label_formatter (Callable[[str, float], str]): Custom label formatter. Default: "{label}\n{value}"
             title (str): Optional chart title. Default: None
-            title_font_size (int): Font size for the title. Default: 16
+            text_format (TextFormat): Text text_format object applied to labels and title.
             bar_fill_color (str): Fill color override for all bars. Default: None
             bar_stroke_color (str): Stroke color for bars. Default: "#000000"
             background_color (str): Optional chart background fill. Default: None
@@ -48,12 +46,11 @@ class BarChart:
         if not data:
             raise ValueError("data cannot be empty")
         
-        # Validate all values are numeric
         for label, value in data.items():
             if not isinstance(value, (int, float)):
                 raise TypeError(f"Value for '{label}' must be numeric, got {type(value).__name__}")
         
-        self._data = data.copy()  # Store a copy to prevent external mutation
+        self._data = data.copy()
         
         # Position and dimensions
         self._position = kwargs.get("position", (0, 0))
@@ -61,26 +58,31 @@ class BarChart:
         self._bar_spacing = kwargs.get("bar_spacing", self.DEFAULT_BAR_SPACING)
         self._max_bar_height = kwargs.get("max_bar_height", self.DEFAULT_MAX_BAR_HEIGHT)
         
-        # Label mode
+        # Unified text_format object
+        self._text_format: TextFormat = kwargs.get("text_format", TextFormat())
+
+        # Label mode and formatter
         self._label_mode = kwargs.get("label_mode", "label")
         if self._label_mode not in ("label", "inside", "none"):
-            raise ValueError("label_mode must be either 'label' or 'inside'")
-
-        # Text formatting
-        self._label_font_size = kwargs.get("label_font_size", self.DEFAULT_LABEL_FONT_SIZE)
+            raise ValueError("label_mode must be either 'label', 'inside', or 'none'")
         self._label_formatter = kwargs.get("label_formatter", self._default_label_formatter)
+
+        # Title
         self._title = kwargs.get("title")
-        self._title_font_size = kwargs.get("title_font_size", self.DEFAULT_TITLE_FONT_SIZE)
-        
+
         # Colors
         self._bar_fill_color = kwargs.get("bar_fill_color")
         self._bar_stroke_color = kwargs.get("bar_stroke_color", "#000000")
         self._background_color = kwargs.get("background_color")
-        
+
+        # Optional bar object template
+        self._bar_object_template: Object | None = kwargs.get("bar_object")
+
         # Normalize bar colors
         bar_colors = kwargs.get("bar_colors", "#66ccff")
         self._bar_colors = self._normalize_colors(bar_colors, len(data))
-        
+        self._original_bar_colors = bar_colors
+
         # Build the chart
         self._group = Group()
         self._build_chart()
@@ -91,17 +93,14 @@ class BarChart:
 
     @property
     def data(self) -> dict[str, float]:
-        """Get a copy of the current data."""
         return self._data.copy()
     
     @property
     def position(self) -> tuple[int, int]:
-        """Get the current position."""
         return self._position
     
     @property
     def group(self) -> Group:
-        """Get the underlying Group object."""
         return self._group
 
     # ------------------------------------------------------------------
@@ -109,11 +108,6 @@ class BarChart:
     # ------------------------------------------------------------------
 
     def update_data(self, data: dict[str, float]) -> None:
-        """Update the chart data and rebuild.
-        
-        Args:
-            data: New data mapping labels to values.
-        """
         if not isinstance(data, dict):
             raise TypeError(f"data must be a dict, got {type(data).__name__}")
         if not data:
@@ -124,34 +118,21 @@ class BarChart:
                 raise TypeError(f"Value for '{label}' must be numeric, got {type(value).__name__}")
         
         self._data = data.copy()
-        self._bar_colors = self._normalize_colors(
-            self._bar_colors[0] if len(set(self._bar_colors)) == 1 else self._bar_colors,
-            len(data)
-        )
+        self._bar_colors = self._normalize_colors(self._original_bar_colors, len(data))
         self._rebuild()
 
-    def update_colors(self, bar_colors: Union[str, list[str]]) -> None:
-        """Update bar colors and rebuild.
-        
-        Args:
-            bar_colors: Single color string or list of colors.
-        """
+    def update_colors(self, bar_colors: str | list[str]) -> None:
+        self._original_bar_colors = bar_colors
         self._bar_colors = self._normalize_colors(bar_colors, len(self._data))
         self._rebuild()
 
     def move(self, new_position: tuple[int, int]) -> None:
-        """Move the entire chart to a new position.
-        
-        Args:
-            new_position: New (x, y) position for the top-left corner.
-        """
         if not isinstance(new_position, (tuple, list)) or len(new_position) != 2:
             raise ValueError("new_position must be a tuple of (x, y)")
         
         dx = new_position[0] - self._position[0]
         dy = new_position[1] - self._position[1]
         
-        # Move all objects in the group
         for obj in self._group.objects:
             old_x, old_y = obj.position
             obj.position = (old_x + dx, old_y + dy)
@@ -160,11 +141,6 @@ class BarChart:
         self._group.update_geometry()
 
     def add_to_page(self, page) -> None:
-        """Add all chart objects to a Drawpyo Page.
-        
-        Args:
-            page: The Page object to add objects to.
-        """
         for obj in self._group.objects:
             page.add_object(obj)
 
@@ -172,110 +148,65 @@ class BarChart:
     # Private methods
     # ------------------------------------------------------------------
 
-    def _normalize_colors(self, colors: Union[str, list[str]], count: int) -> list[str]:
-        """Normalize color input to a list of the correct length.
-        
-        Args:
-            colors: Single color or list of colors.
-            count: Number of colors needed.
-            
-        Returns:
-            List of colors with length equal to count.
-        """
+    def _normalize_colors(self, colors: str | list[str], count: int) -> list[str]:
         if isinstance(colors, str):
             return [colors] * count
-        
         if not colors:
             return ["#66ccff"] * count
-        
-        # Extend list if too short
         if len(colors) < count:
             return colors + [colors[-1]] * (count - len(colors))
-        
         return colors[:count]
 
     def _default_label_formatter(self, label: str, value: float) -> str:
-        """Default formatter for bar labels.
-        
-        Args:
-            label: The bar's label.
-            value: The bar's value.
-            
-        Returns:
-            Formatted label string.
-        """
         return f"{label}\n{value}"
 
     def _calculate_scale(self) -> float:
-        """Calculate the scale factor for bar heights.
-        
-        Returns:
-            Scale factor to apply to values.
-        """
         values = list(self._data.values())
         max_value = max(values)
         min_value = min(values)
         
-        # Handle negative values
         if min_value < 0:
             raise ValueError("Negative values are not currently supported")
-        
         if max_value == 0:
-            return 1
-        
+            return 0
         return self._max_bar_height / max_value
 
     def _calculate_chart_dimensions(self) -> tuple[int, int]:
-        """Calculate the total width and height of the chart content area.
-        
-        Returns:
-            (width, height) tuple.
-        """
         num_bars = len(self._data)
-
         width = num_bars * self._bar_width + (num_bars - 1) * self._bar_spacing
         height = self._max_bar_height
         
-        # Add space for labels
-        height += self._label_font_size + self.LABEL_TOP_MARGIN
+        if self._label_mode == "label":
+            height += (self._text_format.fontSize or 12) + self.LABEL_TOP_MARGIN
 
-        # Add space for title
         if self._title:
-            height += self._title_font_size + self.TITLE_BOTTOM_MARGIN
+            height += (self._text_format.fontSize or 16) + self.TITLE_BOTTOM_MARGIN
         
         return width, height
 
     def _rebuild(self) -> None:
-        """Clear and rebuild the entire chart."""
         self._group.objects.clear()
         self._build_chart()
 
     def _build_chart(self) -> None:
-        """Build all chart components."""
         x, y = self._position
         scale = self._calculate_scale()
         
-        # Adjust starting position if title exists
         content_y = y
         if self._title:
-            content_y += self._title_font_size + self.TITLE_BOTTOM_MARGIN
+            content_y += (self._text_format.fontSize or 16) + self.TITLE_BOTTOM_MARGIN
         
-        # Background (optional)
         if self._background_color:
             self._add_background()
-        
-        # Title (optional)
         if self._title:
             self._add_title()
         
-        # Bars and labels
         for i, (label, value) in enumerate(self._data.items()):
             self._add_bar_and_label(i, label, value, content_y, scale)
         
         self._group.update_geometry()
 
     def _add_background(self) -> None:
-        """Add background rectangle with equal padding on all sides."""
         width, height = self._calculate_chart_dimensions()
         x, y = self._position
         
@@ -290,7 +221,6 @@ class BarChart:
         self._group.add_object(bg)
 
     def _add_title(self) -> None:
-        """Add chart title."""
         x, y = self._position
         chart_width, _ = self._calculate_chart_dimensions()
         
@@ -298,92 +228,76 @@ class BarChart:
             value=self._title,
             position=(x, y),
             width=chart_width,
-            height=self._title_font_size + 4,
+            height=(self._text_format.fontSize or 16) + 4,
             fillColor="none",
             strokeColor="none",
         )
-        title_obj.text_format.fontSize = self._title_font_size
-        title_obj.text_format.align = "center"
+        title_obj.text_format = deepcopy(self._text_format)
+        title_obj.text_format.align = self._text_format.align or "center"
+        title_obj.text_format.verticalAlign = self._text_format.verticalAlign or "top"
         self._group.add_object(title_obj)
 
     def _add_bar_and_label(
         self, index: int, label: str, value: float, content_y: int, scale: float
     ) -> None:
-        """Add a single bar and its label.
-        
-        Args:
-            index: Bar index.
-            label: Bar label.
-            value: Bar value.
-            content_y: Y-coordinate for content area.
-            scale: Scale factor for bar height.
-        """
         x, _ = self._position
         bar_height = value * scale
         color = self._bar_fill_color or self._bar_colors[index]
-        
-        # Calculate bar position
+
         bar_x = x + index * (self._bar_width + self._bar_spacing)
         bar_y = content_y + (self._max_bar_height - bar_height)
         bar_width = self._bar_width
-        bar_display_height = bar_height
-        
-        # Create bar
-        bar = Object(
-            value="",
-            position=(bar_x, bar_y),
-            width=bar_width,
-            height=bar_display_height,
-            fillColor=color,
-            strokeColor=self._bar_stroke_color,
-        )
+
+        # Use the template object if provided, otherwise default
+        if self._bar_object_template:
+            bar = Object.create_from_template_object(
+                self._bar_object_template,
+                value="",
+                position=(bar_x, bar_y),
+            )
+            bar.width = bar_width
+            bar.height = bar_height
+            bar.fillColor = color
+            bar.strokeColor = self._bar_stroke_color
+        else:
+            bar = Object(
+                value="",
+                position=(bar_x, bar_y),
+                width=bar_width,
+                height=bar_height,
+                fillColor=color,
+                strokeColor=self._bar_stroke_color,
+            )
+
         self._group.add_object(bar)
-        
+
         if self._label_mode == "none":
             return
-        
-        # Create label
-        formatted_label = self._label_formatter(label, value)
 
-        label_obj = Object(
-            value=formatted_label,
-            fillColor="none",
-            strokeColor="none",
-        )
-        label_obj.text_format.fontSize = self._label_font_size
+        formatted_label = self._label_formatter(label, value)
+        label_obj = Object(value=formatted_label, fillColor="none", strokeColor="none")
+        label_obj.text_format = deepcopy(self._text_format)
 
         if self._label_mode == "inside":
             label_obj.position = (bar_x, bar_y)
             label_obj.width = bar_width
-            label_obj.height = bar_display_height
-            label_obj.text_format.align = "left"
-            label_obj.text_format.valign = "middle"
-            label_obj.text_format.horizontal = 0
-            
+            label_obj.height = bar_height
+            label_obj.text_format.align = self._text_format.align or "left"
+            label_obj.text_format.verticalAlign = self._text_format.verticalAlign or "middle"
+
         elif self._label_mode == "label":
             label_obj.position = (
                 bar_x,
                 content_y + self._max_bar_height + self.LABEL_TOP_MARGIN,
             )
             label_obj.width = self._bar_width
-            label_obj.height = self._label_font_size + 10
-            label_obj.text_format.align = "center"
-            
+            label_obj.height = (self._text_format.fontSize or 12) + 10
+            label_obj.text_format.align = self._text_format.align or "center"
+
         self._group.add_object(label_obj)
 
-
-    # ------------------------------------------------------------------
-    # Dunder methods
-    # ------------------------------------------------------------------
-
     def __repr__(self) -> str:
-        """Return string representation of the chart."""
-        return (
-            f"BarChart(bars={len(self._data)}, "
-            f"position={self._position}, "
-            f"direction='{self._direction}')"
-        )
+        return f"BarChart(bars={len(self._data)}, position={self._position})"
 
     def __len__(self) -> int:
-        """Return number of bars in the chart."""
         return len(self._data)
