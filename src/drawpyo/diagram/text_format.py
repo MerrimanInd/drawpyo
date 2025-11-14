@@ -26,7 +26,7 @@ class TextFormat(DiagramBase):
             labelPosition (str, optional): The position of the object label ('left', 'center', or 'right')
             labelBackgroundColor (str, optional): The background color of the object label (#ffffff)
             labelBorderColor (str, optional): The border color of the object label (#ffffff)
-            fomrattedText (bool, optional): Whether to render the text as HTML formatted or not
+            formattedText (bool, optional): Whether to render the text as HTML formatted or not
 
         """
         super().__init__(**kwargs)

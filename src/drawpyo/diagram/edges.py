@@ -9,7 +9,7 @@ from .base_diagram import (
 )
 from .text_format import TextFormat
 
-__all__ = ["Edge", "BasicEdge", "EdgeGeometry", "Point"]
+__all__ = ["Edge", "BasicEdge", "EdgeGeometry", "EdgeLabel", "Point"]
 
 data = import_shape_database(
     file_name=path.join("formatting_database", "edge_styles.toml"), relative=True
@@ -119,8 +119,8 @@ class Edge(DiagramBase):
         self.edge = kwargs.get("edge", 1)
         self.targetPerimeterSpacing = kwargs.get("targetPerimeterSpacing", None)
         self.sourcePerimeterSpacing = kwargs.get("sourcePerimeterSpacing", None)
-        self.source = kwargs.get("source", None)
-        self.target = kwargs.get("target", None)
+        self._source = kwargs.get("source", None)
+        self._target = kwargs.get("target", None)
         self.entryX = kwargs.get("entryX", None)
         self.entryY = kwargs.get("entryY", None)
         self.entryDx = kwargs.get("entryDx", None)
@@ -596,9 +596,17 @@ class EdgeLabel(DiagramBase):
         )
 
         self.value = kwargs.get("value", "")
-        self.style = kwargs.get("style", self.default_style)
+        self._style = kwargs.get("style", self.default_style)
         self.vertex = kwargs.get("vertex", 1)
         self.connectable = kwargs.get("connectable", 1)
+
+    @property
+    def style(self):
+        return self._style
+
+    @style.setter
+    def style(self, value):
+        self._style = value
 
     @property
     def attributes(self):

@@ -4,6 +4,7 @@ from os import path
 
 __all__ = [
     "DiagramBase",
+    "Geometry",
     "style_str_from_dict",
     "import_shape_database",
     "color_input_check",
