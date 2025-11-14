@@ -58,7 +58,7 @@ class XMLBase:
         """
         The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.
 
-        When the "tag" attribute tag is provided, a tags attribute is applied to the object. This allows for selecting, hiding, or displaying multiple elements in the diagram. 
+        When the "tag" attribute tag is provided, a tags attribute is applied to the object. This allows for selecting, hiding, or displaying multiple elements in the diagram.
         When the "tooltip" attribute tag is provided, a tooltip attribute is applied to the object. This allows for extra information to be displayed when an element is hovered over in the diagram.
         When using tags or tooltips, the open_tag value and id are shifted to the <UserObject> tag.
 
@@ -76,7 +76,7 @@ class XMLBase:
             if self.tooltip:
                 open_user_object_tag += f' tooltip="{self.xml_ify(self.tooltip)}"'
             open_user_object_tag += ">"
-            
+
             open_tag = "<" + self.xml_class
             for att, value in self.attributes.items():
                 if att == "id" or att == "value":

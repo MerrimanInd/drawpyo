@@ -1,5 +1,6 @@
 import drawpyo
 
+
 # TODO rewrite this test so it's independent of the order of the style attributes
 def test_obj_from_str():
     file = drawpyo.File()

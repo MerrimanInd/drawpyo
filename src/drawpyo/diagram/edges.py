@@ -9,7 +9,7 @@ from .base_diagram import (
 )
 from .text_format import TextFormat
 
-__all__ = ["Edge", "BasicEdge", "EdgeGeometry", "Point"]
+__all__ = ["Edge", "BasicEdge", "EdgeGeometry", "EdgeLabel", "Point"]
 
 data = import_shape_database(
     file_name=path.join("formatting_database", "edge_styles.toml"), relative=True
