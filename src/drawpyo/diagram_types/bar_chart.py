@@ -6,7 +6,7 @@ from ..diagram.text_format import TextFormat
 
 class BarChart:
     """A configurable bar chart built entirely from Object and Group.
-    
+
     This chart is mutable - you can update data, styling, and position after creation.
     """
 
@@ -19,6 +19,13 @@ class BarChart:
     TITLE_BOTTOM_MARGIN = 10
     LABEL_TOP_MARGIN = 5
     BACKGROUND_PADDING = 20
+
+    # Axis constants
+    AXIS_OFFSET = 10
+    TICK_COUNT = 5
+    TICK_LENGTH = 8
+    TICK_LABEL_MARGIN = 4
+    TICK_COLOR = "#000000"
 
     def __init__(self, data: dict[str, float], **kwargs):
         """
@@ -41,6 +48,9 @@ class BarChart:
             bar_fill_color (str): Optional fill color override for all bars. Default: None
             bar_stroke_color (str): Stroke color for bars. Default: "#000000"
             background_color (str): Optional chart background fill. Default: None
+            show_axis (bool): Whether to show the axis and ticks. Default: True
+            axis_tick_count (int): Number of tick intervals on the axis. Default: 5
+            axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()
         """
         # Validate data
         if not isinstance(data, dict):
@@ -50,7 +60,9 @@ class BarChart:
 
         for label, value in data.items():
             if not isinstance(value, (int, float)):
-                raise TypeError(f"Value for '{label}' must be numeric, got {type(value).__name__}")
+                raise TypeError(
+                    f"Value for '{label}' must be numeric, got {type(value).__name__}"
+                )
 
         self._data = data.copy()
 
@@ -61,9 +73,18 @@ class BarChart:
         self._max_bar_height = kwargs.get("max_bar_height", self.DEFAULT_MAX_BAR_HEIGHT)
 
         # Text formats
-        self._title_text_format: TextFormat = deepcopy(kwargs.get("title_text_format", TextFormat()))
-        self._base_text_format: TextFormat = deepcopy(kwargs.get("base_text_format", TextFormat()))
-        self._inside_text_format: TextFormat = deepcopy(kwargs.get("inside_text_format", TextFormat()))
+        self._title_text_format: TextFormat = deepcopy(
+            kwargs.get("title_text_format", TextFormat())
+        )
+        self._base_text_format: TextFormat = deepcopy(
+            kwargs.get("base_text_format", TextFormat())
+        )
+        self._inside_text_format: TextFormat = deepcopy(
+            kwargs.get("inside_text_format", TextFormat())
+        )
+        self._axis_text_format: TextFormat = deepcopy(
+            kwargs.get("axis_text_format", TextFormat())
+        )
 
         # Label formatters
         self._base_label_formatter: Callable[[str, float], str] = kwargs.get(
@@ -80,6 +101,10 @@ class BarChart:
         self._bar_fill_color = kwargs.get("bar_fill_color")
         self._bar_stroke_color = kwargs.get("bar_stroke_color", "#000000")
         self._background_color = kwargs.get("background_color")
+
+        # Axis settings
+        self._show_axis = kwargs.get("show_axis", True)
+        self._axis_tick_count = kwargs.get("axis_tick_count", self.TICK_COUNT)
 
         # Optional bar object template
         self._bar_object_template: Object | None = kwargs.get("bar_object")
@@ -121,7 +146,9 @@ class BarChart:
 
         for label, value in data.items():
             if not isinstance(value, (int, float)):
-                raise TypeError(f"Value for '{label}' must be numeric, got {type(value).__name__}")
+                raise TypeError(
+                    f"Value for '{label}' must be numeric, got {type(value).__name__}"
+                )
 
         self._data = data.copy()
         self._bar_colors = self._normalize_colors(self._original_bar_colors, len(data))
@@ -184,7 +211,9 @@ class BarChart:
 
         # add space for title
         if self._title:
-            height += (self._title_text_format.fontSize or 16) + self.TITLE_BOTTOM_MARGIN
+            height += (
+                self._title_text_format.fontSize or 16
+            ) + self.TITLE_BOTTOM_MARGIN
 
         return width, height
 
@@ -198,12 +227,18 @@ class BarChart:
 
         content_y = y
         if self._title:
-            content_y += (self._title_text_format.fontSize or 16) + self.TITLE_BOTTOM_MARGIN
+            content_y += (
+                self._title_text_format.fontSize or 16
+            ) + self.TITLE_BOTTOM_MARGIN
 
         if self._background_color:
             self._add_background()
         if self._title:
             self._add_title()
+
+        # Add ticks and axis if enabled
+        if self._show_axis:
+            self._add_axis_and_ticks(content_y, scale)
 
         for i, (label, value) in enumerate(self._data.items()):
             self._add_bar_and_label(i, label, value, content_y, scale)
@@ -238,8 +273,65 @@ class BarChart:
         )
         title_obj.text_format = deepcopy(self._title_text_format)
         title_obj.text_format.align = title_obj.text_format.align or "center"
-        title_obj.text_format.verticalAlign = title_obj.text_format.verticalAlign or "top"
+        title_obj.text_format.verticalAlign = (
+            title_obj.text_format.verticalAlign or "top"
+        )
         self._group.add_object(title_obj)
+
+    # Draw axis and tick marks
+    def _add_axis_and_ticks(self, content_y: int, scale: float) -> None:
+        x, _ = self._position
+
+        axis_x = x - self.AXIS_OFFSET
+        axis_y_top = content_y
+        axis_y_bottom = content_y + self._max_bar_height
+
+        axis_line = Object(
+            value="",
+            position=(axis_x, axis_y_top),
+            width=0,
+            height=self._max_bar_height,
+            fillColor=None,
+            strokeColor=self.TICK_COLOR,
+        )
+        self._group.add_object(axis_line)
+
+        self._add_ticks(axis_x, content_y, scale)
+
+    def _add_ticks(self, axis_x: int, content_y: int, scale: float) -> None:
+        max_value = max(self._data.values())
+        font_size = self._axis_text_format.fontSize or 12
+
+        for i in range(self._axis_tick_count + 1):
+            t = i / self._axis_tick_count
+
+            tick_value = max_value * (1 - t)
+            tick_y = content_y + (self._max_bar_height * t)
+
+            tick = Object(
+                value="",
+                position=(axis_x - self.TICK_LENGTH, tick_y),
+                width=self.TICK_LENGTH,
+                height=0,
+                fillColor=None,
+                strokeColor=self.TICK_COLOR,
+            )
+            self._group.add_object(tick)
+
+            label_obj = Object(
+                value=str(round(tick_value, 2)),
+                position=(
+                    axis_x - self.TICK_LENGTH - self.TICK_LABEL_MARGIN - 40,
+                    tick_y - font_size / 2,
+                ),
+                width=40,
+                height=font_size + 4,
+                fillColor="none",
+                strokeColor="none",
+            )
+            label_obj.text_format = deepcopy(self._axis_text_format)
+            label_obj.text_format.align = "right"
+            self._group.add_object(label_obj)
 
     def _add_bar_and_label(
         self, index: int, label: str, value: float, content_y: int, scale: float
@@ -301,7 +393,9 @@ class BarChart:
         )
         inside_obj.text_format = deepcopy(self._inside_text_format)
         inside_obj.text_format.align = inside_obj.text_format.align or "center"
-        inside_obj.text_format.verticalAlign = inside_obj.text_format.verticalAlign or "middle"
+        inside_obj.text_format.verticalAlign = (
+            inside_obj.text_format.verticalAlign or "middle"
+        )
         self._group.add_object(inside_obj)
 
     def __repr__(self) -> str:
