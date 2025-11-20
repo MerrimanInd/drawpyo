@@ -22,8 +22,8 @@ class BarChart:
 
     # Axis constants
     AXIS_OFFSET = 10
-    TICK_COUNT = 0
-    TICK_LENGTH = 8
+    TICK_COUNT = 5
+    TICK_LENGTH = 4
     TICK_LABEL_MARGIN = 4
     TICK_COLOR = "#000000"
 
@@ -198,7 +198,7 @@ class BarChart:
         if min_value < 0:
             raise ValueError("Negative values are not currently supported")
         if max_value == 0:
-            return 0
+            return 1
         return self._max_bar_height / max_value
 
     def _calculate_chart_dimensions(self) -> tuple[int, int]:
@@ -240,8 +240,8 @@ class BarChart:
         if self._show_axis:
             self._add_axis_and_ticks(content_y, scale)
 
-        for i, (label, value) in enumerate(self._data.items()):
-            self._add_bar_and_label(i, label, value, content_y, scale)
+        for i, (key, value) in enumerate(self._data.items()):
+            self._add_bar_and_label(i, key, value, content_y, scale)
 
         self._group.update_geometry()
 
@@ -282,7 +282,7 @@ class BarChart:
     def _add_axis_and_ticks(self, content_y: int, scale: float) -> None:
         x, _ = self._position
 
-        axis_x = x - self.AXIS_OFFSET
+        axis_x = x - self._bar_spacing
         axis_y_top = content_y
         axis_y_bottom = content_y + self._max_bar_height
 
@@ -337,7 +337,7 @@ class BarChart:
             self._group.add_object(label_obj)
 
     def _add_bar_and_label(
-        self, index: int, label: str, value: float, content_y: int, scale: float
+        self, index: int, key: str, value: float, content_y: int, scale: float
     ) -> None:
         x, _ = self._position
         bar_height = value * scale
@@ -371,7 +371,7 @@ class BarChart:
         self._group.add_object(bar)
 
         # BASE LABEL
-        base_label = self._base_label_formatter(label, value)
+        base_label = self._base_label_formatter(key, value)
         base_obj = Object(
             value=base_label,
             position=(bar_x, content_y + self._max_bar_height + self.LABEL_TOP_MARGIN),
@@ -385,7 +385,7 @@ class BarChart:
         self._group.add_object(base_obj)
 
         # INSIDE LABEL
-        inside_label = self._inside_label_formatter(label, value)
+        inside_label = self._inside_label_formatter(key, value)
         inside_obj = Object(
             value=inside_label,
             position=(bar_x, bar_y),
