@@ -12,8 +12,9 @@ chart_title = "Coffee Grinder Prices"
 
 # Define the chart data
 coffee_grinder_prices = {
-    "Blade Grinder": 32,
-    "Burr Grinder":  79,
+    "Manual": 29,
+    "Blade": 45,
+    "Burr":  120,
 }
 
 # Custom formatters can override default label values
