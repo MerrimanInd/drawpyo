@@ -24,6 +24,11 @@ dependencies = [
 Homepage = "https://github.com/MerrimanInd/drawpyo"
 Issues = "https://github.com/MerrimanInd/drawpyo/issues"
 
+[project.optional-dependencies]
+dev = [
+    "pytest >= 7.0"
+]
+
 [tool.pytest.ini_options]
 addopts = [
     "--import-mode=importlib",
