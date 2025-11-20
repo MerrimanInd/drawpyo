@@ -22,7 +22,7 @@ class BarChart:
 
     # Axis constants
     AXIS_OFFSET = 10
-    TICK_COUNT = 5
+    TICK_COUNT = 0
     TICK_LENGTH = 8
     TICK_LABEL_MARGIN = 4
     TICK_COLOR = "#000000"
@@ -48,7 +48,7 @@ class BarChart:
             bar_fill_color (str): Optional fill color override for all bars. Default: None
             bar_stroke_color (str): Stroke color for bars. Default: "#000000"
             background_color (str): Optional chart background fill. Default: None
-            show_axis (bool): Whether to show the axis and ticks. Default: True
+            show_axis (bool): Whether to show the axis and ticks. Default: False
             axis_tick_count (int): Number of tick intervals on the axis. Default: 5
             axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()
         """
@@ -103,7 +103,7 @@ class BarChart:
         self._background_color = kwargs.get("background_color")
 
         # Axis settings
-        self._show_axis = kwargs.get("show_axis", True)
+        self._show_axis = kwargs.get("show_axis", False)
         self._axis_tick_count = kwargs.get("axis_tick_count", self.TICK_COUNT)
 
         # Optional bar object template
@@ -289,7 +289,7 @@ class BarChart:
         axis_line = Object(
             value="",
             position=(axis_x, axis_y_top),
-            width=0,
+            width=1,
             height=self._max_bar_height,
             fillColor=None,
             strokeColor=self.TICK_COLOR,
@@ -299,6 +299,9 @@ class BarChart:
         self._add_ticks(axis_x, content_y, scale)
 
     def _add_ticks(self, axis_x: int, content_y: int, scale: float) -> None:
+        if self._axis_tick_count < 1:
+            return
+
         max_value = max(self._data.values())
         font_size = self._axis_text_format.fontSize or 12
 
@@ -312,7 +315,7 @@ class BarChart:
                 value="",
                 position=(axis_x - self.TICK_LENGTH, tick_y),
                 width=self.TICK_LENGTH,
-                height=0,
+                height=1,
                 fillColor=None,
                 strokeColor=self.TICK_COLOR,
             )
