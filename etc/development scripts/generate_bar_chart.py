@@ -9,7 +9,7 @@ from drawpyo.diagram.objects import Object
 chart_title = "Coffee Grinder Prices"
 coffee_grinder_prices = {
     "Manual": 29,
-    "Blade": 45,
+    "Blade": -45,
     "Burr":  120,
 }
 
