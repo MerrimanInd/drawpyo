@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import List, Optional, Tuple, Dict, Any
+
 from ..file import File
 from ..page import Page
 from ..diagram.objects import Object, Group
@@ -7,7 +11,7 @@ from ..diagram.edges import Edge
 class NodeObject(Object):
     """This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc."""
 
-    def __init__(self, tree=None, **kwargs):
+    def __init__(self, tree=None, **kwargs) -> None:
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
 
         Args:
@@ -18,15 +22,15 @@ class NodeObject(Object):
             parent (list, optional): The parent NodeObject
         """
         super().__init__(**kwargs)
-        self.tree = tree
-        self.tree_children = kwargs.get("tree_children", [])
-        self.tree_parent = kwargs.get("tree_parent", None)
-        self.peers = []
+        self.tree: Optional[TreeDiagram] = tree
+        self.tree_children: List[NodeObject] = kwargs.get("tree_children", [])
+        self.tree_parent: Optional[NodeObject] = kwargs.get("tree_parent", None)
+        self.peers: List[NodeObject] = []
         # self.level = kwargs.get("level", None)
         # self.peers = kwargs.get("peers", [])
 
     @property
-    def tree(self):
+    def tree(self) -> TreeDiagram:
         """The TreeDiagram that owns the NodeObject
 
         Returns:
@@ -35,13 +39,13 @@ class NodeObject(Object):
         return self._tree
 
     @tree.setter
-    def tree(self, value):
+    def tree(self, value: Optional[TreeDiagram]) -> None:
         if value is not None:
             value.add_object(self)
         self._tree = value
 
     @property
-    def tree_parent(self):
+    def tree_parent(self) -> Optional[NodeObject]:
         """The parent NodeObject in the tree
 
         Returns:
@@ -50,12 +54,12 @@ class NodeObject(Object):
         return self._tree_parent
 
     @tree_parent.setter
-    def tree_parent(self, value):
+    def tree_parent(self, value: Optional[NodeObject]) -> None:
         if value is not None:
             value.tree_children.append(self)
         self._tree_parent = value
 
-    def add_child(self, obj):
+    def add_child(self, obj: NodeObject) -> None:
         """Add a new child to the object
 
         Args:
@@ -64,14 +68,14 @@ class NodeObject(Object):
         self.tree_children.append(obj)
         obj._tree_parent = self
 
-    def add_peer(self, obj):
+    def add_peer(self, obj: NodeObject) -> None:
         if obj not in self.peers:
             self.peers.append(obj)
         if self not in obj.peers:
             obj.peers.append(self)
 
     @property
-    def size_of_level(self):
+    def size_of_level(self) -> Optional[int]:
         """The height or the width of the level, depending on tree orientation.
 
         Returns:
@@ -84,7 +88,7 @@ class NodeObject(Object):
                 return self.geometry.width
 
     @property
-    def size_in_level(self):
+    def size_in_level(self) -> Optional[int]:
         """The size of the object within its level, either its width or height depending on tree orientation.
 
         Returns:
@@ -100,7 +104,7 @@ class NodeObject(Object):
 class TreeGroup(Group):
     """This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they're grouped together for auto positioning. Each level of a TreeDiagram is a set of groups."""
 
-    def __init__(self, tree=None, parent_object=None, **kwargs):
+    def __init__(self, tree=None, parent_object=None, **kwargs) -> None:
         """The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.
 
         Args:
@@ -108,11 +112,11 @@ class TreeGroup(Group):
             parent_object (NodeObject, optional): The parent object in the group. Defaults to None.
         """
         super().__init__(**kwargs)
-        self.parent_object = parent_object
-        self.tree = tree
+        self.tree: Optional[TreeDiagram] = tree
+        self.parent_object: Optional[NodeObject] = parent_object
 
     @property
-    def parent_object(self):
+    def parent_object(self) -> Optional[NodeObject]:
         """The object that defines the parent of the group.
 
         Returns:
@@ -121,12 +125,12 @@ class TreeGroup(Group):
         return self._parent_object
 
     @parent_object.setter
-    def parent_object(self, value):
+    def parent_object(self, value: Optional[NodeObject]) -> None:
         if value is not None:
             self.add_object(value)
         self._parent_object = value
 
-    def center_parent(self):
+    def center_parent(self) -> None:
         """This function centers the parent_objects along the group and then offsets it by the level spacing."""
         children_grp = TreeGroup(tree=self.tree)
         for obj in self.objects:
@@ -145,7 +149,7 @@ class TreeGroup(Group):
     # I don't love that these are copy-pasted from NodeObject but the multiple
     # inheritance was too much of a pain to have TreeGroup inherit.
     @property
-    def size_of_level(self):
+    def size_of_level(self) -> Optional[int]:
         """The height or the width of the level, depending on tree orientation.
 
         Returns:
@@ -158,7 +162,7 @@ class TreeGroup(Group):
                 return self.width
 
     @property
-    def size_in_level(self):
+    def size_in_level(self) -> Optional[int]:
         """The size of the object within its level, either its width or height depending on tree orientation.
 
         Returns:
@@ -174,7 +178,7 @@ class TreeGroup(Group):
 class TreeDiagram:
     """The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.
 
         Keyword Args:
@@ -187,30 +191,30 @@ class TreeDiagram:
             file_path (str, optional): The path where the tree diagram should be saved.
         """
         # formatting
-        self.level_spacing = kwargs.get("level_spacing", 60)
-        self.item_spacing = kwargs.get("item_spacing", 15)
-        self.group_spacing = kwargs.get("group_spacing", 30)
-        self.direction = kwargs.get("direction", "down")
-        self.link_style = kwargs.get("link_style", "orthogonal")
-        self.padding = kwargs.get("padding", 10)
+        self.level_spacing: int = kwargs.get("level_spacing", 60)
+        self.item_spacing: int = kwargs.get("item_spacing", 15)
+        self.group_spacing: int = kwargs.get("group_spacing", 30)
+        self.direction: str = kwargs.get("direction", "down")
+        self.link_style: str = kwargs.get("link_style", "orthogonal")
+        self.padding: int = kwargs.get("padding", 10)
 
         # Set up the File and Page objects
-        self.file = File()
-        self.file_name = kwargs.get("file_name", "Heirarchical Diagram.drawio")
-        self.file_path = kwargs.get("file_path", r"C:/")
-        self.page = Page(file=self.file)
+        self.file: File = File()
+        self.file_name: str = kwargs.get("file_name", "Heirarchical Diagram.drawio")
+        self.file_path: str = kwargs.get("file_path", r"C:/")
+        self.page: Page = Page(file=self.file)
 
         # Set up object and level lists
-        self.objects = []
-        self.links = []
+        self.objects: List[NodeObject] = []
+        self.links: List[Edge] = []
 
     ###########################################################
-    # properties
+    # Properties
     ###########################################################
     # These setters and getters keep the file name and file path within the
     # File object
     @property
-    def file_name(self):
+    def file_name(self) -> str:
         """The file name of the TreeDiagram
 
         Returns:
@@ -219,11 +223,11 @@ class TreeDiagram:
         return self.file.file_name
 
     @file_name.setter
-    def file_name(self, fn):
+    def file_name(self, fn: str) -> None:
         self.file.file_name = fn
 
     @property
-    def file_path(self):
+    def file_path(self) -> str:
         """The file path where the TreeDiagram will be saved
 
         Returns:
@@ -232,12 +236,12 @@ class TreeDiagram:
         return self.file.file_path
 
     @file_path.setter
-    def file_path(self, fn):
+    def file_path(self, fn: str) -> None:
         self.file.file_path = fn
 
     # These setters enforce the options for direction and link_style.
     @property
-    def direction(self):
+    def direction(self) -> str:
         """The direction the tree diagram should grow. Options are "up", "down", "left", or "right".
 
         Returns:
@@ -246,7 +250,7 @@ class TreeDiagram:
         return self._direction
 
     @direction.setter
-    def direction(self, d):
+    def direction(self, d: str) -> None:
         directions = ["up", "down", "left", "right"]
         if d in directions:
             self._direction = d
@@ -262,7 +266,7 @@ class TreeDiagram:
     ###########################################################
 
     @property
-    def origin(self):
+    def origin(self) -> Tuple[float, float]:
         """The origin points of the TreeDiagram. This is the point where the center of the top level of the TreeDiagram starts from. By default it's set to the top center of an edge of the page. Which edge depends on the direction of the tree diagram.
 
         Returns:
@@ -276,7 +280,7 @@ class TreeDiagram:
         }
         return origins[self.direction]
 
-    def level_move(self, move):
+    def level_move(self, move: int) -> Tuple[int, int]:
         """The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.
 
         Args:
@@ -290,7 +294,7 @@ class TreeDiagram:
         elif self.direction in ["left", "right"]:
             return (move, 0)
 
-    def move_between_levels(self, start, move):
+    def move_between_levels(self, start: Tuple[int, int], move: int) -> Tuple[int, int]:
         """The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.
 
         Args:
@@ -314,7 +318,7 @@ class TreeDiagram:
         else:
             raise ValueError("No direction defined!")
 
-    def move_in_level(self, start, move):
+    def move_in_level(self, start: Tuple[int, int], move: int) -> Tuple[int, int]:
         """The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.
 
         Args:
@@ -334,12 +338,14 @@ class TreeDiagram:
         else:
             raise ValueError("No direction defined!")
 
-    def abs_move_between_levels(self, start, position):
+    def abs_move_between_levels(
+        self, start: Tuple[int, int], position: Tuple[int, int]
+    ) -> Tuple[int, int]:
         """The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.
 
         Args:
             start (tuple): The starting position, a tuple of ints
-            move (int): The direction to move between levels.
+            position (tuple): The absolute position to move between levels, a tuple of ints
 
         Raises:
             ValueError: "No direction defined!"
@@ -358,12 +364,14 @@ class TreeDiagram:
         else:
             raise ValueError("No direction defined!")
 
-    def abs_move_in_level(self, start, position):
+    def abs_move_in_level(
+        self, start: Tuple[int, int], position: Tuple[int, int]
+    ) -> Tuple[int, int]:
         """The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.
 
         Args:
             start (tuple): The starting position, a tuple of ints
-            move (int): The direction to move between levels.
+            position (tuple): The absolute position to move within a levels, a tuple of ints
 
         Raises:
             ValueError: "No direction defined!"
@@ -383,7 +391,7 @@ class TreeDiagram:
     ###########################################################
 
     @property
-    def link_style(self):
+    def link_style(self) -> str:
         """The style of the links in the TreeDiagram
 
         Returns:
@@ -392,7 +400,7 @@ class TreeDiagram:
         return self._link_style
 
     @link_style.setter
-    def link_style(self, d):
+    def link_style(self, d: str) -> None:
         link_styles = ["orthogonal", "straight", "curved"]
         if d in link_styles:
             self._link_style = d
@@ -404,7 +412,7 @@ class TreeDiagram:
             )
 
     @property
-    def link_style_dict(self):
+    def link_style_dict(self) -> Dict[str, str]:
         """Returns the correct waypoint style for the set link_style
 
         Returns:
@@ -421,7 +429,7 @@ class TreeDiagram:
     # Object Linking and Sorting
     ###########################################################
 
-    def add_object(self, obj, **kwargs):
+    def add_object(self, obj: NodeObject, **kwargs: Any) -> None:
         if obj not in self.objects:
             obj.page = self.page
             if "tree_parent" in kwargs:
@@ -433,11 +441,11 @@ class TreeDiagram:
     ###########################################################
 
     @property
-    def roots(self):
+    def roots(self) -> List[NodeObject]:
         return [x for x in self.objects if x.tree_parent is None]
 
-    def auto_layout(self):
-        def layout_child(tree_parent):
+    def auto_layout(self) -> TreeGroup:
+        def layout_child(tree_parent: Optional[NodeObject]) -> TreeGroup:
             grp = TreeGroup(tree=self)
             grp.parent_object = tree_parent
             if len(tree_parent.tree_children) > 0:
@@ -456,7 +464,7 @@ class TreeDiagram:
                 grp.center_parent()
             return grp
 
-        def layout_group(grp, pos=self.origin):
+        def layout_group(grp: TreeGroup) -> TreeGroup:
             pos = self.origin
 
             for obj in grp.objects:
@@ -496,7 +504,7 @@ class TreeDiagram:
 
         return top_group
 
-    def connect_peers(self):
+    def connect_peers(self) -> None:
         peer_style = {
             "endArrow": "none",
             "dashed": 1,
@@ -525,7 +533,7 @@ class TreeDiagram:
                     edge.apply_attribute_dict(peer_style)
                     self.links.append(edge)
 
-    def connect(self, source, target):
+    def connect(self, source: NodeObject, target: NodeObject) -> None:
         edge = Edge(page=self.page, source=source, target=target)
         edge.apply_attribute_dict(self.link_style_dict)
         if self.direction == "down":
@@ -558,12 +566,12 @@ class TreeDiagram:
             edge.entryY = 0.5
         self.links.append(edge)
 
-    def draw_connections(self):
+    def draw_connections(self) -> None:
         # Draw connections
         for lvl in self.objects.values():
             for obj in lvl:
                 if obj.tree_parent is not None:
                     self.connect(source=obj.tree_parent, target=obj)
 
-    def write(self, **kwargs):
+    def write(self, **kwargs) -> None:
         self.file.write(**kwargs)

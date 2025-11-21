@@ -1,10 +1,13 @@
+from typing import List as ListType, Optional, Any, Union
 from .objects import Object, object_from_library
 
 # These classes extend the basic diagram classes (Object or Edge) with a little bit of custom functionality for ergonomics or ease of use.
 
 
 class List(Object):
-    def __init__(self, title="List", list_items=[], **kwargs):
+    def __init__(
+        self, title: str = "List", list_items: ListType[str] = [], **kwargs: Any
+    ) -> None:
         """The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.
 
         Args:
@@ -13,12 +16,12 @@ class List(Object):
         """
         super().__init__(value=title, **kwargs)
         self.format_as_library_object(library="general", obj_name="list")
-        self.autosizing = kwargs.get("autosizing", True)
-        self.width = kwargs.get("width", 120)
-        self.list_items = list_items
+        self.autosizing: bool = kwargs.get("autosizing", True)
+        self.width: Union[int, float] = kwargs.get("width", 120)
+        self.list_items: Optional[List[str]] = list_items
 
     @property
-    def list_items(self):
+    def list_items(self) -> ListType[str]:
         """A Python list of strings of the objects in the list.
 
         Returns:
@@ -27,14 +30,14 @@ class List(Object):
         return [child.value for child in self.children]
 
     @list_items.setter
-    def list_items(self, value):
+    def list_items(self, value: ListType[str]) -> None:
         if not isinstance(value, list):
             raise TypeError("list_items must be a list!")
         self.children = []
         for item in value:
             self.add_item(item)
 
-    def add_item(self, item_text):
+    def add_item(self, item_text: str) -> None:
         """This function creates a new Draw.io text item and adds it to the end of the list.
 
         Args:
@@ -50,7 +53,7 @@ class List(Object):
         if self.autosizing:
             self.autosize()
 
-    def remove_item(self, item_text):
+    def remove_item(self, item_text: str) -> None:
         """This function removes any list items matching the text passed into the function.
 
         Args:
@@ -64,7 +67,7 @@ class List(Object):
         if self.autosizing:
             self.autosize()
 
-    def autosize(self):
+    def autosize(self) -> None:
         """This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items."""
         y_pos = self.startSize
         for child in self.children:
@@ -74,16 +77,16 @@ class List(Object):
         self.width = min(child.width for child in self.children)
 
     @property
-    def width(self):
+    def width(self) -> Union[int, float]:
         """The width of the object. The difference between List's width and Object's width is that when the List.width is set all of the child objects will be set to the same width.
 
         Returns:
-            _type_: _description_
+            Union[int, float]: The width of the list object
         """
         return self.geometry.width
 
     @width.setter
-    def width(self, value):
+    def width(self, value: Union[int, float]) -> None:
         for child in self.children:
             child.width = value
         self.geometry.width = value

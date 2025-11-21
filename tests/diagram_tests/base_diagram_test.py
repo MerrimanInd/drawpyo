@@ -1,7 +1,7 @@
 import drawpyo
 
 
-def test_diagram_base_init():
+def test_diagram_base_init() -> None:
     test_page = drawpyo.Page()
     test_dbase = drawpyo.diagram.DiagramBase(page=test_page)
 
