@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import List, Optional, Tuple, Dict, Any, Union
+
 from ..xml_base import XMLBase
 from os import path
 
@@ -12,7 +16,7 @@ __all__ = [
 ]
 
 
-def color_input_check(color_str):
+def color_input_check(color_str: Optional[str]) -> Optional[str]:
     if color_str == None:
         return None
     elif color_str == "none":
@@ -21,9 +25,10 @@ def color_input_check(color_str):
         return color_str
     elif color_str[0] == "#" and len(color_str) == 7:
         return color_str
+    return None
 
 
-def width_input_check(width):
+def width_input_check(width: Optional[Union[int, str]]) -> Optional[int]:
     if not width or (isinstance(width, str) and not width.isdigit()):
         return None
 
@@ -36,7 +41,7 @@ def width_input_check(width):
         return width
 
 
-def import_shape_database(file_name, relative=False):
+def import_shape_database(file_name: str, relative: bool = False) -> Dict[str, Any]:
     """
     This function imports a TOML shape database and returns a dictionary of the
     shapes defined therein. It supports inheritance, meaning that if there is
@@ -87,7 +92,7 @@ def import_shape_database(file_name, relative=False):
     return data
 
 
-def style_str_from_dict(style_dict):
+def style_str_from_dict(style_dict: Dict[str, Any]) -> str:
     """
     This function returns a concatenated style string from a style dictionary.
     This format is:
@@ -124,19 +129,19 @@ class DiagramBase(XMLBase):
     This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self._style_attributes = ["html"]
-        self.page = kwargs.get("page", None)
-        self.xml_parent = kwargs.get("xml_parent", None)
+        self._style_attributes: List[str] = ["html"]
+        self.page: Optional[Any] = kwargs.get("page", None)
+        self.xml_parent: Optional[DiagramBase] = kwargs.get("xml_parent", None)
 
     @classmethod
-    def create_from_library(cls, library, obj):
-        return cls
+    def create_from_library(cls, library: Dict[str, Any], obj: str) -> DiagramBase:
+        return cls()
 
     # XML_parent property
     @property
-    def xml_parent_id(self):
+    def xml_parent_id(self) -> int:
         if self.xml_parent is not None:
             return self.xml_parent.id
         else:
@@ -144,11 +149,11 @@ class DiagramBase(XMLBase):
 
     # Parent object linking
     @property
-    def xml_parent(self):
+    def xml_parent(self) -> Optional[DiagramBase]:
         return self._xml_parent
 
     @xml_parent.setter
-    def xml_parent(self, p):
+    def xml_parent(self, p: Optional[DiagramBase]) -> None:
         if p is not None:
             p.add_object(self)
             self._xml_parent = p
@@ -156,13 +161,13 @@ class DiagramBase(XMLBase):
             self._xml_parent = None
 
     @xml_parent.deleter
-    def xml_parent(self):
+    def xml_parent(self) -> None:
         self._xml_parent.remove_object(self)
         self._xml_parent = None
 
     # Page property
     @property
-    def page_id(self):
+    def page_id(self) -> int:
         if self.page is not None:
             return self.page.id
         else:
@@ -170,11 +175,11 @@ class DiagramBase(XMLBase):
 
     # page object linking
     @property
-    def page(self):
+    def page(self) -> Optional[Any]:
         return self._page
 
     @page.setter
-    def page(self, p):
+    def page(self, p: Optional[Any]) -> None:
         if p is not None:
             p.add_object(self)
             self._page = p
@@ -182,22 +187,22 @@ class DiagramBase(XMLBase):
             self._page = None
 
     @page.deleter
-    def page(self):
+    def page(self) -> None:
         self._page.remove_object(self)
         self._page = None
 
-    def add_object(self, obj):
+    def add_object(self, obj: DiagramBase) -> None:
         self.page.add_object(obj)
 
     ###########################################################
     # Style properties
     ###########################################################
-    def add_style_attribute(self, style_attr):
+    def add_style_attribute(self, style_attr: str) -> None:
         if style_attr not in self._style_attributes:
             self._style_attributes.append(style_attr)
 
     @property
-    def style_attributes(self):
+    def style_attributes(self) -> List[str]:
         """
         The style attributes are the list of style tags that should be printed into the style XML attribute. This is a subset of the attributes defined on the object method.
 
@@ -207,11 +212,11 @@ class DiagramBase(XMLBase):
         return self._style_attributes
 
     @style_attributes.setter
-    def style_attributes(self, value):
+    def style_attributes(self, value: List[str]) -> None:
         self._style_attributes = value
 
     @property
-    def style(self):
+    def style(self) -> str:
         """
         This function returns the style string of the object to be appended into the style XML attribute.
 
@@ -247,14 +252,14 @@ class DiagramBase(XMLBase):
             style_str = style_str + self.text_format.style
         return style_str
 
-    def _add_and_set_style_attrib(self, attrib, value):
+    def _add_and_set_style_attrib(self, attrib: str, value: Any) -> None:
         if hasattr(self, attrib):
             setattr(self, attrib, value)
         else:
             setattr(self, attrib, value)
             self.add_style_attribute(attrib)
 
-    def apply_style_string(self, style_str):
+    def apply_style_string(self, style_str: str) -> None:
         """
         This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.
 
@@ -279,12 +284,12 @@ class DiagramBase(XMLBase):
             else:
                 self.baseStyle = attrib
 
-    def _apply_style_from_template(self, template):
+    def _apply_style_from_template(self, template: DiagramBase) -> None:
         for attrib in template.style_attributes:
             value = getattr(template, attrib)
             self._add_and_set_style_attrib(attrib, value)
 
-    def apply_attribute_dict(self, attr_dict):
+    def apply_attribute_dict(self, attr_dict: Dict[str, Any]) -> None:
         """
         This function takes in a dictionary of attributes and applies them
         to the object. These attributes can be style or properties. If the
@@ -306,7 +311,7 @@ class DiagramBase(XMLBase):
             self._add_and_set_style_attrib(attr, val)
 
     @classmethod
-    def from_style_string(cls, style_string):
+    def from_style_string(cls, style_string: str) -> DiagramBase:
         """
         This classmethod allows the intantiation of an object from a style
         string. This is useful since Draw.io allows copying the style string
@@ -317,7 +322,7 @@ class DiagramBase(XMLBase):
             style_string (str): A Draw.io style string
 
         Returns:
-            BaseDiagram: A BaseDiagram or subclass instantiated with the style from the Draw.io string
+            DiagramBase: A DiagramBase or subclass instantiated with the style from the Draw.io string
         """
         new_obj = cls()
         new_obj.apply_style_string(style_string)
@@ -325,35 +330,35 @@ class DiagramBase(XMLBase):
 
 
 class Geometry(DiagramBase):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.xml_class = "mxGeometry"
+        self.xml_class: str = "mxGeometry"
 
-        self.parent_object = kwargs.get("parent_object", None)
-        self.x = kwargs.get("x", 0)
-        self.y = kwargs.get("y", 0)
-        self.width = kwargs.get("width", 120)
-        self.height = kwargs.get("height", 60)
-        self.as_attribute = kwargs.get("as_attribute", "geometry")
+        self.parent_object: Optional[Any] = kwargs.get("parent_object", None)
+        self._x: Union[int, float] = kwargs.get("x", 0)
+        self._y: Union[int, float] = kwargs.get("y", 0)
+        self.width: Union[int, float] = kwargs.get("width", 120)
+        self.height: Union[int, float] = kwargs.get("height", 60)
+        self.as_attribute: str = kwargs.get("as_attribute", "geometry")
 
     @property
-    def x(self):
+    def x(self) -> Union[int, float]:
         return self._x
 
     @x.setter
-    def x(self, value):
+    def x(self, value: Union[int, float]) -> None:
         self._x = value
 
     @property
-    def y(self):
+    def y(self) -> Union[int, float]:
         return self._y
 
     @y.setter
-    def y(self, value):
+    def y(self, value: Union[int, float]) -> None:
         self._y = value
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Union[int, float, str]]:
         return {
             "x": self.x,
             "y": self.y,
@@ -364,7 +369,7 @@ class Geometry(DiagramBase):
 
     # Size property
     @property
-    def size(self):
+    def size(self) -> Tuple[Union[int, float], Union[int, float]]:
         """The size of the object. It's set with a tuple of ints, width and height respectively.
 
         (width, height)
@@ -375,6 +380,6 @@ class Geometry(DiagramBase):
         return (self.width, self.height)
 
     @size.setter
-    def size(self, value):
+    def size(self, value: Tuple[Union[int, float], Union[int, float]]) -> None:
         self.width = value[0]
         self.height = value[1]
