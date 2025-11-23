@@ -1,5 +1,6 @@
 from .xml_base import XMLBase
 from datetime import datetime
+from .utils import logger
 from os import path, makedirs
 from sys import version_info
 from .page import Page
@@ -136,5 +137,6 @@ class File(XMLBase):
             path.join(self.file_path, self.file_name), write_mode, encoding="utf-8"
         ) as f:
             f.write(self.xml)
+            logger.info(f"💾 Saved file '{self.file_name}' at '{self.file_path}'")
 
         return path.join(self.file_path, self.file_name)
