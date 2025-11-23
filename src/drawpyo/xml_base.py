@@ -27,6 +27,7 @@ class XMLBase:
         self.xml_parent = kwargs.get("xml_parent", None)
 
         self.tag = kwargs.get("tag", None)
+        self.tooltip = kwargs.get("tooltip", None)
 
     @property
     def id(self):
@@ -57,7 +58,9 @@ class XMLBase:
         """
         The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.
 
-        When the "tag" attribute tag is provided, a tags attribute is applied to the object. This allows for selecting, hiding, or displaying multiple elements in the diagram. When using tags, the open_tag value and id are shifted to the <UserObject> tag.
+        When the "tag" attribute tag is provided, a tags attribute is applied to the object. This allows for selecting, hiding, or displaying multiple elements in the diagram.
+        When the "tooltip" attribute tag is provided, a tooltip attribute is applied to the object. This allows for extra information to be displayed when an element is hovered over in the diagram.
+        When using tags or tooltips, the open_tag value and id are shifted to the <UserObject> tag.
 
 
         Example:
@@ -66,10 +69,14 @@ class XMLBase:
         Returns:
             str: The opening tag of the object with all the attributes.
         """
-        if self.tag:
-            open_user_object_tag = (
-                f'<UserObject label="{self.value}" tags="{self.tag}" id="{self.id}">'
-            )
+        if self.tag or self.tooltip:
+            open_user_object_tag = f'<UserObject label="{self.value}" id="{self.id}"'
+            if self.tag:
+                open_user_object_tag += f' tags="{self.tag}"'
+            if self.tooltip:
+                open_user_object_tag += f' tooltip="{self.xml_ify(self.tooltip)}"'
+            open_user_object_tag += ">"
+
             open_tag = "<" + self.xml_class
             for att, value in self.attributes.items():
                 if att == "id" or att == "value":
@@ -96,7 +103,7 @@ class XMLBase:
         Returns:
             str: The closing tag of the object with all the attributes.
         """
-        if self.tag:
+        if self.tag or self.tooltip:
             return "</{0}>\n</UserObject>".format(self.xml_class)
         return "</{0}>".format(self.xml_class)
 
