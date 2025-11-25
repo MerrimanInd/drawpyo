@@ -3,6 +3,7 @@ from .file import File
 from .page import Page
 
 from .utils.default_colors import DefaultColors
+from .utils.color_scheme import ColorScheme
 from . import utils
 from . import diagram
 from . import diagram_types

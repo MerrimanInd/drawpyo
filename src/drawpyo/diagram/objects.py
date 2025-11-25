@@ -87,14 +87,16 @@ class Object(DiagramBase):
             aspect # TODO ?
             rounded (bool, optional): Whether to round the corners of the shape
             whiteSpace (str, optional): white space
-            fillColor (str, optional): The object fill color in a hex color code (#ffffff)
+            color_scheme (ColorScheme, optional): Bundled set of color specifications.
+            fillColor (Union[str, DefaultColors], optional): The object fill color.
             opacity  (int, optional): The object's opacity, 0-100
-            strokeColor: The object stroke color in a hex color code (#ffffff)
-            glass (bool, optional): Apply glass styling to  the object
-            shadow (bool, optional): Add a shadow to the object
-            sketch (bool, optional): Add sketch styling to the object
-            comic (bool, optional): Add comic styling to the object
+            strokeColor(Union[str, DefaultColors], optional): The object stroke color.
+            glass (bool, optional): Apply glass styling to  the object.
+            shadow (bool, optional): Add a shadow to the object.
+            sketch (bool, optional): Add sketch styling to the object.
+            comic (bool, optional): Add comic styling to the object.
             line_pattern (str, optional): The stroke style of the object.
+            text_format (TextFormat, optional): Formatting specifically around a text.
         """
         super().__init__(**kwargs)
         self._style_attributes = [
@@ -139,18 +141,19 @@ class Object(DiagramBase):
         # TODO enumerate to fixed
         self.aspect = kwargs.get("aspect", None)
 
-        # Content
-        self.text_format = kwargs.get("text_format", TextFormat())
-        self.value = value
-
         # Style
         self.baseStyle = kwargs.get("baseStyle", None)
 
         self.rounded = kwargs.get("rounded", 0)
         self.whiteSpace = kwargs.get("whiteSpace", "wrap")
         self.opacity = kwargs.get("opacity", None)
-        self.strokeColor = kwargs.get("strokeColor", None)
-        self.fillColor = kwargs.get("fillColor", None)
+        self.color_scheme = kwargs.get("color_scheme")
+        self.strokeColor = kwargs.get("stroke_color") or (
+            self.color_scheme.stroke_color if self.color_scheme else None
+        )
+        self.fillColor = kwargs.get("fill_color") or (
+            self.color_scheme.fill_color if self.color_scheme else None
+        )
         self.glass = kwargs.get("glass", None)
         self.shadow = kwargs.get("shadow", None)
         self.comic = kwargs.get("comic", None)
@@ -167,6 +170,12 @@ class Object(DiagramBase):
             self._apply_style_from_template(self.template_object)
             self.width = self.template_object.width
             self.height = self.template_object.height
+
+        # Content
+        self.text_format = kwargs.get("text_format", TextFormat())
+        if not self.text_format.fontColor and self.color_scheme:
+            self.text_format.fontColor = self.color_scheme.font_color
+        self.value = value
 
         # If a parent was passed in, reactivate the parents autoexpanding and update it
         if "parent" in kwargs:
