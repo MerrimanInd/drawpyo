@@ -1,3 +1,5 @@
+from hypothesis import given, strategies as st
+
 import drawpyo
 
 
@@ -26,3 +28,30 @@ def test_XMLBase_xml_ify():
     assert test_obj.xml_ify("&") == "&amp;"
     assert test_obj.xml_ify('"') == "&quot;"
     assert test_obj.xml_ify("'") == "&apos;"
+
+
+
+xmlbase_kwargs_strategy = st.fixed_dictionaries(
+    mapping={},  # No required keys
+    optional={
+        "id": st.just(st.integers()),
+        "xml_class": st.one_of(st.text(), st.none()),
+        "xml_parent": st.one_of(st.integers(), st.text(), st.none()),
+        "tag": st.one_of(st.text(), st.none()),
+    }
+)
+
+
+@given(kwargs=xmlbase_kwargs_strategy)
+def test_xmlbase(kwargs):
+    obj = drawpyo.XMLBase(**kwargs)
+
+    # 'id' default is generated from id(self)
+    if "id" in kwargs:
+        assert obj._id == kwargs["id"]
+    else:
+        assert isinstance(obj._id, int)
+
+    assert obj.xml_class == kwargs.get("xml_class", "xml_tag")
+    assert obj.xml_parent == kwargs.get("xml_parent", None)
+    assert obj.tag == kwargs.get("tag", None)
