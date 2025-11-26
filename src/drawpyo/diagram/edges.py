@@ -9,6 +9,8 @@ from .base_diagram import (
     width_input_check,
 )
 from .text_format import TextFormat
+from ..utils.color_scheme import ColorScheme
+from ..utils.standard_colors import StandardColor
 
 __all__ = ["Edge", "BasicEdge", "EdgeGeometry", "EdgeLabel", "Point"]
 
@@ -90,21 +92,21 @@ class Edge(DiagramBase):
         self.xml_class: str = "mxCell"
 
         # Style
-        self.color_scheme = kwargs.get("color_scheme", None)
-        self.text_format = kwargs.get("text_format", TextFormat())
+        self.color_scheme: Optional[ColorScheme] = kwargs.get("color_scheme", None)
+        self.text_format: Optional[TextFormat] = kwargs.get("text_format", TextFormat())
         if not self.text_format.fontColor and self.color_scheme:
             self.text_format.fontColor = self.color_scheme.font_color
-        self.waypoints = kwargs.get("waypoints", "orthogonal")
-        self.connection = kwargs.get("connection", "line")
-        self.pattern = kwargs.get("pattern", "solid")
-        self.opacity = kwargs.get("opacity", None)
-        self.strokeWidth = kwargs.get("strokeWidth", None)
-        self.strokeColor = kwargs.get("stroke_color") or (
-            self.color_scheme.stroke_color if self.color_scheme else None
-        )
-        self.fillColor = kwargs.get("fill_color") or (
-            self.color_scheme.fill_color if self.color_scheme else None
-        )
+        self.waypoints: Optional[str] = kwargs.get("waypoints", "orthogonal")
+        self.connection: Optional[str] = kwargs.get("connection", "line")
+        self.pattern: Optional[str] = kwargs.get("pattern", "solid")
+        self.opacity: Optional[int] = kwargs.get("opacity", None)
+        self.strokeWidth: Optional[int] = kwargs.get("strokeWidth", None)
+        self.strokeColor: Optional[Union[str, StandardColor]] = kwargs.get(
+            "stroke_color"
+        ) or (self.color_scheme.stroke_color if self.color_scheme else None)
+        self.fillColor: Optional[Union[str, StandardColor]] = kwargs.get(
+            "fill_color"
+        ) or (self.color_scheme.fill_color if self.color_scheme else None)
 
         # Line end
         self.line_end_target: Optional[str] = kwargs.get("line_end_target", None)

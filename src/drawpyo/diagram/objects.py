@@ -7,6 +7,8 @@ from .base_diagram import (
     import_shape_database,
 )
 from .text_format import TextFormat
+from ..utils.color_scheme import ColorScheme
+from ..utils.standard_colors import StandardColor
 
 __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
@@ -129,7 +131,7 @@ class Object(DiagramBase):
             parent: Object = kwargs.get("parent")
             old_parent_autosize: bool = parent.autosize_to_children
             parent.autoexpand = False
-            self.parent = parent
+            self.parent: Optional[Object] = parent
         else:
             self._parent: Optional[Object] = None
         self.children: List[Object] = kwargs.get("children", [])
@@ -138,10 +140,12 @@ class Object(DiagramBase):
         self.autosize_margin: int = kwargs.get("autosize_margin", 20)
 
         # Geometry
-        self.position = position
+        self.position: Optional[tuple] = position
         # Since the position is already set to either a passed in arg or the default this will
         # either override that default position or redundantly reset the position to the same value
-        self.position_rel_to_parent = kwargs.get("position_rel_to_parent", position)
+        self.position_rel_to_parent: Optional[tuple] = kwargs.get(
+            "position_rel_to_parent", position
+        )
         self.width: int = kwargs.get("width", 120)
         self.height: int = kwargs.get("height", 80)
         self.vertex: int = kwargs.get("vertex", 1)
@@ -152,21 +156,21 @@ class Object(DiagramBase):
         # Style
         self.baseStyle: Optional[str] = kwargs.get("baseStyle", None)
 
-        self.rounded = kwargs.get("rounded", 0)
-        self.whiteSpace = kwargs.get("whiteSpace", "wrap")
-        self.opacity = kwargs.get("opacity", None)
-        self.color_scheme = kwargs.get("color_scheme", None)
-        self.strokeColor = kwargs.get("stroke_color") or (
-            self.color_scheme.stroke_color if self.color_scheme else None
-        )
-        self.fillColor = kwargs.get("fill_color") or (
-            self.color_scheme.fill_color if self.color_scheme else None
-        )
-        self.glass = kwargs.get("glass", None)
-        self.shadow = kwargs.get("shadow", None)
-        self.comic = kwargs.get("comic", None)
-        self.sketch = kwargs.get("sketch", None)
-        self.line_pattern = kwargs.get("line_pattern", "solid")
+        self.rounded: Optional[bool] = kwargs.get("rounded", 0)
+        self.whiteSpace: Optional[str] = kwargs.get("whiteSpace", "wrap")
+        self.opacity: Optional[int] = kwargs.get("opacity", None)
+        self.color_scheme: Optional[ColorScheme] = kwargs.get("color_scheme", None)
+        self.strokeColor: Optional[Union[str, StandardColor]] = kwargs.get(
+            "stroke_color"
+        ) or (self.color_scheme.stroke_color if self.color_scheme else None)
+        self.fillColor: Optional[Union[str, StandardColor]] = kwargs.get(
+            "fill_color"
+        ) or (self.color_scheme.fill_color if self.color_scheme else None)
+        self.glass: Optional[bool] = kwargs.get("glass", None)
+        self.shadow: Optional[bool] = kwargs.get("shadow", None)
+        self.comic: Optional[bool] = kwargs.get("comic", None)
+        self.sketch: Optional[bool] = kwargs.get("sketch", None)
+        self.line_pattern: Optional[str] = kwargs.get("line_pattern", "solid")
 
         self.out_edges: List[Any] = kwargs.get("out_edges", [])
         self.in_edges: List[Any] = kwargs.get("in_edges", [])
@@ -180,10 +184,10 @@ class Object(DiagramBase):
             self.height = self.template_object.height
 
         # Content
-        self.text_format = kwargs.get("text_format", TextFormat())
+        self.text_format: Optional[TextFormat] = kwargs.get("text_format", TextFormat())
         if not self.text_format.fontColor and self.color_scheme:
             self.text_format.fontColor = self.color_scheme.font_color
-        self.value = value
+        self.value: Optional[str] = value
 
         # If a parent was passed in, reactivate the parents autoexpanding and update it
         if "parent" in kwargs:
