@@ -7,9 +7,8 @@ file.file_name = "Color Scheme Object.drawio"
 page = drawpyo.Page(file=file)
 
 color_scheme = drawpyo.ColorScheme(
-    fill_color=drawpyo.DefaultColors.GRAY7,
+    fill_color=drawpyo.StandardColor.GRAY7,
     stroke_color="#AA6600",
-    gradient="#28282E",
     font_color="#AA6600",
 )
 color_scheme_obj = drawpyo.diagram.Object(

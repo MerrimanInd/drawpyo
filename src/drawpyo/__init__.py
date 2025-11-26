@@ -2,7 +2,7 @@ from .xml_base import XMLBase
 from .file import File
 from .page import Page
 
-from .utils.default_colors import DefaultColors
+from .utils.standard_colors import StandardColor
 from .utils.color_scheme import ColorScheme
 from . import utils
 from . import diagram

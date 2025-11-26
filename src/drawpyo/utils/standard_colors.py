@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class DefaultColors(str, Enum):
+class StandardColor(str, Enum):
     NONE = "none"
     BLACK = "#000000"
     WHITE = "#FFFFFF"

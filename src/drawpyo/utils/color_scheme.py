@@ -1,15 +1,15 @@
 from __future__ import annotations
 from typing import Union
 import re
-from .default_colors import DefaultColors
+from .standard_colors import StandardColor
 
 
-ColorType = Union[str, DefaultColors, None]
+ColorType = Union[str, StandardColor, None]
 
 
 class ColorScheme:
     """
-    Represents a set of colors used for an object's fill, stroke, and gradient.
+    Represents a set of colors used for an object's fill, stroke and font.
 
     A color can be:
         • None
@@ -27,12 +27,10 @@ class ColorScheme:
         self,
         fill_color: ColorType = None,
         stroke_color: ColorType = None,
-        gradient: ColorType = None,
         font_color: ColorType = None,
     ) -> None:
         self.fill_color: ColorType = self._validated(fill_color)
         self.stroke_color: ColorType = self._validated(stroke_color)
-        self.gradient: ColorType = self._validated(gradient)
         self.font_color: ColorType = self._validated(font_color)
 
     ###########################################################
@@ -44,9 +42,6 @@ class ColorScheme:
 
     def set_stroke_color(self, color: ColorType) -> None:
         self.stroke_color = self._validated(color)
-
-    def set_gradient(self, color: ColorType) -> None:
-        self.gradient = self._validated(color)
 
     def set_font_color(self, color: ColorType) -> None:
         self.font_color = self._validated(color)
@@ -60,7 +55,7 @@ class ColorScheme:
         if color is None:
             return None
 
-        if isinstance(color, DefaultColors):
+        if isinstance(color, StandardColor):
             return color.value
 
         if isinstance(color, str):
@@ -89,6 +84,5 @@ class ColorScheme:
         return (
             f"ColorScheme(fill={self.fill_color}, "
             f"stroke={self.stroke_color}, "
-            f"gradient={self.gradient})"
             f"font_color={self.font_color})"
         )
