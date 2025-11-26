@@ -79,26 +79,32 @@ class Object(DiagramBase):
             position (tuple, optional): The position of the object in pixels, in (X, Y). Defaults to (0, 0).
 
         Keyword Args:
-            position_rel_to_parent (tuple, optional): The position of the object relative to the parent in pixels, in (X, Y). # TODO document
-            width (int, optional): The width of the object in pixels. Defaults to 120.
+            aspect (optional): Aspect ratio handling. Defaults to None.
+            autocontract (bool, optional): Whether to contract to fit the child objects. Defaults to False.
+            autosize_margin (int, optional): What margin in pixels to leave around the child objects. Defaults to 20.
+            autosize_to_children (bool, optional): Whether to autoexpand when child objects are added. Defaults to False.
+            baseStyle (optional): Base style for the object. Defaults to None.
+            children (list of Objects, optional): The subobjects to add to this object as a parent. Defaults to [].
+            color_scheme (ColorScheme, optional): Bundled set of color specifications. Defaults to None.
+            comic (bool, optional): Add comic styling to the object. Defaults to None.
+            fill_color (Union[str, StandardColor], optional): The object fill color. Defaults to None.
+            glass (bool, optional): Apply glass styling to the object. Defaults to None.
             height (int, optional): The height of the object in pixels. Defaults to 80.
-            parent (Object, optional): The parent object (container, etc) of this object. Defaults to None. # TODO document
-            children (array of Objects, optional): The subobjects to add to this object as a parent. Defaults to []. # TODO document
-            autosize_to_children (bool, optional): Whether to autoexpand when child objects are added. Defaults to false. # TODO document
-            autocontract (bool, optional): Whether to contract to fit the child objects. Defaults to false.
-            autosize_margin (int, optional): What margin in pixels to leave around the child objects. Defaults to 20px. # TODO document
-            template_object (Object, optional): Another object to copy the style_attributes from
-            aspect # TODO ?
-            rounded (bool, optional): Whether to round the corners of the shape
-            whiteSpace (str, optional): white space
-            fillColor (str, optional): The object fill color in a hex color code (#ffffff)
-            opacity  (int, optional): The object's opacity, 0-100
-            strokeColor: The object stroke color in a hex color code (#ffffff)
-            glass (bool, optional): Apply glass styling to  the object
-            shadow (bool, optional): Add a shadow to the object
-            sketch (bool, optional): Add sketch styling to the object
-            comic (bool, optional): Add comic styling to the object
-            line_pattern (str, optional): The stroke style of the object.
+            in_edges (list, optional): List of incoming edges to this object. Defaults to [].
+            line_pattern (str, optional): The stroke style of the object. Defaults to "solid".
+            opacity (int, optional): The object's opacity, 0-100. Defaults to None.
+            out_edges (list, optional): List of outgoing edges from this object. Defaults to [].
+            parent (Object, optional): The parent object (container, etc) of this object. Defaults to None.
+            position_rel_to_parent (tuple, optional): The position of the object relative to the parent in pixels, in (X, Y).
+            rounded (int or bool, optional): Whether to round the corners of the shape. Defaults to 0.
+            shadow (bool, optional): Add a shadow to the object. Defaults to None.
+            sketch (bool, optional): Add sketch styling to the object. Defaults to None.
+            stroke_color (Union[str, StandardColor], optional): The object stroke color. Defaults to None.
+            template_object (Object, optional): Another object to copy the style_attributes from. Defaults to None.
+            text_format (TextFormat, optional): Formatting specifically around text. Defaults to TextFormat().
+            vertex (int, optional): Vertex flag for the object. Defaults to 1.
+            whiteSpace (str, optional): White space handling. Defaults to "wrap".
+            width (int, optional): The width of the object in pixels. Defaults to 120.
         """
         super().__init__(**kwargs)
         self._style_attributes: List[str] = [
@@ -141,27 +147,25 @@ class Object(DiagramBase):
         self.vertex: int = kwargs.get("vertex", 1)
 
         # TODO enumerate to fixed
-        self.aspect: Optional[str] = kwargs.get("aspect", None)
-
-        # Content
-        self.text_format: TextFormat = kwargs.get("text_format", TextFormat())
-        self.value: str = value
+        self.aspect = kwargs.get("aspect", None)
 
         # Style
         self.baseStyle: Optional[str] = kwargs.get("baseStyle", None)
 
-        self.rounded: int = kwargs.get("rounded", 0)
-        self.whiteSpace: str = kwargs.get("whiteSpace", "wrap")
-        self.opacity: Optional[int] = kwargs.get("opacity", None)
-        self.strokeColor: Optional[str] = kwargs.get("strokeColor", None)
-        self.fillColor: Optional[str] = kwargs.get("fillColor", None)
-        self.glass: Optional[bool] = kwargs.get("glass", None)
-        self.shadow: Optional[bool] = kwargs.get("shadow", None)
-        self.comic: Optional[bool] = kwargs.get("comic", None)
-        self.sketch: Optional[bool] = kwargs.get("sketch", None)
-        self._line_pattern: Optional[str] = None
-        self._dashed: Optional[bool] = None
-        self._dashPattern: Optional[str] = None
+        self.rounded = kwargs.get("rounded", 0)
+        self.whiteSpace = kwargs.get("whiteSpace", "wrap")
+        self.opacity = kwargs.get("opacity", None)
+        self.color_scheme = kwargs.get("color_scheme", None)
+        self.strokeColor = kwargs.get("stroke_color") or (
+            self.color_scheme.stroke_color if self.color_scheme else None
+        )
+        self.fillColor = kwargs.get("fill_color") or (
+            self.color_scheme.fill_color if self.color_scheme else None
+        )
+        self.glass = kwargs.get("glass", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.comic = kwargs.get("comic", None)
+        self.sketch = kwargs.get("sketch", None)
         self.line_pattern = kwargs.get("line_pattern", "solid")
 
         self.out_edges: List[Any] = kwargs.get("out_edges", [])
@@ -174,6 +178,12 @@ class Object(DiagramBase):
             self._apply_style_from_template(self.template_object)
             self.width = self.template_object.width
             self.height = self.template_object.height
+
+        # Content
+        self.text_format = kwargs.get("text_format", TextFormat())
+        if not self.text_format.fontColor and self.color_scheme:
+            self.text_format.fontColor = self.color_scheme.font_color
+        self.value = value
 
         # If a parent was passed in, reactivate the parents autoexpanding and update it
         if "parent" in kwargs:
