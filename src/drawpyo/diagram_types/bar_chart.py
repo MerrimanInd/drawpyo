@@ -1,7 +1,10 @@
-from typing import Callable
+from typing import Callable, Union, Optional
 from copy import deepcopy
 from ..diagram.objects import Object, Group
 from ..diagram.text_format import TextFormat
+from ..utils.standard_colors import StandardColor
+from ..utils.color_scheme import ColorScheme
+from ..page import Page
 
 
 class BarChart:
@@ -34,88 +37,111 @@ class BarChart:
 
         Keyword Args:
             position (tuple[int, int]): Chart top-left position. Default: (0, 0)
-            bar_object (Object): Optional template Object for bar styling. Default: None
+            bar_template (Object): Optional template Object for bar styling. Default: None
             bar_width (int): Width of each bar. Default: 40
             bar_spacing (int): Space between bars. Default: 20
             max_bar_height (int): Height of the largest bar. Default: 200
-            bar_colors (str | list[str]): Single color or list of colors. Default: "#66ccff"
+            bar_colors (str | StandardColor | list[Union[str, StandardColor]]): Single color or list of colors. Default: "#66ccff"
             base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l
             inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)
             title (str): Optional chart title. Default: None
             title_text_format (TextFormat): TextFormat for the title. Default: TextFormat()
             base_text_format (TextFormat): TextFormat for base labels. Default: TextFormat()
             inside_text_format (TextFormat): TextFormat for inside labels. Default: TextFormat()
-            bar_fill_color (str): Optional fill color override for all bars. Default: None
-            bar_stroke_color (str): Stroke color for bars. Default: "#000000"
-            background_color (str): Optional chart background fill. Default: None
+            bar_fill_color (str | StandardColor): Optional fill color override for all bars. Default: None
+            bar_stroke_color (str | StandardColor): Stroke color for bars. Default: "#000000"
+            background_color (str | StandardColor): Optional chart background fill. Default: None
             show_axis (bool): Whether to show the axis and ticks. Default: False
             axis_tick_count (int): Number of tick intervals on the axis. Default: 5
             axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()
         """
         # Validate data
         if not isinstance(data, dict):
-            raise TypeError(f"data must be a dict, got {type(data).__name__}")
+            raise TypeError("Data must be a dict.")
         if not data:
-            raise ValueError("data cannot be empty")
+            raise ValueError("Data cannot be empty.")
 
-        for label, value in data.items():
-            if not isinstance(value, (int, float)):
-                raise TypeError(
-                    f"Value for '{label}' must be numeric, got {type(value).__name__}"
-                )
+        invalid_keys = [key for key in data if not isinstance(key, str)]
+        if invalid_keys:
+            raise TypeError(f"All keys must be strings. Invalid: {invalid_keys}")
 
-        self._data = data.copy()
+        invalid_values = [
+            key for key, value in data.items() if not isinstance(value, (int, float))
+        ]
+        if invalid_values:
+            raise TypeError(f"Values must be numeric. Invalid: {invalid_values}")
+
+        self._data: dict[str, Union[int, float]] = data.copy()
 
         # Position and dimensions
-        self._position = kwargs.get("position", (0, 0))
-        self._bar_width = kwargs.get("bar_width", self.DEFAULT_BAR_WIDTH)
-        self._bar_spacing = kwargs.get("bar_spacing", self.DEFAULT_BAR_SPACING)
-        self._max_bar_height = kwargs.get("max_bar_height", self.DEFAULT_MAX_BAR_HEIGHT)
+        self._position: Optional[tuple[int, int]] = kwargs.get("position", (0, 0))
+        self._bar_width: Optional[int] = kwargs.get("bar_width", self.DEFAULT_BAR_WIDTH)
+        self._bar_spacing: Optional[int] = kwargs.get(
+            "bar_spacing", self.DEFAULT_BAR_SPACING
+        )
+        self._max_bar_height: Optional[int] = kwargs.get(
+            "max_bar_height", self.DEFAULT_MAX_BAR_HEIGHT
+        )
 
         # Text formats
-        self._title_text_format: TextFormat = deepcopy(
+        self._title_text_format: Optional[TextFormat] = deepcopy(
             kwargs.get("title_text_format", TextFormat())
         )
-        self._base_text_format: TextFormat = deepcopy(
+        self._base_text_format: Optional[TextFormat] = deepcopy(
             kwargs.get("base_text_format", TextFormat())
         )
-        self._inside_text_format: TextFormat = deepcopy(
+        self._inside_text_format: Optional[TextFormat] = deepcopy(
             kwargs.get("inside_text_format", TextFormat())
         )
-        self._axis_text_format: TextFormat = deepcopy(
+        self._axis_text_format: Optional[TextFormat] = deepcopy(
             kwargs.get("axis_text_format", TextFormat())
         )
 
         # Label formatters
-        self._base_label_formatter: Callable[[str, float], str] = kwargs.get(
+        self._base_label_formatter: Optional[Callable[[str, float], str]] = kwargs.get(
             "base_label_formatter", lambda label, value: label
         )
-        self._inside_label_formatter: Callable[[str, float], str] = kwargs.get(
-            "inside_label_formatter", lambda label, value: str(value)
+        self._inside_label_formatter: Optional[Callable[[str, float], str]] = (
+            kwargs.get("inside_label_formatter", lambda label, value: str(value))
         )
 
         # Title
-        self._title = kwargs.get("title")
+        self._title: Optional[str] = kwargs.get("title")
 
         # Colors
-        self._bar_fill_color = kwargs.get("bar_fill_color")
-        self._bar_stroke_color = kwargs.get("bar_stroke_color", "#000000")
-        self._background_color = kwargs.get("background_color")
+        self._bar_fill_color: Optional[Union[str, StandardColor]] = kwargs.get(
+            "bar_fill_color"
+        )
+        self._bar_stroke_color: Optional[Union[str, StandardColor]] = kwargs.get(
+            "bar_stroke_color", "#000000"
+        )
+        self._background_color: Optional[Union[str, StandardColor]] = kwargs.get(
+            "background_color"
+        )
 
         # Axis settings
-        self._show_axis = kwargs.get("show_axis", False)
-        self._axis_tick_count = kwargs.get("axis_tick_count", self.TICK_COUNT)
+        self._show_axis: Optional[bool] = kwargs.get("show_axis", False)
+        self._axis_tick_count: Optional[int] = kwargs.get(
+            "axis_tick_count", self.TICK_COUNT
+        )
 
         # Optional bar object template
-        self._bar_object_template: Object | None = kwargs.get("bar_object")
+        self._bar_template: Optional[Object] = kwargs.get("bar_template")
 
         # Normalize bar colors
-        bar_colors = kwargs.get("bar_colors", "#66ccff")
-        self._bar_colors = self._normalize_colors(bar_colors, len(data))
-        self._original_bar_colors = bar_colors
+        bar_colors: Optional[
+            Union[str, StandardColor, list[Union[str, StandardColor]]]
+        ] = kwargs.get("bar_colors", "#66ccff")
+        self._bar_colors: list[Union[str, StandardColor]] = self._normalize_colors(
+            bar_colors, len(data)
+        )
+        self._original_bar_colors: (
+            Optional[Union[str, StandardColor]]
+            | Optional[list[Union[str, StandardColor]]]
+        ) = bar_colors
 
         # Build the chart
-        self._group = Group()
+        self._group: Group = Group()
         self._build_chart()
 
     # ------------------------------------------------------------------
@@ -138,23 +164,30 @@ class BarChart:
     # Public methods
     # ------------------------------------------------------------------
 
-    def update_data(self, data: dict[str, float]) -> None:
+    def update_data(self, data: dict[str, Union[float, int]]) -> None:
+        # Validate data
         if not isinstance(data, dict):
-            raise TypeError(f"data must be a dict, got {type(data).__name__}")
+            raise TypeError("Data must be a dict.")
         if not data:
-            raise ValueError("data cannot be empty")
+            raise ValueError("Data cannot be empty.")
 
-        for label, value in data.items():
-            if not isinstance(value, (int, float)):
-                raise TypeError(
-                    f"Value for '{label}' must be numeric, got {type(value).__name__}"
-                )
+        invalid_keys = [key for key in data if not isinstance(key, str)]
+        if invalid_keys:
+            raise TypeError(f"All keys must be strings. Invalid: {invalid_keys}")
+
+        invalid_values = [
+            key for key, value in data.items() if not isinstance(value, (int, float))
+        ]
+        if invalid_values:
+            raise TypeError(f"Values must be numeric. Invalid: {invalid_values}")
 
         self._data = data.copy()
         self._bar_colors = self._normalize_colors(self._original_bar_colors, len(data))
         self._rebuild()
 
-    def update_colors(self, bar_colors: str | list[str]) -> None:
+    def update_colors(
+        self, bar_colors: Union[str, StandardColor] | list[Union[str, StandardColor]]
+    ) -> None:
         self._original_bar_colors = bar_colors
         self._bar_colors = self._normalize_colors(bar_colors, len(self._data))
         self._rebuild()
@@ -173,7 +206,7 @@ class BarChart:
         self._position = new_position
         self._group.update_geometry()
 
-    def add_to_page(self, page) -> None:
+    def add_to_page(self, page: Page) -> None:
         for obj in self._group.objects:
             page.add_object(obj)
 
@@ -181,8 +214,12 @@ class BarChart:
     # Private methods
     # ------------------------------------------------------------------
 
-    def _normalize_colors(self, colors: str | list[str], count: int) -> list[str]:
-        if isinstance(colors, str):
+    def _normalize_colors(
+        self,
+        colors: Union[str, StandardColor, list[Union[str, StandardColor]]],
+        count: int,
+    ) -> list[Union[str, StandardColor]]:
+        if isinstance(colors, (str, StandardColor)):
             return [colors] * count
         if not colors:
             return ["#66ccff"] * count
@@ -348,9 +385,9 @@ class BarChart:
         bar_width = self._bar_width
 
         # Uses the template object if provided, otherwise defaults
-        if self._bar_object_template:
+        if self._bar_template:
             bar = Object.create_from_template_object(
-                self._bar_object_template,
+                self._bar_template,
                 value="",
                 position=(bar_x, bar_y),
             )
