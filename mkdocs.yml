@@ -20,6 +20,7 @@ nav:
   - Basic Diagrams:
     - Usage: usage/basic_usage.md
     - Formatting Text: usage/text_format.md
+    - Color Management: usage/color_management.md
     - Objects: usage/objects.md
     - Parent and Child Objects: usage/parent_child_objects.md
     - Extended Objects: usage/extended_objects.md

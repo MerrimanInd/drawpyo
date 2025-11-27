@@ -1,7 +1,7 @@
 import drawpyo
 
 
-def test_page_init():
+def test_page_init() -> None:
     test_page = drawpyo.Page()
     assert test_page.id == id(test_page)
     assert len(test_page.objects) == 2
@@ -26,7 +26,7 @@ def test_page_init():
     assert test_page.root.xml_class == "root"
 
 
-def test_page_xml():
+def test_page_xml() -> None:
     test_page = drawpyo.Page()
 
     open_tag_1 = f'<diagram name="Page-1" id="{test_page.diagram.id}">'
