@@ -1,3 +1,5 @@
+![CI](https://github.com/MerrimanInd/drawpyo/actions/workflows/ci.yml/badge.svg) ![GitHub License](https://img.shields.io/github/license/MerrimanInd/drawpyo)
+
 # drawpyo
 
 Drawpyo is a Python library for programmatically generating Diagrams.net/Draw.io charts. It enables creating a diagram object, placing and styling objects, then writing the object to a file.
