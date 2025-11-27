@@ -19,8 +19,11 @@
         <link rel="next" href="../tree_diagram/treediagram/">
       
       
+        
+      
+      
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.30">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
@@ -28,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
       
       
 
@@ -49,11 +52,10 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
-    
     
     
   </head>
@@ -87,12 +89,12 @@
     <a href="../.." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -112,30 +114,32 @@
     </div>
     
     
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
@@ -152,13 +156,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/MerrimanInd/drawpyo" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     MerrimanInd/drawpyo
@@ -194,7 +199,7 @@
     <a href="../.." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     Drawpyo
@@ -204,7 +209,7 @@
       <a href="https://github.com/MerrimanInd/drawpyo" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     MerrimanInd/drawpyo
@@ -224,9 +229,16 @@
       <a href="../.." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Home
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -244,9 +256,16 @@
       <a href="../../about/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     About
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -264,6 +283,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -274,9 +294,16 @@
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     Basic Diagrams
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -285,7 +312,11 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Basic Diagrams
+            
+  
+    Basic Diagrams
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -299,9 +330,16 @@
       <a href="../../usage/basic_usage/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Usage
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -320,9 +358,44 @@
       <a href="../../usage/text_format/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Formatting Text
+  
+
+    
   </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/color_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Color Management
+  
+
+    
+  </span>
+  
   
 
       </a>
@@ -341,9 +414,16 @@
       <a href="../../usage/objects/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Objects
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -362,9 +442,16 @@
       <a href="../../usage/parent_child_objects/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Parent and Child Objects
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -383,9 +470,16 @@
       <a href="../../usage/extended_objects/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Extended Objects
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -404,9 +498,16 @@
       <a href="../../usage/edges/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Edges
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -425,9 +526,16 @@
       <a href="../../usage/shape_libs/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Shape Libraries
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -449,6 +557,7 @@
   
   
   
+    
     
     
     
@@ -463,9 +572,16 @@
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     Custom Diagram Types
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -474,7 +590,11 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Custom Diagram Types
+            
+  
+    Custom Diagram Types
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -488,9 +608,44 @@
       <a href="../../diagram_types/tree_diagrams/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Tree Diagrams
+  
+
+    
   </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../diagram_types/bar_charts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bar Charts
+  
+
+    
+  </span>
+  
   
 
       </a>
@@ -518,6 +673,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
@@ -528,9 +684,16 @@
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     API
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -539,7 +702,11 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            API
+            
+  
+    API
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -553,9 +720,16 @@
       <a href="../architecture/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Architecture
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -576,6 +750,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
@@ -586,9 +761,16 @@
           <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     Basic Diagrams
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -597,7 +779,11 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_2">
             <span class="md-nav__icon md-icon"></span>
-            Basic Diagrams
+            
+  
+    Basic Diagrams
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -611,9 +797,16 @@
       <a href="../file/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     File
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -632,9 +825,16 @@
       <a href="../page/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Page
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -653,9 +853,16 @@
       <a href="../text_format/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Text Format
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -674,9 +881,16 @@
       <a href="../edges/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Edges
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -695,9 +909,16 @@
       <a href="../objects/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Objects
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -725,9 +946,16 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
+    
+  
     Extended Objects
+  
+
+    
   </span>
+  
   
 
           <span class="md-nav__icon md-icon"></span>
@@ -736,9 +964,16 @@
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Extended Objects
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -761,7 +996,9 @@
         <li class="md-nav__item">
   <a href="#list" class="md-nav__link">
     <span class="md-ellipsis">
-      List
+      
+        List
+      
     </span>
   </a>
   
@@ -770,7 +1007,9 @@
         <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List" class="md-nav__link">
     <span class="md-ellipsis">
-      List
+      
+        List
+      
     </span>
   </a>
   
@@ -780,7 +1019,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.list_items" class="md-nav__link">
     <span class="md-ellipsis">
-      list_items
+      
+        list_items
+      
     </span>
   </a>
   
@@ -789,7 +1030,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.width" class="md-nav__link">
     <span class="md-ellipsis">
-      width
+      
+        width
+      
     </span>
   </a>
   
@@ -798,7 +1041,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.__init__" class="md-nav__link">
     <span class="md-ellipsis">
-      __init__
+      
+        __init__
+      
     </span>
   </a>
   
@@ -807,7 +1052,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.add_item" class="md-nav__link">
     <span class="md-ellipsis">
-      add_item
+      
+        add_item
+      
     </span>
   </a>
   
@@ -816,7 +1063,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.autosize" class="md-nav__link">
     <span class="md-ellipsis">
-      autosize
+      
+        autosize
+      
     </span>
   </a>
   
@@ -825,7 +1074,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.remove_item" class="md-nav__link">
     <span class="md-ellipsis">
-      remove_item
+      
+        remove_item
+      
     </span>
   </a>
   
@@ -863,6 +1114,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -873,9 +1125,16 @@
           <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     Custom Diagram Types
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -884,7 +1143,11 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_3">
             <span class="md-nav__icon md-icon"></span>
-            Custom Diagram Types
+            
+  
+    Custom Diagram Types
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -894,6 +1157,7 @@
   
   
   
+    
     
     
     
@@ -908,9 +1172,16 @@
           <label class="md-nav__link" for="__nav_5_3_1" id="__nav_5_3_1_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
+    
+  
     Tree Diagram
+  
+
+    
   </span>
+  
   
 
             <span class="md-nav__icon md-icon"></span>
@@ -919,7 +1190,11 @@
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_3_1">
             <span class="md-nav__icon md-icon"></span>
-            Tree Diagram
+            
+  
+    Tree Diagram
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -933,9 +1208,16 @@
       <a href="../tree_diagram/treediagram/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     TreeDiagram
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -954,9 +1236,16 @@
       <a href="../tree_diagram/nodeobject/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     NodeObject
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -968,6 +1257,34 @@
           </ul>
         </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bar_chart/barchart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bar Chart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1017,7 +1334,9 @@
         <li class="md-nav__item">
   <a href="#list" class="md-nav__link">
     <span class="md-ellipsis">
-      List
+      
+        List
+      
     </span>
   </a>
   
@@ -1026,7 +1345,9 @@
         <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List" class="md-nav__link">
     <span class="md-ellipsis">
-      List
+      
+        List
+      
     </span>
   </a>
   
@@ -1036,7 +1357,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.list_items" class="md-nav__link">
     <span class="md-ellipsis">
-      list_items
+      
+        list_items
+      
     </span>
   </a>
   
@@ -1045,7 +1368,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.width" class="md-nav__link">
     <span class="md-ellipsis">
-      width
+      
+        width
+      
     </span>
   </a>
   
@@ -1054,7 +1379,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.__init__" class="md-nav__link">
     <span class="md-ellipsis">
-      __init__
+      
+        __init__
+      
     </span>
   </a>
   
@@ -1063,7 +1390,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.add_item" class="md-nav__link">
     <span class="md-ellipsis">
-      add_item
+      
+        add_item
+      
     </span>
   </a>
   
@@ -1072,7 +1401,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.autosize" class="md-nav__link">
     <span class="md-ellipsis">
-      autosize
+      
+        autosize
+      
     </span>
   </a>
   
@@ -1081,7 +1412,9 @@
           <li class="md-nav__item">
   <a href="#src.drawpyo.diagram.extended_objects.List.remove_item" class="md-nav__link">
     <span class="md-ellipsis">
-      remove_item
+      
+        remove_item
+      
     </span>
   </a>
   
@@ -1102,9 +1435,11 @@
           
           
             <div class="md-content" data-md-component="content">
+              
               <article class="md-content__inner md-typeset">
                 
                   
+
 
   
   
@@ -1130,10 +1465,17 @@
               Bases: <code><a class="autorefs autorefs-internal" title="src.drawpyo.diagram.objects.Object" href="../objects/#src.drawpyo.diagram.objects.Object">Object</a></code></p>
 
 
-              <details class="quote">
-                <summary>Source code in <code>src/drawpyo/diagram/extended_objects.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
-<span class="normal"> 7</span>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>src\drawpyo\diagram\extended_objects.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
@@ -1216,8 +1558,13 @@
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">List</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">        Args:</span>
@@ -1226,12 +1573,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span> <span class="o">=</span> <span class="n">list_items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">list_items</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;A Python list of strings of the objects in the list.</span>
 
 <span class="sd">        Returns:</span>
@@ -1240,14 +1587,14 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
 
     <span class="nd">@list_items</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;list_items must be a list!&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This function creates a new Draw.io text item and adds it to the end of the list.</span>
 
 <span class="sd">        Args:</span>
@@ -1263,7 +1610,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">autosize</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This function removes any list items matching the text passed into the function.</span>
 
 <span class="sd">        Args:</span>
@@ -1277,7 +1624,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">autosize</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.&quot;&quot;&quot;</span>
         <span class="n">y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">startSize</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
@@ -1287,16 +1634,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">width</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The width of the object. The difference between List&#39;s width and Object&#39;s width is that when the List.width is set all of the child objects will be set to the same width.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            Union[int, float]: The width of the list object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span>
 
     <span class="nd">@width</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="n">child</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">value</span>
@@ -1331,7 +1678,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>A Python list of strings of the objects in the list.</p>
+        <p>A Python list of strings of the objects in the list.</p>
 
 
     <p><span class="doc-section-title">Returns:</span></p>
@@ -1345,6 +1692,7 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
+                  <code><span title="typing.List">List</span>[<span title="str">str</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1354,6 +1702,7 @@
           </tr>
       </tbody>
     </table>
+
     </div>
 
 </div>
@@ -1375,32 +1724,35 @@
 
     <div class="doc doc-contents ">
 
-      <p>The width of the object. The difference between List's width and Object's width is that when the List.width is set all of the child objects will be set to the same width.</p>
+        <p>The width of the object. The difference between List's width and Object's width is that when the List.width is set all of the child objects will be set to the same width.</p>
 
 
     <p><span class="doc-section-title">Returns:</span></p>
     <table>
       <thead>
         <tr>
-<th>Name</th>          <th>Type</th>
+          <th>Type</th>
           <th>Description</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-<td><code>_type_</code></td>            <td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="int">int</span>, <span title="float">float</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p><em>description</em></p>
+                <p>Union[int, float]: The width of the list object</p>
               </div>
             </td>
           </tr>
       </tbody>
     </table>
+
     </div>
 
 </div>
+
 
 
 
@@ -1415,7 +1767,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</p>
+        <p>The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1430,9 +1782,11 @@
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code>title</code></td>
             <td>
-                  <code>str</code>
+                <code>title</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1444,7 +1798,9 @@
             </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code>list_items</code></td>
+            <td>
+                <code>list_items</code>
+            </td>
             <td>
                   <code>list of strings</code>
             </td>
@@ -1460,10 +1816,10 @@
       </tbody>
     </table>
 
-            <details class="quote">
-              <summary>Source code in <code>src/drawpyo/diagram/extended_objects.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
-<span class="normal"> 8</span>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src\drawpyo\diagram\extended_objects.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
@@ -1473,7 +1829,12 @@
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
-<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">    Args:</span>
@@ -1482,9 +1843,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span> <span class="o">=</span> <span class="n">list_items</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">list_items</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1502,7 +1863,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>This function creates a new Draw.io text item and adds it to the end of the list.</p>
+        <p>This function creates a new Draw.io text item and adds it to the end of the list.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1517,9 +1878,11 @@
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code>item_text</code></td>
             <td>
-                  <code>string</code>
+                <code>item_text</code>
+            </td>
+            <td>
+                  <code><span title="string">string</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1533,12 +1896,10 @@
       </tbody>
     </table>
 
-            <details class="quote">
-              <summary>Source code in <code>src/drawpyo/diagram/extended_objects.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src\drawpyo\diagram\extended_objects.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
@@ -1549,7 +1910,10 @@
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
-<span class="normal">51</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">):</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function creates a new Draw.io text item and adds it to the end of the list.</span>
 
 <span class="sd">    Args:</span>
@@ -1581,18 +1945,19 @@
 
     <div class="doc doc-contents ">
 
-      <p>This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.</p>
+        <p>This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.</p>
 
-            <details class="quote">
-              <summary>Source code in <code>src/drawpyo/diagram/extended_objects.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src\drawpyo\diagram\extended_objects.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
 <span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.&quot;&quot;&quot;</span>
     <span class="n">y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">startSize</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
@@ -1617,7 +1982,7 @@
 
     <div class="doc doc-contents ">
 
-      <p>This function removes any list items matching the text passed into the function.</p>
+        <p>This function removes any list items matching the text passed into the function.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1632,9 +1997,11 @@
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code>item_text</code></td>
             <td>
-                  <code>string</code>
+                <code>item_text</code>
+            </td>
+            <td>
+                  <code><span title="string">string</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1648,12 +2015,10 @@
       </tbody>
     </table>
 
-            <details class="quote">
-              <summary>Source code in <code>src/drawpyo/diagram/extended_objects.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src\drawpyo\diagram\extended_objects.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
@@ -1662,7 +2027,10 @@
 <span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
-<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">):</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function removes any list items matching the text passed into the function.</span>
 
 <span class="sd">    Args:</span>
@@ -1734,10 +2102,13 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
     
   </body>
