@@ -10,12 +10,12 @@ class TestBarChartInitialization:
 
     def test_initialization_empty_data_raises_error(self):
         """Test that empty data raises ValueError."""
-        with pytest.raises(ValueError, match="data cannot be empty"):
+        with pytest.raises(ValueError, match="Data cannot be empty"):
             BarChart({})
 
     def test_initialization_non_dict_data_raises_error(self):
         """Test that non-dict data raises TypeError."""
-        with pytest.raises(TypeError, match="data must be a dict"):
+        with pytest.raises(TypeError, match="Data must be a dict"):
             BarChart([("A", 10), ("B", 20)])
 
     def test_initialization_non_numeric_value_raises_error(self):
@@ -125,14 +125,14 @@ class TestBarChartUpdateData:
         """Test that updating with empty data raises ValueError."""
         chart = BarChart({"A": 10})
 
-        with pytest.raises(ValueError, match="data cannot be empty"):
+        with pytest.raises(ValueError, match="Data cannot be empty"):
             chart.update_data({})
 
     def test_update_data_non_dict_raises_error(self):
         """Test that non-dict update raises TypeError."""
         chart = BarChart({"A": 10})
 
-        with pytest.raises(TypeError, match="data must be a dict"):
+        with pytest.raises(TypeError, match="Data must be a dict"):
             chart.update_data([("X", 20)])
 
     def test_update_data_non_numeric_raises_error(self):

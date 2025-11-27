@@ -65,7 +65,7 @@ chart = BarChart(
     base_text_format=base_text_format,
     inside_label_formatter=inside_formatter,
     bar_stroke_color=bar_stroke_color,
-    background_color="#BF6060",
+    background_color=StandardColor.GRAY2,
 )
 
 chart.add_to_page(page)
