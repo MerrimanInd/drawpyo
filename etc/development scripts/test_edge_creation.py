@@ -63,6 +63,12 @@ h_spacing = 150
 v_spacing = 80
 obj = drawpyo.diagram.Object(width=100, height=60)
 
+color_scheme = drawpyo.ColorScheme(
+    fill_color=drawpyo.StandardColor.GRAY7,
+    stroke_color="#AA6600",
+    font_color="#AA6600",
+)
+
 origin = (10, 10)
 for waypoint in waypoints:
     item_1 = drawpyo.diagram.Object(page=page, template_object=obj, value="wapyoints")
@@ -71,7 +77,11 @@ for waypoint in waypoints:
     item_2.position = (origin[0] + h_spacing, origin[1] + v_spacing)
 
     link = drawpyo.diagram.Edge(
-        page=page, source=item_1, target=item_2, waypoints=waypoint
+        page=page,
+        source=item_1,
+        target=item_2,
+        waypoints=waypoint,
+        color_scheme=color_scheme,
     )
 
     origin = (origin[0], origin[1] + v_spacing * 2)

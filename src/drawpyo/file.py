@@ -1,3 +1,4 @@
+from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
 from datetime import datetime
 from .utils import logger
@@ -11,9 +12,9 @@ class File(XMLBase):
 
     def __init__(
         self,
-        file_name="Drawpyo Diagram.drawio",
-        file_path=path.join(path.expanduser("~"), "Drawpyo Charts"),
-    ):
+        file_name: str = "Drawpyo Diagram.drawio",
+        file_path: str = path.join(path.expanduser("~"), "Drawpyo Charts"),
+    ) -> None:
         """To initiate a File object, pass in a name and path or leave it to the defaults.
 
         Args:
@@ -23,21 +24,21 @@ class File(XMLBase):
 
         super().__init__()
 
-        self.pages = []
-        self.file_name = file_name
-        self.file_path = file_path
+        self.pages: List[Page] = []
+        self.file_name: str = file_name
+        self.file_path: str = file_path
 
         # Attributes
-        self.host = "Drawpyo"
-        self.type = "device"
-        self.version = "21.6.5"  # This is the version of the Draw.io spec
-        self.xml_class = "mxfile"
+        self.host: str = "Drawpyo"
+        self.type: str = "device"
+        self.version: str = "21.6.5"  # This is the version of the Draw.io spec
+        self.xml_class: str = "mxfile"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"drawpyo File - {self.file_name}"
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Optional[str]]:
         return {
             "host": self.host,
             "modified": self.modified,
@@ -47,7 +48,7 @@ class File(XMLBase):
             "type": self.type,
         }
 
-    def add_page(self, page):
+    def add_page(self, page: Page) -> None:
         """Add a page to the file.
 
         Args:
@@ -56,7 +57,7 @@ class File(XMLBase):
         page._file = self
         self.pages.append(page)
 
-    def remove_page(self, page):
+    def remove_page(self, page: Union[Page, str, int]) -> None:
         """Remove a page from the file. The page argument can be either a Page object, the integer number of the page, or the string name of the page.
 
         Args:
@@ -76,17 +77,17 @@ class File(XMLBase):
     ###########################################################
 
     @property
-    def modified(self):
+    def modified(self) -> str:
         return datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
     @property
-    def agent(self):
+    def agent(self) -> str:
         python_version = f"{version_info.major}.{version_info.minor}"
         drawpyo_version = f"0.01"
         return f"Python {python_version}, Drawpyo {drawpyo_version}"
 
     @property
-    def etag(self):
+    def etag(self) -> None:
         # etag is in the Draw.io spec but not sure how it's used or if I need to create it
         return None
 
@@ -95,7 +96,7 @@ class File(XMLBase):
     ###########################################################
 
     @property
-    def xml(self):
+    def xml(self) -> str:
         """This function goes through each page in the file, retrieves its XML, and appends it to a list, then wraps that list in the file's open and close tags.
 
         Returns:
@@ -110,13 +111,16 @@ class File(XMLBase):
     ###########################################################
     # File Handling
     ###########################################################
-    def write(self, **kwargs):
+    def write(self, **kwargs: Any) -> str:
         """This function write the file to disc at the path and name specified.
 
         Args:
             file_path (str, opt): The path to save the file in
             file_name (str, opt): The name of the file
             overwrite (bool, opt): Whether to overwrite an existing file or not
+
+        Returns:
+            str: The full path to the written file
         """
 
         # Check if file_path or file_name were passed in, or are preexisting
@@ -124,7 +128,7 @@ class File(XMLBase):
 
         self.file_name = kwargs.get("file_name", self.file_name)
 
-        overwrite = kwargs.get("overwrite", True)
+        overwrite: bool = kwargs.get("overwrite", True)
         if overwrite:
             write_mode = "w"
         else:

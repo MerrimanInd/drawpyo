@@ -1,2 +1,3 @@
 from .logger import *
-from .default_colors import DefaultColors
+from .standard_colors import StandardColor
+from .color_scheme import ColorScheme
