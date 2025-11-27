@@ -85,7 +85,6 @@ class File(XMLBase):
         for page in self.pages:
             object_count += len(page.objects)
         return f"Pages: {len(self.pages)} | Objects: {object_count}"
-    
 
     ###########################################################
     # File Properties

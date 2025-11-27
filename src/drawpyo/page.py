@@ -2,6 +2,7 @@ from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
 from .utils.logger import logger
 
+
 class Page:
     """
     This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
