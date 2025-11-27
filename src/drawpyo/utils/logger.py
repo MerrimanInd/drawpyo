@@ -1,7 +1,7 @@
 import logging
 
 logging.basicConfig(
-    level=logging.INFO,  # Change to DEBUG to see debug messages
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
