@@ -7,7 +7,7 @@ file.file_name = "Default Colors Object.drawio"
 page = drawpyo.Page(file=file)
 
 
-base_obj = drawpyo.diagram.Object(page=page, fillColor=drawpyo.StandardColor.BLUE5)
+base_obj = drawpyo.diagram.Object(page=page, fillColor="#DDFFDD")
 
 
 file.write()

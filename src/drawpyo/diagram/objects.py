@@ -89,7 +89,7 @@ class Object(DiagramBase):
             children (list of Objects, optional): The subobjects to add to this object as a parent. Defaults to [].
             color_scheme (ColorScheme, optional): Bundled set of color specifications. Defaults to None.
             comic (bool, optional): Add comic styling to the object. Defaults to None.
-            fill_color (Union[str, StandardColor], optional): The object fill color. Defaults to None.
+            fillColor (Union[str, StandardColor], optional): The object fill color. Defaults to None.
             glass (bool, optional): Apply glass styling to the object. Defaults to None.
             height (int, optional): The height of the object in pixels. Defaults to 80.
             in_edges (list, optional): List of incoming edges to this object. Defaults to [].
@@ -101,7 +101,7 @@ class Object(DiagramBase):
             rounded (int or bool, optional): Whether to round the corners of the shape. Defaults to 0.
             shadow (bool, optional): Add a shadow to the object. Defaults to None.
             sketch (bool, optional): Add sketch styling to the object. Defaults to None.
-            stroke_color (Union[str, StandardColor], optional): The object stroke color. Defaults to None.
+            strokeColor (Union[str, StandardColor], optional): The object stroke color. Defaults to None.
             template_object (Object, optional): Another object to copy the style_attributes from. Defaults to None.
             text_format (TextFormat, optional): Formatting specifically around text. Defaults to TextFormat().
             vertex (int, optional): Vertex flag for the object. Defaults to 1.
@@ -161,10 +161,10 @@ class Object(DiagramBase):
         self.opacity: Optional[int] = kwargs.get("opacity", None)
         self.color_scheme: Optional[ColorScheme] = kwargs.get("color_scheme", None)
         self.strokeColor: Optional[Union[str, StandardColor]] = kwargs.get(
-            "stroke_color"
+            "strokeColor"
         ) or (self.color_scheme.stroke_color if self.color_scheme else None)
         self.fillColor: Optional[Union[str, StandardColor]] = kwargs.get(
-            "fill_color"
+            "fillColor"
         ) or (self.color_scheme.fill_color if self.color_scheme else None)
         self.glass: Optional[bool] = kwargs.get("glass", None)
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
