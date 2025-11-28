@@ -33,3 +33,11 @@ dev = [
 addopts = [
     "--import-mode=importlib",
 ]
+
+[dependency-groups]
+dev = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.7.0",
+    "mkdocstrings-python>=2.0.0",
+    "tox>=4.32.0",
+]
