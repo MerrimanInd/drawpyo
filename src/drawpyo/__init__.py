@@ -9,4 +9,4 @@ from . import utils
 from . import diagram
 from . import diagram_types
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"

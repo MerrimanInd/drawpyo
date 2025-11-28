@@ -1,5 +1,6 @@
 from os import path
 from typing import Optional, Dict, Any, List, Union, Tuple
+from ..utils.logger import logger
 
 from .base_diagram import (
     DiagramBase,
@@ -154,11 +155,42 @@ class Edge(DiagramBase):
         self.label_offset: Optional[int] = kwargs.get("label_offset", None)
         self.label_position: Optional[float] = kwargs.get("label_position", None)
 
+        logger.debug(f"➡️ Edge created: {self.__repr__()}")
+
     def __repr__(self) -> str:
-        name_str: str = "{0} edge from {1} to {2}".format(
-            self.__class__.__name__, self.source, self.target
-        )
-        return name_str
+        """
+        A concise and informative representation of the edge for debugging.
+        """
+        cls = self.__class__.__name__
+        parts = []
+
+        # Source/Target
+        parts.append(f"source: '{self.source.value if self.source else None}'")
+        parts.append(f"target: '{self.target.value if self.target else None}'")
+
+        # Label
+        if self.label:
+            parts.append(f"label={self.label!r}")
+
+        # Entry/Exit geometry (only show if anything is set)
+        geom_parts = []
+        for attr in (
+            "entryX",
+            "entryY",
+            "entryDx",
+            "entryDy",
+            "exitX",
+            "exitY",
+            "exitDx",
+            "exitDy",
+        ):
+            val = getattr(self, attr, None)
+            if val not in (None, 0):
+                geom_parts.append(f"{attr}={val}")
+        if geom_parts:
+            parts.append("geom={" + ", ".join(geom_parts) + "}")
+
+        return f"{cls}(" + ", ".join(parts) + ")"
 
     def __str__(self) -> str:
         return self.__repr__()

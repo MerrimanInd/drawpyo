@@ -1,5 +1,6 @@
 from os import path
 from typing import Optional, Dict, Any, List, Union, Tuple
+from ..utils.logger import logger
 
 from .base_diagram import (
     DiagramBase,
@@ -194,14 +195,28 @@ class Object(DiagramBase):
             self.parent.autosize_to_children = old_parent_autosize
             self.update_parent()
 
+        logger.debug(f"🔲 Object created: {self.__repr__()}")
+
     def __repr__(self) -> str:
-        if self.value != "":
-            name_str: str = "{0} object with value {1}".format(
-                self.__class__.__name__, self.value
-            )
-        else:
-            name_str: str = "{0} object".format(self.__class__.__name__)
-        return name_str
+        """
+        A more informative representation for debugging.
+        """
+        parts = []
+
+        # Geometry
+        parts.append(f"pos: {self.position}")
+        parts.append(f"size: ({self.width}x{self.height})")
+
+        # Parent info
+        if getattr(self, "parent", None):
+            parts.append(f"parent: {self.parent.__class__.__name__}")
+
+        # Child count
+        if getattr(self, "children", None):
+            parts.append(f"children: {len(self.children)}")
+
+        joined = " | ".join(parts)
+        return f"{self.value} | {joined}"
 
     def __str__(self) -> str:
         return self.__repr__()
