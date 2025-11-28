@@ -66,3 +66,41 @@ tree.write()
 With some more additions, the resulting diagram renders as:
 
 ![coffee_grinders_tree](../img/tree_diagram/coffee_grinders_tree.png)
+
+
+---
+
+## Create a Tree from a Dictionary
+
+TreeDiagram supports creating an entire tree structure directly from a nested dictionary or list. This allows you to generate trees programmatically without manually creating every NodeObject.
+
+### Rules for dict/list conversion
+
+* **Dicts** represent branching nodes. Each key becomes a **category node**, and its value is recursively processed as its children.
+* **Lists or tuples** represent multiple siblings under the same parent. Each element is recursively added as a child.
+* **Scalars (`str`, `int`, `float`)** are treated as leaf nodes.
+* **Unsupported types** will raise a `TypeError`.
+
+---
+
+### Example
+
+```python
+from drawpyo.diagram_types import TreeDiagram
+
+data = {
+    "Root": {
+        "Branch A": ["Leaf 1", "Leaf 2"],
+        "Branch B": ["Leaf 3"]
+    }
+}
+
+tree = TreeDiagram.from_dict(
+    data,
+    file_path="~/Test Drawpyo Charts",
+    file_name="Minimal Tree.drawio",
+    direction="down"
+)
+
+tree.write()
+```
