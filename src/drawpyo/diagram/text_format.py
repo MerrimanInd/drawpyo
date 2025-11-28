@@ -1,4 +1,5 @@
 from typing import Optional, Dict, Any, Union
+from ..utils.logger import logger
 from .base_diagram import DiagramBase
 
 __all__ = ["TextFormat"]
@@ -85,6 +86,48 @@ class TextFormat(DiagramBase):
             "verticalAlign",
             "horizontal",
         ]
+
+    def __repr__(self) -> str:
+        """
+        A concise, informative representation for TextFormat.
+        """
+        cls = self.__class__.__name__
+        parts = []
+
+        # Font properties
+        if self.fontFamily:
+            parts.append(f"fontFamily={self.fontFamily!r}")
+        if self.fontSize:
+            parts.append(f"fontSize={self.fontSize}")
+        if self.fontColor:
+            parts.append(f"fontColor={self.fontColor!r}")
+
+        # Style flags
+        flags = []
+        if self.bold:
+            flags.append("bold")
+        if self.italic:
+            flags.append("italic")
+        if self.underline:
+            flags.append("underline")
+        if flags:
+            parts.append("fontStyle=" + "|".join(flags))
+
+        # Alignment
+        if self.align:
+            parts.append(f"align={self.align!r}")
+        if self.verticalAlign:
+            parts.append(f"verticalAlign={self.verticalAlign!r}")
+        if self._direction:
+            parts.append(f"direction={self._direction!r}")
+        if self.html:
+            parts.append("formattedText=True")
+
+        # Label styling
+        if self.labelPosition:
+            parts.append(f"labelPosition={self.labelPosition!r}")
+
+        return f"{cls}(" + ", ".join(parts) + ")"
 
     @property
     def formattedText(self) -> Optional[bool]:

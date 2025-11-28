@@ -1,5 +1,6 @@
 from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
+from .utils.logger import logger
 
 
 class Page:
@@ -47,6 +48,8 @@ class Page:
         self.diagram: Diagram = Diagram(name=self.name)
         self.mxGraph: mxGraph = mxGraph(page=self)
         self.root: Root = Root()
+
+        logger.info(f"📄 Page created: '{self.__repr__()}'")
 
     def __repr__(self) -> str:
         return f"drawpyo Page - {self.name}"

@@ -1,10 +1,13 @@
 import os
+import drawpyo
 from drawpyo.file import File
 from drawpyo.page import Page
 from drawpyo.diagram_types.bar_chart import BarChart
 from drawpyo.diagram.text_format import TextFormat
 from drawpyo.diagram.objects import Object
 from drawpyo.utils.standard_colors import StandardColor
+
+drawpyo.logger.setLevel("DEBUG")
 
 # Chart title and data
 chart_title = "Coffee Grinder Prices"

@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Union
 import re
+from .logger import logger
 from .standard_colors import StandardColor
 
 
@@ -32,6 +33,7 @@ class ColorScheme:
         self.fill_color: ColorType = self._validated(fill_color)
         self.stroke_color: ColorType = self._validated(stroke_color)
         self.font_color: ColorType = self._validated(font_color)
+        logger.info(f"🎨 ColorScheme created: {self.__repr__()}")
 
     ###########################################################
     # Public Setters
@@ -82,7 +84,7 @@ class ColorScheme:
 
     def __repr__(self) -> str:
         return (
-            f"ColorScheme(fill={self.fill_color}, "
-            f"stroke={self.stroke_color}, "
-            f"font_color={self.font_color})"
+            f"fill: {self.fill_color} "
+            f"| stroke: {self.stroke_color} "
+            f"| font: {self.font_color}"
         )
