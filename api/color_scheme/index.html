@@ -1265,9 +1265,8 @@
 
 
               <details class="mkdocstrings-source">
-                <summary>Source code in <code>src\drawpyo\utils\color_scheme.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
-<span class="normal">11</span>
+                <summary>Source code in <code>src/drawpyo/utils/color_scheme.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
@@ -1344,7 +1343,9 @@
 <span class="normal">85</span>
 <span class="normal">86</span>
 <span class="normal">87</span>
-<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ColorScheme</span><span class="p">:</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ColorScheme</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a set of colors used for an object&#39;s fill, stroke and font.</span>
 
@@ -1369,6 +1370,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">fill_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">stroke_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">font_color</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎨 ColorScheme created: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># Public Setters</span>
@@ -1419,9 +1421,9 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ColorScheme(fill=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;stroke=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;font_color=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fill: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;| stroke: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;| font: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -1458,11 +1460,11 @@
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>src\drawpyo\utils\color_scheme.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+              <summary>Source code in <code>src/drawpyo/utils/color_scheme.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_valid_hex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if string is a valid #RRGGBB hex color.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">HEX_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
