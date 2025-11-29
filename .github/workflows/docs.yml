@@ -1,8 +1,15 @@
-name: Build GitHub Pages
+# From:
+# https://thomasthornton.cloud/2024/05/01/deploying-mkdocs-to-github-pages-with-github-actions/
+
+# Only trigger, when the build workflow succeeded
+
+name: build-and-deploy-docs
 on:
   push:
     branches:
       - main
+    tags:
+      - '*'
     paths:
       - '**'
   workflow_dispatch:
@@ -10,6 +17,8 @@ permissions:
   contents: write
   pages: write
   id-token: write
+
+
  
 jobs:
   build_mkdocs:
