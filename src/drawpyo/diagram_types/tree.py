@@ -437,6 +437,61 @@ class TreeDiagram:
             self.objects.append(obj)
 
     ###########################################################
+    # Creating from dict
+    ###########################################################
+
+    @classmethod
+    def from_dict(cls, data: dict, **diagram_kwargs) -> "TreeDiagram":
+        """
+        Build a TreeDiagram from a nested dictionary/list structure.
+
+        Allowed types:
+            - dict
+            - list/tuple
+            - str/int/float
+        """
+
+        diagram = cls(**diagram_kwargs)
+
+        def build(parent: Optional[NodeObject], item) -> None:
+            """
+            - dict keys become category nodes
+            - list items become siblings directly under the parent
+            - strings, ints and floats become leaf nodes
+            """
+
+            # Leaf nodes
+            if isinstance(item, (str, int, float)):
+                NodeObject(tree=diagram, value=str(item), tree_parent=parent)
+                return
+
+            # Category nodes
+            if isinstance(item, dict):
+                for key, value in item.items():
+                    if not isinstance(key, (str, int, float)):
+                        raise TypeError(f"Invalid dict key type: {type(key)}")
+
+                    node = NodeObject(tree=diagram, value=str(key), tree_parent=parent)
+                    build(node, value)
+                return
+
+            # Sibling nodes
+            if isinstance(item, (list, tuple)):
+                for element in item:
+                    build(parent, element)
+                return
+
+            raise TypeError(f"Unsupported type in tree data: {type(item)}")
+
+        if not isinstance(data, dict):
+            raise TypeError("Top-level tree must be a dict")
+
+        build(None, data)
+
+        diagram.auto_layout()
+        return diagram
+
+    ###########################################################
     # Layout and Output
     ###########################################################
 
