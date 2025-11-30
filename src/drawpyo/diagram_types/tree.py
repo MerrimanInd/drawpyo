@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from typing import List, Optional, Tuple, Dict, Any
 
+import hashlib
 from ..file import File
 from ..page import Page
 from ..diagram.objects import Object, Group
 from ..diagram.edges import Edge
+import drawpyo
 
 
 class NodeObject(Object):
@@ -441,44 +443,97 @@ class TreeDiagram:
     ###########################################################
 
     @classmethod
-    def from_dict(cls, data: dict, **diagram_kwargs) -> "TreeDiagram":
+    def from_dict(
+        cls,
+        data: dict,
+        *,
+        colors: list = None,
+        coloring: str = "depth",
+        **diagram_kwargs,
+    ) -> "TreeDiagram":
         """
-        Build a TreeDiagram from a nested dictionary/list structure.
-
-        Allowed types:
-            - dict
-            - list/tuple
-            - str/int/float
+        Build a TreeDiagram from nested dict/list structures.
+        data: Nested dict/list structure representing the tree.
+        colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None
+        coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"
+            1. "depth" - Color nodes based on their depth in the tree.
+            2. "hash" - Color nodes based on a hash of their value.
+            3. "type" - Color nodes based on their type (category, list_item, leaf).
         """
 
         diagram = cls(**diagram_kwargs)
 
-        def build(parent: Optional[NodeObject], item) -> None:
-            """
-            - dict keys become category nodes
-            - list items become siblings directly under the parent
-            - strings, ints and floats become leaf nodes
-            """
+        TYPE_INDEX = {"category": 0, "list_item": 1, "leaf": 2}
 
-            # Leaf nodes
+        if coloring not in ("depth", "hash", "type"):
+            raise ValueError(f"Invalid coloring mode: {coloring}")
+
+        if colors is not None and not isinstance(colors, list):
+            raise TypeError("colors must be a list or None")
+        if colors == []:
+            colors = None
+
+        def choose_color(value: str, node_type: str, depth: int):
+            """Return a color from the palette based on mode."""
+            if not colors:
+                return None
+
+            n = len(colors)
+
+            if coloring == "depth":
+                index = depth % n
+            elif coloring == "hash":
+                # Stable hash using md5
+                h = int(hashlib.md5(value.encode("utf-8")).hexdigest(), 16)
+                index = h % n
+            elif coloring == "type":
+                index = TYPE_INDEX[node_type] % n
+
+            return colors[index]
+
+        def create_node(tree, value, parent, color):
+            """Create NodeObject with proper color argument."""
+            if color is None:
+                return NodeObject(tree=tree, value=value, tree_parent=parent)
+
+            if isinstance(color, drawpyo.ColorScheme):
+                return NodeObject(
+                    tree=tree, value=value, tree_parent=parent, color_scheme=color
+                )
+            elif isinstance(color, (drawpyo.StandardColor, str)):
+                return NodeObject(
+                    tree=tree, value=value, tree_parent=parent, fillColor=color
+                )
+            else:
+                raise TypeError(f"Unsupported color type: {type(color)}")
+
+        def build(parent: Optional[NodeObject], item, depth: int):
+            """Recursively build tree nodes."""
+
+            # LEAF NODE
             if isinstance(item, (str, int, float)):
-                NodeObject(tree=diagram, value=str(item), tree_parent=parent)
+                value = str(item)
+                color = choose_color(value, "leaf", depth)
+                create_node(diagram, value, parent, color)
                 return
 
-            # Category nodes
+            # CATEGORY NODE (dict)
             if isinstance(item, dict):
                 for key, value in item.items():
                     if not isinstance(key, (str, int, float)):
                         raise TypeError(f"Invalid dict key type: {type(key)}")
 
-                    node = NodeObject(tree=diagram, value=str(key), tree_parent=parent)
-                    build(node, value)
+                    key_str = str(key)
+                    color = choose_color(key_str, "category", depth)
+                    node = create_node(diagram, key_str, parent, color)
+                    build(node, value, depth + 1)
                 return
 
-            # Sibling nodes
+            # LIST / TUPLE NODES
             if isinstance(item, (list, tuple)):
                 for element in item:
-                    build(parent, element)
+                    # list itself does not create a node, elements are siblings
+                    build(parent, element, depth)
                 return
 
             raise TypeError(f"Unsupported type in tree data: {type(item)}")
@@ -486,7 +541,7 @@ class TreeDiagram:
         if not isinstance(data, dict):
             raise TypeError("Top-level tree must be a dict")
 
-        build(None, data)
+        build(None, data, depth=0)
 
         diagram.auto_layout()
         return diagram
