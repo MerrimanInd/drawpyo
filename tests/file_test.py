@@ -1,67 +1,107 @@
 import drawpyo
-from os import path
 from pathlib import Path
 import xml.etree.ElementTree as ET
+import pytest
 
 
-def test_file_init() -> None:
-    user_path = path.join(path.expanduser("~"), "Drawpyo Charts")
-    test_file = drawpyo.File(file_name="Test Name.drawio")
-    assert test_file.file_name == "Test Name.drawio"
-    assert test_file.file_path == user_path
-
-    assert len(test_file.pages) == 0
-    assert test_file.host == "Drawpyo"
-    assert test_file.type == "device"
-    assert test_file.version == "21.6.5"
-    assert test_file.xml_class == "mxfile"
+@pytest.fixture
+def empty_file() -> drawpyo.File:
+    return drawpyo.File()
 
 
-def test_file_pages() -> None:
-    test_file = drawpyo.File()
+@pytest.fixture
+def file_with_name() -> drawpyo.File:
+    return drawpyo.File(file_name="Test Name.drawio")
 
-    # Create a page without a file then add it to the file
-    page_1 = drawpyo.Page()
-    test_file.add_page(page_1)
-    # Check if file is added to the page and vice versa
-    assert page_1.file == test_file
-    assert len(test_file.pages) == 1
 
-    # Create some more pages then delete them in a variety of ways
-    page_2 = drawpyo.Page(file=test_file, name="Page-2")
-    page_3 = drawpyo.Page(file=test_file)
-    page_4 = drawpyo.Page(file=test_file)
-    assert len(test_file.pages) == 4
+def test_file_init_default_values(file_with_name) -> None:
+    user_path = Path.home() / "Drawpyo Charts"
+    assert file_with_name.file_name == "Test Name.drawio"
+    assert file_with_name.file_path == str(user_path)
+    assert len(file_with_name.pages) == 0
+    assert file_with_name.host == "Drawpyo"
+    assert file_with_name.type == "device"
+    assert file_with_name.version == "21.6.5"
+    assert file_with_name.xml_class == "mxfile"
 
-    test_file.remove_page(page_1)
-    assert len(test_file.pages) == 3
 
-    test_file.remove_page("Page-2")
-    assert len(test_file.pages) == 2
+def test_file_add_page(empty_file) -> None:
+    page = drawpyo.Page()
+    empty_file.add_page(page)
+    
+    assert page.file == empty_file
+    assert len(empty_file.pages) == 1
+    assert empty_file.pages[0] == page
 
-    test_file.remove_page(0)
-    assert len(test_file.pages) == 1
 
-    page_4.remove()
-    assert len(test_file.pages) == 0
+def test_file_create_page_with_file(empty_file) -> None:
+    page = drawpyo.Page(file=empty_file, name="Page-2")
+    
+    assert page.file == empty_file
+    assert len(empty_file.pages) == 1
+    assert page.name == "Page-2"
+
+
+def test_file_remove_page_by_object(empty_file) -> None:
+    page_1 = drawpyo.Page(file=empty_file)
+    page_2 = drawpyo.Page(file=empty_file)
+    page_3 = drawpyo.Page(file=empty_file)
+    
+    assert len(empty_file.pages) == 3
+    
+    empty_file.remove_page(page_1)
+    assert len(empty_file.pages) == 2
+    assert page_2 in empty_file.pages
+    assert page_3 in empty_file.pages
+
+
+def test_file_remove_page_by_name(empty_file) -> None:
+    drawpyo.Page(file=empty_file, name="Page-1")
+    drawpyo.Page(file=empty_file, name="Page-2")
+    
+    assert len(empty_file.pages) == 2
+    
+    empty_file.remove_page("Page-1")
+    assert len(empty_file.pages) == 1
+    assert empty_file.pages[0].name == "Page-2"
+
+
+def test_file_remove_page_by_index(empty_file) -> None:
+    page_1 = drawpyo.Page(file=empty_file)
+    page_2 = drawpyo.Page(file=empty_file)
+    
+    assert len(empty_file.pages) == 2
+    
+    empty_file.remove_page(0)
+    assert len(empty_file.pages) == 1
+    assert empty_file.pages[0] == page_2
+
+
+def test_page_remove_from_file(empty_file) -> None:
+    page = drawpyo.Page(file=empty_file)
+    
+    assert len(empty_file.pages) == 1
+    
+    page.remove()
+    assert len(empty_file.pages) == 0
 
 
 def test_file_write(tmp_path: Path) -> None:
-    d = tmp_path / "sub"
-    d.mkdir()
+    output_dir = tmp_path / "sub"
+    output_dir.mkdir()
 
-    # Create a File and Page object
     test_file = drawpyo.File(
         file_name="test_file.drawio",
-        file_path=d,
+        file_path=output_dir,
     )
-    page_1 = drawpyo.Page(file=test_file)
+    drawpyo.Page(file=test_file)
 
-    # Write the File object
-    f = test_file.write()
-    assert path.isfile(f)
+    file_path = test_file.write()
+    assert Path(file_path).is_file()
+    assert file_path == str(output_dir / "test_file.drawio")
 
-    with open(f) as test_file:
-        tree = ET.parse(test_file)
+    with open(file_path) as f:
+        tree = ET.parse(f)
         root = tree.getroot()
         assert root.tag == "mxfile"
+
