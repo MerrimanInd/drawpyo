@@ -1,6 +1,8 @@
-![CI](https://github.com/MerrimanInd/drawpyo/actions/workflows/ci.yml/badge.svg) ![GitHub License](https://img.shields.io/github/license/MerrimanInd/drawpyo)
+![CI](https://github.com/MerrimanInd/drawpyo/actions/workflows/ci.yml/badge.svg) ![GitHub License](https://img.shields.io/github/license/MerrimanInd/drawpyo) ![PyPI Version](https://img.shields.io/pypi/v/drawpyo) ![PyPI Downloads](https://img.shields.io/pypi/dm/drawpyo)
 
-# drawpyo
+<p align="left">
+  <img src="docs/img/logo.png" alt="drawpyo logo"/>
+</p>
 
 Drawpyo is a Python library for programmatically generating Diagrams.net/Draw.io charts. It enables creating a diagram object, placing and styling objects, then writing the object to a file.
 
@@ -62,65 +64,19 @@ item_from_stylestr.apply_style_string("rounded=1;whiteSpace=wrap;html=1;fillColo
 file.write()
 ```
 
-# Usage with a diagram type
+## Usage with Diagram Types
 
-There is also functionality available in drawpyo that extends what can be done in Draw.io's app! These diagram types allow for easy and automatic creation of specific diagrams.
+Drawpyo also provides higher-level functionality that goes beyond what the Draw.io app offers. These **diagram types** allow you to generate complete structures automatically, without manually placing every element.
 
-The only diagram type that's released is the tree diagram. Varying level of conceptual work has been started for:
+Currently, Drawpyo supports:
 
-- Automatic class/object/inheritance diagrams of a python module
+* **Tree Diagrams**
+* **Bar Charts**
 
-- Flowcharts
+For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 
-- Process diagrams
+Work has also begun on additional diagram types, including:
 
-## Working with TreeDiagrams
-
-Create a new tree diagram:
-
-```python
-from drawpyo.diagram_types import TreeDiagram, NodeObject
-
-tree = TreeDiagram(
-    file_path = path.join(path.expanduser('~'), "Test Drawpyo Charts"),
-    file_name = "Coffee Grinders.drawio",
-    direction = "down",
-    link_style = "orthogonal",
-    )
-```
-
-The direction property sets which way the leaf nodes grow from the root: up, down, left, or right. The link_style can be orthogonal, straight, or curved.
-
-Create some NodeObjects:
-
-```python
-# Top object
-grinders = NodeObject(tree=tree, value="Appliances for Grinding Coffee", base_style="rounded rectangle")
-
-# Main categories
-blade_grinders = NodeObject(tree=tree, value="Blade Grinders", tree_parent=grinders)
-burr_grinders = NodeObject(tree=tree, value="Burr Grinders", tree_parent=grinders)
-blunt_objects = NodeObject(tree=tree, value="Blunt Objects", tree_parent=grinders)
-```
-
-Note that the base_style was manually declared for the first object. But NodeObjects will default to "rounded rectangle" so it's not necessary for every one. Any NodeObject can be a parent, so you can keep adding objects down the tree:
-
-```python
-# Other
-elec_blade = NodeObject(tree=tree, value="Electric Blade Grinder", tree_parent=blade_grinders)
-mnp = NodeObject(tree=tree, value="Mortar and Pestle", tree_parent=blunt_objects)
-
-# Conical Burrs
-conical = NodeObject(tree=tree, value="Conical Burrs", tree_parent=burr_grinders)
-elec_conical = NodeObject(tree=tree, value="Electric", tree_parent=conical)
-manual_conical = NodeObject(tree=tree, value="Manual", tree_parent=conical)
-```
-
-> **Important Note:** TreeDiagrams do not currently support NodeObjects with multiple parents! It may not ever as this seriously complicates the auto layout process. However, you can add links between any two objects in the tree and render them in the diagram. They just may look ugly until you manually rearrange the diagram.
-
-Finally, before writing the diagram you'll want to run the magic penultimate step: auto layout.
-
-```python
-tree.auto_layout()
-tree.write()
-```
+* Automatic class/object/inheritance diagrams from a Python module
+* Flowcharts
+* Process diagrams

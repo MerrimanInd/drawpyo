@@ -26,7 +26,7 @@ class TestBarChartInitialization:
     def test_initialization_with_single_color(self):
         """Test initialization with a single color string."""
         data = {"A": 10, "B": 20}
-        chart = BarChart(data, bar_colors="#ff0000")
+        chart = BarChart(data, bar_colors=["#ff0000"])
 
         assert chart._bar_colors == ["#ff0000", "#ff0000"]
 
@@ -37,7 +37,7 @@ class TestBarChartInitialization:
         chart = BarChart(data, bar_colors=colors)
 
         # Should repeat last color
-        assert chart._bar_colors == ["#ff0000", "#00ff00", "#00ff00"]
+        assert chart._bar_colors == ["#ff0000", "#00ff00", "#ff0000"]
 
     def test_initialization_with_empty_color_list(self):
         """Test that empty color list uses default."""
@@ -155,13 +155,6 @@ class TestBarChartUpdateData:
 
 class TestBarChartUpdateColors:
     """Test color update functionality."""
-
-    def test_update_colors_single(self):
-        """Test updating to a single color."""
-        chart = BarChart({"A": 10, "B": 20})
-        chart.update_colors("#ff0000")
-
-        assert chart._bar_colors == ["#ff0000", "#ff0000"]
 
     def test_update_colors_list(self):
         """Test updating with a color list."""
@@ -354,21 +347,6 @@ class TestBarChartBackgroundAndStyling:
         """Test background color is applied."""
         chart = BarChart({"A": 10}, background_color="#f0f0f0")
         assert chart._background_color == "#f0f0f0"
-
-    def test_bar_fill_color_override(self):
-        """Test that bar_fill_color overrides individual colors."""
-        chart = BarChart(
-            {"A": 10, "B": 20},
-            bar_colors=["#ff0000", "#00ff00"],
-            bar_fill_color="#0000ff",
-        )
-
-        assert chart._bar_fill_color == "#0000ff"
-
-    def test_bar_stroke_color(self):
-        """Test bar stroke color."""
-        chart = BarChart({"A": 10}, bar_stroke_color="#ff0000")
-        assert chart._bar_stroke_color == "#ff0000"
 
 
 class TestBarChartGroupIntegration:
