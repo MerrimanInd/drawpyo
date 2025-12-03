@@ -1,4 +1,6 @@
+from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
+from .utils.logger import logger
 
 
 class Page:
@@ -6,12 +8,12 @@ class Page:
     This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
     """
 
-    def __init__(self, file=None, **kwargs):
+    def __init__(self, file: Optional[Any] = None, **kwargs: Any) -> None:
         super().__init__()
-        self.id = id(self)
+        self.id: int = id(self)
 
-        self.file = file
-        self.objects = kwargs.get("objects", [])
+        self.file: Optional[Any] = file
+        self.objects: List[Any] = kwargs.get("objects", [])
 
         # There are two empty top level objects in every Draw.io diagram
         self.objects.append(XMLBase(id=0, xml_class="mxCell"))
@@ -23,58 +25,60 @@ class Page:
             page_num = len(self.file.pages)
         else:
             page_num = 1
-        self.name = kwargs.get("name", f"Page-{page_num}")
-        self.page_num = kwargs.get("page_num", page_num)
+        self.name: str = kwargs.get("name", f"Page-{page_num}")
+        self.page_num: int = kwargs.get("page_num", page_num)
 
-        self.dx = kwargs.get("dx", 2037)
-        self.dy = kwargs.get("dy", 830)
-        self.grid = kwargs.get("grid", 1)
-        self.grid_size = kwargs.get("grid_size", 10)
-        self.guides = kwargs.get("guides", 1)
-        self.tooltips = kwargs.get("tooltips", 1)
-        self.connect = kwargs.get("connect", 1)
-        self.arrows = kwargs.get("arrows", 1)
-        self.fold = kwargs.get("fold", 1)
-        self.scale = kwargs.get("scale", 1)
-        self.width = kwargs.get("width", 850)
-        self.height = kwargs.get("height", 1100)
-        self.math = kwargs.get("math", 0)
-        self.shadow = kwargs.get("shadow", 0)
+        self.dx: Union[int, float] = kwargs.get("dx", 2037)
+        self.dy: Union[int, float] = kwargs.get("dy", 830)
+        self.grid: int = kwargs.get("grid", 1)
+        self.grid_size: int = kwargs.get("grid_size", 10)
+        self.guides: int = kwargs.get("guides", 1)
+        self.tooltips: int = kwargs.get("tooltips", 1)
+        self.connect: int = kwargs.get("connect", 1)
+        self.arrows: int = kwargs.get("arrows", 1)
+        self.fold: int = kwargs.get("fold", 1)
+        self.scale: Union[int, float] = kwargs.get("scale", 1)
+        self.width: Union[int, float] = kwargs.get("width", 850)
+        self.height: Union[int, float] = kwargs.get("height", 1100)
+        self.math: int = kwargs.get("math", 0)
+        self.shadow: int = kwargs.get("shadow", 0)
 
         # In the Draw.io file format, each page is actually three nested XML
         # tags. These are defined as XMLBase subclasses below
-        self.diagram = Diagram(name=self.name)
-        self.mxGraph = mxGraph(page=self)
-        self.root = Root()
+        self.diagram: Diagram = Diagram(name=self.name)
+        self.mxGraph: mxGraph = mxGraph(page=self)
+        self.root: Root = Root()
 
-    def __repr__(self):
+        logger.info(f"📄 Page created: '{self.__repr__()}'")
+
+    def __repr__(self) -> str:
         return f"drawpyo Page - {self.name}"
 
-    def remove(self):
+    def remove(self) -> None:
         """This function removes the Page from its linked File object then deletes itself."""
         if self.file is not None:
             self.file.remove_page(self)
         del self
 
-    def add_object(self, obj):
+    def add_object(self, obj: Any) -> None:
         if obj not in self.objects:
             self.objects.append(obj)
 
-    def remove_object(self, obj):
+    def remove_object(self, obj: Any) -> None:
         self.objects.remove(obj)
 
     @property
-    def file(self):
+    def file(self) -> Optional[Any]:
         return self._file
 
     @file.setter
-    def file(self, f):
+    def file(self, f: Optional[Any]) -> None:
         if f is not None:
             f.add_page(self)
         self._file = f
 
     @file.deleter
-    def file(self):
+    def file(self) -> None:
         self._file.remove_page(self)
         self._file = None
 
@@ -82,7 +86,7 @@ class Page:
     # XML Generation
     ###########################################################
     @property
-    def xml(self):
+    def xml(self) -> str:
         xml_string = self.xml_open_tag
         for obj in self.objects:
             xml_string = xml_string + "\n        " + obj.xml
@@ -90,7 +94,7 @@ class Page:
         return xml_string
 
     @property
-    def xml_open_tag(self):
+    def xml_open_tag(self) -> str:
         tag = (
             self.diagram.xml_open_tag
             + "\n    "
@@ -101,7 +105,7 @@ class Page:
         return tag
 
     @property
-    def xml_close_tag(self):
+    def xml_close_tag(self) -> str:
         tag = (
             "      "
             + self.root.xml_close_tag
@@ -119,24 +123,24 @@ class Page:
 
 
 class Diagram(XMLBase):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.name = kwargs.get("name", "")
-        self.xml_class = "diagram"
+        self.name: str = kwargs.get("name", "")
+        self.xml_class: str = "diagram"
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Union[str, int]]:
         return {"name": self.name, "id": self.id}
 
 
 class mxGraph(XMLBase):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.xml_class = "mxGraphModel"
-        self.page = kwargs.get("page", None)
+        self.xml_class: str = "mxGraphModel"
+        self.page: Optional[Page] = kwargs.get("page", None)
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Union[int, float]]:
         return {
             "dx": self.page.dx,
             "dy": self.page.dy,
@@ -157,10 +161,10 @@ class mxGraph(XMLBase):
 
 
 class Root(XMLBase):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.xml_class = "root"
+        self.xml_class: str = "root"
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Any]:
         return {}
