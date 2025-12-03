@@ -38,9 +38,7 @@ There are a number of configuration parameters available to fine-tune the layout
 | `bar_width`              | Width of each bar                                       | `40`                 |
 | `bar_spacing`            | Horizontal spacing between bars                         | `20`                 |
 | `max_bar_height`         | Height of the tallest bar                               | `200`                |
-| `bar_colors`             | Single color or list of colors applied to bars          | `"#66ccff"`          |
-| `bar_fill_color`         | Overrides fill color for all bars                       | `None`               |
-| `bar_stroke_color`       | Stroke color for bar outlines                           | `"#000000"`          |
+| `bar_colors`             | List of colors or ColorSchemes applied to bars          | `["#66ccff"]`        |
 | `title`                  | Optional chart title                                    | `None`               |
 | `title_text_format`      | Text formatting for the title                           | `TextFormat()`       |
 | `base_text_format`       | Formatting for labels below bars                        | `TextFormat()`       |
@@ -50,9 +48,8 @@ There are a number of configuration parameters available to fine-tune the layout
 | `axis_text_format`       | Formatting for axis tick labels                         | `TextFormat()`       |
 | `base_label_formatter`   | Callable that formats the category label below each bar | `lambda l,v: l`      |
 | `inside_label_formatter` | Callable that formats values printed inside each bar    | `lambda l,v: str(v)` |
-| `bar_object`             | Optional template `Object` used to generate each bar    | `None`               |
-
-> **Note:** When you provide a bar template object, every bar in the chart will inherit its styling (such as rounded corners, glass or shadow). However, properties like the bar’s value, color and size are always controlled by the `BarChart` itself and will override the template’s values.
+| `glass`                  | Whether bars have a glass effect.                       | `False`              |
+| `rounded`                | Whether bars have rounded corners.                      | `False`              |
 
 With a few visual adjustments, the resulting chart renders as:
 
