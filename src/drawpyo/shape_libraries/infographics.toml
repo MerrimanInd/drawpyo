@@ -1,0 +1,5 @@
+[pie]
+width = 120
+height = 120
+shape = "mxgraph.basic.pie"
+aspect = "fixed"

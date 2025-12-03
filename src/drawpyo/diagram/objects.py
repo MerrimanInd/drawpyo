@@ -19,6 +19,9 @@ general: Dict[str, Any] = import_shape_database(
 flowchart: Dict[str, Any] = import_shape_database(
     file_name=path.join("shape_libraries", "flowchart.toml"), relative=True
 )
+infographics: Dict[str, Any] = import_shape_database(
+    file_name=path.join("shape_libraries", "infographics.toml"), relative=True
+)
 line_styles: Dict[str, Any] = import_shape_database(
     file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
@@ -26,6 +29,7 @@ line_styles: Dict[str, Any] = import_shape_database(
 base_libraries: Dict[str, Dict[str, Any]] = {
     "general": general,
     "flowchart": flowchart,
+    "infographics": infographics,
 }
 
 container: Dict[Optional[str], None] = {None: None, "vertical_container": None}
@@ -121,6 +125,8 @@ class Object(DiagramBase):
             "sketch",
             "opacity",
             "dashed",
+            "startAngle",
+            "endAngle",
         ]
 
         self.geometry: Geometry = Geometry(parent_object=self)
