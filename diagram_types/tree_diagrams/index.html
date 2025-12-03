@@ -688,6 +688,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-a-tree-from-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Tree from a Dictionary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a Tree from a Dictionary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-for-dictlist-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules for dict/list conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coloring-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coloring Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1279,6 +1329,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-a-tree-from-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Tree from a Dictionary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a Tree from a Dictionary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-for-dictlist-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules for dict/list conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coloring-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coloring Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1378,6 +1478,105 @@ tree.write()
 </code></pre>
 <p>With some more additions, the resulting diagram renders as:</p>
 <p><img alt="coffee_grinders_tree" src="../../img/tree_diagram/coffee_grinders_tree.png" /></p>
+<hr />
+<h2 id="create-a-tree-from-a-dictionary">Create a Tree from a Dictionary</h2>
+<p><code>TreeDiagram</code> supports creating an entire tree structure directly from a nested dictionary or list. This allows you to generate trees programmatically without manually creating every <code>NodeObject</code>.</p>
+<h3 id="rules-for-dictlist-conversion">Rules for dict/list conversion</h3>
+<table>
+<thead>
+<tr>
+<th>Input Type</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dict</strong></td>
+<td>Each key becomes a <strong>category node</strong>, and its value is recursively processed as its children.</td>
+</tr>
+<tr>
+<td><strong>List / Tuple</strong></td>
+<td>Each element becomes a sibling under the same parent.</td>
+</tr>
+<tr>
+<td><strong>Scalar (<code>str</code>, <code>int</code>, <code>float</code>)</strong></td>
+<td>Treated as a <strong>leaf node</strong>.</td>
+</tr>
+<tr>
+<td><strong>Unsupported types</strong></td>
+<td>Raises a <code>TypeError</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="coloring-nodes">Coloring Nodes</h3>
+<p>You can control node colors using the <code>colors</code> list and <code>coloring</code> mode.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options / Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>colors</code></td>
+<td>List of <code>ColorScheme</code>, <code>StandardColor</code>, or color hex strings.</td>
+<td>Default: <code>None</code></td>
+</tr>
+<tr>
+<td><code>coloring</code></td>
+<td>Method used to assign colors to nodes.</td>
+<td><code>"depth"</code> (default), <code>"hash"</code>, <code>"type"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Coloring Modes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>depth</code></td>
+<td>Colors nodes based on their <strong>depth in the tree</strong>.</td>
+</tr>
+<tr>
+<td><code>hash</code></td>
+<td>Colors nodes based on a <strong>hash of their value</strong> (stable across runs).</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Colors nodes based on <strong>node type</strong>: category, list item, or leaf.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="example">Example</h3>
+<pre><code class="language-python">from drawpyo.diagram_types import TreeDiagram
+
+data = {
+    &quot;Root&quot;: {
+        &quot;Branch A&quot;: [&quot;Leaf 1&quot;, &quot;Leaf 2&quot;],
+        &quot;Branch B&quot;: [&quot;Leaf 3&quot;]
+    }
+}
+
+tree = TreeDiagram.from_dict(
+    data,
+    file_path=&quot;~/Test Drawpyo Charts&quot;,
+    file_name=&quot;Minimal Tree.drawio&quot;,
+    direction=&quot;down&quot;,
+    colors=[&quot;#DDDDDD&quot;,&quot;#BBBBBB&quot;],
+    coloring=&quot;depth&quot;
+)
+
+tree.write()
+</code></pre>
 
 
 

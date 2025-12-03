@@ -1339,18 +1339,8 @@ chart = BarChart(
 </tr>
 <tr>
 <td><code>bar_colors</code></td>
-<td>Single color or list of colors applied to bars</td>
-<td><code>"#66ccff"</code></td>
-</tr>
-<tr>
-<td><code>bar_fill_color</code></td>
-<td>Overrides fill color for all bars</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>bar_stroke_color</code></td>
-<td>Stroke color for bar outlines</td>
-<td><code>"#000000"</code></td>
+<td>List of colors or ColorSchemes applied to bars</td>
+<td><code>["#66ccff"]</code></td>
 </tr>
 <tr>
 <td><code>title</code></td>
@@ -1398,15 +1388,17 @@ chart = BarChart(
 <td><code>lambda l,v: str(v)</code></td>
 </tr>
 <tr>
-<td><code>bar_object</code></td>
-<td>Optional template <code>Object</code> used to generate each bar</td>
-<td><code>None</code></td>
+<td><code>glass</code></td>
+<td>Whether bars have a glass effect.</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>rounded</code></td>
+<td>Whether bars have rounded corners.</td>
+<td><code>False</code></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>Note:</strong> When you provide a bar template object, every bar in the chart will inherit its styling (such as rounded corners, glass or shadow). However, properties like the bar’s value, color and size are always controlled by the <code>BarChart</code> itself and will override the template’s values.</p>
-</blockquote>
 <p>With a few visual adjustments, the resulting chart renders as:</p>
 <p><img alt="coffee_grinders_chart" src="../../img/bar_chart/coffee_grinders_chart.png" /></p>
 

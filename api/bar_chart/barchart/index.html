@@ -1757,26 +1757,7 @@
 <span class="normal">423</span>
 <span class="normal">424</span>
 <span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span>
-<span class="normal">428</span>
-<span class="normal">429</span>
-<span class="normal">430</span>
-<span class="normal">431</span>
-<span class="normal">432</span>
-<span class="normal">433</span>
-<span class="normal">434</span>
-<span class="normal">435</span>
-<span class="normal">436</span>
-<span class="normal">437</span>
-<span class="normal">438</span>
-<span class="normal">439</span>
-<span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span>
-<span class="normal">443</span>
-<span class="normal">444</span>
-<span class="normal">445</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BarChart</span><span class="p">:</span>
+<span class="normal">426</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BarChart</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A configurable bar chart built entirely from Object and Group.</span>
 
 <span class="sd">    This chart is mutable - you can update data, styling, and position after creation.</span>
@@ -1806,23 +1787,22 @@
 
 <span class="sd">        Keyword Args:</span>
 <span class="sd">            position (tuple[int, int]): Chart top-left position. Default: (0, 0)</span>
-<span class="sd">            bar_template (Object): Optional template Object for bar styling. Default: None</span>
 <span class="sd">            bar_width (int): Width of each bar. Default: 40</span>
 <span class="sd">            bar_spacing (int): Space between bars. Default: 20</span>
 <span class="sd">            max_bar_height (int): Height of the largest bar. Default: 200</span>
-<span class="sd">            bar_colors (str | StandardColor | list[Union[str, StandardColor]]): Single color or list of colors. Default: &quot;#66ccff&quot;</span>
+<span class="sd">            bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: [&quot;#66ccff&quot;]</span>
 <span class="sd">            base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l</span>
 <span class="sd">            inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)</span>
 <span class="sd">            title (str): Optional chart title. Default: None</span>
 <span class="sd">            title_text_format (TextFormat): TextFormat for the title. Default: TextFormat()</span>
 <span class="sd">            base_text_format (TextFormat): TextFormat for base labels. Default: TextFormat()</span>
 <span class="sd">            inside_text_format (TextFormat): TextFormat for inside labels. Default: TextFormat()</span>
-<span class="sd">            bar_fill_color (str | StandardColor): Optional fill color override for all bars. Default: None</span>
-<span class="sd">            bar_stroke_color (str | StandardColor): Stroke color for bars. Default: &quot;#000000&quot;</span>
 <span class="sd">            background_color (str | StandardColor): Optional chart background fill. Default: None</span>
 <span class="sd">            show_axis (bool): Whether to show the axis and ticks. Default: False</span>
 <span class="sd">            axis_tick_count (int): Number of tick intervals on the axis. Default: 5</span>
 <span class="sd">            axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()</span>
+<span class="sd">            glass (bool): Whether bars have a glass effect. Default: False</span>
+<span class="sd">            rounded (bool): Whether bars have rounded corners. Default: False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Validate data</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -1877,13 +1857,7 @@
         <span class="c1"># Title</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Colors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_fill_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;bar_fill_color&quot;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_stroke_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;bar_stroke_color&quot;</span><span class="p">,</span> <span class="s2">&quot;#000000&quot;</span>
-        <span class="p">)</span>
+        <span class="c1"># Background color</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;background_color&quot;</span>
         <span class="p">)</span>
@@ -1894,20 +1868,18 @@
             <span class="s2">&quot;axis_tick_count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
         <span class="p">)</span>
 
-        <span class="c1"># Optional bar object template</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Object</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_template&quot;</span><span class="p">)</span>
-
-        <span class="c1"># Normalize bar colors</span>
-        <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-            <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]]</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="s2">&quot;#66ccff&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span>
-            <span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Bar appearance</span>
+        <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="p">(</span>
-            <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span>
-            <span class="o">|</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]]</span>
-        <span class="p">)</span> <span class="o">=</span> <span class="n">bar_colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+            <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="n">bar_colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Build the chart</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
@@ -1955,7 +1927,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">update_colors</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span> <span class="o">=</span> <span class="n">bar_colors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">))</span>
@@ -1985,16 +1957,17 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_colors</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">colors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]],</span>
+        <span class="n">colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]],</span>
         <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">colors</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">colors</span> <span class="o">+</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">*</span> <span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">colors</span><span class="p">[:</span><span class="n">count</span><span class="p">]</span>
+
+        <span class="c1"># Cycle through the list until we have the right amount of colors</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -2147,32 +2120,38 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
         <span class="n">bar_height</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">scale</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_fill_color</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">ColorScheme</span><span class="p">):</span>
+            <span class="n">color_scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="p">(</span><span class="n">StandardColor</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="n">fill_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
+        <span class="c1"># Calculate geometry</span>
         <span class="n">bar_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">index</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_spacing</span><span class="p">)</span>
         <span class="n">bar_y</span> <span class="o">=</span> <span class="n">content_y</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span> <span class="o">-</span> <span class="n">bar_height</span><span class="p">)</span>
         <span class="n">bar_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span>
 
-        <span class="c1"># Uses the template object if provided, otherwise defaults</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_template</span><span class="p">:</span>
-            <span class="n">bar</span> <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">create_from_template_object</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_bar_template</span><span class="p">,</span>
-                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">bar_x</span><span class="p">,</span> <span class="n">bar_y</span><span class="p">),</span>
-            <span class="p">)</span>
-            <span class="n">bar</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">bar_width</span>
-            <span class="n">bar</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">bar_height</span>
-            <span class="n">bar</span><span class="o">.</span><span class="n">fillColor</span> <span class="o">=</span> <span class="n">color</span>
-            <span class="n">bar</span><span class="o">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_stroke_color</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">bar</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">bar_x</span><span class="p">,</span> <span class="n">bar_y</span><span class="p">),</span>
-                <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span>
-                <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">,</span>
-                <span class="n">fillColor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-                <span class="n">strokeColor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bar_stroke_color</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="c1"># Resolve color</span>
+        <span class="n">color_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">color_scheme</span> <span class="o">=</span> <span class="n">color_value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color_value</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">fill_color</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">color_scheme</span> <span class="k">else</span> <span class="n">color_value</span>
+
+        <span class="c1"># INSIDE LABEL</span>
+        <span class="n">inside_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inside_label_formatter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">inside_text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inside_text_format</span><span class="p">)</span>
+        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
+        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">&quot;middle&quot;</span>
+
+        <span class="n">bar</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">inside_label</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">bar_x</span><span class="p">,</span> <span class="n">bar_y</span><span class="p">),</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">,</span>
+            <span class="n">color_scheme</span><span class="o">=</span><span class="n">color_scheme</span><span class="p">,</span>
+            <span class="n">fillColor</span><span class="o">=</span><span class="n">fill_color</span><span class="p">,</span>
+            <span class="n">rounded</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">,</span>
+            <span class="n">glass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">,</span>
+            <span class="n">text_format</span><span class="o">=</span><span class="n">inside_text_format</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span>
 
@@ -2190,23 +2169,6 @@
         <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">base_obj</span><span class="p">)</span>
 
-        <span class="c1"># INSIDE LABEL</span>
-        <span class="n">inside_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inside_label_formatter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-        <span class="n">inside_obj</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-            <span class="n">value</span><span class="o">=</span><span class="n">inside_label</span><span class="p">,</span>
-            <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">bar_x</span><span class="p">,</span> <span class="n">bar_y</span><span class="p">),</span>
-            <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="n">bar_height</span><span class="p">,</span>
-            <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">inside_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inside_text_format</span><span class="p">)</span>
-        <span class="n">inside_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">inside_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
-        <span class="n">inside_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">inside_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">&quot;middle&quot;</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">inside_obj</span><span class="p">)</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;BarChart(bars=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="si">}</span><span class="s2">)&quot;</span>
 
@@ -2217,7 +2179,7 @@
 
 
 
-  <div class="doc doc-children">
+<div class="doc doc-children">
 
 
 
@@ -2294,17 +2256,6 @@
             </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code>bar_template</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="src.drawpyo.diagram.objects.Object" href="../../objects/#src.drawpyo.diagram.objects.Object">Object</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optional template Object for bar styling. Default: None</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
             <td><code>bar_width</code></td>
             <td>
                   <code><span title="int">int</span></code>
@@ -2340,11 +2291,11 @@
           <tr class="doc-section-item">
             <td><code>bar_colors</code></td>
             <td>
-                  <code><span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a> | <span title="list">list</span>[<span title="typing.Union">Union</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a>]]</code>
+                  <code><span title="list">list</span>[<span title="typing.Union">Union</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a>, <a class="autorefs autorefs-internal" title="src.drawpyo.utils.color_scheme.ColorScheme" href="../../color_scheme/#src.drawpyo.utils.color_scheme.ColorScheme">ColorScheme</a>]]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Single color or list of colors. Default: "#66ccff"</p>
+                <p>List of colors. Default: ["#66ccff"]</p>
               </div>
             </td>
           </tr>
@@ -2415,28 +2366,6 @@
             </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code>bar_fill_color</code></td>
-            <td>
-                  <code><span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Optional fill color override for all bars. Default: None</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>bar_stroke_color</code></td>
-            <td>
-                  <code><span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Stroke color for bars. Default: "#000000"</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
             <td><code>background_color</code></td>
             <td>
                   <code><span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a></code>
@@ -2477,6 +2406,28 @@
             <td>
               <div class="doc-md-description">
                 <p>TextFormat for axis tick labels. Default: TextFormat()</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>glass</code></td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether bars have a glass effect. Default: False</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>rounded</code></td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether bars have rounded corners. Default: False</p>
               </div>
             </td>
           </tr>
@@ -2589,39 +2540,29 @@
 <span class="normal">133</span>
 <span class="normal">134</span>
 <span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
 <span class="sd">        data (dict[str, float]): Mapping of labels to numeric values.</span>
 
 <span class="sd">    Keyword Args:</span>
 <span class="sd">        position (tuple[int, int]): Chart top-left position. Default: (0, 0)</span>
-<span class="sd">        bar_template (Object): Optional template Object for bar styling. Default: None</span>
 <span class="sd">        bar_width (int): Width of each bar. Default: 40</span>
 <span class="sd">        bar_spacing (int): Space between bars. Default: 20</span>
 <span class="sd">        max_bar_height (int): Height of the largest bar. Default: 200</span>
-<span class="sd">        bar_colors (str | StandardColor | list[Union[str, StandardColor]]): Single color or list of colors. Default: &quot;#66ccff&quot;</span>
+<span class="sd">        bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: [&quot;#66ccff&quot;]</span>
 <span class="sd">        base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l</span>
 <span class="sd">        inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)</span>
 <span class="sd">        title (str): Optional chart title. Default: None</span>
 <span class="sd">        title_text_format (TextFormat): TextFormat for the title. Default: TextFormat()</span>
 <span class="sd">        base_text_format (TextFormat): TextFormat for base labels. Default: TextFormat()</span>
 <span class="sd">        inside_text_format (TextFormat): TextFormat for inside labels. Default: TextFormat()</span>
-<span class="sd">        bar_fill_color (str | StandardColor): Optional fill color override for all bars. Default: None</span>
-<span class="sd">        bar_stroke_color (str | StandardColor): Stroke color for bars. Default: &quot;#000000&quot;</span>
 <span class="sd">        background_color (str | StandardColor): Optional chart background fill. Default: None</span>
 <span class="sd">        show_axis (bool): Whether to show the axis and ticks. Default: False</span>
 <span class="sd">        axis_tick_count (int): Number of tick intervals on the axis. Default: 5</span>
 <span class="sd">        axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()</span>
+<span class="sd">        glass (bool): Whether bars have a glass effect. Default: False</span>
+<span class="sd">        rounded (bool): Whether bars have rounded corners. Default: False</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Validate data</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -2676,13 +2617,7 @@
     <span class="c1"># Title</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Colors</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_fill_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;bar_fill_color&quot;</span>
-    <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_stroke_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;bar_stroke_color&quot;</span><span class="p">,</span> <span class="s2">&quot;#000000&quot;</span>
-    <span class="p">)</span>
+    <span class="c1"># Background color</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
         <span class="s2">&quot;background_color&quot;</span>
     <span class="p">)</span>
@@ -2693,20 +2628,18 @@
         <span class="s2">&quot;axis_tick_count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
     <span class="p">)</span>
 
-    <span class="c1"># Optional bar object template</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Object</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_template&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Normalize bar colors</span>
-    <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-        <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]]</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="s2">&quot;#66ccff&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span>
-        <span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># Bar appearance</span>
+    <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="p">(</span>
-        <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span>
-        <span class="o">|</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]]</span>
-    <span class="p">)</span> <span class="o">=</span> <span class="n">bar_colors</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">bar_colors</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Build the chart</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
