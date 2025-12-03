@@ -28,7 +28,7 @@ def test_file_init_default_values(file_with_name) -> None:
 def test_file_add_page(empty_file) -> None:
     page = drawpyo.Page()
     empty_file.add_page(page)
-    
+
     assert page.file == empty_file
     assert len(empty_file.pages) == 1
     assert empty_file.pages[0] == page
@@ -36,7 +36,7 @@ def test_file_add_page(empty_file) -> None:
 
 def test_file_create_page_with_file(empty_file) -> None:
     page = drawpyo.Page(file=empty_file, name="Page-2")
-    
+
     assert page.file == empty_file
     assert len(empty_file.pages) == 1
     assert page.name == "Page-2"
@@ -46,9 +46,9 @@ def test_file_remove_page_by_object(empty_file) -> None:
     page_1 = drawpyo.Page(file=empty_file)
     page_2 = drawpyo.Page(file=empty_file)
     page_3 = drawpyo.Page(file=empty_file)
-    
+
     assert len(empty_file.pages) == 3
-    
+
     empty_file.remove_page(page_1)
     assert len(empty_file.pages) == 2
     assert page_2 in empty_file.pages
@@ -58,9 +58,9 @@ def test_file_remove_page_by_object(empty_file) -> None:
 def test_file_remove_page_by_name(empty_file) -> None:
     drawpyo.Page(file=empty_file, name="Page-1")
     drawpyo.Page(file=empty_file, name="Page-2")
-    
+
     assert len(empty_file.pages) == 2
-    
+
     empty_file.remove_page("Page-1")
     assert len(empty_file.pages) == 1
     assert empty_file.pages[0].name == "Page-2"
@@ -69,9 +69,9 @@ def test_file_remove_page_by_name(empty_file) -> None:
 def test_file_remove_page_by_index(empty_file) -> None:
     page_1 = drawpyo.Page(file=empty_file)
     page_2 = drawpyo.Page(file=empty_file)
-    
+
     assert len(empty_file.pages) == 2
-    
+
     empty_file.remove_page(0)
     assert len(empty_file.pages) == 1
     assert empty_file.pages[0] == page_2
@@ -79,9 +79,9 @@ def test_file_remove_page_by_index(empty_file) -> None:
 
 def test_page_remove_from_file(empty_file) -> None:
     page = drawpyo.Page(file=empty_file)
-    
+
     assert len(empty_file.pages) == 1
-    
+
     page.remove()
     assert len(empty_file.pages) == 0
 
@@ -104,4 +104,3 @@ def test_file_write(tmp_path: Path) -> None:
         tree = ET.parse(f)
         root = tree.getroot()
         assert root.tag == "mxfile"
-
