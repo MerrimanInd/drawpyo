@@ -1,4 +1,6 @@
-xmlize = {}
+from typing import Dict, Optional, Any, Union
+
+xmlize: Dict[str, str] = {}
 xmlize[">"] = "&gt;"
 xmlize["<"] = "&lt;"
 xmlize["&"] = "&amp;"
@@ -16,21 +18,21 @@ class XMLBase:
     XMLBase is the base class for all exportable objects in drawpyo. This class defines a few useful properties that drawpyo needs to use to generate a Draw.io file.
     """
 
-    def __init__(self, **kwargs):
-        self._id = kwargs.get("id", id(self))
-        self.xml_class = kwargs.get("xml_class", "xml_tag")
+    def __init__(self, **kwargs: Any) -> None:
+        self._id: Union[int, str] = kwargs.get("id", id(self))
+        self.xml_class: str = kwargs.get("xml_class", "xml_tag")
 
         # There's only one situation where XMLBase is called directly: to
         # create the two empty mxCell objects at the beginning of every
         # Draw.io diagram. The following declarations should be overwritten
         # in every other use case.
-        self.xml_parent = kwargs.get("xml_parent", None)
+        self.xml_parent: Optional[Any] = kwargs.get("xml_parent", None)
 
-        self.tag = kwargs.get("tag", None)
-        self.tooltip = kwargs.get("tooltip", None)
+        self.tag: Optional[str] = kwargs.get("tag", None)
+        self.tooltip: Optional[str] = kwargs.get("tooltip", None)
 
     @property
-    def id(self):
+    def id(self) -> Union[int, str]:
         """
         id is a unique identifier. Draw.io generated diagrams use an ID many more characters but the app isn't picky when parsing so drawpyo just uses Python's built-in id() function as it guarantees unique identifiers.
 
@@ -40,7 +42,7 @@ class XMLBase:
         return self._id
 
     @property
-    def attributes(self):
+    def attributes(self) -> Dict[str, Any]:
         """
         The most basic attributes of a Draw.io object. Extended by subclasses.
 
@@ -54,7 +56,7 @@ class XMLBase:
     ###########################################################
 
     @property
-    def xml_open_tag(self):
+    def xml_open_tag(self) -> str:
         """
         The open tag contains the name of the object but also the attribute tags. This property function concatenates all the attributes in the class along with the opening and closing angle brackets and returns them as a string.
 
@@ -93,7 +95,7 @@ class XMLBase:
         return open_tag + ">"
 
     @property
-    def xml_close_tag(self):
+    def xml_close_tag(self) -> str:
         """
         The closing tag contains the name of the object wrapped in angle brackets.
 
@@ -108,7 +110,7 @@ class XMLBase:
         return "</{0}>".format(self.xml_class)
 
     @property
-    def xml(self):
+    def xml(self) -> str:
         """
         All drawpyo exportable classes contain an xml property that returns the formatted string of their XML output.
 
@@ -122,11 +124,11 @@ class XMLBase:
         """
         return self.xml_open_tag[:-1] + " />"
 
-    def xml_ify(self, parameter_string):
+    def xml_ify(self, parameter_string: str) -> str:
         return self.translate_txt(parameter_string, xmlize)
 
     @staticmethod
-    def translate_txt(string, replacement_dict):
+    def translate_txt(string: str, replacement_dict: Dict[str, str]) -> str:
         new_str = ""
         for char in string:
             if char in replacement_dict:

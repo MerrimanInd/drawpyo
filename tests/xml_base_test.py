@@ -1,14 +1,14 @@
 import drawpyo
 
 
-def test_XMLBase_init():
+def test_XMLBase_init() -> None:
     test_obj = drawpyo.XMLBase()
     assert test_obj.id == id(test_obj)
     assert test_obj.xml_class == "xml_tag"
     assert test_obj.attributes == {"id": id(test_obj), "parent": None}
 
 
-def test_XMLBase_tags():
+def test_XMLBase_tags() -> None:
     test_obj = drawpyo.XMLBase(xml_class="mxCell")
     expected_xml_open_tag = f'<mxCell id="{test_obj.id}">'
     expected_xml_close_tag = f"</mxCell>"
@@ -18,7 +18,7 @@ def test_XMLBase_tags():
     assert test_obj.xml == expected_xml
 
 
-def test_XMLBase_xml_ify():
+def test_XMLBase_xml_ify() -> None:
     test_obj = drawpyo.XMLBase(xml_class="mxCell")
 
     assert test_obj.xml_ify(">") == "&gt;"

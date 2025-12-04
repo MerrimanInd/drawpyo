@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class DefaultColors(str, Enum):
+class StandardColor(str, Enum):
     NONE = "none"
     BLACK = "#000000"
     WHITE = "#FFFFFF"
@@ -84,7 +84,7 @@ class DefaultColors(str, Enum):
     BLUE5 = "#007FFF"
     BLUE6 = "#0066CC"
     BLUE7 = "#004C99"
-    BLUE8 = "#^003366"
+    BLUE8 = "#003366"
     BLUE9 = "#001933"
     INDIGO1 = "#CCCCFF"
     INDIGO2 = "#9999FF"
