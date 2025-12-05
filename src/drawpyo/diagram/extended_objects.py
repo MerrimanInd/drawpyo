@@ -96,7 +96,7 @@ class List(Object):
 class PieSlice(Object):
     def __init__(
         self,
-        value: str = "Slice",
+        value: str = "",
         slice_value: float = 2.0,
         **kwargs: Any,
     ) -> None:
@@ -112,7 +112,7 @@ class PieSlice(Object):
         self.slice_value: float = slice_value
         self.size: Union[int, float] = kwargs.get("size", 120)
         self.startAngle: float = kwargs.get("startAngle", 0.0)
-        self.endAngle: float = (self.startAngle + slice_value)%1
+        self.endAngle: float = (self.startAngle + slice_value) % 1
 
     @property
     def size(self) -> Union[int, float]:
@@ -122,7 +122,7 @@ class PieSlice(Object):
             Union[int, float]: The size
         """
         return self.geometry.width
-    
+
     @size.setter
     def size(self, value: Union[int, float]) -> None:
         self.geometry.width = float(value)
