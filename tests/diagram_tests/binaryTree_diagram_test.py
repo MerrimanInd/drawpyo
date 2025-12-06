@@ -155,6 +155,17 @@ class TestBinaryTreeDiagramHelpers:
 class TestEdgeCasesAndConsistency:
     """Extra edge and consistency checks."""
 
+    def test_setting_none_on_left_removes_child(self):
+        """Setting left to None removes child and clears parent pointer."""
+        parent = BinaryNodeObject(value="P")
+        child = BinaryNodeObject(value="C")
+        parent.left = child
+        assert child._tree_parent is parent
+
+        parent.left = None
+        assert child._tree_parent is None
+        assert child not in parent.tree_children
+
     def test_setting_none_on_right_removes_child(self):
         """Setting right to None removes child and clears parent pointer."""
         parent = BinaryNodeObject(value="P")
@@ -167,18 +178,28 @@ class TestEdgeCasesAndConsistency:
         assert child not in parent.tree_children
 
     def test_adding_same_child_as_left_then_right_moves_it(self):
-        """If child was left then set as right, it should be moved to index 1."""
+        """If child was left then set as right, right should return it and left be None."""
         parent = BinaryNodeObject(value="P")
         child = BinaryNodeObject(value="C")
         parent.left = child
-        # now move to right
         parent.right = child
+
         assert parent.right is child
-        # left should now be None (or another object) and child at index 1
-        if parent.left is not None:
-            assert parent.tree_children[1] is child
-        else:
-            assert parent.tree_children[1] is child
+        assert parent.left is None
+        # no duplicates
+        assert parent.tree_children.count(child) == 1
+
+    def test_adding_same_child_as_right_then_left_moves_it(self):
+        """If child was right then set as left, left should return it and right be None."""
+        parent = BinaryNodeObject(value="P")
+        child = BinaryNodeObject(value="C")
+        parent.right = child
+        parent.left = child
+
+        assert parent.left is child
+        assert parent.right is None
+        # no duplicates
+        assert parent.tree_children.count(child) == 1
 
     def test_no_duplicate_when_setting_right_after_left(self):
         """Setting same object left then right should not leave duplicate entries."""

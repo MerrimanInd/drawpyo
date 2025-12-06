@@ -22,22 +22,28 @@ class BinaryNodeObject(NodeObject):
         Returns:
             Optional[NodeObject]: left child or None.
         """
-        if len(self.tree_children) >= 1:
+        if len(self.tree_children) >= 2:
             return self.tree_children[0]
+        elif len(self.tree_children) == 1:
+            # If the sole child was last assigned via left, treat it as left.
+            if getattr(self, "_last_assigned_side", None) == "left":
+                return self.tree_children[0]
+            return None
         return None
 
     @left.setter
     def left(self, obj: Optional[NodeObject]) -> None:
         """Set or remove the left child.
 
-        Side effects:
-            - Detaches obj from any previous parent and assigns this node as its parent.
-            - Inserts obj at index 0 of tree_children.
-        Raises:
-            ValueError: if the two-child limit would be exceeded.
+        Detaches obj from any previous parent, inserts at index 0, and sets
+        obj._tree_parent = self. 
+        
+        Raises: 
+         ValueError if the two-child limit
+        would be violated.
         """
-        # remove existing left if setting to None
         existing = self.left
+        # remove existing left if setting to None
         if obj is None:
             if existing is not None:
                 try:
@@ -45,6 +51,10 @@ class BinaryNodeObject(NodeObject):
                 except ValueError:
                     pass
                 existing._tree_parent = None
+            try:
+                delattr(self, "_last_assigned_side")
+            except Exception:
+                pass
             return
 
         # detach from previous parent if any
@@ -59,21 +69,27 @@ class BinaryNodeObject(NodeObject):
         if len(self.tree_children) >= 2 and obj not in self.tree_children:
             raise ValueError("BinaryNodeObject cannot have more than two children")
 
-        # place as left (index 0)
+        # if already the existing left, nothing to do
         if existing is obj:
+            # mark last assigned side
+            self._last_assigned_side = "left"
             return
 
-        # if already present elsewhere (as right), move it
+        # if already present elsewhere (as right), remove it first
         if obj in self.tree_children:
-            self.tree_children.remove(obj)
+            try:
+                self.tree_children.remove(obj)
+            except ValueError:
+                pass
 
+        # insert at position 0
         if len(self.tree_children) == 0:
-            self.tree_children.insert(0, obj)
+            self.tree_children.append(obj)
         else:
-            # if there's one child, insert at position 0
             self.tree_children.insert(0, obj)
 
         obj._tree_parent = self
+        self._last_assigned_side = "left"
 
     @property
     def right(self) -> Optional[NodeObject]:
@@ -85,6 +101,9 @@ class BinaryNodeObject(NodeObject):
         if len(self.tree_children) >= 2:
             return self.tree_children[1]
         elif len(self.tree_children) == 1:
+            # If the sole child was last assigned via right, treat it as right.
+            if getattr(self, "_last_assigned_side", None) == "right":
+                return self.tree_children[0]
             return None
         return None
 
@@ -92,13 +111,16 @@ class BinaryNodeObject(NodeObject):
     def right(self, obj: Optional[NodeObject]) -> None:
         """Set or remove the right child.
 
-        Side effects:
-            - Detaches obj from any previous parent and assigns this node as its parent.
-            - Ensures obj occupies index 1 of tree_children.
+        Ensures obj occupies index 1 of tree_children (or is treated as right
+        when it's the sole child and was last set via right). Detaches obj
+        from any previous parent. 
+        
         Raises:
-            ValueError: if the two-child limit would be exceeded.
+         ValueError if the two-child limit
+        would be violated.
         """
         existing = self.right
+        # remove existing right if setting to None
         if obj is None:
             if existing is not None:
                 try:
@@ -106,6 +128,10 @@ class BinaryNodeObject(NodeObject):
                 except ValueError:
                     pass
                 existing._tree_parent = None
+            try:
+                delattr(self, "_last_assigned_side")
+            except Exception:
+                pass
             return
 
         # detach from previous parent if any
@@ -120,7 +146,7 @@ class BinaryNodeObject(NodeObject):
         if len(self.tree_children) >= 2 and obj not in self.tree_children:
             raise ValueError("BinaryNodeObject cannot have more than two children")
 
-        # if already present as left, move to right
+        # if already present, remove it (we'll reinsert at right position)
         if obj in self.tree_children:
             try:
                 self.tree_children.remove(obj)
@@ -129,17 +155,17 @@ class BinaryNodeObject(NodeObject):
 
         # ensure list has space for right at index 1
         if len(self.tree_children) == 0:
-            # insert a placeholder for left (None by omission) then append
+            # no children -> append (sole child). mark as right-assigned
             self.tree_children.append(obj)
         elif len(self.tree_children) == 1:
-            self.tree_children.append(obj)
+            # one child exists -> insert at position 1 to be the right child
+            self.tree_children.insert(1, obj)
         else:
-            # replace existing right
+            # already two children -> replace the right slot
             self.tree_children[1] = obj
 
         obj._tree_parent = self
-
-    
+        self._last_assigned_side = "right"
 
 
 class BinaryTreeDiagram(TreeDiagram):
