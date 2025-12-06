@@ -13,7 +13,6 @@ class NodeObject(Object):
 
     def __init__(self, tree=None, **kwargs) -> None:
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
-
         Args:
             tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.
 

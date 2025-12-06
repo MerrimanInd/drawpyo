@@ -44,6 +44,3 @@ flat = NodeObject(tree=tree, value="Flat Burrs", tree_parent=burr_grinders)
 DF64 = NodeObject(tree=tree, value="Turin DF64", tree_parent=flat)
 FellowOde = NodeObject(tree=tree, value="Fellow Ode", tree_parent=flat)
 LagomP64 = NodeObject(tree=tree, value="Lagom P64", tree_parent=flat)
-
-grp = tree.auto_layout()
-tree.write()
