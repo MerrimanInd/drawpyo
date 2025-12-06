@@ -37,23 +37,22 @@ class BarChart:
 
         Keyword Args:
             position (tuple[int, int]): Chart top-left position. Default: (0, 0)
-            bar_template (Object): Optional template Object for bar styling. Default: None
             bar_width (int): Width of each bar. Default: 40
             bar_spacing (int): Space between bars. Default: 20
             max_bar_height (int): Height of the largest bar. Default: 200
-            bar_colors (str | StandardColor | list[Union[str, StandardColor]]): Single color or list of colors. Default: "#66ccff"
+            bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: ["#66ccff"]
             base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l
             inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)
             title (str): Optional chart title. Default: None
             title_text_format (TextFormat): TextFormat for the title. Default: TextFormat()
             base_text_format (TextFormat): TextFormat for base labels. Default: TextFormat()
             inside_text_format (TextFormat): TextFormat for inside labels. Default: TextFormat()
-            bar_fill_color (str | StandardColor): Optional fill color override for all bars. Default: None
-            bar_stroke_color (str | StandardColor): Stroke color for bars. Default: "#000000"
             background_color (str | StandardColor): Optional chart background fill. Default: None
             show_axis (bool): Whether to show the axis and ticks. Default: False
             axis_tick_count (int): Number of tick intervals on the axis. Default: 5
             axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()
+            glass (bool): Whether bars have a glass effect. Default: False
+            rounded (bool): Whether bars have rounded corners. Default: False
         """
         # Validate data
         if not isinstance(data, dict):
@@ -108,13 +107,7 @@ class BarChart:
         # Title
         self._title: Optional[str] = kwargs.get("title")
 
-        # Colors
-        self._bar_fill_color: Optional[Union[str, StandardColor]] = kwargs.get(
-            "bar_fill_color"
-        )
-        self._bar_stroke_color: Optional[Union[str, StandardColor]] = kwargs.get(
-            "bar_stroke_color", "#000000"
-        )
+        # Background color
         self._background_color: Optional[Union[str, StandardColor]] = kwargs.get(
             "background_color"
         )
@@ -125,20 +118,18 @@ class BarChart:
             "axis_tick_count", self.TICK_COUNT
         )
 
-        # Optional bar object template
-        self._bar_template: Optional[Object] = kwargs.get("bar_template")
-
-        # Normalize bar colors
-        bar_colors: Optional[
-            Union[str, StandardColor, list[Union[str, StandardColor]]]
-        ] = kwargs.get("bar_colors", "#66ccff")
-        self._bar_colors: list[Union[str, StandardColor]] = self._normalize_colors(
-            bar_colors, len(data)
+        # Bar appearance
+        bar_colors: Optional[list[Union[str, StandardColor, ColorScheme]]] = kwargs.get(
+            "bar_colors", ["#66ccff"]
         )
-        self._original_bar_colors: (
-            Optional[Union[str, StandardColor]]
-            | Optional[list[Union[str, StandardColor]]]
-        ) = bar_colors
+        self._bar_colors: list[Union[str, StandardColor, ColorScheme]] = (
+            self._normalize_colors(bar_colors, len(data))
+        )
+        self._original_bar_colors: Optional[
+            list[Union[str, StandardColor, ColorScheme]]
+        ] = bar_colors
+        self._glass: Optional[bool] = kwargs.get("glass", False)
+        self._rounded: Optional[bool] = kwargs.get("rounded", False)
 
         # Build the chart
         self._group: Group = Group()
@@ -186,7 +177,7 @@ class BarChart:
         self._rebuild()
 
     def update_colors(
-        self, bar_colors: Union[str, StandardColor] | list[Union[str, StandardColor]]
+        self, bar_colors: list[Union[str, StandardColor, ColorScheme]]
     ) -> None:
         self._original_bar_colors = bar_colors
         self._bar_colors = self._normalize_colors(bar_colors, len(self._data))
@@ -216,16 +207,17 @@ class BarChart:
 
     def _normalize_colors(
         self,
-        colors: Union[str, StandardColor, list[Union[str, StandardColor]]],
+        colors: list[Union[str, StandardColor, ColorScheme]],
         count: int,
-    ) -> list[Union[str, StandardColor]]:
-        if isinstance(colors, (str, StandardColor)):
-            return [colors] * count
+    ) -> list[Union[str, StandardColor, ColorScheme]]:
         if not colors:
             return ["#66ccff"] * count
-        if len(colors) < count:
-            return colors + [colors[-1]] * (count - len(colors))
-        return colors[:count]
+
+        # Cycle through the list until we have the right amount of colors
+        result = []
+        for i in range(count):
+            result.append(colors[i % len(colors)])
+        return result
 
     def _calculate_scale(self) -> float:
         values = list(self._data.values())
@@ -378,32 +370,38 @@ class BarChart:
     ) -> None:
         x, _ = self._position
         bar_height = value * scale
-        color = self._bar_fill_color or self._bar_colors[index]
+        if isinstance(self._bar_colors[index], ColorScheme):
+            color_scheme = self._bar_colors[index]
+        elif isinstance(self._bar_colors[index], (StandardColor, str)):
+            fill_color = self._bar_colors[index]
 
+        # Calculate geometry
         bar_x = x + index * (self._bar_width + self._bar_spacing)
         bar_y = content_y + (self._max_bar_height - bar_height)
         bar_width = self._bar_width
 
-        # Uses the template object if provided, otherwise defaults
-        if self._bar_template:
-            bar = Object.create_from_template_object(
-                self._bar_template,
-                value="",
-                position=(bar_x, bar_y),
-            )
-            bar.width = bar_width
-            bar.height = bar_height
-            bar.fillColor = color
-            bar.strokeColor = self._bar_stroke_color
-        else:
-            bar = Object(
-                value="",
-                position=(bar_x, bar_y),
-                width=bar_width,
-                height=bar_height,
-                fillColor=color,
-                strokeColor=self._bar_stroke_color,
-            )
+        # Resolve color
+        color_value = self._bar_colors[index]
+        color_scheme = color_value if isinstance(color_value, ColorScheme) else None
+        fill_color = None if color_scheme else color_value
+
+        # INSIDE LABEL
+        inside_label = self._inside_label_formatter(key, value)
+        inside_text_format = deepcopy(self._inside_text_format)
+        inside_text_format.align = inside_text_format.align or "center"
+        inside_text_format.verticalAlign = inside_text_format.verticalAlign or "middle"
+
+        bar = Object(
+            value=inside_label,
+            position=(bar_x, bar_y),
+            width=bar_width,
+            height=bar_height,
+            color_scheme=color_scheme,
+            fillColor=fill_color,
+            rounded=self._rounded,
+            glass=self._glass,
+            text_format=inside_text_format,
+        )
 
         self._group.add_object(bar)
 
@@ -420,23 +418,6 @@ class BarChart:
         base_obj.text_format = deepcopy(self._base_text_format)
         base_obj.text_format.align = base_obj.text_format.align or "center"
         self._group.add_object(base_obj)
-
-        # INSIDE LABEL
-        inside_label = self._inside_label_formatter(key, value)
-        inside_obj = Object(
-            value=inside_label,
-            position=(bar_x, bar_y),
-            width=bar_width,
-            height=bar_height,
-            fillColor="none",
-            strokeColor="none",
-        )
-        inside_obj.text_format = deepcopy(self._inside_text_format)
-        inside_obj.text_format.align = inside_obj.text_format.align or "center"
-        inside_obj.text_format.verticalAlign = (
-            inside_obj.text_format.verticalAlign or "middle"
-        )
-        self._group.add_object(inside_obj)
 
     def __repr__(self) -> str:
         return f"BarChart(bars={len(self._data)}, position={self._position})"
