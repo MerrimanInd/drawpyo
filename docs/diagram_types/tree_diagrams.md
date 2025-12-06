@@ -66,3 +66,64 @@ tree.write()
 With some more additions, the resulting diagram renders as:
 
 ![coffee_grinders_tree](../img/tree_diagram/coffee_grinders_tree.png)
+
+
+---
+
+## Create a Tree from a Dictionary
+
+`TreeDiagram` supports creating an entire tree structure directly from a nested dictionary or list. This allows you to generate trees programmatically without manually creating every `NodeObject`.
+
+### Rules for dict/list conversion
+
+| Input Type                         | Behavior                                                                                      |
+| ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Dict**                           | Each key becomes a **category node**, and its value is recursively processed as its children. |
+| **List / Tuple**                   | Each element becomes a sibling under the same parent.                                         |
+| **Scalar (`str`, `int`, `float`)** | Treated as a **leaf node**.                                                                   |
+| **Unsupported types**              | Raises a `TypeError`.                                                                         |
+
+---
+
+### Coloring Nodes
+
+You can control node colors using the `colors` list and `coloring` mode.
+
+| Parameter  | Description                                                   | Options / Default                       |
+| ---------- | ------------------------------------------------------------- | --------------------------------------- |
+| `colors`   | List of `ColorScheme`, `StandardColor`, or color hex strings. | Default: `None`                         |
+| `coloring` | Method used to assign colors to nodes.                        | `"depth"` (default), `"hash"`, `"type"` |
+
+**Coloring Modes**
+
+| Mode    | Description                                                           |
+| ------- | --------------------------------------------------------------------- |
+| `depth` | Colors nodes based on their **depth in the tree**.                    |
+| `hash`  | Colors nodes based on a **hash of their value** (stable across runs). |
+| `type`  | Colors nodes based on **node type**: category, list item, or leaf.    |
+
+---
+
+### Example
+
+```python
+from drawpyo.diagram_types import TreeDiagram
+
+data = {
+    "Root": {
+        "Branch A": ["Leaf 1", "Leaf 2"],
+        "Branch B": ["Leaf 3"]
+    }
+}
+
+tree = TreeDiagram.from_dict(
+    data,
+    file_path="~/Test Drawpyo Charts",
+    file_name="Minimal Tree.drawio",
+    direction="down",
+    colors=["#DDDDDD","#BBBBBB"],
+    coloring="depth"
+)
+
+tree.write()
+```
