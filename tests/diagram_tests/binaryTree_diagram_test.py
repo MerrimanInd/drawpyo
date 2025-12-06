@@ -100,9 +100,13 @@ class TestBinaryTreeDiagramHelpers:
     def test_add_with_incorrect_types_raises(self):
         """Passing non-BinaryNodeObject should raise TypeError."""
         bt = BinaryTreeDiagram()
-        with pytest.raises(TypeError, match="parent and child must be BinaryNodeObject"):
+        with pytest.raises(
+            TypeError, match="parent and child must be BinaryNodeObject"
+        ):
             bt.add_left(object(), BinaryNodeObject())
-        with pytest.raises(TypeError, match="parent and child must be BinaryNodeObject"):
+        with pytest.raises(
+            TypeError, match="parent and child must be BinaryNodeObject"
+        ):
             bt.add_right(BinaryNodeObject(), object())
 
     def test_exceed_two_children_raises_when_adding_third_left(self):
@@ -115,7 +119,9 @@ class TestBinaryTreeDiagramHelpers:
 
         bt.add_left(parent, c1)
         bt.add_right(parent, c2)
-        with pytest.raises(ValueError, match="BinaryNodeObject cannot have more than two children"):
+        with pytest.raises(
+            ValueError, match="BinaryNodeObject cannot have more than two children"
+        ):
             bt.add_left(parent, c3)
         assert c3._tree_parent is None
         assert c3 not in parent.tree_children
@@ -130,7 +136,9 @@ class TestBinaryTreeDiagramHelpers:
 
         bt.add_left(parent, c1)
         bt.add_right(parent, c2)
-        with pytest.raises(ValueError, match="BinaryNodeObject cannot have more than two children"):
+        with pytest.raises(
+            ValueError, match="BinaryNodeObject cannot have more than two children"
+        ):
             bt.add_right(parent, c3)
         assert c3._tree_parent is None
         assert c3 not in parent.tree_children

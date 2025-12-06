@@ -36,9 +36,9 @@ class BinaryNodeObject(NodeObject):
         """Set or remove the left child.
 
         Detaches obj from any previous parent, inserts at index 0, and sets
-        obj._tree_parent = self. 
-        
-        Raises: 
+        obj._tree_parent = self.
+
+        Raises:
          ValueError if the two-child limit
         would be violated.
         """
@@ -58,7 +58,10 @@ class BinaryNodeObject(NodeObject):
             return
 
         # detach from previous parent if any
-        if getattr(obj, "tree_parent", None) is not None and obj.tree_parent is not self:
+        if (
+            getattr(obj, "tree_parent", None) is not None
+            and obj.tree_parent is not self
+        ):
             try:
                 obj.tree_parent.tree_children.remove(obj)
             except Exception:
@@ -113,8 +116,8 @@ class BinaryNodeObject(NodeObject):
 
         Ensures obj occupies index 1 of tree_children (or is treated as right
         when it's the sole child and was last set via right). Detaches obj
-        from any previous parent. 
-        
+        from any previous parent.
+
         Raises:
          ValueError if the two-child limit
         would be violated.
@@ -135,7 +138,10 @@ class BinaryNodeObject(NodeObject):
             return
 
         # detach from previous parent if any
-        if getattr(obj, "tree_parent", None) is not None and obj.tree_parent is not self:
+        if (
+            getattr(obj, "tree_parent", None) is not None
+            and obj.tree_parent is not self
+        ):
             try:
                 obj.tree_parent.tree_children.remove(obj)
             except Exception:
@@ -194,7 +200,9 @@ class BinaryTreeDiagram(TreeDiagram):
             TypeError: if arguments are not BinaryNodeObject.
             ValueError: if adding the child violates the two-child limit.
         """
-        if not isinstance(parent, BinaryNodeObject) or not isinstance(child, BinaryNodeObject):
+        if not isinstance(parent, BinaryNodeObject) or not isinstance(
+            child, BinaryNodeObject
+        ):
             raise TypeError("parent and child must be BinaryNodeObject instances")
         # ensure parent is part of this tree
         if parent.tree is not self:
@@ -212,7 +220,9 @@ class BinaryTreeDiagram(TreeDiagram):
             TypeError: if arguments are not BinaryNodeObject.
             ValueError: if adding the child violates the two-child limit.
         """
-        if not isinstance(parent, BinaryNodeObject) or not isinstance(child, BinaryNodeObject):
+        if not isinstance(parent, BinaryNodeObject) or not isinstance(
+            child, BinaryNodeObject
+        ):
             raise TypeError("parent and child must be BinaryNodeObject instances")
         if parent.tree is not self:
             parent.tree = self

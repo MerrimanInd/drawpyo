@@ -49,4 +49,3 @@ binaryTree.add_right(claire, aeva)
 
 grp = binaryTree.auto_layout()
 binaryTree.write()
-
