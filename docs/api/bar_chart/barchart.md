@@ -1,4 +1,4 @@
-# BarChart
+# Bar Chart
 
 ::: src.drawpyo.diagram_types.bar_chart.BarChart
     options:
