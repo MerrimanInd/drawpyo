@@ -125,8 +125,6 @@ class Object(DiagramBase):
             "sketch",
             "opacity",
             "dashed",
-            "startAngle",
-            "endAngle",
         ]
 
         self.geometry: Geometry = Geometry(parent_object=self)

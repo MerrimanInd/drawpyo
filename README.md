@@ -72,6 +72,7 @@ Currently, Drawpyo supports:
 
 * **Tree Diagrams**
 * **Bar Charts**
+* **Pie Charts**
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 

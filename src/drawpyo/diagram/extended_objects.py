@@ -109,6 +109,8 @@ class PieSlice(Object):
         """
         super().__init__(value=value, **kwargs)
         self.format_as_library_object(library="infographics", obj_name="pie")
+        self._style_attributes.append("startAngle")
+        self._style_attributes.append("endAngle")
         self.slice_value: float = slice_value
         self.size: Union[int, float] = kwargs.get("size", 120)
         self.startAngle: float = kwargs.get("startAngle", 0.0)

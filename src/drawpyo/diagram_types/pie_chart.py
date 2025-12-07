@@ -169,6 +169,9 @@ class PieChart:
             self._add_title()
 
         total = sum(self._data.values())
+        if total == 0:
+            total = 1.0  # Avoid division by zero
+
         start_angle = 0.0
 
         for i, (label, value) in enumerate(self._data.items()):
