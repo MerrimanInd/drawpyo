@@ -16,8 +16,8 @@ class PieChart:
 
     # Layout constants
     DEFAULT_SIZE = 200
-    TITLE_BOTTOM_MARGIN = 10
-    LABEL_OFFSET = 20
+    TITLE_BOTTOM_MARGIN = 20
+    LABEL_OFFSET = 5
     BACKGROUND_PADDING = 20
 
     def __init__(self, data: dict[str, float], **kwargs):
@@ -78,8 +78,8 @@ class PieChart:
         self._original_slice_colors = slice_colors
 
         # Label formatting
-        self._label_formatter: Callable[[str, float], str] = kwargs.get(
-            "label_formatter", lambda label, value: label
+        self._label_formatter: Callable[[str, float, float], str] = kwargs.get(
+            "label_formatter", self.default_label_formatter
         )
 
         # Build
@@ -136,8 +136,11 @@ class PieChart:
         for obj in self._group.objects:
             page.add_object(obj)
 
+    def default_label_formatter(self, key, value, total):
+        return f"{key}: {value/total*100:.1f}%"
+
     # ------------------------------------------------------------------
-    # Helper functions
+    # Private methods
     # ------------------------------------------------------------------
 
     def _normalize_colors(self, colors, count):
@@ -173,7 +176,7 @@ class PieChart:
             slice_color = self._slice_colors[i]
 
             slice_obj = PieSlice(
-                value=self._label_formatter(label, value),
+                value="",
                 slice_value=fraction,
                 position=(x, pie_y),
                 size=self._size,
@@ -186,9 +189,47 @@ class PieChart:
 
             self._group.add_object(slice_obj)
 
+            # SLICE LABEL
+            slice_label_pos = self._get_slice_label_position(
+                start_angle, fraction, x, pie_y
+            )
+            slice_text = self._label_formatter(label, value, total)
+            slice_label = Object(
+                value=slice_text,
+                position=slice_label_pos,
+                width=self._size,
+                height=self._size,
+                color_scheme=(
+                    slice_color if isinstance(slice_color, ColorScheme) else None
+                ),
+                fillColor="none",
+                strokeColor="none",
+            )
+            self._group.add_object(slice_label)
+
             start_angle += fraction
 
         self._group.update_geometry()
+
+    def _get_slice_label_position(
+        self, start_angle: float, fraction: float, x: int, y: int
+    ) -> tuple[int, int]:
+        import math
+
+        # Mittelpunktwinkel der Scheibe (normalisiert 0–1)
+        mid_angle = start_angle + (fraction / 2)
+
+        # In Radiant umrechnen (Uhrzeigersinn)
+        theta = (mid_angle * 2 * math.pi) - (math.pi / 2)
+
+        # Radius + Offset
+        offset = (self._size / 4) + self.LABEL_OFFSET
+
+        # Kreisposition berechnen
+        label_x = x + math.cos(theta) * offset
+        label_y = y + math.sin(theta) * offset
+
+        return (label_x, label_y)
 
     def _add_background(self, title_h: int):
         x, y = self._position
@@ -205,20 +246,21 @@ class PieChart:
 
     def _add_title(self):
         x, y = self._position
+        title_height = (self._title_text_format.fontSize or 16) + 4
+
         title_obj = Object(
             value=self._title,
-            position=(
-                x,
-                y - (self._title_text_format.fontSize or 16) - self.TITLE_BOTTOM_MARGIN,
-            ),
+            position=(x, y),
             width=self._size,
-            height=(self._title_text_format.fontSize or 16) + 4,
+            height=title_height,
             fillColor="none",
             strokeColor="none",
         )
+
         title_obj.text_format = deepcopy(self._title_text_format)
         title_obj.text_format.align = "center"
-        title_obj.text_format.verticalAlign = "bottom"
+        title_obj.text_format.verticalAlign = "top"
+
         self._group.add_object(title_obj)
 
     def __repr__(self):

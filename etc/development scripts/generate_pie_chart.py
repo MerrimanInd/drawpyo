@@ -10,9 +10,9 @@ from drawpyo.utils.color_scheme import ColorScheme
 # Chart title and data
 chart_title = "Coffee Orders"
 coffee_orders = {
-    "Americano": 69,
-    "Espresso": 20,
-    "Latte": 11,
+    "Americano": 64,
+    "Espresso": 21,
+    "Latte": 15,
 }
 
 # Create .drawio file at output path
@@ -37,30 +37,31 @@ title_format = TextFormat(
 color_scheme_a = ColorScheme(
     fill_color="#403025",
     stroke_color="#403025",
-    font_color=StandardColor.GRAY5,
+    font_color=StandardColor.GRAY1,
 )
 color_scheme_b = ColorScheme(
     fill_color="#16100B",
     stroke_color="#16100B",
-    font_color=StandardColor.GRAY5,
+    font_color=StandardColor.GRAY3,
 )
 color_scheme_c = ColorScheme(
     fill_color="#A98A72",
     stroke_color="#A98A72",
-    font_color=StandardColor.GRAY5,
+    font_color=StandardColor.GRAY7,
 )
 slice_colors = [color_scheme_a, color_scheme_b, color_scheme_c]
 
 
 # Create custom label formatter
-def label_formatter(key, _value):
-    return f"{key}"
+def label_formatter(key, value, total):
+    return f"{key.upper()} {value/total*100:.1f}%"
 
 
 # Create the chart and add it to the page
 chart = PieChart(
     coffee_orders,
     position=(100, 0),
+    size=350,
     slice_colors=slice_colors,
     title=chart_title,
     title_text_format=title_format,
