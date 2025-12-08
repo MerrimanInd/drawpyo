@@ -17,13 +17,13 @@ class BinaryNodeObject(NodeObject):
 
     def __init__(self, tree=None, **kwargs) -> None:
         """Initialize a binary node with exactly 2 child slots [left, right].
-        
+
         Each slot can be BinaryNodeObject or None. If tree_children is provided
         in kwargs, it will be normalized to a 2-element list.
         """
         # Get any provided children before calling super()
         provided_children = kwargs.get("tree_children", [])
-        
+
         # Normalize to exactly 2 elements [left, right]
         if len(provided_children) == 0:
             kwargs["tree_children"] = [None, None]
@@ -35,19 +35,19 @@ class BinaryNodeObject(NodeObject):
         else:
             # More than 2 children provided - raise error
             raise ValueError("BinaryNodeObject cannot have more than two children")
-        
+
         super().__init__(tree=tree, **kwargs)
 
     def _set_child_at_index(
         self, index: int, obj: Optional[NodeObject], side_name: str
     ) -> None:
         """Shared logic for setting a child at a specific index (0=left, 1=right).
-        
+
         Args:
             index: 0 for left, 1 for right
             obj: the child node to set, or None to clear
             side_name: 'left' or 'right' for tracking last assignment
-        
+
         Raises:
             ValueError: if attempting to add a third distinct child when both slots
                         are already occupied.
@@ -55,27 +55,29 @@ class BinaryNodeObject(NodeObject):
         # Ensure tree_children is always 2 elements
         while len(self.tree_children) < 2:
             self.tree_children.append(None)
-        
+
         existing = self.tree_children[index]
-        
+
         # Remove existing child if setting to None
         if obj is None:
             if existing is not None:
                 self.tree_children[index] = None
                 existing._tree_parent = None
             return
-        
+
         # Check if obj is already one of our children (moving between slots is allowed)
         is_already_our_child = obj in self.tree_children
-        
+
         # If we're trying to add a NEW child (not moving an existing one),
         # and both slots are occupied by different nodes, raise error
         if not is_already_our_child:
             other_index = 1 - index  # 0->1, 1->0
-            if (self.tree_children[index] is not None and 
-                self.tree_children[other_index] is not None):
+            if (
+                self.tree_children[index] is not None
+                and self.tree_children[other_index] is not None
+            ):
                 raise ValueError("BinaryNodeObject cannot have more than two children")
-        
+
         # Detach from previous parent if any
         if (
             getattr(obj, "tree_parent", None) is not None
@@ -93,12 +95,12 @@ class BinaryNodeObject(NodeObject):
                 except Exception:
                     pass
             obj._tree_parent = None
-        
+
         # If obj is already one of our children, clear its old position
         for i, child in enumerate(self.tree_children):
             if child is obj and i != index:
                 self.tree_children[i] = None
-        
+
         # Set the child at the target index
         self.tree_children[index] = obj
         obj._tree_parent = self
@@ -159,7 +161,6 @@ class BinaryTreeDiagram(TreeDiagram):
 
     # Styling constants
     DEFAULT_LINK_STYLE = "straight"
-
 
     def __init__(self, **kwargs) -> None:
         """Initialize with binary-friendly spacing and styling defaults."""

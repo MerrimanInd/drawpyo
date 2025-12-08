@@ -563,7 +563,9 @@ class TreeDiagram:
                 # has children, go through each child and check its children
                 for child in actual_children:
                     self.connect(tree_parent, child)
-                    child_actual_children = [c for c in child.tree_children if c is not None]
+                    child_actual_children = [
+                        c for c in child.tree_children if c is not None
+                    ]
                     if len(child_actual_children) > 0:
                         # If this child has its own children then recursive call
                         grp.add_object(layout_child(child))
