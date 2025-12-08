@@ -15,7 +15,6 @@ class NodeObject(Object):
 
     def __init__(self, tree=None, **kwargs) -> None:
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
-
         Args:
             tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.
 
@@ -558,11 +557,16 @@ class TreeDiagram:
         def layout_child(tree_parent: Optional[NodeObject]) -> TreeGroup:
             grp = TreeGroup(tree=self)
             grp.parent_object = tree_parent
-            if len(tree_parent.tree_children) > 0:
+            # Filter out None children (for BinaryNodeObject compatibility)
+            actual_children = [c for c in tree_parent.tree_children if c is not None]
+            if len(actual_children) > 0:
                 # has children, go through each child and check its children
-                for child in tree_parent.tree_children:
+                for child in actual_children:
                     self.connect(tree_parent, child)
-                    if len(child.tree_children) > 0:
+                    child_actual_children = [
+                        c for c in child.tree_children if c is not None
+                    ]
+                    if len(child_actual_children) > 0:
                         # If this child has its own children then recursive call
                         grp.add_object(layout_child(child))
                     else:
