@@ -1,218 +1,151 @@
 from __future__ import annotations
 
-from typing import List, Optional, Tuple, Dict, Any
-
-from ..file import File
-from ..page import Page
-from ..diagram.objects import Object, Group
-from ..diagram.edges import Edge
+from typing import List, Optional
 
 from .tree import NodeObject, TreeDiagram
 
 
 class BinaryNodeObject(NodeObject):
-    """NodeObject variant for binary trees exposing `left` and `right` properties
+    """
+    NodeObject variant for binary trees exposing `left` and `right` properties
     and enforcing at most two children.
     """
 
     def __init__(self, tree=None, **kwargs) -> None:
-        """Initialize a binary node with exactly 2 child slots [left, right].
-
-        Each slot can be BinaryNodeObject or None. If tree_children is provided
-        in kwargs, it will be normalized to a 2-element list.
         """
-        # Get any provided children before calling super()
-        provided_children = kwargs.get("tree_children", [])
+        Initialize a binary node with exactly 2 child slots [left, right].
 
-        # Normalize to exactly 2 elements [left, right]
-        if len(provided_children) == 0:
-            kwargs["tree_children"] = [None, None]
-        elif len(provided_children) == 1:
-            # Single child defaults to left position
-            kwargs["tree_children"] = [provided_children[0], None]
-        elif len(provided_children) == 2:
-            kwargs["tree_children"] = provided_children[:2]
+        If `tree_children` is provided, it is normalized to two elements.
+        """
+        children: List[Optional[BinaryNodeObject]] = kwargs.get("tree_children", [])
+
+        # Normalize provided list to exactly 2 elements
+        if len(children) == 0:
+            normalized = [None, None]
+        elif len(children) == 1:
+            normalized = [children[0], None]
+        elif len(children) == 2:
+            normalized = children[:]
         else:
-            # More than 2 children provided - raise error
             raise ValueError("BinaryNodeObject cannot have more than two children")
 
+        kwargs["tree_children"] = normalized
         super().__init__(tree=tree, **kwargs)
 
-    def _set_child_at_index(
-        self, index: int, obj: Optional[NodeObject], side_name: str
-    ) -> None:
-        """Shared logic for setting a child at a specific index (0=left, 1=right).
+    # ---------------------------------------------------------
+    # Private methods
+    # ---------------------------------------------------------
 
-        Args:
-            index: 0 for left, 1 for right
-            obj: the child node to set, or None to clear
-            side_name: 'left' or 'right' for tracking last assignment
+    def _ensure_two_slots(self) -> None:
+        """Ensure tree_children always has exactly 2 slots."""
+        if len(self.tree_children) < 2:
+            missing = 2 - len(self.tree_children)
+            self.tree_children.extend([None] * missing)
+        elif len(self.tree_children) > 2:
+            self.tree_children[:] = self.tree_children[:2]
 
-        Raises:
-            ValueError: if attempting to add a third distinct child when both slots
-                        are already occupied.
+    def _detach_from_old_parent(self, node: NodeObject) -> None:
+        """Remove `node` from its old parent's children (if any)."""
+        parent = getattr(node, "tree_parent", None)
+        if parent is None or parent is self:
+            return
+
+        if hasattr(parent, "tree_children"):
+            for i, existing in enumerate(parent.tree_children):
+                if existing is node:
+                    parent.tree_children[i] = None
+                    break
+
+        node._tree_parent = None
+
+    def _clear_existing_slot(self, node: NodeObject, target_index: int) -> None:
         """
-        # Ensure tree_children is always 2 elements
-        while len(self.tree_children) < 2:
-            self.tree_children.append(None)
+        If `node` already belongs to this parent in the *other* slot,
+        clear the old slot.
+        """
+        for i, existing in enumerate(self.tree_children):
+            if existing is node and i != target_index:
+                self.tree_children[i] = None
 
+    def _assign_child(self, index: int, node: Optional[NodeObject]) -> None:
+        """
+        Handles:
+        - Ensuring slot count
+        - Clearing old child if assigning None
+        - Preventing more than 2 distinct children
+        - Correctly detaching and reattaching node
+        """
+        self._ensure_two_slots()
         existing = self.tree_children[index]
 
-        # Remove existing child if setting to None
-        if obj is None:
+        if node is None:
             if existing is not None:
                 self.tree_children[index] = None
                 existing._tree_parent = None
             return
 
-        # Check if obj is already one of our children (moving between slots is allowed)
-        is_already_our_child = obj in self.tree_children
-
-        # If we're trying to add a NEW child (not moving an existing one),
-        # and both slots are occupied by different nodes, raise error
-        if not is_already_our_child:
-            other_index = 1 - index  # 0->1, 1->0
-            if (
-                self.tree_children[index] is not None
-                and self.tree_children[other_index] is not None
-            ):
+        if not node in self.tree_children:
+            other = 1 - index
+            if self.tree_children[index] is not None and self.tree_children[other] is not None:
                 raise ValueError("BinaryNodeObject cannot have more than two children")
 
-        # Detach from previous parent if any
-        if (
-            getattr(obj, "tree_parent", None) is not None
-            and obj.tree_parent is not self
-        ):
-            if hasattr(obj.tree_parent, "tree_children"):
-                # Remove from old parent's children list
-                try:
-                    old_parent_children = obj.tree_parent.tree_children
-                    if isinstance(old_parent_children, list):
-                        for i, child in enumerate(old_parent_children):
-                            if child is obj:
-                                old_parent_children[i] = None
-                                break
-                except Exception:
-                    pass
-            obj._tree_parent = None
+        self._detach_from_old_parent(node)
 
-        # If obj is already one of our children, clear its old position
-        for i, child in enumerate(self.tree_children):
-            if child is obj and i != index:
-                self.tree_children[i] = None
+        self._clear_existing_slot(node, index)
 
-        # Set the child at the target index
-        self.tree_children[index] = obj
-        obj._tree_parent = self
+        self.tree_children[index] = node
+        node._tree_parent = self
+
+    # ---------------------------------------------------------
+    # Properties and setters
+    # ---------------------------------------------------------
 
     @property
     def left(self) -> Optional[NodeObject]:
-        """Left child (index 0) or None.
-
-        Returns:
-            Optional[NodeObject]: left child or None.
-        """
-        # Ensure list has 2 elements
-        while len(self.tree_children) < 2:
-            self.tree_children.append(None)
+        self._ensure_two_slots()
         return self.tree_children[0]
 
     @left.setter
-    def left(self, obj: Optional[NodeObject]) -> None:
-        """Set or remove the left child.
-
-        Detaches obj from any previous parent and sets obj._tree_parent = self.
-        """
-        self._set_child_at_index(0, obj, "left")
+    def left(self, node: Optional[NodeObject]) -> None:
+        self._assign_child(0, node)
 
     @property
     def right(self) -> Optional[NodeObject]:
-        """Right child (index 1) or None.
-
-        Returns:
-            Optional[NodeObject]: right child or None.
-        """
-        # Ensure list has 2 elements
-        while len(self.tree_children) < 2:
-            self.tree_children.append(None)
+        self._ensure_two_slots()
         return self.tree_children[1]
 
     @right.setter
-    def right(self, obj: Optional[NodeObject]) -> None:
-        """Set or remove the right child.
-
-        Detaches obj from any previous parent and sets obj._tree_parent = self.
-        """
-        self._set_child_at_index(1, obj, "right")
+    def right(self, node: Optional[NodeObject]) -> None:
+        self._assign_child(1, node)
 
 
 class BinaryTreeDiagram(TreeDiagram):
-    """A simple subclass of TreeDiagram for binary trees.
+    """Simplifies TreeDiagram for binary-tree convenience."""
 
-    - Uses `BinaryNodeObject` for convenience methods.
-    - Provides `add_left` / `add_right` helpers and enforces two-child limit.
-    - Applies light prestyling defaults.
-    """
-
-    # Spacing constants
     DEFAULT_LEVEL_SPACING = 80
     DEFAULT_ITEM_SPACING = 20
     DEFAULT_GROUP_SPACING = 30
-
-    # Styling constants
     DEFAULT_LINK_STYLE = "straight"
 
     def __init__(self, **kwargs) -> None:
-        """Initialize with binary-friendly spacing and styling defaults."""
-        # apply some prestyling defaults for binary trees
         kwargs.setdefault("level_spacing", self.DEFAULT_LEVEL_SPACING)
         kwargs.setdefault("item_spacing", self.DEFAULT_ITEM_SPACING)
         kwargs.setdefault("group_spacing", self.DEFAULT_GROUP_SPACING)
         kwargs.setdefault("link_style", self.DEFAULT_LINK_STYLE)
         super().__init__(**kwargs)
 
-    def add_left(self, parent: BinaryNodeObject, child: BinaryNodeObject) -> None:
-        """Attach child as parent's left within this diagram.
-
-        Ensures both nodes belong to this diagram before linking.
-
-        Raises:
-            TypeError: if arguments are not BinaryNodeObject.
-            ValueError: if adding the child violates the two-child limit.
-        """
-        if not isinstance(parent, BinaryNodeObject) or not isinstance(
-            child, BinaryNodeObject
-        ):
+    def _attach(self, parent: BinaryNodeObject, child: BinaryNodeObject, side: str) -> None:
+        if not isinstance(parent, BinaryNodeObject) or not isinstance(child, BinaryNodeObject):
             raise TypeError("parent and child must be BinaryNodeObject instances")
-        # ensure parent is part of this tree
+
         if parent.tree is not self:
             parent.tree = self
-        # attach child to this tree and set as left
         child.tree = self
-        parent.left = child
+
+        setattr(parent, side, child)
+
+    def add_left(self, parent: BinaryNodeObject, child: BinaryNodeObject) -> None:
+        self._attach(parent, child, "left")
 
     def add_right(self, parent: BinaryNodeObject, child: BinaryNodeObject) -> None:
-        """Attach child as parent's right within this diagram.
-
-        Ensures both nodes belong to this diagram before linking.
-
-        Raises:
-            TypeError: if arguments are not BinaryNodeObject.
-            ValueError: if adding the child violates the two-child limit.
-        """
-        if not isinstance(parent, BinaryNodeObject) or not isinstance(
-            child, BinaryNodeObject
-        ):
-            raise TypeError("parent and child must be BinaryNodeObject instances")
-        if parent.tree is not self:
-            parent.tree = self
-        child.tree = self
-        parent.right = child
-
-    # def add_object(self, obj: NodeObject, **kwargs: Any) -> None:  # type: ignore[override]
-    #     """Add a node to this diagram (accepts BinaryNodeObject or NodeObject)."""
-    #     # ensure BinaryNodeObject is used when desired, but accept NodeObject too
-    #     if isinstance(obj, BinaryNodeObject):
-    #         super().add_object(obj, **kwargs)
-    #     else:
-    #         super().add_object(obj, **kwargs)
+        self._attach(parent, child, "right")
