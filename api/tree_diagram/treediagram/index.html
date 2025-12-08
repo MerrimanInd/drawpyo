@@ -1608,7 +1608,8 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">179</span>
+<span class="normal">180</span>
 <span class="normal">181</span>
 <span class="normal">182</span>
 <span class="normal">183</span>
@@ -2115,7 +2116,11 @@
 <span class="normal">684</span>
 <span class="normal">685</span>
 <span class="normal">686</span>
-<span class="normal">687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeDiagram</span><span class="p">:</span>
+<span class="normal">687</span>
+<span class="normal">688</span>
+<span class="normal">689</span>
+<span class="normal">690</span>
+<span class="normal">691</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeDiagram</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -2496,11 +2501,16 @@
         <span class="k">def</span><span class="w"> </span><span class="nf">layout_child</span><span class="p">(</span><span class="n">tree_parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TreeGroup</span><span class="p">:</span>
             <span class="n">grp</span> <span class="o">=</span> <span class="n">TreeGroup</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
             <span class="n">grp</span><span class="o">.</span><span class="n">parent_object</span> <span class="o">=</span> <span class="n">tree_parent</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_parent</span><span class="o">.</span><span class="n">tree_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Filter out None children (for BinaryNodeObject compatibility)</span>
+            <span class="n">actual_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tree_parent</span><span class="o">.</span><span class="n">tree_children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># has children, go through each child and check its children</span>
-                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree_parent</span><span class="o">.</span><span class="n">tree_children</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">actual_children</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tree_parent</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tree_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">child_actual_children</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">tree_children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">child_actual_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="c1"># If this child has its own children then recursive call</span>
                         <span class="n">grp</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">layout_child</span><span class="p">(</span><span class="n">child</span><span class="p">))</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -3020,7 +3030,8 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">183</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
+<span class="normal">183</span>
 <span class="normal">184</span>
 <span class="normal">185</span>
 <span class="normal">186</span>
@@ -3047,8 +3058,7 @@
 <span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.</span>
 
 <span class="sd">    Keyword Args:</span>
@@ -3192,7 +3202,8 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">343</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">342</span>
+<span class="normal">343</span>
 <span class="normal">344</span>
 <span class="normal">345</span>
 <span class="normal">346</span>
@@ -3215,8 +3226,7 @@
 <span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
-<span class="normal">366</span>
-<span class="normal">367</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_between_levels</span><span class="p">(</span>
+<span class="normal">366</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_between_levels</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
@@ -3356,7 +3366,8 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">369</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">368</span>
+<span class="normal">369</span>
 <span class="normal">370</span>
 <span class="normal">371</span>
 <span class="normal">372</span>
@@ -3375,8 +3386,7 @@
 <span class="normal">385</span>
 <span class="normal">386</span>
 <span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_in_level</span><span class="p">(</span>
+<span class="normal">388</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_in_level</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
@@ -3429,7 +3439,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">445</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">444</span>
+<span class="normal">445</span>
 <span class="normal">446</span>
 <span class="normal">447</span>
 <span class="normal">448</span>
@@ -3530,8 +3541,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">543</span>
 <span class="normal">544</span>
 <span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">546</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span>
     <span class="bp">cls</span><span class="p">,</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -3710,7 +3720,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">284</span>
+<span class="normal">285</span>
 <span class="normal">286</span>
 <span class="normal">287</span>
 <span class="normal">288</span>
@@ -3721,8 +3732,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">293</span>
 <span class="normal">294</span>
 <span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">level_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="normal">296</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">level_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
@@ -3850,7 +3860,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">298</span>
+<span class="normal">299</span>
 <span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
@@ -3871,8 +3882,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span>
-<span class="normal">320</span>
-<span class="normal">321</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_between_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="normal">320</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_between_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
@@ -4010,7 +4020,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">323</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">322</span>
+<span class="normal">323</span>
 <span class="normal">324</span>
 <span class="normal">325</span>
 <span class="normal">326</span>
@@ -4027,8 +4038,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">337</span>
 <span class="normal">338</span>
 <span class="normal">339</span>
-<span class="normal">340</span>
-<span class="normal">341</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="normal">340</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
@@ -4091,7 +4101,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
+<span class="normal">106</span>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
@@ -4161,8 +4172,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">173</span>
 <span class="normal">174</span>
 <span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+<span class="normal">176</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they&#39;re grouped together for auto positioning. Each level of a TreeDiagram is a set of groups.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -4449,7 +4459,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">108</span>
+<span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
@@ -4457,8 +4468,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.</span>
 
 <span class="sd">    Args:</span>
@@ -4490,7 +4500,8 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">134</span>
+<span class="normal">135</span>
 <span class="normal">136</span>
 <span class="normal">137</span>
 <span class="normal">138</span>
@@ -4503,8 +4514,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function centers the parent_objects along the group and then offsets it by the level spacing.&quot;&quot;&quot;</span>
     <span class="n">children_grp</span> <span class="o">=</span> <span class="n">TreeGroup</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
