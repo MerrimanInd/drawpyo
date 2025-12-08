@@ -20,6 +20,12 @@ This diagram makes creating directed tree graphs easy. Define trees, nodes, and 
 
 ## BarChart
 
-Useful visualization to compare the size of different categories.
+Useful visualization to compare the absolute size of different categories.
 
 [Documentation](diagram_types/bar_charts.md)
+
+## PieChart
+
+Useful visualization to compare the relative size of different categories.
+
+[Documentation](diagram_types/pie_charts.md)

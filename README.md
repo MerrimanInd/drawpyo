@@ -18,6 +18,10 @@ Available here!
 
 https://merrimanind.github.io/drawpyo/
 
+# Discord Server
+
+https://discord.gg/CSMHupUvRp
+
 # Basic Usage
 
 The basic mode of interacting with drawpyo is to manually create, style, and place objects just like you would using the Draw.io UI. There are a number of ways to style objects and you can write your own functionality for automatically handling style or placement.
@@ -72,6 +76,7 @@ Currently, Drawpyo supports:
 
 * **Tree Diagrams**
 * **Bar Charts**
+* **Pie Charts**
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 

@@ -10,4 +10,4 @@ So when I had a need to generate hierarchical tree diagrams of requirement struc
 
 # The Future of Drawpyo
 
-I will continue to tinker away with this tool, creating new functionality as I need it or find it interesting. But it's unfortunately a rather low priority so if anyone wants to contribute I would be grateful for the help! Reach out to me at [xander@merriman.industries](mailto:xander@merriman.industries) if you want to contribute.
+We’re constantly working to add new functionality, address issues and feature requests. If you find Drawpyo useful and would like to contribute, we’d greatly appreciate your help! You can reach out directly at [xander@merriman.industries](mailto:xander@merriman.industries) or join the conversation through GitHub issues.
