@@ -4,75 +4,43 @@
   <img src="docs/img/logo.png" alt="drawpyo logo"/>
 </p>
 
-drawpyo is a Python library for programmatically generating Diagrams.net / Draw.io charts. It enables you to create diagram files, place and style objects, and export fully compatible `.drawio` documents that can be opened in the Draw.io (Diagrams.net) desktop or web applications.
+Drawpyo is a Python library for programmatically generating Diagrams.net/Draw.io charts. It enables creating a diagram object, placing and styling objects, then writing the object to a file.
 
----
+# History/Justification
 
-## Table of Contents
+I love Draw.io! Compared to expensive and heavy commercial options like Visio and Miro, Draw.io's free and lightweight app allows wider and more universal distribution of diagrams. Because the files are stored in plaintext they can be versioned alongside code in a repository as documentation. The XML-based file format makes these diagrams semi-portable, and could easily be ported to other applications if Draw.io ever failed you. For these reason, I think it's one of the best options for documentation diagrams.
 
-- [History / Justification](#history--justification)
-- [Full Documentation](#full-documentation)
-- [Basic Usage](#basic-usage)
-  - [Make a new file](#make-a-new-file)
-  - [Add an object](#add-an-object)
-  - [Create an object from a Draw.io library](#create-an-object-from-the-base-style-libraries-available-in-the-drawio-ui)
-  - [Style an object using a style string](#style-an-object-from-a-string)
-  - [Write the file](#write-the-file)
-- [Usage with a Diagram Type](#usage-with-a-diagram-type)
-- [Working with TreeDiagrams](#working-with-treediagrams)
-  - [Create a new TreeDiagram](#create-a-new-tree-diagram)
-  - [Create NodeObjects](#create-some-nodeobjects)
-  - [Auto layout and write](#auto-layout-and-write)
-  - [Configuration Summary](#configuration-summary)
-  - [Limitations](#limitations)
-- [License](#license)
+When I had a need to generate heirarchical tree diagrams of requirement structures I was surprised to find there wasn't even a single existing Python library for working with these files. I took the project home and spent a weekend building the initial functionality. I've been adding functionality, robustness, and documentation intermittently since.
 
+# Full Documentation
 
----
-
-## History / Justification
-
-Draw.io is a free, lightweight alternative to heavier commercial tools such as Visio and Miro. Because files are stored in plaintext XML, they can be versioned alongside source code and treated as first-class documentation assets. The XML-based file format is also relatively portable and can be transformed or migrated if needed.
-
-drawpyo was created to fill a gap: there was no Python library focused on generating and manipulating Draw.io diagrams programmatically, especially for hierarchical requirement and tree structures. The initial version was built to support automated generation of hierarchical diagrams and has been extended over time with additional functionality, robustness, and documentation.
-
----
-
-## Full Documentation
-
-The complete documentation, including API reference and additional examples, is available at:
+Available here!
 
 https://merrimanind.github.io/drawpyo/
 
----
+# Basic Usage
 
-## Basic Usage
+The basic mode of interacting with drawpyo is to manually create, style, and place objects just like you would using the Draw.io UI. There are a number of ways to style objects and you can write your own functionality for automatically handling style or placement.
 
-The basic mode of interacting with drawpyo is similar to working directly in the Draw.io UI: you create objects, position them on a page, apply styles, and then write the resulting diagram to a `.drawio` file.
-
-You can either manage all placement and styling manually or build higher-level abstractions on top of drawpyo to automate those responsibilities.
-
-### Make a new file
+## Make a new file
 
 ```python
 import drawpyo
-
 file = drawpyo.File()
 file.file_path = r"C:\drawpyo"
 file.file_name = "Test Generated Edges.drawio"
-
 # Add a page
 page = drawpyo.Page(file=file)
 ```
 
-### Add an object
+## Add an object
 
 ```python
 item = drawpyo.diagram.Object(page=page, value="new object")
 item.position = (0, 0)
 ```
 
-### Create an object from the base style libraries available in the Draw.io UI
+## Create an object from the base style libraries available in the Draw.io UI
 
 ```python
 item_from_lib = drawpyo.diagram.object_from_library(
@@ -80,21 +48,17 @@ item_from_lib = drawpyo.diagram.object_from_library(
     library="general",
     obj_name="process",
     value="New Process",
-)
+    )
 ```
 
-### Style an object from a string
+## Style an object from a string
 
 ```python
 item_from_stylestr = drawpyo.diagram.Object(page=page)
-item_from_stylestr.apply_style_string(
-    "rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;"
-    "fontColor=#ffffff;strokeColor=#000000;gradientColor=#FF33FF;"
-    "strokeWidth=4;"
-)
+item_from_stylestr.apply_style_string("rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#000000;gradientColor=#FF33FF;strokeWidth=4;")
 ```
 
-### Write the file
+## Write the file
 
 ```python
 file.write()

@@ -1,51 +1,45 @@
 from os import path
-from drawpyo.diagram_types.binaryTree import BinaryNodeObject, BinaryTreeDiagram
+from drawpyo.diagram_types.binary_tree import BinaryNodeObject, BinaryTreeDiagram
 
 binaryTree = BinaryTreeDiagram(
     file_path=path.join(path.expanduser("~"), "Test Drawpyo Charts"),
-    file_name="Family Tree.drawio",
+    file_name="Coffee Types.drawio",
     direction="down",
     link_style="orthogonal",
 )
 
-BinaryNodeObject()
+# Root - Coffee
+coffee = BinaryNodeObject(value="Coffee")
 
-# Root (grandparent)
-grandparent = BinaryNodeObject(value="John (Grandparent)")
+# First level - Hot and Cold
+hot_coffee = BinaryNodeObject(value="Hot Coffee")
+cold_coffee = BinaryNodeObject(value="Cold Coffee")
 
-# First generation (children of John)
-alice = BinaryNodeObject(value="Alice (child)")
-bob = BinaryNodeObject(value="Bob (child)")
+# Second level under Hot Coffee
+espresso = BinaryNodeObject(value="Espresso")
+cappuccino = BinaryNodeObject(value="Cappuccino")
 
-# Second generation under Alice
-claire = BinaryNodeObject(value="Claire (grandchild)")
-dylan = BinaryNodeObject(value="Dylan (grandchild)")
+# Second level under Cold Coffee
+iced_latte = BinaryNodeObject(value="Iced Latte")
+cold_brew = BinaryNodeObject(value="Cold Brew")
 
-# Second generation under Bob
-eve = BinaryNodeObject(value="Eve (grandchild)")
-frank = BinaryNodeObject(value="Frank (grandchild)")
+# Third level under Hot Coffee's left child (Espresso)
+americano = BinaryNodeObject(value="Americano")
+macchiato = BinaryNodeObject(value="Macchiato")
 
-# Third generation: adding an extra binary subinaryTreeree under Bob's left child (Eve)
-gina = BinaryNodeObject(value="Gina (great-grandchild)")
-hank = BinaryNodeObject(value="Hank (great-grandchild)")
+# Build the binary tree (Coffee taxonomy)
+binaryTree.add_left(coffee, hot_coffee)
+binaryTree.add_right(coffee, cold_coffee)
 
-aeva = BinaryNodeObject(value="Aeva (great-grandchild)")
+binaryTree.add_left(hot_coffee, espresso)
+binaryTree.add_right(hot_coffee, cappuccino)
 
-# Build the binary tree (Family tree)
-binaryTree.add_left(grandparent, alice)
-binaryTree.add_right(grandparent, bob)
+binaryTree.add_left(cold_coffee, iced_latte)
+binaryTree.add_right(cold_coffee, cold_brew)
 
-binaryTree.add_left(alice, claire)
-binaryTree.add_right(alice, dylan)
-
-binaryTree.add_left(bob, eve)
-binaryTree.add_right(bob, frank)
-
-# Add the extra binary subinaryTreeree under parent's right child's left child (bob -> eve)
-binaryTree.add_left(eve, gina)
-binaryTree.add_right(eve, hank)
-
-binaryTree.add_right(claire, aeva)
+# Add extra binary subtree under hot coffee's left child (espresso)
+binaryTree.add_left(espresso, americano)
+binaryTree.add_right(espresso, macchiato)
 
 grp = binaryTree.auto_layout()
 binaryTree.write()

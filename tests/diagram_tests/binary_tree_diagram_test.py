@@ -1,6 +1,6 @@
 import pytest
 
-from drawpyo.diagram_types.binaryTree import BinaryNodeObject, BinaryTreeDiagram
+from drawpyo.diagram_types.binary_tree import BinaryNodeObject, BinaryTreeDiagram
 
 
 class TestBinaryNodeBasic:
