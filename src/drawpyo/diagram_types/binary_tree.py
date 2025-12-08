@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, Tuple, Dict, Any
 
 from .tree import NodeObject, TreeDiagram
 
@@ -86,7 +86,10 @@ class BinaryNodeObject(NodeObject):
 
         if not node in self.tree_children:
             other = 1 - index
-            if self.tree_children[index] is not None and self.tree_children[other] is not None:
+            if (
+                self.tree_children[index] is not None
+                and self.tree_children[other] is not None
+            ):
                 raise ValueError("BinaryNodeObject cannot have more than two children")
 
         self._detach_from_old_parent(node)
@@ -134,8 +137,12 @@ class BinaryTreeDiagram(TreeDiagram):
         kwargs.setdefault("link_style", self.DEFAULT_LINK_STYLE)
         super().__init__(**kwargs)
 
-    def _attach(self, parent: BinaryNodeObject, child: BinaryNodeObject, side: str) -> None:
-        if not isinstance(parent, BinaryNodeObject) or not isinstance(child, BinaryNodeObject):
+    def _attach(
+        self, parent: BinaryNodeObject, child: BinaryNodeObject, side: str
+    ) -> None:
+        if not isinstance(parent, BinaryNodeObject) or not isinstance(
+            child, BinaryNodeObject
+        ):
             raise TypeError("parent and child must be BinaryNodeObject instances")
 
         if parent.tree is not self:
