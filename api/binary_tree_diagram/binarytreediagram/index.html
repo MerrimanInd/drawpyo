@@ -10,28 +10,28 @@
         <meta name="author" content="Xander Cesari">
       
       
-        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/usage/objects/">
+        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/binary_tree_diagram/binarytreediagram/">
       
       
-        <link rel="prev" href="../color_management/">
+        <link rel="prev" href="../../tree_diagram/nodeobject/">
       
       
-        <link rel="next" href="../parent_child_objects/">
+        <link rel="next" href="../binarynodeobject/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>Objects - Drawpyo</title>
+        <title>BinaryTreeDiagram - Drawpyo</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
       
       
 
@@ -50,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#objects" class="md-skip">
+        <a href="#binarytreediagram" class="md-skip">
           Skip to content
         </a>
       
@@ -86,7 +86,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+    <a href="../../.." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Objects
+              BinaryTreeDiagram
             
           </span>
         </div>
@@ -196,7 +196,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+    <a href="../../.." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -226,7 +226,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -253,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -277,20 +277,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -311,7 +309,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -329,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../basic_usage/" class="md-nav__link">
+      <a href="../../../usage/basic_usage/" class="md-nav__link">
         
   
   
@@ -357,7 +355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../text_format/" class="md-nav__link">
+      <a href="../../../usage/text_format/" class="md-nav__link">
         
   
   
@@ -385,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../color_management/" class="md-nav__link">
+      <a href="../../../usage/color_management/" class="md-nav__link">
         
   
   
@@ -410,37 +408,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Objects
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../usage/objects/" class="md-nav__link">
         
   
   
@@ -456,182 +427,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#creating-a-basic-object" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Creating a basic object
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Creating a basic object">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#creating-an-object-from-a-shape-library" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Creating an object from a shape library
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#object-geometry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Geometry
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Object Geometry">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#object-sizing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Sizing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#object-geometry-and-placement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Geometry and Placement
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#styling-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Styling Objects
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Styling Objects">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#generating-from-a-style-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Generating from a style string
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#styling-manually" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Styling Manually
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Styling Manually">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#text-styling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Text Styling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#basestyle-and-shape" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BaseStyle and Shape
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#basic-styling-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Basic Styling Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#further-styling-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Styling Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -644,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../parent_child_objects/" class="md-nav__link">
+      <a href="../../../usage/parent_child_objects/" class="md-nav__link">
         
   
   
@@ -672,7 +467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../extended_objects/" class="md-nav__link">
+      <a href="../../../usage/extended_objects/" class="md-nav__link">
         
   
   
@@ -700,7 +495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../edges/" class="md-nav__link">
+      <a href="../../../usage/edges/" class="md-nav__link">
         
   
   
@@ -728,7 +523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../shape_libs/" class="md-nav__link">
+      <a href="../../../usage/shape_libs/" class="md-nav__link">
         
   
   
@@ -810,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagram_types/tree_diagrams/" class="md-nav__link">
+      <a href="../../../diagram_types/tree_diagrams/" class="md-nav__link">
         
   
   
@@ -838,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagram_types/binary_tree_diagrams/" class="md-nav__link">
+      <a href="../../../diagram_types/binary_tree_diagrams/" class="md-nav__link">
         
   
   
@@ -866,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagram_types/bar_charts/" class="md-nav__link">
+      <a href="../../../diagram_types/bar_charts/" class="md-nav__link">
         
   
   
@@ -894,7 +689,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../diagram_types/pie_charts.md" class="md-nav__link">
+      <a href="../../../diagram_types/pie_charts.md" class="md-nav__link">
         
   
   
@@ -926,18 +721,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -958,7 +755,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -976,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/architecture/" class="md-nav__link">
+      <a href="../../architecture/" class="md-nav__link">
         
   
   
@@ -1051,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/file/" class="md-nav__link">
+      <a href="../../file/" class="md-nav__link">
         
   
   
@@ -1079,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/page/" class="md-nav__link">
+      <a href="../../page/" class="md-nav__link">
         
   
   
@@ -1107,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/text_format/" class="md-nav__link">
+      <a href="../../text_format/" class="md-nav__link">
         
   
   
@@ -1135,7 +932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/edges/" class="md-nav__link">
+      <a href="../../edges/" class="md-nav__link">
         
   
   
@@ -1163,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/objects/" class="md-nav__link">
+      <a href="../../objects/" class="md-nav__link">
         
   
   
@@ -1191,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/extended_objects/" class="md-nav__link">
+      <a href="../../extended_objects/" class="md-nav__link">
         
   
   
@@ -1224,18 +1021,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
         
           
           <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
@@ -1256,7 +1055,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1321,7 +1120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/tree_diagram/treediagram/" class="md-nav__link">
+      <a href="../../tree_diagram/treediagram/" class="md-nav__link">
         
   
   
@@ -1349,7 +1148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/tree_diagram/nodeobject/" class="md-nav__link">
+      <a href="../../tree_diagram/nodeobject/" class="md-nav__link">
         
   
   
@@ -1382,18 +1181,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_5_3_2" id="__nav_5_3_2_label" tabindex="0">
@@ -1414,7 +1215,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_3_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1429,10 +1230,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../api/binary_tree_diagram/binarytreediagram/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BinaryTreeDiagram
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1448,6 +1276,54 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BinaryTreeDiagram
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BinaryTreeDiagram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram.from_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1460,7 +1336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/binary_tree_diagram/binarynodeobject/" class="md-nav__link">
+      <a href="../binarynodeobject/" class="md-nav__link">
         
   
   
@@ -1496,7 +1372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/bar_chart/barchart/" class="md-nav__link">
+      <a href="../../bar_chart/barchart/" class="md-nav__link">
         
   
   
@@ -1524,7 +1400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/pie_chart/piechart/" class="md-nav__link">
+      <a href="../../pie_chart/piechart/" class="md-nav__link">
         
   
   
@@ -1587,153 +1463,25 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-a-basic-object" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Creating a basic object
+        BinaryTreeDiagram
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Creating a basic object">
+    <nav class="md-nav" aria-label="BinaryTreeDiagram">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-an-object-from-a-shape-library" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram.from_dict" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Creating an object from a shape library
+        from_dict
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#object-geometry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Geometry
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Object Geometry">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#object-sizing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Sizing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#object-geometry-and-placement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Object Geometry and Placement
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#styling-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Styling Objects
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Styling Objects">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#generating-from-a-style-string" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Generating from a style string
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#styling-manually" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Styling Manually
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Styling Manually">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#text-styling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Text Styling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#basestyle-and-shape" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        BaseStyle and Shape
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#basic-styling-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Basic Styling Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#further-styling-attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Styling Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1762,123 +1510,192 @@
   
 
 
-<h1 id="objects">Objects</h1>
-<p>Though some diagram types have their own object subclasses, the main class for creating objects is the Object class.</p>
-<h2 id="creating-a-basic-object">Creating a basic object</h2>
-<pre><code class="language-python">base_obj = drawpyo.diagram.Object(page=page)
-</code></pre>
-<p>The default object type is a rounded corner rectangle with white background and a black border just like in the Draw.io app.</p>
-<p><img alt="object_default" src="../../img/object_styles/object_default.png" /></p>
-<p>The value attribute holds the text to display in the object.</p>
-<pre><code class="language-python">base_obj.value = &quot;This Object's Name is Fred&quot;
-</code></pre>
-<p><img alt="object_default_fred" src="../../img/object_styles/object_default_fred.png" /></p>
-<h3 id="creating-an-object-from-a-shape-library">Creating an object from a shape library</h3>
-<p>Just like the built-in shape libraries in the Draw.io app, Drawpyo supports generating shapes from libraries. Currently the 'general' and 'flowchart' libraries from the Draw.io app is defined but more will be added in the future.</p>
-<blockquote>
-<p>These libraries are defined in TOML files and drawpyo supports importing custom shape libraries! See <a href="/drawpyo/usage/shape_libs">Shape Libraries</a> for more information.</p>
-</blockquote>
-<p>To generate an object from a library:</p>
-<pre><code class="language-python">object = drawpyo.diagram.object_from_library(
-    library=&quot;general&quot;,
-    obj_name=&quot;process&quot;,
-    page=page,
-    )
-</code></pre>
-<p>This function returns a normal Object but prestyled by the library. It can then be further styled or modified.</p>
-<h2 id="object-geometry">Object Geometry</h2>
-<p>All objects contain a structure called ObjectGeometry that provides a layer of abstraction. Interacting directly with the geometry class is optional.</p>
-<h3 id="object-sizing">Object Sizing</h3>
-<p>The three parameters that affect object placement are size and aspect. Size has to be set individually with the .width and .height attributes.</p>
-<pre><code class="language-python">Object.width = 120
-Object.height = 80
-Object.aspect = 'fixed'
-</code></pre>
-<blockquote>
-<p>In earlier versions there was a 'size' attribute. But then it was found that 'size' was also used as a style attribute for certain shapes so the geometry size attribute was removed in favor of using width and height directly.</p>
-</blockquote>
-<h3 id="object-geometry-and-placement">Object Geometry and Placement</h3>
-<p>Repositioning objects is simple but there are a few convenience features to know about. There are two attributes available for setting the position by either the top left corner or the center:</p>
-<pre><code class="language-python">Object.position = (0, 0)
-Object.center_position = (0, 0)
-</code></pre>
-<p>The X and Y positions can also be accessed directly in the geometry object.</p>
-<pre><code class="language-python">Object.geometry.x = 0
-Object.geometry.y = 0
-</code></pre>
-<h2 id="styling-objects">Styling Objects</h2>
-<h3 id="generating-from-a-style-string">Generating from a style string</h3>
-<p>While styling an object from scratch in drawpyo is possible, you're probably using drawpyo because Draw.io exists and is a great UI so use it! The easiest workflow is to style objects in Draw.io, or at least play with the different parameters to understand how they'll render visually.</p>
-<p>Once you have an object styled in Draw.io how you like it, you can replicate the styling attributes you want manually or just copy the style string.</p>
-<p>To do this, first style an object as much as you want:</p>
-<p><img alt="stylestr_styled_object" src="../../img/object_styles/stylestr_styled_object.png" /></p>
-<p>Then right click on the object and select 'Edit Style:'. The following pop-up will show the exact style string:</p>
-<p><img alt="stylestr_edit_style" src="../../img/object_styles/stylestr_edit_style.png" /></p>
-<p>This style string can be copied into the drawpyo function <code>apply_style_string</code>:</p>
-<pre><code class="language-python">style_str_obj = drawpyo.diagram.Object(page=page)
+<h1 id="binarytreediagram">BinaryTreeDiagram</h1>
 
-style_str_obj.apply_style_string(
-    &quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#63B6FF;glass=1;strokeWidth=5;shadow=1;&quot;
-)
-</code></pre>
-<p>The <code>style_str_obj</code> will now have all of the custom styled attributes. It can also be used as a template object for others.</p>
-<h3 id="styling-manually">Styling Manually</h3>
-<p>There are infinite permutations of object formatting and styling available. There are some higher order attributes that set the template for the object. What lower order styling attributes may or may not apply in combination. Then there are attributes like size and text formatting that apply in all cases. These interactions are difficult to predict in drawpyo alone so a good way to get familiar with all of the possible options and types of customizations is just to play with the Draw.io app directly to design formatting to your taste.</p>
-<p>Almost all styling attributes are optional (and drawpyo adds the non-optional ones automatically). If an attribute is unset or set to None then it won't be included in the file output. This will set that specific styling behavior to a default mode.</p>
-<h4 id="text-styling">Text Styling</h4>
-<p>The styling within an object is contained inside of a <code>TextFormat</code> object. All styling parameters can be accessed at the attribute <code>Object.text_format</code>, which contains a <code>TextFormat</code> object.</p>
-<p>For more information about styling text, see <a href="/drawpyo/usage/text_format">Formatting Text</a> for more information.</p>
-<h4 id="basestyle-and-shape">BaseStyle and Shape</h4>
-<p>The highest order styling attribute in Draw.io for objects is <code>shape</code>. This sets how the object behaves and is rendered. Different values include:</p>
-<ul>
-<li>parallelogram</li>
-<li>shape</li>
-<li>process</li>
-<li>hexagon</li>
-<li>document</li>
-<li>cylinder3</li>
-<li>internalStorage</li>
-<li>cube</li>
-<li>step</li>
-<li>tape</li>
-<li>trapezoid</li>
-<li>note</li>
-<li>card</li>
-<li>callout</li>
-<li>dataStorage</li>
-</ul>
-<p>and many more.</p>
-<p>Confusingly there is another attribute called <code>baseStyle</code> that is sometimes used in combination with <code>shape</code> and sometimes without.</p>
-<p>BaseStyles include:</p>
-<ul>
-<li>text</li>
-<li>ellipse</li>
-<li>rhombus</li>
-<li>triangle</li>
-<li>swimlane</li>
-</ul>
-<p>It can be hard to predict how these two attributes will interact. To utilize them it's recommended to start in the Draw.io app, use their shape libraries or templates to get the desired style, then look at the style string to see what <code>shape</code> and <code>baseStyle</code> were used. When creating an object from a shape library these two attributes are handled automatically.</p>
-<h4 id="basic-styling-attributes">Basic Styling Attributes</h4>
-<p>These attributes mostly apply to most shape/baseStyle combinations and can be set on almost any object.</p>
-<ul>
-<li>rounded</li>
-<li>fillColor</li>
-<li>strokeColor</li>
-<li>opacity</li>
-<li>whiteSpace</li>
-<li>glass</li>
-<li>shadow</li>
-<li>comic</li>
-<li>line_pattern</li>
-</ul>
-<h4 id="further-styling-attributes">Further Styling Attributes</h4>
-<p>As mentioned above, not all of these attributes will apply to all object shapes and types. But some commonly called include:</p>
-<ul>
-<li>darkOpacity</li>
-<li>darkOpacity2</li>
-<li>backgroundOutline</li>
-<li>perimeter</li>
-</ul>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram" class="doc doc-heading">
+            <code>src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="src.drawpyo.diagram_types.tree.TreeDiagram" href="../../tree_diagram/treediagram/#src.drawpyo.diagram_types.tree.TreeDiagram">TreeDiagram</a></code></p>
+
+
+
+        <p>Simplifies TreeDiagram for binary-tree convenience.</p>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>src/drawpyo/diagram_types/binary_tree.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BinaryTreeDiagram</span><span class="p">(</span><span class="n">TreeDiagram</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simplifies TreeDiagram for binary-tree convenience.&quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT_LEVEL_SPACING</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="n">DEFAULT_ITEM_SPACING</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">DEFAULT_GROUP_SPACING</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">DEFAULT_LINK_STYLE</span> <span class="o">=</span> <span class="s2">&quot;straight&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;level_spacing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_LEVEL_SPACING</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;item_spacing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_ITEM_SPACING</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;group_spacing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_GROUP_SPACING</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;link_style&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_LINK_STYLE</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_attach</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">side</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">BinaryNodeObject</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">child</span><span class="p">,</span> <span class="n">BinaryNodeObject</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;parent and child must be BinaryNodeObject instances&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">child</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">side</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinaryTreeDiagram</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a BinaryTreeDiagram from a nested dictionary structure.</span>
+
+<span class="sd">        Each key represents a node, and its value is either None or another</span>
+<span class="sd">        dictionary with up to two keys (left and right children).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>  <span class="c1"># Implementation would go here</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram.from_dict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create a BinaryTreeDiagram from a nested dictionary structure.</p>
+<p>Each key represents a node, and its value is either None or another
+dictionary with up to two keys (left and right children).</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/drawpyo/diagram_types/binary_tree.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinaryTreeDiagram</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a BinaryTreeDiagram from a nested dictionary structure.</span>
+
+<span class="sd">    Each key represents a node, and its value is either None or another</span>
+<span class="sd">    dictionary with up to two keys (left and right children).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>  <span class="c1"># Implementation would go here</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 
 
@@ -1928,10 +1745,10 @@ style_str_obj.apply_style_string(
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
     
   </body>
