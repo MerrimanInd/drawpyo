@@ -75,6 +75,7 @@ Drawpyo also provides higher-level functionality that goes beyond what the Draw.
 Currently, Drawpyo supports:
 
 * **Tree Diagrams**
+* **Binary Tree Diagrams**
 * **Bar Charts**
 * **Pie Charts**
 
@@ -83,5 +84,6 @@ For more details, refer to the [documentation](https://merrimanind.github.io/dra
 Work has also begun on additional diagram types, including:
 
 * Automatic class/object/inheritance diagrams from a Python module
+* Directed and undirected graphs from adjacency lists
 * Flowcharts
 * Process diagrams

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Dict, Any
 
 from .tree import NodeObject, TreeDiagram
 
@@ -156,3 +156,13 @@ class BinaryTreeDiagram(TreeDiagram):
 
     def add_right(self, parent: BinaryNodeObject, child: BinaryNodeObject) -> None:
         self._attach(parent, child, "right")
+
+    @classmethod
+    def from_dict(self, data: Dict[str, Any], **kwargs) -> BinaryTreeDiagram:
+        """
+        Create a BinaryTreeDiagram from a nested dictionary structure.
+
+        Each key represents a node, and its value is either None or another
+        dictionary with up to two keys (left and right children).
+        """
+        pass  # Implementation would go here
