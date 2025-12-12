@@ -9,6 +9,8 @@ repo_url: https://github.com/MerrimanInd/drawpyo
 # theme: readthedocs
 theme:
   name: "material"
+  features:
+    - navigation.expand
 
 plugins:
   - search
