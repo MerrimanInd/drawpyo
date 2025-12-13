@@ -10,13 +10,11 @@
         <meta name="author" content="Xander Cesari">
       
       
-        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/pie_chart/piechart/">
+        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/api/legend/legend/">
       
       
-        <link rel="prev" href="../../bar_chart/barchart/">
+        <link rel="prev" href="../../pie_chart/piechart/">
       
-      
-        <link rel="next" href="../../legend/legend/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>Pie Chart - Drawpyo</title>
+        <title>Legend - Drawpyo</title>
       
     
     
@@ -70,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pie-chart" class="md-skip">
+        <a href="#legend" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Pie Chart
+              Legend
             
           </span>
         </div>
@@ -1358,6 +1356,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pie_chart/piechart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pie Chart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1377,7 +1403,7 @@
   <span class="md-ellipsis">
     
   
-    Pie Chart
+    Legend
   
 
     
@@ -1395,7 +1421,7 @@
   <span class="md-ellipsis">
     
   
-    Pie Chart
+    Legend
   
 
     
@@ -1421,19 +1447,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#src.drawpyo.diagram_types.pie_chart.PieChart" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.legend.Legend" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PieChart
+        Legend
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="PieChart">
+    <nav class="md-nav" aria-label="Legend">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#src.drawpyo.diagram_types.pie_chart.PieChart.__init__" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.legend.Legend.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       
         __init__
@@ -1452,34 +1478,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../legend/legend/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Legend
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1527,19 +1525,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#src.drawpyo.diagram_types.pie_chart.PieChart" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.legend.Legend" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PieChart
+        Legend
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="PieChart">
+    <nav class="md-nav" aria-label="Legend">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#src.drawpyo.diagram_types.pie_chart.PieChart.__init__" class="md-nav__link">
+  <a href="#src.drawpyo.diagram_types.legend.Legend.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       
         __init__
@@ -1574,15 +1572,15 @@
   
 
 
-<h1 id="pie-chart">Pie Chart</h1>
+<h1 id="legend">Legend</h1>
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<h2 id="src.drawpyo.diagram_types.pie_chart.PieChart" class="doc doc-heading">
-            <code>src.drawpyo.diagram_types.pie_chart.PieChart</code>
+<h2 id="src.drawpyo.diagram_types.legend.Legend" class="doc doc-heading">
+            <code>src.drawpyo.diagram_types.legend.Legend</code>
 
 
 </h2>
@@ -1592,8 +1590,7 @@
 
 
 
-        <p>A configurable pie chart built entirely from Object, Group, and PieSlice.</p>
-<p>This chart is mutable - you can update data, styling, and position after creation.</p>
+        <p>A simple color/label legend diagram.</p>
 
 
 
@@ -1603,8 +1600,9 @@
 
 
               <details class="mkdocstrings-source">
-                <summary>Source code in <code>src/drawpyo/diagram_types/pie_chart.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 11</span>
+                <summary>Source code in <code>src/drawpyo/diagram_types/legend.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 10</span>
+<span class="normal"> 11</span>
 <span class="normal"> 12</span>
 <span class="normal"> 13</span>
 <span class="normal"> 14</span>
@@ -1819,101 +1817,45 @@
 <span class="normal">223</span>
 <span class="normal">224</span>
 <span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
-<span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
-<span class="normal">244</span>
-<span class="normal">245</span>
-<span class="normal">246</span>
-<span class="normal">247</span>
-<span class="normal">248</span>
-<span class="normal">249</span>
-<span class="normal">250</span>
-<span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
-<span class="normal">254</span>
-<span class="normal">255</span>
-<span class="normal">256</span>
-<span class="normal">257</span>
-<span class="normal">258</span>
-<span class="normal">259</span>
-<span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span>
-<span class="normal">263</span>
-<span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span>
-<span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
-<span class="normal">272</span>
-<span class="normal">273</span>
-<span class="normal">274</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PieChart</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A configurable pie chart built entirely from Object, Group, and PieSlice.</span>
-
-<span class="sd">    This chart is mutable - you can update data, styling, and position after creation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="normal">226</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Legend</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple color/label legend diagram.&quot;&quot;&quot;</span>
 
     <span class="c1"># Layout constants</span>
-    <span class="n">DEFAULT_SIZE</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">COLOR_BOX_SIZE</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">COLOR_TEXT_GAP</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">ROW_GAP</span> <span class="o">=</span> <span class="mi">8</span>
     <span class="n">TITLE_BOTTOM_MARGIN</span> <span class="o">=</span> <span class="mi">20</span>
-    <span class="n">LABEL_OFFSET</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">BACKGROUND_PADDING</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">BACKGROUND_PADDING</span> <span class="o">=</span> <span class="mi">15</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            data (dict[str, float]): Mapping of labels to numeric values.</span>
+<span class="sd">            mapping (dict[str, StandardColor, ColorScheme]): Mapping of labels to colors.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            position (tuple[int, int]): Top-left chart position. Default: (0, 0)</span>
-<span class="sd">            size (int): Diameter of the pie. Default: 200</span>
-<span class="sd">            slice_colors (list[str | StandardColor | ColorScheme]): Colors for slices.</span>
+<span class="sd">            position (tuple[int, int]): Top-left diagram position. Default: (0, 0)</span>
 <span class="sd">            title (str): Optional title.</span>
 <span class="sd">            title_text_format (TextFormat): Formatting for the title.</span>
 <span class="sd">            label_text_format (TextFormat): Formatting for labels.</span>
-<span class="sd">            background_color (str | StandardColor): Optional chart background.</span>
-<span class="sd">            label_formatter (Callable[[str, float], str]): Custom formatter for slice labels.</span>
+<span class="sd">            glass (bool): Whether color boxes have a glass effect. Default: False</span>
+<span class="sd">            rounded (bool): Whether color boxes have rounded corners. Default: False</span>
+<span class="sd">            background_color (str | StandardColor): Optional background fill color.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Validate data</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Mapping must be a non-empty dict.&quot;</span><span class="p">)</span>
 
-        <span class="n">invalid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">invalid_keys</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All keys must be strings: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="p">)</span>
 
-        <span class="n">invalid_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))]</span>
-        <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Values must be numeric: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-        <span class="c1"># Position and size</span>
+        <span class="c1"># Position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_SIZE</span><span class="p">)</span>
+
+        <span class="c1"># Title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
 
         <span class="c1"># Text formats</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">:</span> <span class="n">TextFormat</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
@@ -1923,63 +1865,34 @@
             <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;label_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
         <span class="p">)</span>
 
-        <span class="c1"># Title</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+        <span class="c1"># Color box styles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Background</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;background_color&quot;</span><span class="p">)</span>
-
-        <span class="c1"># Colors</span>
-        <span class="n">slice_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;slice_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_slice_colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">slice_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_original_slice_colors</span> <span class="o">=</span> <span class="n">slice_colors</span>
-
-        <span class="c1"># Label formatting</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_label_formatter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;label_formatter&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_label_formatter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;background_color&quot;</span>
         <span class="p">)</span>
 
-        <span class="c1"># Build</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_build_chart</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
 
-    <span class="c1"># ------------------------------------------------------------------</span>
-    <span class="c1"># Properties</span>
-    <span class="c1"># ------------------------------------------------------------------</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
+    <span class="c1"># -----------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">group</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Group</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span>
 
-    <span class="c1"># ------------------------------------------------------------------</span>
-    <span class="c1"># Public methods</span>
-    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_slice_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_original_slice_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">update_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_original_slice_colors</span> <span class="o">=</span> <span class="n">slice_colors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_slice_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">slice_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_mapping</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
@@ -1989,8 +1902,8 @@
         <span class="n">dy</span> <span class="o">=</span> <span class="n">new_y</span> <span class="o">-</span> <span class="n">old_y</span>
 
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
-            <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">position</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="n">ox</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">position</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_position</span> <span class="o">=</span> <span class="n">new_position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">update_geometry</span><span class="p">()</span>
@@ -1999,112 +1912,69 @@
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
             <span class="n">page</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">default_label_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span>
-
-    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># -----------------------------------------------------</span>
     <span class="c1"># Private methods</span>
-    <span class="c1"># ------------------------------------------------------------------</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_normalize_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span>
+    <span class="c1"># -----------------------------------------------------</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_build_chart</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_chart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
 
-        <span class="c1"># Compute vertical offsets if title is present</span>
-        <span class="n">title_h</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">title_offset</span> <span class="o">=</span> <span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="o">.</span><span class="n">fontSize</span> <span class="ow">or</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TITLE_BOTTOM_MARGIN</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span>
             <span class="k">else</span> <span class="mi">0</span>
         <span class="p">)</span>
-        <span class="n">pie_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">title_h</span>
+
+        <span class="n">bg_width</span><span class="p">,</span> <span class="n">bg_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_background_dimensions</span><span class="p">(</span><span class="n">title_offset</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_add_background</span><span class="p">(</span><span class="n">title_h</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_background</span><span class="p">(</span><span class="n">bg_width</span><span class="p">,</span> <span class="n">bg_height</span><span class="p">,</span> <span class="n">title_offset</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_title</span><span class="p">()</span>
 
-        <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Avoid division by zero</span>
+        <span class="n">current_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">title_offset</span>
 
-        <span class="n">start_angle</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">fraction</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">total</span> <span class="k">if</span> <span class="n">total</span> <span class="k">else</span> <span class="mi">0</span>
-            <span class="n">slice_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-
-            <span class="n">slice_obj</span> <span class="o">=</span> <span class="n">PieSlice</span><span class="p">(</span>
-                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="n">slice_value</span><span class="o">=</span><span class="n">fraction</span><span class="p">,</span>
-                <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pie_y</span><span class="p">),</span>
-                <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
-                <span class="n">startAngle</span><span class="o">=</span><span class="n">start_angle</span><span class="p">,</span>
-                <span class="n">fillColor</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_color</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="n">slice_color</span><span class="p">,</span>
-                <span class="n">color_scheme</span><span class="o">=</span><span class="p">(</span>
-                    <span class="n">slice_color</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_color</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-                <span class="p">),</span>
-            <span class="p">)</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
-
-            <span class="c1"># SLICE LABEL</span>
-            <span class="n">slice_label_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_slice_label_position</span><span class="p">(</span>
-                <span class="n">start_angle</span><span class="p">,</span> <span class="n">fraction</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">pie_y</span>
-            <span class="p">)</span>
-            <span class="n">slice_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_formatter</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
-            <span class="n">slice_label</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-                <span class="n">value</span><span class="o">=</span><span class="n">slice_text</span><span class="p">,</span>
-                <span class="n">position</span><span class="o">=</span><span class="n">slice_label_pos</span><span class="p">,</span>
-                <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
-                <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
-                <span class="n">color_scheme</span><span class="o">=</span><span class="p">(</span>
-                    <span class="n">slice_color</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_color</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-                <span class="p">),</span>
-                <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-                <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">slice_label</span><span class="p">)</span>
-
-            <span class="n">start_angle</span> <span class="o">+=</span> <span class="n">fraction</span>
+        <span class="c1"># Create rows</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_row</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">current_y</span><span class="p">)</span>
+            <span class="n">current_y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROW_GAP</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">update_geometry</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_slice_label_position</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">start_angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_background_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title_offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute background size dynamically based on label lengths.&quot;&quot;&quot;</span>
 
-        <span class="c1"># Mittelpunktwinkel der Scheibe (normalisiert 0–1)</span>
-        <span class="n">mid_angle</span> <span class="o">=</span> <span class="n">start_angle</span> <span class="o">+</span> <span class="p">(</span><span class="n">fraction</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># Estimate text width</span>
+        <span class="n">max_text_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="p">)</span>
+        <span class="n">approx_text_width</span> <span class="o">=</span> <span class="n">max_text_len</span> <span class="o">*</span> <span class="mi">8</span>
 
-        <span class="c1"># In Radiant umrechnen (Uhrzeigersinn)</span>
-        <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">mid_angle</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_TEXT_GAP</span>
+            <span class="o">+</span> <span class="n">approx_text_width</span>
+            <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">title_offset</span>
+            <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROW_GAP</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ROW_GAP</span>
+            <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">)</span>
+        <span class="p">)</span>
 
-        <span class="c1"># Radius + Offset</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">LABEL_OFFSET</span>
+        <span class="k">return</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
 
-        <span class="c1"># Kreisposition berechnen</span>
-        <span class="n">label_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">offset</span>
-        <span class="n">label_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">offset</span>
-
-        <span class="k">return</span> <span class="p">(</span><span class="n">label_x</span><span class="p">,</span> <span class="n">label_y</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_add_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title_h</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">title_offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
-        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
         <span class="n">bg</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">),</span>
-            <span class="n">width</span><span class="o">=</span><span class="n">size</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="n">size</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span> <span class="o">+</span> <span class="n">title_h</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
             <span class="n">fillColor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">,</span>
             <span class="n">strokeColor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
@@ -2112,25 +1982,58 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_add_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
-        <span class="n">title_height</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="o">.</span><span class="n">fontSize</span> <span class="ow">or</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span>
+        <span class="n">text_h</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="o">.</span><span class="n">fontSize</span> <span class="ow">or</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span>
 
         <span class="n">title_obj</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
-            <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="n">title_height</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">text_h</span><span class="p">,</span>
             <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
             <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">)</span>
-        <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span>
+        <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span>
         <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">title_obj</span><span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_row</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
+
+        <span class="c1"># Color square</span>
+        <span class="n">color_box</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+            <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span><span class="p">,</span>
+            <span class="n">fillColor</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="n">color</span><span class="p">,</span>
+            <span class="n">color_scheme</span><span class="o">=</span><span class="p">(</span><span class="n">color</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">rounded</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">,</span>
+            <span class="n">glass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">color_box</span><span class="p">)</span>
+
+        <span class="c1"># Text label</span>
+        <span class="n">label_obj</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_TEXT_GAP</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">COLOR_BOX_SIZE</span><span class="p">,</span>
+            <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_text_format</span><span class="p">)</span>
+        <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span>
+        <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="s2">&quot;middle&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">label_obj</span><span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PieChart(slices=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Legend(items=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="p">)</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="si">}</span><span class="s2">)&quot;</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -2150,8 +2053,8 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="src.drawpyo.diagram_types.pie_chart.PieChart.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="src.drawpyo.diagram_types.legend.Legend.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2173,14 +2076,14 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>data</code>
+                <code>mapping</code>
             </td>
             <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <span title="float">float</span>]</code>
+                  <code><span title="dict">dict</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a>, <a class="autorefs autorefs-internal" title="src.drawpyo.utils.color_scheme.ColorScheme" href="../../color_scheme/#src.drawpyo.utils.color_scheme.ColorScheme">ColorScheme</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Mapping of labels to numeric values.</p>
+                <p>Mapping of labels to colors.</p>
               </div>
             </td>
             <td>
@@ -2208,29 +2111,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Top-left chart position. Default: (0, 0)</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>size</code></td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Diameter of the pie. Default: 200</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>slice_colors</code></td>
-            <td>
-                  <code><span title="list">list</span>[<span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.color_scheme.ColorScheme" href="../../color_scheme/#src.drawpyo.utils.color_scheme.ColorScheme">ColorScheme</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Colors for slices.</p>
+                <p>Top-left diagram position. Default: (0, 0)</p>
               </div>
             </td>
           </tr>
@@ -2268,24 +2149,35 @@
             </td>
           </tr>
           <tr class="doc-section-item">
+            <td><code>glass</code></td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether color boxes have a glass effect. Default: False</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>rounded</code></td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether color boxes have rounded corners. Default: False</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
             <td><code>background_color</code></td>
             <td>
                   <code><span title="str">str</span> | <a class="autorefs autorefs-internal" title="src.drawpyo.utils.standard_colors.StandardColor" href="../../standard_colors/#src.drawpyo.utils.standard_colors.StandardColor">StandardColor</a></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Optional chart background.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>label_formatter</code></td>
-            <td>
-                  <code><span title="typing.Callable">Callable</span>[[<span title="str">str</span>, <span title="float">float</span>], <span title="str">str</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Custom formatter for slice labels.</p>
+                <p>Optional background fill color.</p>
               </div>
             </td>
           </tr>
@@ -2294,8 +2186,11 @@
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/drawpyo/diagram_types/pie_chart.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+              <summary>Source code in <code>src/drawpyo/diagram_types/legend.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
@@ -2340,60 +2235,35 @@
 <span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Args:</span>
-<span class="sd">        data (dict[str, float]): Mapping of labels to numeric values.</span>
+<span class="sd">        mapping (dict[str, StandardColor, ColorScheme]): Mapping of labels to colors.</span>
 
 <span class="sd">    Keyword Args:</span>
-<span class="sd">        position (tuple[int, int]): Top-left chart position. Default: (0, 0)</span>
-<span class="sd">        size (int): Diameter of the pie. Default: 200</span>
-<span class="sd">        slice_colors (list[str | StandardColor | ColorScheme]): Colors for slices.</span>
+<span class="sd">        position (tuple[int, int]): Top-left diagram position. Default: (0, 0)</span>
 <span class="sd">        title (str): Optional title.</span>
 <span class="sd">        title_text_format (TextFormat): Formatting for the title.</span>
 <span class="sd">        label_text_format (TextFormat): Formatting for labels.</span>
-<span class="sd">        background_color (str | StandardColor): Optional chart background.</span>
-<span class="sd">        label_formatter (Callable[[str, float], str]): Custom formatter for slice labels.</span>
+<span class="sd">        glass (bool): Whether color boxes have a glass effect. Default: False</span>
+<span class="sd">        rounded (bool): Whether color boxes have rounded corners. Default: False</span>
+<span class="sd">        background_color (str | StandardColor): Optional background fill color.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Validate data</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">mapping</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Mapping must be a non-empty dict.&quot;</span><span class="p">)</span>
 
-    <span class="n">invalid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
-    <span class="k">if</span> <span class="n">invalid_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All keys must be strings: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">mapping</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="p">)</span>
 
-    <span class="n">invalid_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))]</span>
-    <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Values must be numeric: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="c1"># Position and size</span>
+    <span class="c1"># Position</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_SIZE</span><span class="p">)</span>
+
+    <span class="c1"># Title</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
 
     <span class="c1"># Text formats</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">:</span> <span class="n">TextFormat</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
@@ -2403,27 +2273,17 @@
         <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;label_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
     <span class="p">)</span>
 
-    <span class="c1"># Title</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+    <span class="c1"># Color box styles</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Background</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;background_color&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Colors</span>
-    <span class="n">slice_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;slice_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
-    <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_slice_colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">slice_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_original_slice_colors</span> <span class="o">=</span> <span class="n">slice_colors</span>
-
-    <span class="c1"># Label formatting</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_label_formatter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;label_formatter&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_label_formatter</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;background_color&quot;</span>
     <span class="p">)</span>
 
-    <span class="c1"># Build</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_build_chart</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
