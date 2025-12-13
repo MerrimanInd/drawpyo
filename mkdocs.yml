@@ -32,7 +32,7 @@ nav:
     - Tree Diagrams: diagram_types/tree_diagrams.md
     - Binary Tree Diagrams: diagram_types/binary_tree_diagrams.md
     - Bar Charts: diagram_types/bar_charts.md
-    - Bar Charts: diagram_types/pie_charts.md
+    - Pie Charts: diagram_types/pie_charts.md
   - API:
     - Architecture: api/architecture.md
     - Basic Diagrams:
