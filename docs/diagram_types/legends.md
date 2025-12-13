@@ -1,4 +1,4 @@
-# Legendy
+# Legends
 
 A legend displays a color-to-label mapping, typically used to explain color coding in diagrams. The `Legend` class renders a vertical list of colored boxes with corresponding text labels.
 
