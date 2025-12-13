@@ -124,11 +124,15 @@ class PieChart:
         self._rebuild()
 
     def move(self, new_position: tuple[int, int]):
-        dx = new_position[0] - self._position[0]
-        dy = new_position[1] - self._position[1]
+        new_x, new_y = new_position
+        old_x, old_y = self._position
+        dx = new_x - old_x
+        dy = new_y - old_y
+
         for obj in self._group.objects:
             ox, oy = obj.position
             obj.position = (ox + dx, oy + dy)
+
         self._position = new_position
         self._group.update_geometry()
 
