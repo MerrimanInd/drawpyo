@@ -29,6 +29,8 @@ class Legend:
             title (str): Optional title.
             title_text_format (TextFormat): Formatting for the title.
             label_text_format (TextFormat): Formatting for labels.
+            glass (bool): Whether color boxes have a glass effect. Default: False
+            rounded (bool): Whether color boxes have rounded corners. Default: False
             background_color (str | StandardColor): Optional background fill color.
         """
 
@@ -52,6 +54,10 @@ class Legend:
         self._label_text_format: TextFormat = deepcopy(
             kwargs.get("label_text_format", TextFormat())
         )
+
+        # Color box styles
+        self._glass: Optional[bool] = kwargs.get("glass", False)
+        self._rounded: Optional[bool] = kwargs.get("rounded", False)
 
         # Background
         self._background_color: Optional[Union[str, StandardColor]] = kwargs.get(
@@ -79,15 +85,17 @@ class Legend:
         self._mapping = mapping.copy()
         self._rebuild()
 
-    def move(self, new_pos: tuple[int, int]):
-        dx = new_pos[0] - self._position[0]
-        dy = new_pos[1] - self._position[1]
+    def move(self, new_position: tuple[int, int]):
+        new_x, new_y = new_position
+        old_x, old_y = self._position
+        dx = new_x - old_x
+        dy = new_y - old_y
 
         for obj in self._group.objects:
             x, y = obj.position
             obj.position = (x + dx, y + dy)
 
-        self._position = new_pos
+        self._position = new_position
         self._group.update_geometry()
 
     def add_to_page(self, page: Page):
@@ -194,6 +202,8 @@ class Legend:
             height=self.COLOR_BOX_SIZE,
             fillColor=None if isinstance(color, ColorScheme) else color,
             color_scheme=(color if isinstance(color, ColorScheme) else None),
+            rounded=self._rounded,
+            glass=self._glass,
         )
         self._group.add_object(color_box)
 

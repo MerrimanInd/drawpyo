@@ -54,7 +54,7 @@ legend = Legend(
     position=(50, 50),
     title_text_format=title_format,
     label_text_format=label_format,
-    background_color="#f2d0c9",
+    rounded=True,
 )
 
 legend.add_to_page(page)
