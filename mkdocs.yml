@@ -31,6 +31,7 @@ nav:
     - Binary Tree Diagrams: diagram_types/binary_tree_diagrams.md
     - Bar Charts: diagram_types/bar_charts.md
     - Bar Charts: diagram_types/pie_charts.md
+    - Legends: diagram_types/legends.md
   - API:
     - Architecture: api/architecture.md
     - Basic Diagrams:
@@ -49,3 +50,4 @@ nav:
         - BinaryNodeObject: api/binary_tree_diagram/binarynodeobject.md
       - Bar Chart: api/bar_chart/barchart.md
       - Pie Chart: api/pie_chart/piechart.md
+      - Legend: api/legend/legend.md

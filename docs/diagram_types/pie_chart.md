@@ -77,4 +77,4 @@ chart = PieChart(
 
 After optional customization, add the chart to a `Page` and save the `.drawio` file.
 
-![example\_pie\_chart](../img/pie_chart/coffee_orders_chart.png)
+![example\_legend](../img/legend/legend.png)
