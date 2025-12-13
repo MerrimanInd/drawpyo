@@ -63,4 +63,4 @@ legend.add_to_page(page)
 
 The legend automatically sizes itself based on label lengths and applies consistent spacing between rows.
 
-![example\_pie\_chart](../img/pie_chart/coffee_orders_chart.png)
+![example\_legend](../img/legend/legend.png)
