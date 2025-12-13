@@ -781,6 +781,19 @@ class Group:
     # Position properties
     ###########################################################
 
+    def _move_by_delta(
+        self, delta_x: Union[int, float], delta_y: Union[int, float]
+    ) -> None:
+        """Apply position delta to all objects in the group.
+
+        Args:
+            delta_x: Horizontal offset to apply
+            delta_y: Vertical offset to apply
+        """
+        for obj in self.objects:
+            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
+        self.update_geometry()
+
     @property
     def center_position(self) -> Tuple[Union[int, float], Union[int, float]]:
         """The center position of the group. Returns a tuple of ints, with the X and Y coordinate. When this property is set, the coordinates of every object in the group are updated.
@@ -794,15 +807,9 @@ class Group:
     def center_position(
         self, new_center: Tuple[Union[int, float], Union[int, float]]
     ) -> None:
-        current_center: Tuple[Union[int, float], Union[int, float]] = (
-            self.left + self.width / 2,
-            self.top + self.height / 2,
-        )
-        delta_x: Union[int, float] = new_center[0] - current_center[0]
-        delta_y: Union[int, float] = new_center[1] - current_center[1]
-        for obj in self.objects:
-            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-        self.update_geometry()
+        delta_x = new_center[0] - self.center_position[0]
+        delta_y = new_center[1] - self.center_position[1]
+        self._move_by_delta(delta_x, delta_y)
 
     @property
     def position(self) -> Tuple[Union[int, float], Union[int, float]]:
@@ -817,12 +824,6 @@ class Group:
     def position(
         self, new_position: Tuple[Union[int, float], Union[int, float]]
     ) -> None:
-        current_position: Tuple[Union[int, float], Union[int, float]] = (
-            self.left,
-            self.top,
-        )
-        delta_x: Union[int, float] = new_position[0] - current_position[0]
-        delta_y: Union[int, float] = new_position[1] - current_position[1]
-        for obj in self.objects:
-            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-        self.update_geometry()
+        delta_x = new_position[0] - self.position[0]
+        delta_y = new_position[1] - self.position[1]
+        self._move_by_delta(delta_x, delta_y)
