@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from typing import List, Optional, Tuple, Dict, Any
 
+import hashlib
 from ..file import File
 from ..page import Page
 from ..diagram.objects import Object, Group
 from ..diagram.edges import Edge
+import drawpyo
 
 
 class NodeObject(Object):
@@ -13,7 +15,6 @@ class NodeObject(Object):
 
     def __init__(self, tree=None, **kwargs) -> None:
         """The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.
-
         Args:
             tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.
 
@@ -437,6 +438,114 @@ class TreeDiagram:
             self.objects.append(obj)
 
     ###########################################################
+    # Creating from dict
+    ###########################################################
+
+    @classmethod
+    def from_dict(
+        cls,
+        data: dict,
+        *,
+        colors: list = None,
+        coloring: str = "depth",
+        **diagram_kwargs,
+    ) -> "TreeDiagram":
+        """
+        Build a TreeDiagram from nested dict/list structures.
+        data: Nested dict/list structure representing the tree.
+        colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None
+        coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"
+            1. "depth" - Color nodes based on their depth in the tree.
+            2. "hash" - Color nodes based on a hash of their value.
+            3. "type" - Color nodes based on their type (category, list_item, leaf).
+        """
+
+        diagram = cls(**diagram_kwargs)
+
+        TYPE_INDEX = {"category": 0, "list_item": 1, "leaf": 2}
+
+        if coloring not in ("depth", "hash", "type"):
+            raise ValueError(f"Invalid coloring mode: {coloring}")
+
+        if colors is not None and not isinstance(colors, list):
+            raise TypeError("colors must be a list or None")
+        if colors == []:
+            colors = None
+
+        def choose_color(value: str, node_type: str, depth: int):
+            """Return a color from the palette based on mode."""
+            if not colors:
+                return None
+
+            n = len(colors)
+
+            if coloring == "depth":
+                index = depth % n
+            elif coloring == "hash":
+                # Stable hash using md5
+                h = int(hashlib.md5(value.encode("utf-8")).hexdigest(), 16)
+                index = h % n
+            elif coloring == "type":
+                index = TYPE_INDEX[node_type] % n
+
+            return colors[index]
+
+        def create_node(tree, value, parent, color):
+            """Create NodeObject with proper color argument."""
+            if color is None:
+                return NodeObject(tree=tree, value=value, tree_parent=parent)
+
+            if isinstance(color, drawpyo.ColorScheme):
+                return NodeObject(
+                    tree=tree, value=value, tree_parent=parent, color_scheme=color
+                )
+            elif isinstance(color, (drawpyo.StandardColor, str)):
+                return NodeObject(
+                    tree=tree, value=value, tree_parent=parent, fillColor=color
+                )
+            else:
+                raise TypeError(f"Unsupported color type: {type(color)}")
+
+        def build(parent: Optional[NodeObject], item, depth: int):
+            """Recursively build tree nodes."""
+
+            # LEAF NODE
+            if isinstance(item, (str, int, float)):
+                value = str(item)
+                color = choose_color(value, "leaf", depth)
+                create_node(diagram, value, parent, color)
+                return
+
+            # CATEGORY NODE (dict)
+            if isinstance(item, dict):
+                for key, value in item.items():
+                    if not isinstance(key, (str, int, float)):
+                        raise TypeError(f"Invalid dict key type: {type(key)}")
+
+                    key_str = str(key)
+                    color = choose_color(key_str, "category", depth)
+                    node = create_node(diagram, key_str, parent, color)
+                    build(node, value, depth + 1)
+                return
+
+            # LIST / TUPLE NODES
+            if isinstance(item, (list, tuple)):
+                for element in item:
+                    # list itself does not create a node, elements are siblings
+                    build(parent, element, depth)
+                return
+
+            raise TypeError(f"Unsupported type in tree data: {type(item)}")
+
+        if not isinstance(data, dict):
+            raise TypeError("Top-level tree must be a dict")
+
+        build(None, data, depth=0)
+
+        diagram.auto_layout()
+        return diagram
+
+    ###########################################################
     # Layout and Output
     ###########################################################
 
@@ -448,11 +557,16 @@ class TreeDiagram:
         def layout_child(tree_parent: Optional[NodeObject]) -> TreeGroup:
             grp = TreeGroup(tree=self)
             grp.parent_object = tree_parent
-            if len(tree_parent.tree_children) > 0:
+            # Filter out None children (for BinaryNodeObject compatibility)
+            actual_children = [c for c in tree_parent.tree_children if c is not None]
+            if len(actual_children) > 0:
                 # has children, go through each child and check its children
-                for child in tree_parent.tree_children:
+                for child in actual_children:
                     self.connect(tree_parent, child)
-                    if len(child.tree_children) > 0:
+                    child_actual_children = [
+                        c for c in child.tree_children if c is not None
+                    ]
+                    if len(child_actual_children) > 0:
                         # If this child has its own children then recursive call
                         grp.add_object(layout_child(child))
                     else:

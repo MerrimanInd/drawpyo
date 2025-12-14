@@ -17,3 +17,15 @@ Drawpyo extends the basic functionality of the Draw.io app with custom diagram t
 This diagram makes creating directed tree graphs easy. Define trees, nodes, and the apply an auto layout.
 
 [Documentation](diagram_types/tree_diagrams.md)
+
+## BarChart
+
+Useful visualization to compare the absolute size of different categories.
+
+[Documentation](diagram_types/bar_charts.md)
+
+## PieChart
+
+Useful visualization to compare the relative size of different categories.
+
+[Documentation](diagram_types/pie_charts.md)

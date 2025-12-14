@@ -7,3 +7,11 @@
         show_root_heading: true
 
 -----
+
+## Pie Slice
+
+::: src.drawpyo.diagram.extended_objects.PieSlice
+    options:
+        show_root_heading: true
+
+-----

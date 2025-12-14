@@ -45,6 +45,7 @@ htmlcov/
 .coverage.*
 .cache
 nosetests.xml
+conftest.py
 coverage.xml
 *.cover
 *.py,cover
@@ -154,3 +155,4 @@ cython_debug/
 
 # Draw.io
 *.drawio.bkp
+uv.lock

@@ -91,3 +91,42 @@ class List(Object):
             child.width = value
         self.geometry.width = value
         self.update_parent()
+
+
+class PieSlice(Object):
+    def __init__(
+        self,
+        value: str = "",
+        slice_value: float = 2.0,
+        **kwargs: Any,
+    ) -> None:
+        """The PieSlice object wraps the basic Object type but allows easier managing of a pie chart slice. All of the arguments and keyword arguments for Object are available here as well.
+
+        Args:
+            title (str, optional): The name of the pie slice. Defaults to "Slice".
+            slice_value (float, optional): The numeric value of the pie slice. Defaults to 1.0.
+            startAngle (float, optional): The starting angle of the pie slice in degrees. Defaults to 0.0.
+        """
+        super().__init__(value=value, **kwargs)
+        self.format_as_library_object(library="infographics", obj_name="pie")
+        self._style_attributes.append("startAngle")
+        self._style_attributes.append("endAngle")
+        self.slice_value: float = slice_value
+        self.size: Union[int, float] = kwargs.get("size", 120)
+        self.startAngle: float = kwargs.get("startAngle", 0.0)
+        self.endAngle: float = (self.startAngle + slice_value) % 1
+
+    @property
+    def size(self) -> Union[int, float]:
+        """The size (width and height) of the pie slice.
+
+        Returns:
+            Union[int, float]: The size
+        """
+        return self.geometry.width
+
+    @size.setter
+    def size(self, value: Union[int, float]) -> None:
+        self.geometry.width = float(value)
+        self.geometry.height = float(value)
+        self.update_parent()

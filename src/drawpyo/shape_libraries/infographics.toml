@@ -1,0 +1,18 @@
+[pie]
+width = 120
+height = 120
+startAngle = 0.0
+endAngle = 0.5
+shape = "mxgraph.basic.pie"
+verticalLabelPosition = "bottom"
+aspect = "fixed"
+
+[arc]
+width = 120
+height = 120
+strokeWidth = 6
+startAngle = 0.0
+endAngle = 0.5
+shape = "mxgraph.basic.arc"
+verticalLabelPosition = "bottom"
+aspect = "fixed"

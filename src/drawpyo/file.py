@@ -1,6 +1,7 @@
 from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
 from datetime import datetime
+from .utils import logger
 from os import path, makedirs
 from sys import version_info
 from .page import Page
@@ -33,6 +34,8 @@ class File(XMLBase):
         self.version: str = "21.6.5"  # This is the version of the Draw.io spec
         self.xml_class: str = "mxfile"
 
+        logger.info(f"🗃️ File created: '{self.__repr__()}'")
+
     def __repr__(self) -> str:
         return f"drawpyo File - {self.file_name}"
 
@@ -62,6 +65,7 @@ class File(XMLBase):
         Args:
             page (drawpyo.diagram.Page or str or int): A Page object that's currently contained in the file
         """
+        logger.info(f"🗑️ Page deleted: '{page.__repr__()}'")
         if isinstance(page, int):
             del self.pages[page]
         elif isinstance(page, str):
@@ -70,6 +74,17 @@ class File(XMLBase):
                     self.pages.remove(pg)
         elif isinstance(page, Page):
             self.pages.remove(page)
+
+    def stats(self) -> str:
+        """This function returns a string summarizing the file's properties.
+
+        Returns:
+            str: A summary of the file's properties
+        """
+        object_count = 0
+        for page in self.pages:
+            object_count += len(page.objects)
+        return f"Pages: {len(self.pages)} | Objects: {object_count}"
 
     ###########################################################
     # File Properties
@@ -82,7 +97,7 @@ class File(XMLBase):
     @property
     def agent(self) -> str:
         python_version = f"{version_info.major}.{version_info.minor}"
-        drawpyo_version = f"0.01"
+        drawpyo_version = f"0.23"
         return f"Python {python_version}, Drawpyo {drawpyo_version}"
 
     @property
@@ -140,5 +155,7 @@ class File(XMLBase):
             path.join(self.file_path, self.file_name), write_mode, encoding="utf-8"
         ) as f:
             f.write(self.xml)
+            logger.info(f"📈 File contents: '{self.stats()}'")
+            logger.info(f"💾 Saved file: '{self.file_name}' at '{self.file_path}'")
 
         return path.join(self.file_path, self.file_name)

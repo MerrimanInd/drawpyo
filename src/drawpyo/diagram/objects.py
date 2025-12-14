@@ -1,5 +1,6 @@
 from os import path
 from typing import Optional, Dict, Any, List, Union, Tuple
+from ..utils.logger import logger
 
 from .base_diagram import (
     DiagramBase,
@@ -18,6 +19,9 @@ general: Dict[str, Any] = import_shape_database(
 flowchart: Dict[str, Any] = import_shape_database(
     file_name=path.join("shape_libraries", "flowchart.toml"), relative=True
 )
+infographics: Dict[str, Any] = import_shape_database(
+    file_name=path.join("shape_libraries", "infographics.toml"), relative=True
+)
 line_styles: Dict[str, Any] = import_shape_database(
     file_name=path.join("formatting_database", "line_styles.toml"), relative=True
 )
@@ -25,6 +29,7 @@ line_styles: Dict[str, Any] = import_shape_database(
 base_libraries: Dict[str, Dict[str, Any]] = {
     "general": general,
     "flowchart": flowchart,
+    "infographics": infographics,
 }
 
 container: Dict[Optional[str], None] = {None: None, "vertical_container": None}
@@ -89,7 +94,7 @@ class Object(DiagramBase):
             children (list of Objects, optional): The subobjects to add to this object as a parent. Defaults to [].
             color_scheme (ColorScheme, optional): Bundled set of color specifications. Defaults to None.
             comic (bool, optional): Add comic styling to the object. Defaults to None.
-            fill_color (Union[str, StandardColor], optional): The object fill color. Defaults to None.
+            fillColor (Union[str, StandardColor], optional): The object fill color. Defaults to None.
             glass (bool, optional): Apply glass styling to the object. Defaults to None.
             height (int, optional): The height of the object in pixels. Defaults to 80.
             in_edges (list, optional): List of incoming edges to this object. Defaults to [].
@@ -101,7 +106,7 @@ class Object(DiagramBase):
             rounded (int or bool, optional): Whether to round the corners of the shape. Defaults to 0.
             shadow (bool, optional): Add a shadow to the object. Defaults to None.
             sketch (bool, optional): Add sketch styling to the object. Defaults to None.
-            stroke_color (Union[str, StandardColor], optional): The object stroke color. Defaults to None.
+            strokeColor (Union[str, StandardColor], optional): The object stroke color. Defaults to None.
             template_object (Object, optional): Another object to copy the style_attributes from. Defaults to None.
             text_format (TextFormat, optional): Formatting specifically around text. Defaults to TextFormat().
             vertex (int, optional): Vertex flag for the object. Defaults to 1.
@@ -161,10 +166,10 @@ class Object(DiagramBase):
         self.opacity: Optional[int] = kwargs.get("opacity", None)
         self.color_scheme: Optional[ColorScheme] = kwargs.get("color_scheme", None)
         self.strokeColor: Optional[Union[str, StandardColor]] = kwargs.get(
-            "stroke_color"
+            "strokeColor"
         ) or (self.color_scheme.stroke_color if self.color_scheme else None)
         self.fillColor: Optional[Union[str, StandardColor]] = kwargs.get(
-            "fill_color"
+            "fillColor"
         ) or (self.color_scheme.fill_color if self.color_scheme else None)
         self.glass: Optional[bool] = kwargs.get("glass", None)
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
@@ -194,14 +199,28 @@ class Object(DiagramBase):
             self.parent.autosize_to_children = old_parent_autosize
             self.update_parent()
 
+        logger.debug(f"🔲 Object created: {self.__repr__()}")
+
     def __repr__(self) -> str:
-        if self.value != "":
-            name_str: str = "{0} object with value {1}".format(
-                self.__class__.__name__, self.value
-            )
-        else:
-            name_str: str = "{0} object".format(self.__class__.__name__)
-        return name_str
+        """
+        A more informative representation for debugging.
+        """
+        parts = []
+
+        # Geometry
+        parts.append(f"pos: {self.position}")
+        parts.append(f"size: ({self.width}x{self.height})")
+
+        # Parent info
+        if getattr(self, "parent", None):
+            parts.append(f"parent: {self.parent.__class__.__name__}")
+
+        # Child count
+        if getattr(self, "children", None):
+            parts.append(f"children: {len(self.children)}")
+
+        joined = " | ".join(parts)
+        return f"{self.value} | {joined}"
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -762,6 +781,19 @@ class Group:
     # Position properties
     ###########################################################
 
+    def _move_by_delta(
+        self, delta_x: Union[int, float], delta_y: Union[int, float]
+    ) -> None:
+        """Apply position delta to all objects in the group.
+
+        Args:
+            delta_x: Horizontal offset to apply
+            delta_y: Vertical offset to apply
+        """
+        for obj in self.objects:
+            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
+        self.update_geometry()
+
     @property
     def center_position(self) -> Tuple[Union[int, float], Union[int, float]]:
         """The center position of the group. Returns a tuple of ints, with the X and Y coordinate. When this property is set, the coordinates of every object in the group are updated.
@@ -775,15 +807,9 @@ class Group:
     def center_position(
         self, new_center: Tuple[Union[int, float], Union[int, float]]
     ) -> None:
-        current_center: Tuple[Union[int, float], Union[int, float]] = (
-            self.left + self.width / 2,
-            self.top + self.height / 2,
-        )
-        delta_x: Union[int, float] = new_center[0] - current_center[0]
-        delta_y: Union[int, float] = new_center[1] - current_center[1]
-        for obj in self.objects:
-            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-        self.update_geometry()
+        delta_x = new_center[0] - self.center_position[0]
+        delta_y = new_center[1] - self.center_position[1]
+        self._move_by_delta(delta_x, delta_y)
 
     @property
     def position(self) -> Tuple[Union[int, float], Union[int, float]]:
@@ -798,12 +824,6 @@ class Group:
     def position(
         self, new_position: Tuple[Union[int, float], Union[int, float]]
     ) -> None:
-        current_position: Tuple[Union[int, float], Union[int, float]] = (
-            self.left,
-            self.top,
-        )
-        delta_x: Union[int, float] = new_position[0] - current_position[0]
-        delta_y: Union[int, float] = new_position[1] - current_position[1]
-        for obj in self.objects:
-            obj.position = (obj.geometry.x + delta_x, obj.geometry.y + delta_y)
-        self.update_geometry()
+        delta_x = new_position[0] - self.position[0]
+        delta_y = new_position[1] - self.position[1]
+        self._move_by_delta(delta_x, delta_y)
