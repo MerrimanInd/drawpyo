@@ -159,7 +159,6 @@ class TestBinaryTreeDiagramHelpers:
         assert parent.tree_children[0] is a
         assert parent.tree_children[1] is b
 
-
 class TestEdgeCasesAndConsistency:
     """Extra edge and consistency checks."""
 
@@ -217,3 +216,97 @@ class TestEdgeCasesAndConsistency:
         parent.right = child
         assert parent.tree_children.count(child) == 1
         assert child._tree_parent is parent
+
+class TestBinaryTreeDiagramFromDict:
+    """Tests for BinaryTreeDiagram.from_dict method."""
+
+    def test_from_dict_basic_structure(self):
+        """Test a simple dictionary structure."""
+        data = {"Root": ["LeftChild", "RightChild"]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 3
+
+        root = [obj for obj in diagram.objects if obj.value == "Root"][0]
+        left_child = [obj for obj in diagram.objects if obj.value == "LeftChild"][0]
+        right_child = [obj for obj in diagram.objects if obj.value == "RightChild"][0]
+
+        assert root.left is left_child
+        assert root.right is right_child
+        assert left_child.tree_parent is root
+        assert right_child.tree_parent is root
+
+    def test_from_dict_nested_structure(self):
+        """Test a more complex nested dictionary structure."""
+        data = {
+            "A": {
+                "B": ["D",None], 
+                "C": [None, "E"]},
+        }
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 5
+        a = [obj for obj in diagram.objects if obj.value == "A"][0]
+        b = [obj for obj in diagram.objects if obj.value == "B"][0]
+        c = [obj for obj in diagram.objects if obj.value == "C"][0]
+        d = [obj for obj in diagram.objects if obj.value == "D"][0]
+        e = [obj for obj in diagram.objects if obj.value == "E"][0]
+
+        assert a.left is b
+        assert a.right is c
+        assert b.left is d
+        assert b.right is None
+        assert c.left is None
+        assert c.right is e
+
+        assert b.tree_parent is a
+        assert c.tree_parent is a
+        assert d.tree_parent is b
+        assert e.tree_parent is c
+
+class TestBinaryTreeDiagramFromDictExtras:
+    """Additional tests for `from_dict` to cover lists, None siblings and errors."""
+
+    def test_from_dict_with_list_children(self):
+        data = {"Root": ["Left", "Right"]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 3
+        root = [o for o in diagram.objects if o.value == "Root"][0]
+        left = [o for o in diagram.objects if o.value == "Left"][0]
+        right = [o for o in diagram.objects if o.value == "Right"][0]
+
+        assert root.left is left
+        assert root.right is right
+
+    def test_from_dict_with_none_sibling(self):
+        data = {"Root": ["Left", None]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        root = [o for o in diagram.objects if o.value == "Root"][0]
+        left = [o for o in diagram.objects if o.value == "Left"][0]
+
+        assert root.left is left
+        assert root.right is None
+
+    def test_from_dict_too_many_children_raises(self):
+        data = {"Root": {"a": "A", "b": "B", "c": "C"}}
+        with pytest.raises(TypeError, match="have 1 or 2 children"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_from_dict_multiple_roots_raises(self):
+        data = {"A": {}, "B": {}}
+        with pytest.raises(TypeError, match="Root dict must contain exactly one key"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_from_dict_invalid_key_type_raises(self):
+        data = {(1, 2): "X"}
+        with pytest.raises(TypeError, match="Invalid dict key type"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_invalid_coloring_mode_raises(self):
+        data = {"Root": ["L"]}
+        with pytest.raises(ValueError, match="Invalid coloring mode"):
+            BinaryTreeDiagram.from_dict(data, coloring="unknown")
+
+

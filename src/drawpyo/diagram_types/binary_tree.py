@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import List, Optional, Dict, Any
 
 from .tree import NodeObject, TreeDiagram
+import drawpyo
+import hashlib
 
 
 class BinaryNodeObject(NodeObject):
@@ -158,11 +160,178 @@ class BinaryTreeDiagram(TreeDiagram):
         self._attach(parent, child, "right")
 
     @classmethod
-    def from_dict(self, data: Dict[str, Any], **kwargs) -> BinaryTreeDiagram:
-        """
-        Create a BinaryTreeDiagram from a nested dictionary structure.
+    def from_dict(
+        cls,
+        data: dict,
+        *,
+        colors: list = None,
+        coloring: str = "depth",
+        **kwargs,
+    ) -> "BinaryTreeDiagram":
 
-        Each key represents a node, and its value is either None or another
-        dictionary with up to two keys (left and right children).
-        """
-        pass  # Implementation would go here
+
+        if coloring not in {"depth", "hash", "type"}:
+            raise ValueError(f"Invalid coloring mode: {coloring}")
+
+        if colors is not None and not isinstance(colors, list):
+            raise TypeError("colors must be a list or None")
+
+        colors = colors or None
+        TYPE_INDEX = {"category": 0, "list_item": 1, "leaf": 2}
+
+        # -------------------------
+        # Validation
+        # -------------------------
+
+        def validate(item: Any, *, is_root=False):
+            if item is None or isinstance(item, (str, int, float)):
+                return
+
+            if isinstance(item, (list, tuple)):
+                if len(item) > 2:
+                    raise TypeError("List node can have at most two children")
+                for x in item:
+                    validate(x)
+                return
+
+            if isinstance(item, dict):
+                if is_root and len(item) != 1:
+                    raise TypeError("Root dict must contain exactly one key")
+
+                if not is_root and not (1 <= len(item) <= 2):
+                    raise TypeError("Dict node must have 1 or 2 children")
+
+                for k, v in item.items():
+                    if not isinstance(k, (str, int, float)):
+                        raise TypeError(f"Invalid dict key type: {type(k)}")
+                    validate(v)
+                return
+
+            raise TypeError(f"Unsupported tree item type: {type(item)}")
+
+        if not isinstance(data, dict):
+            raise TypeError("Top-level tree must be a dict")
+
+
+        #Checks if the provided dict data is valid for a binary tree construction
+        validate(data, is_root=True)
+
+        # -------------------------
+        # Helpers
+        # -------------------------
+
+        diagram = cls(**kwargs)
+
+        def choose_color(value: str, node_type: str, depth: int):
+            if not colors:
+                return None
+            n = len(colors)
+
+            if coloring == "depth":
+                idx = depth % n
+            elif coloring == "hash":
+                h = int(hashlib.md5(value.encode()).hexdigest(), 16)
+                idx = h % n
+            else:  # type
+                idx = TYPE_INDEX[node_type] % n
+
+            return colors[idx]
+
+        def create_node(value: str, parent, color):
+            if color is None:
+                return BinaryNodeObject(tree=diagram, value=value, tree_parent=parent)
+
+            if isinstance(color, drawpyo.ColorScheme):
+                return BinaryNodeObject(
+                    tree=diagram, value=value, tree_parent=parent, color_scheme=color
+                )
+
+            return BinaryNodeObject(
+                tree=diagram, value=value, tree_parent=parent, fillColor=color
+            )
+
+        # -------------------------
+        # Build
+        # -------------------------
+
+        def build(parent: BinaryNodeObject, item: Any, depth: int):
+            if item is None:
+                return
+
+            # Leaf
+            if isinstance(item, (str, int, float)):
+                value = str(item)
+                node = create_node(
+                    value,
+                    parent,
+                    choose_color(value, "leaf", depth),
+                )
+                diagram.add_left(parent, node)
+                return
+
+            # Dict (named children)
+            if isinstance(item, dict):
+                for i, (k, v) in enumerate(item.items()):
+                    name = str(k)
+                    node = create_node(
+                        name,
+                        parent,
+                        choose_color(name, "category", depth),
+                    )
+                    if i == 0:
+                        diagram.add_left(parent, node)
+                    else:
+                        diagram.add_right(parent, node)
+
+                    build(node, v, depth + 1)
+                return
+
+            # List / Tuple (positional children)
+            for i, elem in enumerate(item):
+                if elem is None:
+                    continue
+
+                if isinstance(elem, (str, int, float)):
+                    name = str(elem)
+                    node = create_node(
+                        name,
+                        parent,
+                        choose_color(name, "leaf", depth + 1),
+                    )
+                    
+                elif isinstance(elem, dict) and len(elem) == 1:
+                    k, v = next(iter(elem.items()))
+                    name = str(k)
+                    node = create_node(
+                        name,
+                        parent,
+                        choose_color(name, "category", depth + 1),
+                    )
+                    build(node, v, depth + 1)
+                else:
+                    raise TypeError(
+                        "List elements must be primitive or single-key dict"
+                    )
+
+                if i == 0:
+                    diagram.add_left(parent, node)
+                else:
+                    diagram.add_right(parent, node)
+
+        # -------------------------
+        # Root
+        # -------------------------
+
+        root_key, root_value = next(iter(data.items()))
+        root_name = str(root_key)
+
+        root = create_node(
+            root_name,
+            None,
+            choose_color(root_name, "category", 0),
+        )
+
+        build(root, root_value, depth=1)
+
+        diagram.auto_layout()
+        return diagram
