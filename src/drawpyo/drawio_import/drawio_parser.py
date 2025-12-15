@@ -132,17 +132,24 @@ def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
         geo_elem = cell_elem.find("mxGeometry")
         if geo_elem is not None:
             points = []
-            for point_elem in geo_elem.findall("mxPoint"):
-                x = point_elem.get("x")
-                y = point_elem.get("y")
-                if x is not None and y is not None:
-                    points.append((float(x), float(y)))
+
+            points_array = geo_elem.find("Array[@as='points']")
+            if points_array is not None:
+                for point_elem in points_array.findall("mxPoint"):
+                    x = point_elem.get("x")
+                    y = point_elem.get("y")
+                    if x is not None and y is not None:
+                        points.append((float(x), float(y)))
 
             cell.geometry = RawGeometry(
-                x=float(geo_elem.get("x", 0)),
-                y=float(geo_elem.get("y", 0)),
-                width=float(geo_elem.get("width", 0)),
-                height=float(geo_elem.get("height", 0)),
+                x=float(geo_elem.get("x", 0)) if geo_elem.get("x") else None,
+                y=float(geo_elem.get("y", 0)) if geo_elem.get("y") else None,
+                width=(
+                    float(geo_elem.get("width", 0)) if geo_elem.get("width") else None
+                ),
+                height=(
+                    float(geo_elem.get("height", 0)) if geo_elem.get("height") else None
+                ),
                 relative=geo_elem.get("relative") == "1",
                 points=points,
             )
