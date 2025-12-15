@@ -156,3 +156,6 @@ cython_debug/
 # Draw.io
 *.drawio.bkp
 uv.lock
+
+# Mac setting
+.DS_Store
