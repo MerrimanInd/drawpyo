@@ -169,7 +169,6 @@ class BinaryTreeDiagram(TreeDiagram):
         **kwargs,
     ) -> "BinaryTreeDiagram":
 
-
         if coloring not in {"depth", "hash", "type"}:
             raise ValueError(f"Invalid coloring mode: {coloring}")
 
@@ -212,8 +211,7 @@ class BinaryTreeDiagram(TreeDiagram):
         if not isinstance(data, dict):
             raise TypeError("Top-level tree must be a dict")
 
-
-        #Checks if the provided dict data is valid for a binary tree construction
+        # Checks if the provided dict data is valid for a binary tree construction
         validate(data, is_root=True)
 
         # -------------------------
@@ -298,7 +296,7 @@ class BinaryTreeDiagram(TreeDiagram):
                         parent,
                         choose_color(name, "leaf", depth + 1),
                     )
-                    
+
                 elif isinstance(elem, dict) and len(elem) == 1:
                     k, v = next(iter(elem.items()))
                     name = str(k)

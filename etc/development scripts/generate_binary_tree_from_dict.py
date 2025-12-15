@@ -12,7 +12,8 @@ data = {
                 ],
                 "Electric": ["Baratza Encore", "Niche Zero"],
             },
-            "Flat Burrs": ["Turin DF64", "Lagom P64"],},
+            "Flat Burrs": ["Turin DF64", "Lagom P64"],
+        },
         "Blunt Objects": ["Mortar and Pestle"],
     }
 }

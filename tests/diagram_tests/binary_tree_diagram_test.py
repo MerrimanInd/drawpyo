@@ -159,6 +159,7 @@ class TestBinaryTreeDiagramHelpers:
         assert parent.tree_children[0] is a
         assert parent.tree_children[1] is b
 
+
 class TestEdgeCasesAndConsistency:
     """Extra edge and consistency checks."""
 
@@ -217,6 +218,7 @@ class TestEdgeCasesAndConsistency:
         assert parent.tree_children.count(child) == 1
         assert child._tree_parent is parent
 
+
 class TestBinaryTreeDiagramFromDict:
     """Tests for BinaryTreeDiagram.from_dict method."""
 
@@ -239,9 +241,7 @@ class TestBinaryTreeDiagramFromDict:
     def test_from_dict_nested_structure(self):
         """Test a more complex nested dictionary structure."""
         data = {
-            "A": {
-                "B": ["D",None], 
-                "C": [None, "E"]},
+            "A": {"B": ["D", None], "C": [None, "E"]},
         }
         diagram = BinaryTreeDiagram.from_dict(data)
 
@@ -263,6 +263,7 @@ class TestBinaryTreeDiagramFromDict:
         assert c.tree_parent is a
         assert d.tree_parent is b
         assert e.tree_parent is c
+
 
 class TestBinaryTreeDiagramFromDictExtras:
     """Additional tests for `from_dict` to cover lists, None siblings and errors."""
@@ -308,5 +309,3 @@ class TestBinaryTreeDiagramFromDictExtras:
         data = {"Root": ["L"]}
         with pytest.raises(ValueError, match="Invalid coloring mode"):
             BinaryTreeDiagram.from_dict(data, coloring="unknown")
-
-
