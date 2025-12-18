@@ -313,10 +313,8 @@ class BinaryTreeDiagram(TreeDiagram):
                     )
 
                     if index == 0:
-                        print("Left Node: ", name, " ", side)
                         diagram.add_left(parent, node)
                     else:
-                        print("Right Node: ", name, " ", side)
                         diagram.add_right(parent, node)
 
                     build(node, children, depth + 1)
