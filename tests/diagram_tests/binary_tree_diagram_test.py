@@ -327,7 +327,9 @@ class TestBinaryTreeDiagramFromDictExtras:
             for c in [left_hex, right_hex]
         ]
 
-        diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes, coloring='directional')
+        diagram = BinaryTreeDiagram.from_dict(
+            data, colors=color_schemes, coloring="directional"
+        )
 
         ll = [o for o in diagram.objects if o.value == "LLV" or o.value == "LL"][0]
         rr = [o for o in diagram.objects if o.value == "RRV" or o.value == "RR"][0]
@@ -341,7 +343,7 @@ class TestBinaryTreeDiagramFromDictExtras:
 
         data = {"Root": {"L": ["LL", "RR"], "R": ["LLV", "RRV"]}}
         left_hex = "#112233"
-        
+
         color_schemes = [
             drawpyo.ColorScheme(
                 font_color=drawpyo.StandardColor.GRAY1,
@@ -351,7 +353,7 @@ class TestBinaryTreeDiagramFromDictExtras:
             for c in [left_hex]
         ]
 
-        with pytest.raises(
-            ValueError, match="atleast 2 for directional "):
-                diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes, coloring='directional')
-        
+        with pytest.raises(ValueError, match="atleast 2 for directional "):
+            diagram = BinaryTreeDiagram.from_dict(
+                data, colors=color_schemes, coloring="directional"
+            )

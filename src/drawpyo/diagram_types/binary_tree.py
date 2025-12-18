@@ -221,7 +221,6 @@ class BinaryTreeDiagram(TreeDiagram):
 
             raise TypeError(f"Unsupported tree tree_node type: {type(tree_node)}")
 
-
         if not isinstance(data, dict):
             raise TypeError("Top-level tree must be a dict")
 
@@ -249,8 +248,10 @@ class BinaryTreeDiagram(TreeDiagram):
                 idx = h % n
             elif coloring == "directional":
                 # side can be 'left'/'right' or a boolean where True==left
-                if (n != 2):
-                    raise ValueError("colors list must be of length atleast 2 for directional coloring")
+                if n != 2:
+                    raise ValueError(
+                        "colors list must be of length atleast 2 for directional coloring"
+                    )
 
                 if side is None:
                     return None
@@ -310,12 +311,12 @@ class BinaryTreeDiagram(TreeDiagram):
                         parent,
                         choose_color(name, "category", depth, side=side),
                     )
-                    
+
                     if index == 0:
-                        print('Left Node: ', name, " ", side)
+                        print("Left Node: ", name, " ", side)
                         diagram.add_left(parent, node)
                     else:
-                        print('Right Node: ', name, " ", side)
+                        print("Right Node: ", name, " ", side)
                         diagram.add_right(parent, node)
 
                     build(node, children, depth + 1)
