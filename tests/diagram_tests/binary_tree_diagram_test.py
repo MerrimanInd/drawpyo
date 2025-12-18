@@ -327,9 +327,7 @@ class TestBinaryTreeDiagramFromDictExtras:
             for c in [left_hex, right_hex]
         ]
 
-        diagram = BinaryTreeDiagram.from_dict(
-            data, colors = color_schemes
-        )
+        diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes)
 
         ll = [o for o in diagram.objects if o.value == "LLV" or o.value == "LL"][0]
         rr = [o for o in diagram.objects if o.value == "RRV" or o.value == "RR"][0]
@@ -337,5 +335,3 @@ class TestBinaryTreeDiagramFromDictExtras:
         # these nodes should have received the side override
         assert getattr(ll, "fillColor", None) == left_hex
         assert getattr(rr, "fillColor", None) == right_hex
-
-    

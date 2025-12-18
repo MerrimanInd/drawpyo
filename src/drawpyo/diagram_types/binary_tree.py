@@ -176,8 +176,7 @@ class BinaryTreeDiagram(TreeDiagram):
             1. "depth" - Color nodes based on their depth in the tree.
             2. "hash" - Color nodes based on a hash of their value.
             3. "type" - Color nodes based on their type (category, list_item, leaf).
-         """
-
+        """
 
         if coloring not in {"depth", "hash", "type"}:
             raise ValueError(f"Invalid coloring mode: {coloring}")
@@ -341,8 +340,6 @@ class BinaryTreeDiagram(TreeDiagram):
 
         build(root, root_value, depth=1)
 
-
-
         def _apply_color(node, color):
             if color is None:
                 return
@@ -351,20 +348,19 @@ class BinaryTreeDiagram(TreeDiagram):
                 node.fillColor = color.fill_color
             elif hasattr(node, "fillColor"):
                 node.fillColor = color
-            
 
         def color_tree(tree: BinaryNodeObject):
             for child in tree.tree_children:
                 if child is not None:
-                    #Left Color applied to Every Left Node
+                    # Left Color applied to Every Left Node
                     if tree.left is child:
                         _apply_color(child, left_color)
 
-                    #Right color applied to Every Right Node
+                    # Right color applied to Every Right Node
                     if tree.right is child:
                         _apply_color(child, right_color)
 
-                    #Recursively apply the same thing
+                    # Recursively apply the same thing
                     color_tree(child)
 
         if colors is None:
