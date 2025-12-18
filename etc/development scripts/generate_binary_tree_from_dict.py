@@ -20,23 +20,23 @@ data = {
 
 
 color_schemes = [
-    drawpyo.ColorScheme(
-        font_color=drawpyo.StandardColor.GRAY1,
-        stroke_color="#3C755E",
-        fill_color="#5BA283",
-    ),
-    drawpyo.ColorScheme(
-        font_color=drawpyo.StandardColor.GRAY1,
-        stroke_color="#3C756E",
-        fill_color="#5BA299",
-    ),
-    drawpyo.StandardColor.CRIMSON4,
+    "#A25B99",
     drawpyo.ColorScheme(
         font_color=drawpyo.StandardColor.GRAY1,
         stroke_color="#3C4F75",
         fill_color="#5B6EA2",
     ),
-    "#A25B99",
+    drawpyo.ColorScheme(
+        font_color=drawpyo.StandardColor.GRAY1,
+        stroke_color="#3C755E",
+        fill_color="#5BA283",
+    ),
+    drawpyo.StandardColor.CRIMSON4,
+    drawpyo.ColorScheme(
+        font_color=drawpyo.StandardColor.GRAY1,
+        stroke_color="#3C756E",
+        fill_color="#5BA299",
+    ),
 ]
 
 tree = BinaryTreeDiagram.from_dict(

@@ -168,6 +168,16 @@ class BinaryTreeDiagram(TreeDiagram):
         coloring: str = "depth",
         **kwargs,
     ) -> "BinaryTreeDiagram":
+        """
+        Build a BinaryTreeDiagram from nested dict/list structures.
+        data: Nested dict/list structure representing the tree.
+        colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None
+        coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"
+            1. "depth" - Color nodes based on their depth in the tree.
+            2. "hash" - Color nodes based on a hash of their value.
+            3. "type" - Color nodes based on their type (category, list_item, leaf).
+         """
+
 
         if coloring not in {"depth", "hash", "type"}:
             raise ValueError(f"Invalid coloring mode: {coloring}")
@@ -182,7 +192,7 @@ class BinaryTreeDiagram(TreeDiagram):
         # Validation
         # -------------------------
 
-        def validate(item: Any, *, is_root=False):
+        def validate(item: Dict, *, is_root=False):
             if item is None or isinstance(item, (str, int, float)):
                 return
 
@@ -269,23 +279,23 @@ class BinaryTreeDiagram(TreeDiagram):
 
             # Dict (named children)
             if isinstance(item, dict):
-                for i, (k, v) in enumerate(item.items()):
-                    name = str(k)
+                for index, (node, childs) in enumerate(item.items()):
+                    name = str(node)
                     node = create_node(
                         name,
                         parent,
                         choose_color(name, "category", depth),
                     )
-                    if i == 0:
+                    if index == 0:
                         diagram.add_left(parent, node)
                     else:
                         diagram.add_right(parent, node)
 
-                    build(node, v, depth + 1)
+                    build(node, childs, depth + 1)
                 return
 
             # List / Tuple (positional children)
-            for i, elem in enumerate(item):
+            for index, elem in enumerate(item):
                 if elem is None:
                     continue
 
@@ -298,20 +308,20 @@ class BinaryTreeDiagram(TreeDiagram):
                     )
 
                 elif isinstance(elem, dict) and len(elem) == 1:
-                    k, v = next(iter(elem.items()))
-                    name = str(k)
+                    node, childs = next(iter(elem.items()))
+                    name = str(node)
                     node = create_node(
                         name,
                         parent,
                         choose_color(name, "category", depth + 1),
                     )
-                    build(node, v, depth + 1)
+                    build(node, childs, depth + 1)
                 else:
                     raise TypeError(
                         "List elements must be primitive or single-key dict"
                     )
 
-                if i == 0:
+                if index == 0:
                     diagram.add_left(parent, node)
                 else:
                     diagram.add_right(parent, node)
@@ -331,5 +341,39 @@ class BinaryTreeDiagram(TreeDiagram):
 
         build(root, root_value, depth=1)
 
+
+
+        def _apply_color(node, color):
+            if color is None:
+                return
+            # If a ColorScheme was provided, assign the scheme; otherwise set fillColor (string/hex)
+            if isinstance(color, drawpyo.ColorScheme) and hasattr(node, "color_scheme"):
+                node.fillColor = color.fill_color
+            elif hasattr(node, "fillColor"):
+                node.fillColor = color
+            
+
+        def color_tree(tree: BinaryNodeObject):
+            for child in tree.tree_children:
+                if child is not None:
+                    #Left Color applied to Every Left Node
+                    if tree.left is child:
+                        _apply_color(child, left_color)
+
+                    #Right color applied to Every Right Node
+                    if tree.right is child:
+                        _apply_color(child, right_color)
+
+                    #Recursively apply the same thing
+                    color_tree(child)
+
+        if colors is None:
+            left_color = None
+            right_color = None
+        else:
+            left_color = colors[0]
+            right_color = colors[1]
+
+        color_tree(root)
         diagram.auto_layout()
         return diagram

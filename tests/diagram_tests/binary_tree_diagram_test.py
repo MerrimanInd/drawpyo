@@ -1,5 +1,7 @@
 import pytest
 
+import drawpyo
+
 from drawpyo.diagram_types.binary_tree import BinaryNodeObject, BinaryTreeDiagram
 
 
@@ -309,3 +311,31 @@ class TestBinaryTreeDiagramFromDictExtras:
         data = {"Root": ["L"]}
         with pytest.raises(ValueError, match="Invalid coloring mode"):
             BinaryTreeDiagram.from_dict(data, coloring="unknown")
+
+    def test_from_dict_left_right_colour_applies_to_deeper_children(self):
+        """Left/right colouring should apply to nodes that are left/right children anywhere in the tree."""
+        data = {"Root": {"L": ["LL", "RR"], "R": ["LLV", "RRV"]}}
+        left_hex = "#112233"
+        right_hex = "#445566"
+
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex, right_hex]
+        ]
+
+        diagram = BinaryTreeDiagram.from_dict(
+            data, colors = color_schemes
+        )
+
+        ll = [o for o in diagram.objects if o.value == "LLV" or o.value == "LL"][0]
+        rr = [o for o in diagram.objects if o.value == "RRV" or o.value == "RR"][0]
+
+        # these nodes should have received the side override
+        assert getattr(ll, "fillColor", None) == left_hex
+        assert getattr(rr, "fillColor", None) == right_hex
+
+    
