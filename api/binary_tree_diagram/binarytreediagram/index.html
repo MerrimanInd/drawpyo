@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -1605,9 +1605,7 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram_types/binary_tree.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
 <span class="normal">128</span>
 <span class="normal">129</span>
 <span class="normal">130</span>
@@ -1648,7 +1646,211 @@
 <span class="normal">165</span>
 <span class="normal">166</span>
 <span class="normal">167</span>
-<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BinaryTreeDiagram</span><span class="p">(</span><span class="n">TreeDiagram</span><span class="p">):</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BinaryTreeDiagram</span><span class="p">(</span><span class="n">TreeDiagram</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Simplifies TreeDiagram for binary-tree convenience.&quot;&quot;&quot;</span>
 
     <span class="n">DEFAULT_LEVEL_SPACING</span> <span class="o">=</span> <span class="mi">80</span>
@@ -1684,14 +1886,216 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinaryTreeDiagram</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BinaryTreeDiagram&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a BinaryTreeDiagram from a nested dictionary structure.</span>
+<span class="sd">        Build a BinaryTreeDiagram from nested dict/list structures.</span>
+<span class="sd">        data: Nested dict/list structure representing the tree.</span>
+<span class="sd">        colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None</span>
+<span class="sd">        coloring: str - &quot;depth&quot; | &quot;hash&quot; | &quot;type&quot; | &quot;directional&quot; - Method to match colors to nodes. Default: &quot;depth&quot;</span>
+<span class="sd">            1. &quot;depth&quot; - Color nodes based on their depth in the tree.</span>
+<span class="sd">            2. &quot;hash&quot; - Color nodes based on a hash of their value.</span>
+<span class="sd">            3. &quot;type&quot; - Color nodes based on their type (category, list_item, leaf).</span>
+<span class="sd">            4. &quot;directional&quot; - Color nodes based on their direction (left, right).</span>
 
-<span class="sd">        Each key represents a node, and its value is either None or another</span>
-<span class="sd">        dictionary with up to two keys (left and right children).</span>
+<span class="sd">            Note: In colors Left Nodes are coloured by 0th index and Right Nodes are coloured by 1st index in the list of colors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>  <span class="c1"># Implementation would go here</span>
+
+        <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;directional&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;colors must be a list or None&quot;</span><span class="p">)</span>
+
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;list_item&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+        <span class="c1"># -------------------------</span>
+        <span class="c1"># Validation</span>
+        <span class="c1"># -------------------------</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">tree_node</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_root</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">tree_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;List node can have at most two children&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="p">:</span>
+                    <span class="n">validate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">is_root</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Root dict must contain exactly one key&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_root</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Dict node must have 1 or 2 children&quot;</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="n">validate</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported tree tree_node type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Top-level tree must be a dict&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Checks if the provided dict data is valid for a binary tree construction</span>
+        <span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">is_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------</span>
+        <span class="c1"># Helpers</span>
+        <span class="c1"># -------------------------</span>
+
+        <span class="n">diagram</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">choose_color</span><span class="p">(</span>
+            <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">side</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;depth&quot;</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">%</span> <span class="n">n</span>
+            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">h</span> <span class="o">%</span> <span class="n">n</span>
+            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;directional&quot;</span><span class="p">:</span>
+                <span class="c1"># side can be &#39;left&#39;/&#39;right&#39; or a boolean where True==left</span>
+                <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;colors list must be of length atleast 2 for directional coloring&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">side</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                    <span class="n">is_left</span> <span class="o">=</span> <span class="n">side</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">is_left</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">side</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span>
+
+                <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">is_left</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span>
+
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># type</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">TYPE_INDEX</span><span class="p">[</span><span class="n">node_type</span><span class="p">]</span> <span class="o">%</span> <span class="n">n</span>
+
+            <span class="k">return</span> <span class="n">colors</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">create_node</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">drawpyo</span><span class="o">.</span><span class="n">ColorScheme</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span>
+                    <span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">color_scheme</span><span class="o">=</span><span class="n">color</span>
+                <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span>
+                <span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">fillColor</span><span class="o">=</span><span class="n">color</span>
+            <span class="p">)</span>
+
+        <span class="c1"># -------------------------</span>
+        <span class="c1"># Build</span>
+        <span class="c1"># -------------------------</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="c1"># Leaf</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="c1"># leaf nodes in this branch are always attached as left</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">parent</span><span class="p">,</span>
+                    <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="c1"># Dict (named children)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                    <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">parent</span><span class="p">,</span>
+                        <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                    <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">diagram</span><span class="o">.</span><span class="n">add_right</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+                    <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="c1"># List / Tuple (positional children)</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">elem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                    <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">parent</span><span class="p">,</span>
+                        <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                    <span class="p">)</span>
+
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">node</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                    <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">parent</span><span class="p">,</span>
+                        <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                    <span class="p">)</span>
+                    <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s2">&quot;List elements must be primitive or single-key dict&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">diagram</span><span class="o">.</span><span class="n">add_right</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+        <span class="c1"># -------------------------</span>
+        <span class="c1"># Root</span>
+        <span class="c1"># -------------------------</span>
+
+        <span class="n">root_key</span><span class="p">,</span> <span class="n">root_value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">root_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">root_key</span><span class="p">)</span>
+
+        <span class="n">root</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+            <span class="n">root_name</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="n">choose_color</span><span class="p">(</span><span class="n">root_name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">build</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">root_value</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">diagram</span><span class="o">.</span><span class="n">auto_layout</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">diagram</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1712,7 +2116,7 @@
 
 
 <h3 id="src.drawpyo.diagram_types.binary_tree.BinaryTreeDiagram.from_dict" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coloring</span><span class="o">=</span><span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
@@ -1723,30 +2127,441 @@
 
     <div class="doc doc-contents ">
 
-        <p>Create a BinaryTreeDiagram from a nested dictionary structure.</p>
-<p>Each key represents a node, and its value is either None or another
-dictionary with up to two keys (left and right children).</p>
+        <p>Build a BinaryTreeDiagram from nested dict/list structures.
+data: Nested dict/list structure representing the tree.
+colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None
+coloring: str - "depth" | "hash" | "type" | "directional" - Method to match colors to nodes. Default: "depth"
+    1. "depth" - Color nodes based on their depth in the tree.
+    2. "hash" - Color nodes based on a hash of their value.
+    3. "type" - Color nodes based on their type (category, list_item, leaf).
+    4. "directional" - Color nodes based on their direction (left, right).</p>
+<pre><code>Note: In colors Left Nodes are coloured by 0th index and Right Nodes are coloured by 1st index in the list of colors.
+</code></pre>
 
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/binary_tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
 <span class="normal">163</span>
 <span class="normal">164</span>
 <span class="normal">165</span>
 <span class="normal">166</span>
 <span class="normal">167</span>
-<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BinaryTreeDiagram</span><span class="p">:</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span>
+    <span class="bp">cls</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BinaryTreeDiagram&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a BinaryTreeDiagram from a nested dictionary structure.</span>
+<span class="sd">    Build a BinaryTreeDiagram from nested dict/list structures.</span>
+<span class="sd">    data: Nested dict/list structure representing the tree.</span>
+<span class="sd">    colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None</span>
+<span class="sd">    coloring: str - &quot;depth&quot; | &quot;hash&quot; | &quot;type&quot; | &quot;directional&quot; - Method to match colors to nodes. Default: &quot;depth&quot;</span>
+<span class="sd">        1. &quot;depth&quot; - Color nodes based on their depth in the tree.</span>
+<span class="sd">        2. &quot;hash&quot; - Color nodes based on a hash of their value.</span>
+<span class="sd">        3. &quot;type&quot; - Color nodes based on their type (category, list_item, leaf).</span>
+<span class="sd">        4. &quot;directional&quot; - Color nodes based on their direction (left, right).</span>
 
-<span class="sd">    Each key represents a node, and its value is either None or another</span>
-<span class="sd">    dictionary with up to two keys (left and right children).</span>
+<span class="sd">        Note: In colors Left Nodes are coloured by 0th index and Right Nodes are coloured by 1st index in the list of colors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>  <span class="c1"># Implementation would go here</span>
+
+    <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;directional&quot;</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;colors must be a list or None&quot;</span><span class="p">)</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span> <span class="ow">or</span> <span class="kc">None</span>
+    <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;list_item&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+    <span class="c1"># -------------------------</span>
+    <span class="c1"># Validation</span>
+    <span class="c1"># -------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">tree_node</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_root</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tree_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;List node can have at most two children&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="p">:</span>
+                <span class="n">validate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree_node</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_root</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Root dict must contain exactly one key&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_root</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Dict node must have 1 or 2 children&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">tree_node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">validate</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported tree tree_node type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tree_node</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Top-level tree must be a dict&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Checks if the provided dict data is valid for a binary tree construction</span>
+    <span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">is_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------</span>
+    <span class="c1"># Helpers</span>
+    <span class="c1"># -------------------------</span>
+
+    <span class="n">diagram</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">choose_color</span><span class="p">(</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">side</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;depth&quot;</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">h</span> <span class="o">%</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;directional&quot;</span><span class="p">:</span>
+            <span class="c1"># side can be &#39;left&#39;/&#39;right&#39; or a boolean where True==left</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;colors list must be of length atleast 2 for directional coloring&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">side</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">side</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="n">is_left</span> <span class="o">=</span> <span class="n">side</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_left</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">side</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span>
+
+            <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">is_left</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">n</span>
+
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># type</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">TYPE_INDEX</span><span class="p">[</span><span class="n">node_type</span><span class="p">]</span> <span class="o">%</span> <span class="n">n</span>
+
+        <span class="k">return</span> <span class="n">colors</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_node</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">drawpyo</span><span class="o">.</span><span class="n">ColorScheme</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span>
+                <span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">color_scheme</span><span class="o">=</span><span class="n">color</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">BinaryNodeObject</span><span class="p">(</span>
+            <span class="n">tree</span><span class="o">=</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">fillColor</span><span class="o">=</span><span class="n">color</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -------------------------</span>
+    <span class="c1"># Build</span>
+    <span class="c1"># -------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="n">BinaryNodeObject</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Leaf</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="c1"># leaf nodes in this branch are always attached as left</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                <span class="n">value</span><span class="p">,</span>
+                <span class="n">parent</span><span class="p">,</span>
+                <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Dict (named children)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                    <span class="n">name</span><span class="p">,</span>
+                    <span class="n">parent</span><span class="p">,</span>
+                    <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">diagram</span><span class="o">.</span><span class="n">add_right</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+                <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># List / Tuple (positional children)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">elem</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                    <span class="n">name</span><span class="p">,</span>
+                    <span class="n">parent</span><span class="p">,</span>
+                    <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                <span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">node</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">side</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+                    <span class="n">name</span><span class="p">,</span>
+                    <span class="n">parent</span><span class="p">,</span>
+                    <span class="n">choose_color</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">children</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;List elements must be primitive or single-key dict&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">diagram</span><span class="o">.</span><span class="n">add_left</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">diagram</span><span class="o">.</span><span class="n">add_right</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+    <span class="c1"># -------------------------</span>
+    <span class="c1"># Root</span>
+    <span class="c1"># -------------------------</span>
+
+    <span class="n">root_key</span><span class="p">,</span> <span class="n">root_value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+    <span class="n">root_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">root_key</span><span class="p">)</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span>
+        <span class="n">root_name</span><span class="p">,</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="n">choose_color</span><span class="p">(</span><span class="n">root_name</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">build</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">root_value</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">diagram</span><span class="o">.</span><span class="n">auto_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">diagram</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1809,10 +2624,10 @@ dictionary with up to two keys (left and right children).</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.expand"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.expand"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
