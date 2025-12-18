@@ -172,13 +172,16 @@ class BinaryTreeDiagram(TreeDiagram):
         Build a BinaryTreeDiagram from nested dict/list structures.
         data: Nested dict/list structure representing the tree.
         colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None
-        coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"
+        coloring: str - "depth" | "hash" | "type" | "directional" - Method to match colors to nodes. Default: "depth"
             1. "depth" - Color nodes based on their depth in the tree.
             2. "hash" - Color nodes based on a hash of their value.
             3. "type" - Color nodes based on their type (category, list_item, leaf).
+            4. "directional" - Color nodes based on their direction (left, right).
+
+            Note: In colors Left Nodes are coloured by 0th index and Right Nodes are coloured by 1st index in the list of colors.
         """
 
-        if coloring not in {"depth", "hash", "type"}:
+        if coloring not in {"depth", "hash", "type", "directional"}:
             raise ValueError(f"Invalid coloring mode: {coloring}")
 
         if colors is not None and not isinstance(colors, list):
@@ -191,31 +194,33 @@ class BinaryTreeDiagram(TreeDiagram):
         # Validation
         # -------------------------
 
-        def validate(item: Dict, *, is_root=False):
-            if item is None or isinstance(item, (str, int, float)):
+        def validate(tree_node: Dict, *, is_root=False):
+            if tree_node is None or isinstance(tree_node, (str, int, float)):
                 return
 
-            if isinstance(item, (list, tuple)):
-                if len(item) > 2:
+            if isinstance(tree_node, (list, tuple)):
+                if len(tree_node) > 2:
                     raise TypeError("List node can have at most two children")
-                for x in item:
+                for x in tree_node:
                     validate(x)
                 return
 
-            if isinstance(item, dict):
-                if is_root and len(item) != 1:
+            if isinstance(tree_node, dict):
+                if is_root and len(tree_node) != 1:
                     raise TypeError("Root dict must contain exactly one key")
 
-                if not is_root and not (1 <= len(item) <= 2):
+                if not is_root and not (1 <= len(tree_node) <= 2):
                     raise TypeError("Dict node must have 1 or 2 children")
 
-                for k, v in item.items():
-                    if not isinstance(k, (str, int, float)):
-                        raise TypeError(f"Invalid dict key type: {type(k)}")
-                    validate(v)
+                for node, children in tree_node.items():
+                    if not isinstance(node, (str, int, float)):
+                        raise TypeError(f"Invalid dict key type: {type(node)}")
+
+                    validate(children)
                 return
 
-            raise TypeError(f"Unsupported tree item type: {type(item)}")
+            raise TypeError(f"Unsupported tree tree_node type: {type(tree_node)}")
+
 
         if not isinstance(data, dict):
             raise TypeError("Top-level tree must be a dict")
@@ -229,9 +234,12 @@ class BinaryTreeDiagram(TreeDiagram):
 
         diagram = cls(**kwargs)
 
-        def choose_color(value: str, node_type: str, depth: int):
+        def choose_color(
+            value: str, node_type: str, depth: int, side: Optional[object] = None
+        ):
             if not colors:
                 return None
+
             n = len(colors)
 
             if coloring == "depth":
@@ -239,6 +247,21 @@ class BinaryTreeDiagram(TreeDiagram):
             elif coloring == "hash":
                 h = int(hashlib.md5(value.encode()).hexdigest(), 16)
                 idx = h % n
+            elif coloring == "directional":
+                # side can be 'left'/'right' or a boolean where True==left
+                if (n != 2):
+                    raise ValueError("colors list must be of length atleast 2 for directional coloring")
+
+                if side is None:
+                    return None
+
+                if isinstance(side, bool):
+                    is_left = side
+                else:
+                    is_left = str(side).lower() == "left"
+
+                idx = (0 if is_left else 1) % n
+
             else:  # type
                 idx = TYPE_INDEX[node_type] % n
 
@@ -268,29 +291,34 @@ class BinaryTreeDiagram(TreeDiagram):
             # Leaf
             if isinstance(item, (str, int, float)):
                 value = str(item)
+                # leaf nodes in this branch are always attached as left
                 node = create_node(
                     value,
                     parent,
-                    choose_color(value, "leaf", depth),
+                    choose_color(value, "leaf", depth, side="left"),
                 )
                 diagram.add_left(parent, node)
                 return
 
             # Dict (named children)
             if isinstance(item, dict):
-                for index, (node, childs) in enumerate(item.items()):
+                for index, (node, children) in enumerate(item.items()):
                     name = str(node)
+                    side = "left" if index == 0 else "right"
                     node = create_node(
                         name,
                         parent,
-                        choose_color(name, "category", depth),
+                        choose_color(name, "category", depth, side=side),
                     )
+                    
                     if index == 0:
+                        print('Left Node: ', name, " ", side)
                         diagram.add_left(parent, node)
                     else:
+                        print('Right Node: ', name, " ", side)
                         diagram.add_right(parent, node)
 
-                    build(node, childs, depth + 1)
+                    build(node, children, depth + 1)
                 return
 
             # List / Tuple (positional children)
@@ -300,21 +328,23 @@ class BinaryTreeDiagram(TreeDiagram):
 
                 if isinstance(elem, (str, int, float)):
                     name = str(elem)
+                    side = "left" if index == 0 else "right"
                     node = create_node(
                         name,
                         parent,
-                        choose_color(name, "leaf", depth + 1),
+                        choose_color(name, "leaf", depth + 1, side=side),
                     )
 
                 elif isinstance(elem, dict) and len(elem) == 1:
-                    node, childs = next(iter(elem.items()))
+                    node, children = next(iter(elem.items()))
                     name = str(node)
+                    side = "left" if index == 0 else "right"
                     node = create_node(
                         name,
                         parent,
-                        choose_color(name, "category", depth + 1),
+                        choose_color(name, "category", depth + 1, side=side),
                     )
-                    build(node, childs, depth + 1)
+                    build(node, children, depth + 1)
                 else:
                     raise TypeError(
                         "List elements must be primitive or single-key dict"
@@ -335,41 +365,9 @@ class BinaryTreeDiagram(TreeDiagram):
         root = create_node(
             root_name,
             None,
-            choose_color(root_name, "category", 0),
+            choose_color(root_name, "category", 0, None),
         )
 
         build(root, root_value, depth=1)
-
-        def _apply_color(node, color):
-            if color is None:
-                return
-            # If a ColorScheme was provided, assign the scheme; otherwise set fillColor (string/hex)
-            if isinstance(color, drawpyo.ColorScheme) and hasattr(node, "color_scheme"):
-                node.fillColor = color.fill_color
-            elif hasattr(node, "fillColor"):
-                node.fillColor = color
-
-        def color_tree(tree: BinaryNodeObject):
-            for child in tree.tree_children:
-                if child is not None:
-                    # Left Color applied to Every Left Node
-                    if tree.left is child:
-                        _apply_color(child, left_color)
-
-                    # Right color applied to Every Right Node
-                    if tree.right is child:
-                        _apply_color(child, right_color)
-
-                    # Recursively apply the same thing
-                    color_tree(child)
-
-        if colors is None:
-            left_color = None
-            right_color = None
-        else:
-            left_color = colors[0]
-            right_color = colors[1]
-
-        color_tree(root)
         diagram.auto_layout()
         return diagram

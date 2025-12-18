@@ -6,10 +6,7 @@ data = {
     "Appliances for Grinding Coffee": {
         "Burr Grinders": {
             "Conical Burrs": {
-                "Manual": [
-                    "Comandante",
-                    "Weber HG-2",
-                ],
+                "Manual": ["Comandante","Weber HG-2",],
                 "Electric": ["Baratza Encore", "Niche Zero"],
             },
             "Flat Burrs": ["Turin DF64", "Lagom P64"],
@@ -45,6 +42,7 @@ tree = BinaryTreeDiagram.from_dict(
     file_name="Coffee Grinders Binary from Dict.drawio",
     direction="down",
     colors=color_schemes,
+    coloring="directional",
 )
 
 tree.write()

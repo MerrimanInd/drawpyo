@@ -327,7 +327,7 @@ class TestBinaryTreeDiagramFromDictExtras:
             for c in [left_hex, right_hex]
         ]
 
-        diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes)
+        diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes, coloring='directional')
 
         ll = [o for o in diagram.objects if o.value == "LLV" or o.value == "LL"][0]
         rr = [o for o in diagram.objects if o.value == "RRV" or o.value == "RR"][0]
@@ -335,3 +335,23 @@ class TestBinaryTreeDiagramFromDictExtras:
         # these nodes should have received the side override
         assert getattr(ll, "fillColor", None) == left_hex
         assert getattr(rr, "fillColor", None) == right_hex
+
+    def test_from_dict_color_list_length_mismatch_raises(self):
+        """color list provided must be of length atleast 2"""
+
+        data = {"Root": {"L": ["LL", "RR"], "R": ["LLV", "RRV"]}}
+        left_hex = "#112233"
+        
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex]
+        ]
+
+        with pytest.raises(
+            ValueError, match="atleast 2 for directional "):
+                diagram = BinaryTreeDiagram.from_dict(data, colors=color_schemes, coloring='directional')
+        
