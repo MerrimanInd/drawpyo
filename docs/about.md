@@ -14,7 +14,7 @@ Drawpyo extends the basic functionality of the Draw.io app with custom diagram t
 
 ## TreeDiagram
 
-This diagram makes creating directed tree graphs easy. Define trees, nodes, and the apply an auto layout.
+This diagram makes creating directed tree graphs easy. Define trees, nodes, and then apply an auto layout.
 
 [Documentation](diagram_types/tree_diagrams.md)
 
@@ -29,3 +29,9 @@ Useful visualization to compare the absolute size of different categories.
 Useful visualization to compare the relative size of different categories.
 
 [Documentation](diagram_types/pie_charts.md)
+
+## BinaryTreeDiagram
+
+A binary tree diagram visually represents a hierarchical data structure where each node has at most two children, typically called the left and right child.
+
+[Documentation](diagram_types/binary_tree_diagrams.md)
