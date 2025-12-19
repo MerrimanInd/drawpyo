@@ -78,6 +78,7 @@ Currently, Drawpyo supports:
 * **Binary Tree Diagrams**
 * **Bar Charts**
 * **Pie Charts**
+* **Color Legends**
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 
