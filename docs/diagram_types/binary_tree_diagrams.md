@@ -138,6 +138,46 @@ tree.add_left(parent, not_a_binary_node)
 
 ---
 
+The resulting diagram looks something like this:
+
+![coffee_grinders_binary_tree](../img/binary_tree_diagram/coffee_grinders_binary_tree.png)
+
+
+## Create a Binary Tree from a Dictionary
+
+`BinaryTreeDiagram` supports creating an entire binary tree structure directly from a nested dictionary or list. This allows you to generate binary trees programmatically without manually creating every `BinaryNodeObject`.
+
+### Rules for dict/list conversion
+
+| Input Type                         | Behavior                                                                                      |
+| ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Dict**                           | Each key becomes a **category node**, and its value is recursively processed as its children. |
+| **List / Tuple**                   | Each element becomes a sibling under the same parent.                                         |
+| **Scalar (`str`, `int`, `float`)** | Treated as a **leaf node**.                                                                   |
+| **Unsupported types**              | Raises a `TypeError`.                                                                         |
+
+---
+
+### Coloring Nodes
+
+You can control node colors using the `colors` list and `coloring` mode.
+
+| Parameter  | Description                                                   | Options / Default                       |
+| ---------- | ------------------------------------------------------------- | --------------------------------------- |
+| `colors`   | List of `ColorScheme`, `StandardColor`, or color hex strings. | Default: `None`                         |
+| `coloring` | Method used to assign colors to nodes.                        | `"depth"` (default), `"hash"`, `"type"`, `"directional"` |
+
+**Coloring Modes**
+
+| Mode    | Description                                                           |
+| ------- | --------------------------------------------------------------------- |
+| `depth` | Colors nodes based on their **depth in the tree**.                    |
+| `hash`  | Colors nodes based on a **hash of their value** (stable across runs). |
+| `type`  | Colors nodes based on **node type**: category, list item, or leaf.    |
+| `directional` | Colors based on **direction** i.e, one color for left direction and one color for right direction.  |
+
+---
+
 ## Full Example
 
 ```python
