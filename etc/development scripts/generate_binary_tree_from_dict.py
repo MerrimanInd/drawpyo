@@ -36,7 +36,7 @@ color_schemes = [
         stroke_color="#3C756E",
         fill_color="#5BA299",
     ),
-     "#A25B99",
+    "#A25B99",
 ]
 
 tree = BinaryTreeDiagram.from_dict(
