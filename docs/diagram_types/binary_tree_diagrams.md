@@ -166,5 +166,15 @@ a.right = BinaryNodeObject(tree=tree, value="A2")
 b.left  = BinaryNodeObject(tree=tree, value="B1")
 
 tree.auto_layout()
+
+tree = BinaryTreeDiagram.from_dict(
+    data,
+    file_path= "~/Test Drawpyo Charts",
+    file_name="Minimal Binary Tree.drawio",
+    direction="down",
+    colors=["#DDDDDD","#BBBBBB"],
+    coloring="directional",
+)
+
 tree.write()
 ```
