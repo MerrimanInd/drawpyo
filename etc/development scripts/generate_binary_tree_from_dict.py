@@ -20,7 +20,7 @@ data = {
 
 
 color_schemes = [
-    "#A25B99",
+   
     drawpyo.ColorScheme(
         font_color=drawpyo.StandardColor.GRAY1,
         stroke_color="#3C4F75",
@@ -37,6 +37,7 @@ color_schemes = [
         stroke_color="#3C756E",
         fill_color="#5BA299",
     ),
+     "#A25B99",
 ]
 
 tree = BinaryTreeDiagram.from_dict(

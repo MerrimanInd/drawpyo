@@ -364,7 +364,7 @@ class BinaryTreeDiagram(TreeDiagram):
         root = create_node(
             root_name,
             None,
-            choose_color(root_name, "category", 0, None),
+            choose_color(root_name, "category", 0),
         )
 
         build(root, root_value, depth=1)
