@@ -353,7 +353,33 @@ class TestBinaryTreeDiagramFromDictExtras:
             for c in [left_hex]
         ]
 
-        with pytest.raises(ValueError, match="atleast 2 for directional "):
+        with pytest.raises(ValueError, match="at least 2 for directional "):
             diagram = BinaryTreeDiagram.from_dict(
                 data, colors=color_schemes, coloring="directional"
             )
+
+    def test_from_dict_coloring_directional_with_single_siblings(self):
+        """Directional coloring should still apply when some nodes have only one child."""
+        data = {"Root": {"L": ["LL", None], "R": [None, "RR"]}}
+        left_hex = "#112233"
+        right_hex = "#445566"
+
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex, right_hex]
+        ]
+
+        diagram = BinaryTreeDiagram.from_dict(
+            data, colors=color_schemes, coloring="directional"
+        )
+
+        ll = [o for o in diagram.objects if o.value == "LL"][0]
+        rr = [o for o in diagram.objects if o.value == "RR"][0]
+
+        # these nodes should have received the side override
+        assert getattr(ll, "fillColor", None) == left_hex
+        assert getattr(rr, "fillColor", None) == right_hex

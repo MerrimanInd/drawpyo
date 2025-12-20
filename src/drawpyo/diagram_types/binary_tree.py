@@ -248,9 +248,9 @@ class BinaryTreeDiagram(TreeDiagram):
                 idx = h % n
             elif coloring == "directional":
                 # side can be 'left'/'right' or a boolean where True==left
-                if n != 2:
+                if n < 2:
                     raise ValueError(
-                        "colors list must be of length atleast 2 for directional coloring"
+                        "colors list must be of length at least 2 for directional coloring"
                     )
 
                 if side is None:
