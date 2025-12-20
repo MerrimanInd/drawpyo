@@ -20,7 +20,6 @@ data = {
 
 
 color_schemes = [
-   
     drawpyo.ColorScheme(
         font_color=drawpyo.StandardColor.GRAY1,
         stroke_color="#3C4F75",
