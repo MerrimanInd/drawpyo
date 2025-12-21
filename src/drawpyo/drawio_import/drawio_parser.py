@@ -86,7 +86,9 @@ def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
                 x=float(geo_elem.get("x")) if geo_elem.get("x") else None,
                 y=float(geo_elem.get("y")) if geo_elem.get("y") else None,
                 width=float(geo_elem.get("width")) if geo_elem.get("width") else None,
-                height=float(geo_elem.get("height")) if geo_elem.get("height") else None,
+                height=(
+                    float(geo_elem.get("height")) if geo_elem.get("height") else None
+                ),
                 relative=geo_elem.get("relative") == "1",
                 points=points,
             )
@@ -231,9 +233,7 @@ def _build_diagram(raw_cells: Dict[str, RawMxCell]) -> ParsedDiagram:
 
     # Apply geometry starting from layer roots (parent == "1")
     root_ids = [
-        cell.id
-        for cell in raw_cells.values()
-        if cell.is_vertex and cell.parent == "1"
+        cell.id for cell in raw_cells.values() if cell.is_vertex and cell.parent == "1"
     ]
 
     for root_id in root_ids:
