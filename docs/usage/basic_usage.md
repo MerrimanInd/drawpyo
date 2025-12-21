@@ -25,13 +25,13 @@ Files can be written simply with the write() function. This function takes a few
 
 ## Pages
 
-## Add a page
+### Add a page
 
 The Page object represents the different diagram pages that you can create in Draw.io. A Page can be created without linking it to a File but it won't be writable without a File object.
 
 ```python
 # Add a page
-page = drawpy.Page(file=file)
+page = drawpyo.Page(file=file)
 ```
 
 ### Page Parameters
