@@ -15,6 +15,7 @@ class AnnotationPosition(Enum):
     MIDDLE = 1.0
     OUTSIDE = 1.4
 
+
 @dataclass(frozen=True)
 class ArcAnnotation:
     name: str = "Annotation"
@@ -61,7 +62,7 @@ class DonutChart:
             raise TypeError("Data must be a dict.")
         if not data:
             raise ValueError("Data cannot be empty.")
-        
+
         invalid_keys = [k for k in data if not isinstance(k, str)]
         if invalid_keys:
             raise TypeError(f"All keys must be strings: {invalid_keys}")
@@ -75,9 +76,11 @@ class DonutChart:
         # Position and size
         self._position: tuple[int, int] = kwargs.get("position", (0, 0))
         self._size: int = kwargs.get("size", self.DEFAULT_SIZE)
-        
+
         # Inner radius ratio
-        self._inner_radius_ratio: float = kwargs.get("inner_radius_ratio", self.DEFAULT_INNER_RATIO)
+        self._inner_radius_ratio: float = kwargs.get(
+            "inner_radius_ratio", self.DEFAULT_INNER_RATIO
+        )
         if not (0.0 <= self._inner_radius_ratio <= 1.0):
             raise ValueError("inner_radius_ratio must be between 0.0 and 1.0")
 
@@ -90,7 +93,9 @@ class DonutChart:
         self._title: Optional[str] = kwargs.get("title")
 
         # Background
-        self._background_color: Optional[Union[str, StandardColor]] = kwargs.get("background_color")
+        self._background_color: Optional[Union[str, StandardColor]] = kwargs.get(
+            "background_color"
+        )
 
         # Colors
         arc_colors: list[Union[str, StandardColor, ColorScheme]] = kwargs.get(
@@ -111,7 +116,7 @@ class DonutChart:
     # ------------------------------------------------------------------
     # Properties
     # ------------------------------------------------------------------
-    
+
     @property
     def data(self) -> dict[str, float]:
         return self._data.copy()
@@ -135,9 +140,7 @@ class DonutChart:
             raise ValueError("Data cannot be empty.")
 
         self._data = data.copy()
-        self._arc_colors = self._normalize_colors(
-            self._original_arc_colors, len(data)
-        )
+        self._arc_colors = self._normalize_colors(self._original_arc_colors, len(data))
         self._rebuild()
 
     def update_colors(self, arc_colors: list[Union[str, StandardColor, ColorScheme]]):
@@ -183,7 +186,7 @@ class DonutChart:
 
     def _inner_radius(self) -> float:
         return self._outer_radius() * self._inner_radius_ratio
-    
+
     def _max_annotation_radius(self) -> float:
         return max(
             self._annotation_radius(annotation.position)
@@ -192,7 +195,7 @@ class DonutChart:
 
     def _max_chart_radius(self) -> float:
         return max(self._outer_radius(), self._max_annotation_radius())
-    
+
     def _annotation_radius(self, position: Union[AnnotationPosition, float]) -> float:
         outer = self._outer_radius()
         inner = self._inner_radius()
@@ -210,13 +213,17 @@ class DonutChart:
     def _rebuild(self):
         self._group.objects.clear()
         self._build_chart()
-    
+
     def _build_chart(self):
         x, y = self._position
 
         # Compute vertical offsets if title is present
         title_h = (
-            max(self._title_text_format.fontSize or 16, (self._max_chart_radius() - self._outer_radius())) + self.TITLE_BOTTOM_MARGIN
+            max(
+                self._title_text_format.fontSize or 16,
+                (self._max_chart_radius() - self._outer_radius()),
+            )
+            + self.TITLE_BOTTOM_MARGIN
             if self._title
             else 0
         )
@@ -303,9 +310,17 @@ class DonutChart:
         annotation_overflow = self._max_chart_radius() - self._outer_radius()
         bg = Object(
             value="",
-            position=((x - 2 * annotation_overflow - self.BACKGROUND_PADDING, y - 2 * annotation_overflow - self.BACKGROUND_PADDING)),
+            position=(
+                (
+                    x - 2 * annotation_overflow - self.BACKGROUND_PADDING,
+                    y - 2 * annotation_overflow - self.BACKGROUND_PADDING,
+                )
+            ),
             width=2 * r + 2 * self.BACKGROUND_PADDING + 2 * annotation_overflow,
-            height=2 * r + 2 * self.BACKGROUND_PADDING + 2 * annotation_overflow + title_h,
+            height=2 * r
+            + 2 * self.BACKGROUND_PADDING
+            + 2 * annotation_overflow
+            + title_h,
             fillColor=self._background_color,
             strokeColor=None,
         )
@@ -318,7 +333,12 @@ class DonutChart:
 
         title_obj = Object(
             value=self._title,
-            position=(x, y - min(self.MAX_TITLE_DISTANCE, annotation_overflow) - self.TITLE_BOTTOM_MARGIN),
+            position=(
+                x,
+                y
+                - min(self.MAX_TITLE_DISTANCE, annotation_overflow)
+                - self.TITLE_BOTTOM_MARGIN,
+            ),
             width=self._size,
             height=title_height,
             fillColor="none",

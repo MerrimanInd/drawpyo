@@ -131,6 +131,7 @@ class PieSlice(Object):
         self.geometry.height = float(value)
         self.update_parent()
 
+
 class DonutArc(Object):
     def __init__(
         self,
@@ -153,9 +154,7 @@ class DonutArc(Object):
             obj_name="partial_concentric_ellipse",
         )
 
-        self._style_attributes.extend(
-            ["startAngle", "endAngle", "arcWidth"]
-        )
+        self._style_attributes.extend(["startAngle", "endAngle", "arcWidth"])
 
         self.arc_value: float = arc_value
 
