@@ -16,3 +16,13 @@ endAngle = 0.5
 shape = "mxgraph.basic.arc"
 verticalLabelPosition = "bottom"
 aspect = "fixed"
+
+[partial_concentric_ellipse]
+width = 120
+height = 120
+startAngle = 0.0
+endAngle = 0.5
+arcWidth = 0.5
+shape = "mxgraph.basic.partConcEllipse"
+verticalLabelPosition = "bottom"
+aspect = "fixed"
