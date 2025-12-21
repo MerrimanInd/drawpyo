@@ -11,7 +11,7 @@ diagram = load_diagram(file_path)
 # Create file & page
 file = drawpyo.File()
 file.file_path = str(Path.home() / "Test Drawpyo Charts")
-file.file_name = "Converted From Draw.io.drawio"
+file.file_name = "Converted From Drawio.drawio"
 
 page = drawpyo.Page(file=file)
 

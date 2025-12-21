@@ -30,65 +30,6 @@ class ParsedDiagram:
         """
         return self._id_map.get(cell_id)
 
-    def get_roots(self) -> List[DiagramBase]:
-        """Get top-level shapes (shapes that aren't connected as targets).
-
-        Returns:
-            List of root-level shapes
-        """
-        target_shapes = {edge.target for edge in self.edges if edge.target}
-        return [shape for shape in self.shapes if shape not in target_shapes]
-
-    def find_shapes_by_value(
-        self, value: str, exact: bool = False
-    ) -> List[DiagramBase]:
-        """Find shapes by their text content.
-
-        Args:
-            value: Text to search for
-            exact: If True, requires exact match; if False, does substring match
-
-        Returns:
-            List of matching shapes
-        """
-        if exact:
-            return [s for s in self.shapes if s.value == value]
-        else:
-            return [s for s in self.shapes if value in (s.value or "")]
-
-    def get_connected_edges(self, shape: DiagramBase) -> List[Edge]:
-        """Get all edges connected to a shape.
-
-        Args:
-            shape: The shape to find connections for
-
-        Returns:
-            List of edges connected to the shape
-        """
-        return [e for e in self.edges if e.source == shape or e.target == shape]
-
-    def get_outgoing_edges(self, shape: DiagramBase) -> List[Edge]:
-        """Get edges originating from a shape.
-
-        Args:
-            shape: The source shape
-
-        Returns:
-            List of outgoing edges
-        """
-        return [e for e in self.edges if e.source == shape]
-
-    def get_incoming_edges(self, shape: DiagramBase) -> List[Edge]:
-        """Get edges pointing to a shape.
-
-        Args:
-            shape: The target shape
-
-        Returns:
-            List of incoming edges
-        """
-        return [e for e in self.edges if e.target == shape]
-
     @property
     def element_count(self) -> int:
         """Total number of elements (shapes + edges)."""
@@ -142,19 +83,20 @@ def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
                         points.append((float(x), float(y)))
 
             cell.geometry = RawGeometry(
-                x=float(geo_elem.get("x", 0)) if geo_elem.get("x") else None,
-                y=float(geo_elem.get("y", 0)) if geo_elem.get("y") else None,
-                width=(
-                    float(geo_elem.get("width", 0)) if geo_elem.get("width") else None
-                ),
-                height=(
-                    float(geo_elem.get("height", 0)) if geo_elem.get("height") else None
-                ),
+                x=float(geo_elem.get("x")) if geo_elem.get("x") else None,
+                y=float(geo_elem.get("y")) if geo_elem.get("y") else None,
+                width=float(geo_elem.get("width")) if geo_elem.get("width") else None,
+                height=float(geo_elem.get("height")) if geo_elem.get("height") else None,
                 relative=geo_elem.get("relative") == "1",
                 points=points,
             )
 
         cells[cell.id] = cell
+
+    # Link parent -> children (required for nested objects)
+    for cell in cells.values():
+        if cell.parent and cell.parent in cells:
+            cells[cell.parent].children.append(cell.id)
 
     return cells
 
@@ -183,29 +125,6 @@ def _parse_drawio_file(file_path: str) -> Dict[str, RawMxCell]:
 # -----------------------------
 # Vertex / Edge Builder
 # -----------------------------
-def _vertex_from_raw(cell: RawMxCell) -> DiagramBase:
-    """Create a drawpyo DiagramBase object from a RawMxCell vertex.
-
-    Args:
-        cell: Raw cell data
-
-    Returns:
-        DiagramBase object representing the shape
-    """
-    obj = Object(value=cell.value)
-
-    if cell.style:
-        obj.apply_style_string(cell.style)
-
-    if cell.geometry:
-        obj.geometry.x = cell.geometry.x
-        obj.geometry.y = cell.geometry.y
-        obj.geometry.width = cell.geometry.width
-        obj.geometry.height = cell.geometry.height
-
-    return obj
-
-
 def _build_vertices(raw_cells: Dict[str, RawMxCell]) -> Dict[str, DiagramBase]:
     """Build all vertex objects from raw cells.
 
@@ -215,43 +134,55 @@ def _build_vertices(raw_cells: Dict[str, RawMxCell]) -> Dict[str, DiagramBase]:
     Returns:
         Dictionary mapping cell IDs to DiagramBase objects
     """
-    elements = {}
+    elements: Dict[str, DiagramBase] = {}
+
     for cell in raw_cells.values():
-        if cell.is_vertex:
-            element = _vertex_from_raw(cell)
-            elements[cell.id] = element
+        if not cell.is_vertex:
+            continue
+
+        obj = Object(value=cell.value)
+        if cell.style:
+            obj.apply_style_string(cell.style)
+
+        elements[cell.id] = obj
+
     return elements
 
 
-def _edge_from_raw(cell: RawMxCell, elements: Dict[str, DiagramBase]) -> Edge:
-    """Create a drawpyo Edge object from a RawMxCell edge.
+def _attach_children(raw_cells: Dict[str, RawMxCell], elements: Dict[str, DiagramBase]):
+    """Attach child vertices to their parent vertices based on Draw.io hierarchy."""
+    for cell in raw_cells.values():
+        if not cell.is_vertex:
+            continue
+        if cell.parent in ("0", "1", None):
+            continue
+        if cell.parent in elements:
+            parent_obj: Object = elements[cell.parent]
+            child_obj: Object = elements[cell.id]
+            parent_obj.add_object(child_obj)
 
-    Args:
-        cell: Raw cell data for the edge
-        elements: Dictionary of already-built elements for linking
 
-    Returns:
-        Edge object with source/target connections
-    """
-    e = Edge()
-
-    if cell.style:
-        e.apply_style_string(cell.style)
-
-    # Source/Target linking
-    if cell.source in elements:
-        e.source = elements[cell.source]
-    if cell.target in elements:
-        e.target = elements[cell.target]
+def _apply_geometry_recursive(
+    cell_id: str,
+    raw_cells: Dict[str, RawMxCell],
+    elements: Dict[str, DiagramBase],
+):
+    """Apply geometry recursively, preserving relative positions."""
+    cell = raw_cells[cell_id]
+    obj = elements[cell_id]
 
     if cell.geometry:
-        e.geometry.relative = cell.geometry.relative
-        for x, y in cell.geometry.points:
-            e.add_point(int(x), int(y))
+        # Store relative position to parent, not absolute
+        obj.position_rel_to_parent = (
+            cell.geometry.x or 0,
+            cell.geometry.y or 0,
+        )
+        obj.width = cell.geometry.width or obj.width
+        obj.height = cell.geometry.height or obj.height
 
-    e.label = cell.value
-
-    return e
+    for child_id in cell.children:
+        if child_id in elements:
+            _apply_geometry_recursive(child_id, raw_cells, elements)
 
 
 def _build_edges(raw_cells: Dict[str, RawMxCell], elements: Dict[str, DiagramBase]):
@@ -262,11 +193,30 @@ def _build_edges(raw_cells: Dict[str, RawMxCell], elements: Dict[str, DiagramBas
         elements: Dictionary to add edges to (modified in place)
     """
     for cell in raw_cells.values():
-        if cell.is_edge:
-            edge = _edge_from_raw(cell, elements)
-            elements[cell.id] = edge
+        if not cell.is_edge:
+            continue
+
+        e = Edge()
+        if cell.style:
+            e.apply_style_string(cell.style)
+
+        if cell.source in elements:
+            e.source = elements[cell.source]
+        if cell.target in elements:
+            e.target = elements[cell.target]
+
+        if cell.geometry:
+            e.geometry.relative = cell.geometry.relative
+            for x, y in cell.geometry.points:
+                e.add_point(int(x), int(y))
+
+        e.label = cell.value
+        elements[cell.id] = e
 
 
+# -----------------------------
+# Diagram Builder
+# -----------------------------
 def _build_diagram(raw_cells: Dict[str, RawMxCell]) -> ParsedDiagram:
     """Convert RawMxCell dictionary into a structured ParsedDiagram.
 
@@ -276,11 +226,21 @@ def _build_diagram(raw_cells: Dict[str, RawMxCell]) -> ParsedDiagram:
     Returns:
         ParsedDiagram with organized shapes and edges
     """
-    # Build all elements
     elements = _build_vertices(raw_cells)
+    _attach_children(raw_cells, elements)
+
+    # Apply geometry starting from layer roots (parent == "1")
+    root_ids = [
+        cell.id
+        for cell in raw_cells.values()
+        if cell.is_vertex and cell.parent == "1"
+    ]
+
+    for root_id in root_ids:
+        _apply_geometry_recursive(root_id, raw_cells, elements)
+
     _build_edges(raw_cells, elements)
 
-    # Separate into shapes and edges
     shapes = [e for e in elements.values() if isinstance(e, Object)]
     edges = [e for e in elements.values() if isinstance(e, Edge)]
 
@@ -306,12 +266,6 @@ def load_diagram(file_path: str) -> ParsedDiagram:
     Raises:
         FileNotFoundError: If the file doesn't exist
         ValueError: If the XML is invalid or not a valid Draw.io file
-
-    Example:
-        >>> diagram = load_diagram("my_flowchart.drawio")
-        >>> print(f"Found {len(diagram.shapes)} shapes and {len(diagram.edges)} edges")
-        >>> for shape in diagram.shapes:
-        ...     print(f"Shape: {shape.value}")
     """
     try:
         logger.info(f"📂 Loading .drawio: '{file_path}'")

@@ -16,6 +16,7 @@ class RawGeometry:
 class RawMxCell:
     id: str
     parent: Optional[str] = None
+    children: List[str] = field(default_factory=list)
 
     value: Optional[str] = None
     style: Optional[str] = None
