@@ -40,4 +40,5 @@ dev = [
     "mkdocs-material>=9.7.0",
     "mkdocstrings-python>=2.0.0",
     "tox>=4.32.0",
+    "twine>=6.2.0",
 ]

@@ -7,6 +7,12 @@ xmlize["&"] = "&amp;"
 xmlize['"'] = "&quot;"
 xmlize["'"] = "&apos;"
 
+# Escape control characters
+xmlize["\n"] = "&#xa;"  # Newline
+xmlize["\t"] = "&#x9;"  # Tab
+xmlize["\r"] = "&#xd;"  # Carriage return
+
+
 # When saving Draw.io uses this for single quotes and also has some funky XML character escaping (double escaping ampersands) but handles normal XML escapes (above) fine on loading
 # xmlize["'"] = "&#39;"
 # xmlize['"'] = "&#34;"

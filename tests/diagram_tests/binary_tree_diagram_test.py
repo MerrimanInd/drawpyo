@@ -1,5 +1,7 @@
 import pytest
 
+import drawpyo
+
 from drawpyo.diagram_types.binary_tree import BinaryNodeObject, BinaryTreeDiagram
 
 
@@ -217,3 +219,167 @@ class TestEdgeCasesAndConsistency:
         parent.right = child
         assert parent.tree_children.count(child) == 1
         assert child._tree_parent is parent
+
+
+class TestBinaryTreeDiagramFromDict:
+    """Tests for BinaryTreeDiagram.from_dict method."""
+
+    def test_from_dict_basic_structure(self):
+        """Test a simple dictionary structure."""
+        data = {"Root": ["LeftChild", "RightChild"]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 3
+
+        root = [obj for obj in diagram.objects if obj.value == "Root"][0]
+        left_child = [obj for obj in diagram.objects if obj.value == "LeftChild"][0]
+        right_child = [obj for obj in diagram.objects if obj.value == "RightChild"][0]
+
+        assert root.left is left_child
+        assert root.right is right_child
+        assert left_child.tree_parent is root
+        assert right_child.tree_parent is root
+
+    def test_from_dict_nested_structure(self):
+        """Test a more complex nested dictionary structure."""
+        data = {
+            "A": {"B": ["D", None], "C": [None, "E"]},
+        }
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 5
+        a = [obj for obj in diagram.objects if obj.value == "A"][0]
+        b = [obj for obj in diagram.objects if obj.value == "B"][0]
+        c = [obj for obj in diagram.objects if obj.value == "C"][0]
+        d = [obj for obj in diagram.objects if obj.value == "D"][0]
+        e = [obj for obj in diagram.objects if obj.value == "E"][0]
+
+        assert a.left is b
+        assert a.right is c
+        assert b.left is d
+        assert b.right is None
+        assert c.left is None
+        assert c.right is e
+
+        assert b.tree_parent is a
+        assert c.tree_parent is a
+        assert d.tree_parent is b
+        assert e.tree_parent is c
+
+
+class TestBinaryTreeDiagramFromDictExtras:
+    """Additional tests for `from_dict` to cover lists, None siblings and errors."""
+
+    def test_from_dict_with_list_children(self):
+        data = {"Root": ["Left", "Right"]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        assert len(diagram.objects) == 3
+        root = [o for o in diagram.objects if o.value == "Root"][0]
+        left = [o for o in diagram.objects if o.value == "Left"][0]
+        right = [o for o in diagram.objects if o.value == "Right"][0]
+
+        assert root.left is left
+        assert root.right is right
+
+    def test_from_dict_with_none_sibling(self):
+        data = {"Root": ["Left", None]}
+        diagram = BinaryTreeDiagram.from_dict(data)
+
+        root = [o for o in diagram.objects if o.value == "Root"][0]
+        left = [o for o in diagram.objects if o.value == "Left"][0]
+
+        assert root.left is left
+        assert root.right is None
+
+    def test_from_dict_too_many_children_raises(self):
+        data = {"Root": {"a": "A", "b": "B", "c": "C"}}
+        with pytest.raises(TypeError, match="have 1 or 2 children"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_from_dict_multiple_roots_raises(self):
+        data = {"A": {}, "B": {}}
+        with pytest.raises(TypeError, match="Root dict must contain exactly one key"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_from_dict_invalid_key_type_raises(self):
+        data = {(1, 2): "X"}
+        with pytest.raises(TypeError, match="Invalid dict key type"):
+            BinaryTreeDiagram.from_dict(data)
+
+    def test_invalid_coloring_mode_raises(self):
+        data = {"Root": ["L"]}
+        with pytest.raises(ValueError, match="Invalid coloring mode"):
+            BinaryTreeDiagram.from_dict(data, coloring="unknown")
+
+    def test_from_dict_left_right_colour_applies_to_deeper_children(self):
+        """Left/right colouring should apply to nodes that are left/right children anywhere in the tree."""
+        data = {"Root": {"L": ["LL", "RR"], "R": ["LLV", "RRV"]}}
+        left_hex = "#112233"
+        right_hex = "#445566"
+
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex, right_hex]
+        ]
+
+        diagram = BinaryTreeDiagram.from_dict(
+            data, colors=color_schemes, coloring="directional"
+        )
+
+        ll = [o for o in diagram.objects if o.value == "LLV" or o.value == "LL"][0]
+        rr = [o for o in diagram.objects if o.value == "RRV" or o.value == "RR"][0]
+
+        # these nodes should have received the side override
+        assert getattr(ll, "fillColor", None) == left_hex
+        assert getattr(rr, "fillColor", None) == right_hex
+
+    def test_from_dict_color_list_length_mismatch_raises(self):
+        """color list provided must be of length atleast 2"""
+
+        data = {"Root": {"L": ["LL", "RR"], "R": ["LLV", "RRV"]}}
+        left_hex = "#112233"
+
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex]
+        ]
+
+        with pytest.raises(ValueError, match="at least 2 for directional "):
+            diagram = BinaryTreeDiagram.from_dict(
+                data, colors=color_schemes, coloring="directional"
+            )
+
+    def test_from_dict_coloring_directional_with_single_siblings(self):
+        """Directional coloring should still apply when some nodes have only one child."""
+        data = {"Root": {"L": ["LL", None], "R": [None, "RR"]}}
+        left_hex = "#112233"
+        right_hex = "#445566"
+
+        color_schemes = [
+            drawpyo.ColorScheme(
+                font_color=drawpyo.StandardColor.GRAY1,
+                stroke_color=c,
+                fill_color=c,
+            )
+            for c in [left_hex, right_hex]
+        ]
+
+        diagram = BinaryTreeDiagram.from_dict(
+            data, colors=color_schemes, coloring="directional"
+        )
+
+        ll = [o for o in diagram.objects if o.value == "LL"][0]
+        rr = [o for o in diagram.objects if o.value == "RR"][0]
+
+        # these nodes should have received the side override
+        assert getattr(ll, "fillColor", None) == left_hex
+        assert getattr(rr, "fillColor", None) == right_hex
