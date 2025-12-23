@@ -2,7 +2,7 @@ import pytest
 from drawpyo import load_diagram
 from drawpyo.diagram import Object, Edge
 
-# Sample Draw.io XML string for testing
+# Sample XML string for testing
 SAMPLE_XML = """<mxfile host="Drawpyo">
 <diagram name="Page-1">
   <mxGraphModel dx="2037" dy="830" grid="1">
@@ -24,12 +24,7 @@ SAMPLE_XML = """<mxfile host="Drawpyo">
 </mxfile>"""
 
 
-# -----------------------------
-# Pytest Suite
-# -----------------------------
 class TestDrawpyoParsing:
-    """Class-based tests for Drawpyo diagram parsing"""
-
     @pytest.fixture
     def diagram(self, tmp_path):
         """Fixture that writes XML to a temp file and loads it"""
