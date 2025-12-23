@@ -22,6 +22,7 @@ nav:
   - Basic Diagrams:
     - Usage: usage/basic_usage.md
     - Formatting Text: usage/text_format.md
+    - Load Diagrams: usage/load_diagrams.md
     - Color Management: usage/color_management.md
     - Objects: usage/objects.md
     - Parent and Child Objects: usage/parent_child_objects.md
@@ -43,6 +44,7 @@ nav:
       - Edges: api/edges.md
       - Objects: api/objects.md
       - Extended Objects: api/extended_objects.md
+      - Parsed Diagrams: api/parsed_diagrams.md
     - Custom Diagram Types:
       - Tree Diagram:
         - TreeDiagram: api/tree_diagram/treediagram.md

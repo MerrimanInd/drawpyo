@@ -8,6 +8,8 @@ Drawpyo's basic functionality provides the same features as using the Draw.io ap
 
 See the full documentation for these functions in [Basic Diagrams - Usage](usage/basic_usage.md).
 
+---
+
 # Extended Functionality
 
 Drawpyo extends the basic functionality of the Draw.io app with custom diagram types. These custom diagrams have automated styling and layouting to make common or complex diagrams easier to generate.
@@ -35,3 +37,19 @@ Useful visualization to compare the relative size of different categories.
 A binary tree diagram visually represents a hierarchical data structure where each node has at most two children, typically called the left and right child.
 
 [Documentation](diagram_types/binary_tree_diagrams.md)
+
+---
+
+# Loading Existing Diagrams
+
+Drawpyo can also **load existing Draw.io diagrams** into Python objects for further inspection, modification, or analysis. This allows you to work with diagrams created in the Draw.io app directly from Python.
+
+Use the `load_diagram` function to read a `.drawio` or `.xml` file:
+
+```python
+from drawpyo import load_diagram
+
+diagram = load_diagram("path/to/diagram.drawio")
+```
+
+[Documentation](usage/load_diagrams.md)
