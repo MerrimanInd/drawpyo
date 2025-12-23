@@ -10,28 +10,28 @@
         <meta name="author" content="Xander Cesari">
       
       
-        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/about/">
+        <link rel="canonical" href="https://merrimanind.github.io/drawpyo/usage/load_diagrams/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../text_format/">
       
       
-        <link rel="next" href="../usage/basic_usage/">
+        <link rel="next" href="../color_management/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>About - Drawpyo</title>
+        <title>Load Diagrams - Drawpyo</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -50,9 +50,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#conventions-and-naming" class="md-skip">
+        <a href="#loading-existing-drawio-diagrams-with-drawpyo" class="md-skip">
           Skip to content
         </a>
       
@@ -86,7 +86,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+    <a href="../.." title="Drawpyo" class="md-header__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              About
+              Load Diagrams
             
           </span>
         </div>
@@ -196,7 +196,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
+    <a href="../.." title="Drawpyo" class="md-nav__button md-logo" aria-label="Drawpyo" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -226,7 +226,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -250,19 +250,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
         
   
   
@@ -278,7 +269,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -287,20 +277,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -321,7 +311,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -339,7 +329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/basic_usage/" class="md-nav__link">
+      <a href="../basic_usage/" class="md-nav__link">
         
   
   
@@ -367,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/text_format/" class="md-nav__link">
+      <a href="../text_format/" class="md-nav__link">
         
   
   
@@ -392,10 +382,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../usage/load_diagrams/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Load Diagrams
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -411,6 +428,87 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parseddiagram-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ParsedDiagram Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-nested-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Nested Objects
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -423,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/color_management/" class="md-nav__link">
+      <a href="../color_management/" class="md-nav__link">
         
   
   
@@ -451,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/objects/" class="md-nav__link">
+      <a href="../objects/" class="md-nav__link">
         
   
   
@@ -479,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/parent_child_objects/" class="md-nav__link">
+      <a href="../parent_child_objects/" class="md-nav__link">
         
   
   
@@ -507,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/extended_objects/" class="md-nav__link">
+      <a href="../extended_objects/" class="md-nav__link">
         
   
   
@@ -535,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/edges/" class="md-nav__link">
+      <a href="../edges/" class="md-nav__link">
         
   
   
@@ -563,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/shape_libs/" class="md-nav__link">
+      <a href="../shape_libs/" class="md-nav__link">
         
   
   
@@ -647,7 +745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram_types/tree_diagrams/" class="md-nav__link">
+      <a href="../../diagram_types/tree_diagrams/" class="md-nav__link">
         
   
   
@@ -675,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram_types/binary_tree_diagrams/" class="md-nav__link">
+      <a href="../../diagram_types/binary_tree_diagrams/" class="md-nav__link">
         
   
   
@@ -703,7 +801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram_types/bar_charts/" class="md-nav__link">
+      <a href="../../diagram_types/bar_charts/" class="md-nav__link">
         
   
   
@@ -731,7 +829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram_types/pie_charts/" class="md-nav__link">
+      <a href="../../diagram_types/pie_charts/" class="md-nav__link">
         
   
   
@@ -759,7 +857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram_types/legends/" class="md-nav__link">
+      <a href="../../diagram_types/legends/" class="md-nav__link">
         
   
   
@@ -843,7 +941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/architecture/" class="md-nav__link">
+      <a href="../../api/architecture/" class="md-nav__link">
         
   
   
@@ -920,7 +1018,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/file/" class="md-nav__link">
+      <a href="../../api/file/" class="md-nav__link">
         
   
   
@@ -948,7 +1046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/page/" class="md-nav__link">
+      <a href="../../api/page/" class="md-nav__link">
         
   
   
@@ -976,7 +1074,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/text_format/" class="md-nav__link">
+      <a href="../../api/text_format/" class="md-nav__link">
         
   
   
@@ -1004,7 +1102,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/edges/" class="md-nav__link">
+      <a href="../../api/edges/" class="md-nav__link">
         
   
   
@@ -1032,7 +1130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/objects/" class="md-nav__link">
+      <a href="../../api/objects/" class="md-nav__link">
         
   
   
@@ -1060,7 +1158,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/extended_objects/" class="md-nav__link">
+      <a href="../../api/extended_objects/" class="md-nav__link">
         
   
   
@@ -1088,7 +1186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/parsed_diagrams/" class="md-nav__link">
+      <a href="../../api/parsed_diagrams/" class="md-nav__link">
         
   
   
@@ -1222,7 +1320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/tree_diagram/treediagram/" class="md-nav__link">
+      <a href="../../api/tree_diagram/treediagram/" class="md-nav__link">
         
   
   
@@ -1250,7 +1348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/tree_diagram/nodeobject/" class="md-nav__link">
+      <a href="../../api/tree_diagram/nodeobject/" class="md-nav__link">
         
   
   
@@ -1335,7 +1433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/binary_tree_diagram/binarytreediagram/" class="md-nav__link">
+      <a href="../../api/binary_tree_diagram/binarytreediagram/" class="md-nav__link">
         
   
   
@@ -1363,7 +1461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/binary_tree_diagram/binarynodeobject/" class="md-nav__link">
+      <a href="../../api/binary_tree_diagram/binarynodeobject/" class="md-nav__link">
         
   
   
@@ -1399,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/bar_chart/barchart/" class="md-nav__link">
+      <a href="../../api/bar_chart/barchart/" class="md-nav__link">
         
   
   
@@ -1427,7 +1525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/pie_chart/piechart/" class="md-nav__link">
+      <a href="../../api/pie_chart/piechart/" class="md-nav__link">
         
   
   
@@ -1455,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/legend/legend/" class="md-nav__link">
+      <a href="../../api/legend/legend/" class="md-nav__link">
         
   
   
@@ -1511,6 +1609,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parseddiagram-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ParsedDiagram Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-nested-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Nested Objects
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1529,35 +1696,85 @@
   
 
 
-<h1 id="conventions-and-naming">Conventions and Naming</h1>
-<p>This library contains quite a lot of camel case (capitalizeEachWord) attributes. While the Python convention is snake case (underscores_between_lowercase) the Draw.io style strings and attributes are camel case. Wherever possible, drawpyo uses the terminology and variable names from Draw.io to make it more intuitive to work between the two apps. However, any attribute that does not have an analogy in the Draw.io app is snake case. While this is a bit confusing I hope it helps to clarify when there's a direct analog between drawpyo and Draw.io and when the variable is a drawpyo abstraction. If this is confusing please share that feedback on the GitHub page or email and it may be changed in future versions!</p>
-<h1 id="basic-diagrams">Basic Diagrams</h1>
-<p>Drawpyo's basic functionality provides the same features as using the Draw.io app. You can create files with one or more pages, add objects to them, and position those objects. You can style objects from built-in shape libraries, manually, or from style strings. Those objects can be shapes, containers, or edges to connect them. Finally you can save your diagrams where they can be opened with the Draw.io app.</p>
-<p>See the full documentation for these functions in <a href="../usage/basic_usage/">Basic Diagrams - Usage</a>.</p>
+<h1 id="loading-existing-drawio-diagrams-with-drawpyo">Loading Existing Draw.io Diagrams with Drawpyo</h1>
+<p>Drawpyo provides an <strong>API to load existing Draw.io diagrams</strong> into Python objects, allowing inspection, modification, and analysis programmatically.</p>
 <hr />
-<h1 id="extended-functionality">Extended Functionality</h1>
-<p>Drawpyo extends the basic functionality of the Draw.io app with custom diagram types. These custom diagrams have automated styling and layouting to make common or complex diagrams easier to generate.</p>
-<h2 id="treediagram">TreeDiagram</h2>
-<p>This diagram makes creating directed tree graphs easy. Define trees, nodes, and then apply an auto layout.</p>
-<p><a href="../diagram_types/tree_diagrams/">Documentation</a></p>
-<h2 id="barchart">BarChart</h2>
-<p>Useful visualization to compare the absolute size of different categories.</p>
-<p><a href="../diagram_types/bar_charts/">Documentation</a></p>
-<h2 id="piechart">PieChart</h2>
-<p>Useful visualization to compare the relative size of different categories.</p>
-<p><a href="../diagram_types/pie_charts/">Documentation</a></p>
-<h2 id="binarytreediagram">BinaryTreeDiagram</h2>
-<p>A binary tree diagram visually represents a hierarchical data structure where each node has at most two children, typically called the left and right child.</p>
-<p><a href="../diagram_types/binary_tree_diagrams/">Documentation</a></p>
+<h2 id="overview">Overview</h2>
+<p>The main function for loading diagrams is:</p>
+<pre><code class="language-python">from drawpyo import load_diagram
+</code></pre>
+<p><code>load_diagram(file_path: str) -&gt; ParsedDiagram</code> reads a <code>.drawio</code> or <code>.xml</code> file and returns a <strong><code>ParsedDiagram</code></strong> object.</p>
+<p>This object represents all shapes, containers, and edges in a structured, accessible form.</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Full hierarchy support:</strong> Parent-child relationships are preserved. Nested objects inside containers maintain their relative positions.</li>
+<li><strong>Geometry preservation:</strong> All positions (<code>x</code>, <code>y</code>) and dimensions (<code>width</code>, <code>height</code>) are maintained exactly as in Draw.io. Relative offsets for child objects are automatically applied.</li>
+<li><strong>Edges supported:</strong> Connections between objects are imported as <code>Edge</code> objects, including source, target, and any intermediate points.</li>
+<li><strong>ID mapping:</strong> Every object can be accessed by its original Draw.io cell ID.</li>
+<li><strong>Error handling:</strong> Malformed XML or invalid Draw.io files raise clear exceptions.</li>
+</ul>
 <hr />
-<h1 id="loading-existing-diagrams">Loading Existing Diagrams</h1>
-<p>Drawpyo can also <strong>load existing Draw.io diagrams</strong> into Python objects for further inspection, modification, or analysis. This allows you to work with diagrams created in the Draw.io app directly from Python.</p>
-<p>Use the <code>load_diagram</code> function to read a <code>.drawio</code> or <code>.xml</code> file:</p>
+<h2 id="parseddiagram-structure">ParsedDiagram Structure</h2>
+<p>A <code>ParsedDiagram</code> has:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shapes</code></td>
+<td>List of <code>Object</code> instances (vertices, containers)</td>
+</tr>
+<tr>
+<td><code>edges</code></td>
+<td>List of <code>Edge</code> instances (connections between objects)</td>
+</tr>
+<tr>
+<td><code>_id_map</code></td>
+<td>Internal mapping of Draw.io cell IDs to objects for fast access</td>
+</tr>
+<tr>
+<td><code>get_by_id(id)</code></td>
+<td>Retrieve a shape or edge by its original Draw.io ID</td>
+</tr>
+<tr>
+<td><code>element_count</code></td>
+<td>Total number of shapes + edges in the diagram</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="basic-usage">Basic Usage</h2>
 <pre><code class="language-python">from drawpyo import load_diagram
 
-diagram = load_diagram(&quot;path/to/diagram.drawio&quot;)
+# Load diagram
+diagram = load_diagram(&quot;example.drawio&quot;)
+
+# Print total counts
+print(f&quot;Shapes: {len(diagram.shapes)}&quot;)
+print(f&quot;Edges: {len(diagram.edges)}&quot;)
+print(f&quot;Total elements: {diagram.element_count}&quot;)
+
+# Access a specific shape
+shape_id = &quot;2292288764992&quot;
+shape = diagram.get_by_id(shape_id)
+print(f&quot;Shape value: {shape.value}&quot;)
+print(f&quot;Geometry: x={shape.geometry.x}, y={shape.geometry.y}, width={shape.geometry.width}, height={shape.geometry.height}&quot;)
 </code></pre>
-<p><a href="../usage/load_diagrams/">Documentation</a></p>
+<hr />
+<h2 id="working-with-nested-objects">Working with Nested Objects</h2>
+<p>Draw.io allows containers, swimlanes, and groups. Drawpyo preserves the hierarchy and applies <strong>absolute positioning</strong> recursively:</p>
+<pre><code class="language-python"># Access a parent container
+parent_container = diagram.get_by_id(&quot;2292288764992&quot;)
+
+# List all child objects
+for child in parent_container.objects:
+    print(f&quot;- {child.value} at ({child.geometry.x}, {child.geometry.y})&quot;)
+</code></pre>
+<p>This ensures that when a container is moved, its children maintain their relative positions.</p>
 
 
 
@@ -1607,10 +1824,10 @@ diagram = load_diagram(&quot;path/to/diagram.drawio&quot;)
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

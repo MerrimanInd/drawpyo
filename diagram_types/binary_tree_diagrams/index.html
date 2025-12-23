@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -365,6 +365,34 @@
     
   
     Formatting Text
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/load_diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Load Diagrams
   
 
     
@@ -797,6 +825,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#create-a-binary-tree-from-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Binary Tree from a Dictionary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a Binary Tree from a Dictionary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-for-dictlist-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules for dict/list conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coloring-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coloring Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#full-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1188,6 +1255,34 @@
     
   
     Extended Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/parsed_diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parsed Diagrams
   
 
     
@@ -1710,6 +1805,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#create-a-binary-tree-from-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a Binary Tree from a Dictionary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a Binary Tree from a Dictionary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-for-dictlist-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules for dict/list conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coloring-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coloring Nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#full-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1856,6 +1990,89 @@ tree.add_right(root, right)
 </code></pre>
 <p>→ Raises <code>TypeError</code>.</p>
 <hr />
+<p>The resulting diagram looks something like this:</p>
+<p><img alt="coffee_grinders_binary_tree" src="../../img/binary_tree_diagram/coffee_grinders_binary_tree.png" /></p>
+<h2 id="create-a-binary-tree-from-a-dictionary">Create a Binary Tree from a Dictionary</h2>
+<p><code>BinaryTreeDiagram</code> supports creating an entire binary tree structure directly from a nested dictionary or list. This allows you to generate binary trees programmatically without manually creating every <code>BinaryNodeObject</code>.</p>
+<h3 id="rules-for-dictlist-conversion">Rules for dict/list conversion</h3>
+<table>
+<thead>
+<tr>
+<th>Input Type</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dict</strong></td>
+<td>Each key becomes a <strong>category node</strong>, and its value is recursively processed as its children.</td>
+</tr>
+<tr>
+<td><strong>List / Tuple</strong></td>
+<td>Each element becomes a sibling under the same parent.</td>
+</tr>
+<tr>
+<td><strong>Scalar (<code>str</code>, <code>int</code>, <code>float</code>)</strong></td>
+<td>Treated as a <strong>leaf node</strong>.</td>
+</tr>
+<tr>
+<td><strong>Unsupported types</strong></td>
+<td>Raises a <code>TypeError</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="coloring-nodes">Coloring Nodes</h3>
+<p>You can control node colors using the <code>colors</code> list and <code>coloring</code> mode.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Options / Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>colors</code></td>
+<td>List of <code>ColorScheme</code>, <code>StandardColor</code>, or color hex strings.</td>
+<td>Default: <code>None</code></td>
+</tr>
+<tr>
+<td><code>coloring</code></td>
+<td>Method used to assign colors to nodes.</td>
+<td><code>"depth"</code> (default), <code>"hash"</code>, <code>"type"</code>, <code>"directional"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Coloring Modes</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>depth</code></td>
+<td>Colors nodes based on their <strong>depth in the tree</strong>.</td>
+</tr>
+<tr>
+<td><code>hash</code></td>
+<td>Colors nodes based on a <strong>hash of their value</strong> (stable across runs).</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Colors nodes based on <strong>node type</strong>: category, list item, or leaf.</td>
+</tr>
+<tr>
+<td><code>directional</code></td>
+<td>Colors based on <strong>direction</strong> i.e, one color for left direction and one color for right direction.</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="full-example">Full Example</h2>
 <pre><code class="language-python">from drawpyo.diagram_types import BinaryTreeDiagram, BinaryNodeObject
 
@@ -1882,6 +2099,16 @@ a.right = BinaryNodeObject(tree=tree, value=&quot;A2&quot;)
 b.left  = BinaryNodeObject(tree=tree, value=&quot;B1&quot;)
 
 tree.auto_layout()
+
+tree = BinaryTreeDiagram.from_dict(
+    data,
+    file_path= &quot;~/Test Drawpyo Charts&quot;,
+    file_name=&quot;Minimal Binary Tree.drawio&quot;,
+    direction=&quot;down&quot;,
+    colors=[&quot;#DDDDDD&quot;,&quot;#BBBBBB&quot;],
+    coloring=&quot;directional&quot;,
+)
+
 tree.write()
 </code></pre>
 
@@ -1933,10 +2160,10 @@ tree.write()
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
