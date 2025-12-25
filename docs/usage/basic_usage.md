@@ -38,12 +38,13 @@ page = drawpyo.Page(file=file)
 
 There are a number of customizable parameter for pages:
 
-| argument  | description                      |
-| --------- | -------------------------------- |
-| width     | Width of the document in pixels  |
-| height    | Height of the document in pixels |
-| grid      | Enable grid (0 or 1)             |
-| grid_size | Side of grid squares in pixels   |
-| guides    | Enable guides (0 or 1)           |
-| tooltips  | Enable tooltips (0 or 1)         |
-| scale     | Scale of the drawing             |
+| argument    | description                                                |
+| ----------- | ---------------------------------------------------------- |
+| width       | Width of the document in pixels                            |
+| height      | Height of the document in pixels                           |
+| size_preset | Optional predefined page size. Overrides width and height. |
+| grid        | Enable grid (0 or 1)                                       |
+| grid_size   | Side of grid squares in pixels                             |
+| guides      | Enable guides (0 or 1)                                     |
+| tooltips    | Enable tooltips (0 or 1)                                   |
+| scale       | Scale of the drawing                                       |
