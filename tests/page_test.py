@@ -41,6 +41,17 @@ class TestPageInit:
         assert empty_page.width == 850
         assert empty_page.height == 1100
 
+    def test_page_size_presets(self) -> None:
+        """Checks page dimensions when using a size preset"""
+        page = drawpyo.Page(
+            size_preset=drawpyo.PageSize.A4LANDSCAPE,
+            width=99,
+        )
+
+        assert page.scale == 1
+        assert page.width == 1169
+        assert page.height == 827
+
     def test_special_features(self, empty_page: drawpyo.Page) -> None:
         """Checks special default functions"""
         assert empty_page.math == 0

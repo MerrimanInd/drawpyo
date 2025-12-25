@@ -1,18 +1,44 @@
 from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
 from .utils.logger import logger
+from .utils.page_sizes import PageSize
 
 
 class Page:
-    """
-    This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.
-    """
-
     def __init__(self, file: Optional[Any] = None, **kwargs: Any) -> None:
+        """
+        Args:
+            file (Optional[File]): Parent File object this page belongs to.
+
+        Keyword Args:
+            objects (list[Any]): Initial list of objects on the page.
+
+            name (str): Page name. Default: "Page-{page_num}"
+            page_num (int): Page index within the file. Default: inferred from file.
+
+            dx (int | float): Horizontal translation of the page. Default: 2037
+            dy (int | float): Vertical translation of the page. Default: 830
+            scale (int | float): Page scale factor. Default: 1
+
+            grid (int): Whether grid is enabled. Default: 1
+            grid_size (int): Grid spacing. Default: 10
+            guides (int): Whether alignment guides are enabled. Default: 1
+            tooltips (int): Whether tooltips are enabled. Default: 1
+            connect (int): Whether connections are enabled. Default: 1
+            arrows (int): Whether arrows are enabled. Default: 1
+            fold (int): Whether page folding is enabled. Default: 1
+
+            size_preset (PageSize): Optional predefined page size. Overrides width and height.
+            width (int | float): Page width. Default: 850
+            height (int | float): Page height. Default: 1100
+
+            math (int): Whether math rendering is enabled. Default: 0
+            shadow (int): Whether shadows are enabled. Default: 0
+        """
         super().__init__()
         self.id: int = id(self)
 
-        self.file: Optional[Any] = file
+        self.file: Optional[File] = file
         self.objects: List[Any] = kwargs.get("objects", [])
 
         # There are two empty top level objects in every Draw.io diagram
@@ -38,8 +64,17 @@ class Page:
         self.arrows: int = kwargs.get("arrows", 1)
         self.fold: int = kwargs.get("fold", 1)
         self.scale: Union[int, float] = kwargs.get("scale", 1)
-        self.width: Union[int, float] = kwargs.get("width", 850)
-        self.height: Union[int, float] = kwargs.get("height", 1100)
+        self.size_preset: Optional[PageSize] = kwargs.get("size_preset", None)
+        if self.size_preset and ("width" in kwargs or "height" in kwargs):
+            logger.warning(
+                "Page created with size_preset - This overrides width/height arguments."
+            )
+        self.width: Union[int, float] = (
+            kwargs.get("width", 850) if not self.size_preset else self.size_preset[0]
+        )
+        self.height: Union[int, float] = (
+            kwargs.get("height", 1100) if not self.size_preset else self.size_preset[1]
+        )
         self.math: int = kwargs.get("math", 0)
         self.shadow: int = kwargs.get("shadow", 0)
 
