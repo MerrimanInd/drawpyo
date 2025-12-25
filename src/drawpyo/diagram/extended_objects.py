@@ -130,3 +130,50 @@ class PieSlice(Object):
         self.geometry.width = float(value)
         self.geometry.height = float(value)
         self.update_parent()
+
+
+class DonutArc(Object):
+    def __init__(
+        self,
+        value: str = "DonutArc",
+        arc_value: float = 1.0,
+        **kwargs: Any,
+    ) -> None:
+        """The DonutArc object wraps the basic Object type but allows easier managing of a donut chart arc. All of the arguments and keyword arguments for Object are available here as well.
+
+        Args:
+            value (str, optional): The name of the donut arc. Defaults to "DonutArc".
+            arc_value (float, optional): The numeric value of the donut arc. Defaults to 1.0.
+            startAngle (float, optional): The starting angle of the donut arc in degrees. Defaults to 0.0.
+            arcWidth (float, optional): The Thickness of the arc represented as a fraction of the outer radius (0.0-1.0). Defaults to 0.35.
+        """
+        super().__init__(value=value, **kwargs)
+
+        self.format_as_library_object(
+            library="infographics",
+            obj_name="partial_concentric_ellipse",
+        )
+
+        self._style_attributes.extend(["startAngle", "endAngle", "arcWidth"])
+
+        self.arc_value: float = arc_value
+
+        self.size: Union[int, float] = kwargs.get("size", 120)
+        self.startAngle: float = kwargs.get("startAngle", 0.0)
+        self.arcWidth: float = kwargs.get("arcWidth", 0.35)
+
+        self.endAngle: float = (self.startAngle + arc_value) % 1
+
+    @property
+    def size(self) -> Union[int, float]:
+        """The size (width and height) of the donut arc.
+
+        Returns:
+            Union[int, float]: The size"""
+        return self.geometry.width
+
+    @size.setter
+    def size(self, value: Union[int, float]) -> None:
+        self.geometry.width = float(value)
+        self.geometry.height = float(value)
+        self.update_parent()
