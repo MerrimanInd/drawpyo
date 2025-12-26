@@ -1,11 +1,12 @@
 import drawpyo
+from drawpyo.utils.page_sizes import PageSize
 from os import path
 
 file = drawpyo.File()
 file.file_path = path.join(path.expanduser("~"), "Test Drawpyo Charts")
 file.file_name = "Create and delete.drawio"
 
-page_1 = drawpyo.Page(file=file)
+page_1 = drawpyo.Page(file=file, size_preset=PageSize.A4LANDSCAPE)
 page_2 = drawpyo.Page(file=file, name="Page-2")
 page_3 = drawpyo.Page(file=file)
 page_4 = drawpyo.Page(file=file)

@@ -5,6 +5,7 @@ from .page import Page
 from .utils.standard_colors import StandardColor
 from .utils.color_scheme import ColorScheme
 from .utils.logger import logger
+from .utils.page_sizes import PageSize
 
 from .drawio_import import load_diagram
 
@@ -19,6 +20,7 @@ __all__ = [
     Page,
     StandardColor,
     ColorScheme,
+    PageSize,
     logger,
     utils,
     diagram,
