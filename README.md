@@ -18,10 +18,6 @@ Available here!
 
 https://merrimanind.github.io/drawpyo/
 
-# Discord Server
-
-https://discord.gg/CSMHupUvRp
-
 # Basic Usage
 
 The basic mode of interacting with drawpyo is to manually create, style, and place objects just like you would using the Draw.io UI. There are a number of ways to style objects and you can write your own functionality for automatically handling style or placement.
@@ -72,19 +68,13 @@ file.write()
 
 Drawpyo also provides higher-level functionality that goes beyond what the Draw.io app offers. These **diagram types** allow you to generate complete structures automatically, without manually placing every element.
 
-Currently, Drawpyo supports:
+This video demonstrates an exemplary automatic diagram layout process:
 
-* **Tree Diagrams**
-* **Binary Tree Diagrams**
-* **Bar Charts**
-* **Pie Charts**
-* **Color Legends**
+[<img src="https://img.youtube.com/vi/HwUqUZZVMgQ/hqdefault.jpg" width="480" height="270"
+/>](https://www.youtube.com/embed/HwUqUZZVMgQ)
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 
-Work has also begun on additional diagram types, including:
+## Contributions
 
-* Automatic class/object/inheritance diagrams from a Python module
-* Directed and undirected graphs from adjacency lists
-* Flowcharts
-* Process diagrams
+Contributions are welcome. See the [contribution guidelines](CONTRIBUTING.md) or join our [Discord server](https://discord.gg/CSMHupUvRp) for more information.

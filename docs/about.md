@@ -14,6 +14,11 @@ See the full documentation for these functions in [Basic Diagrams - Usage](usage
 
 Drawpyo extends the basic functionality of the Draw.io app with custom diagram types. These custom diagrams have automated styling and layouting to make common or complex diagrams easier to generate.
 
+This video demonstrates an exemplary automatic diagram layout process:
+
+[<img src="https://img.youtube.com/vi/HwUqUZZVMgQ/hqdefault.jpg" width="480" height="270"
+/>](https://www.youtube.com/embed/HwUqUZZVMgQ)
+
 ## TreeDiagram
 
 This diagram makes creating directed tree graphs easy. Define trees, nodes, and then apply an auto layout.
