@@ -1010,6 +1010,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#src.drawpyo.page.Page.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#src.drawpyo.page.Page.remove" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1022,6 +1033,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#page-size-preset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Page Size Preset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.utils.page_sizes.PageSize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PageSize
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1595,6 +1628,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#src.drawpyo.page.Page.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __init__
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#src.drawpyo.page.Page.remove" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1607,6 +1651,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#page-size-preset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Page Size Preset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.drawpyo.utils.page_sizes.PageSize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PageSize
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1648,8 +1714,6 @@
 
 
 
-        <p>This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it's in as well as formatting attributes.</p>
-
 
 
 
@@ -1658,9 +1722,8 @@
 
 
               <details class="mkdocstrings-source">
-                <summary>Source code in <code>src/drawpyo/page.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  6</span>
-<span class="normal">  7</span>
+                <summary>Source code in <code>src\drawpyo\page.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  7</span>
 <span class="normal">  8</span>
 <span class="normal">  9</span>
 <span class="normal"> 10</span>
@@ -1770,16 +1833,76 @@
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Page</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class defines a page in a Draw.io document. It contains a list of objects and a reference to the File it&#39;s in as well as formatting attributes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Page</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            file (Optional[File]): Parent File object this page belongs to.</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            objects (list[Any]): Initial list of objects on the page.</span>
+
+<span class="sd">            name (str): Page name. Default: &quot;Page-{page_num}&quot;</span>
+<span class="sd">            page_num (int): Page index within the file. Default: inferred from file.</span>
+
+<span class="sd">            dx (int | float): Horizontal translation of the page. Default: 2037</span>
+<span class="sd">            dy (int | float): Vertical translation of the page. Default: 830</span>
+<span class="sd">            scale (int | float): Page scale factor. Default: 1</span>
+
+<span class="sd">            grid (int): Whether grid is enabled. Default: 1</span>
+<span class="sd">            grid_size (int): Grid spacing. Default: 10</span>
+<span class="sd">            guides (int): Whether alignment guides are enabled. Default: 1</span>
+<span class="sd">            tooltips (int): Whether tooltips are enabled. Default: 1</span>
+<span class="sd">            connect (int): Whether connections are enabled. Default: 1</span>
+<span class="sd">            arrows (int): Whether arrows are enabled. Default: 1</span>
+<span class="sd">            fold (int): Whether page folding is enabled. Default: 1</span>
+
+<span class="sd">            size_preset (PageSize): Optional predefined page size. Overrides width and height.</span>
+<span class="sd">            width (int | float): Page width. Default: 850</span>
+<span class="sd">            height (int | float): Page height. Default: 1100</span>
+
+<span class="sd">            math (int): Whether math rendering is enabled. Default: 0</span>
+<span class="sd">            shadow (int): Whether shadows are enabled. Default: 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">File</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;objects&quot;</span><span class="p">,</span> <span class="p">[])</span>
 
         <span class="c1"># There are two empty top level objects in every Draw.io diagram</span>
@@ -1805,8 +1928,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">arrows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arrows&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fold&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">850</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PageSize</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size_preset&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;width&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="s2">&quot;height&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Page created with size_preset - This overrides width/height arguments.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">850</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">math</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shadow</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shadow&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -1901,6 +2033,429 @@
 <div class="doc doc-object doc-function">
 
 
+<h3 id="src.drawpyo.page.Page.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>file</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="src.drawpyo.file.File" href="../file/#src.drawpyo.file.File">File</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Parent File object this page belongs to.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Other Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>objects</code></td>
+            <td>
+                  <code><span title="list">list</span>[<span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initial list of objects on the page.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>name</code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page name. Default: "Page-{page_num}"</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>page_num</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page index within the file. Default: inferred from file.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>dx</code></td>
+            <td>
+                  <code><span title="int">int</span> | <span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Horizontal translation of the page. Default: 2037</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>dy</code></td>
+            <td>
+                  <code><span title="int">int</span> | <span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Vertical translation of the page. Default: 830</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>scale</code></td>
+            <td>
+                  <code><span title="int">int</span> | <span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page scale factor. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>grid</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether grid is enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>grid_size</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Grid spacing. Default: 10</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>guides</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether alignment guides are enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>tooltips</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether tooltips are enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>connect</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether connections are enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>arrows</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether arrows are enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>fold</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether page folding is enabled. Default: 1</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>size_preset</code></td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="src.drawpyo.utils.page_sizes.PageSize" href="#src.drawpyo.utils.page_sizes.PageSize">PageSize</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional predefined page size. Overrides width and height.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>width</code></td>
+            <td>
+                  <code><span title="int">int</span> | <span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page width. Default: 850</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>height</code></td>
+            <td>
+                  <code><span title="int">int</span> | <span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Page height. Default: 1100</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>math</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether math rendering is enabled. Default: 0</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>shadow</code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether shadows are enabled. Default: 0</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src\drawpyo\page.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        file (Optional[File]): Parent File object this page belongs to.</span>
+
+<span class="sd">    Keyword Args:</span>
+<span class="sd">        objects (list[Any]): Initial list of objects on the page.</span>
+
+<span class="sd">        name (str): Page name. Default: &quot;Page-{page_num}&quot;</span>
+<span class="sd">        page_num (int): Page index within the file. Default: inferred from file.</span>
+
+<span class="sd">        dx (int | float): Horizontal translation of the page. Default: 2037</span>
+<span class="sd">        dy (int | float): Vertical translation of the page. Default: 830</span>
+<span class="sd">        scale (int | float): Page scale factor. Default: 1</span>
+
+<span class="sd">        grid (int): Whether grid is enabled. Default: 1</span>
+<span class="sd">        grid_size (int): Grid spacing. Default: 10</span>
+<span class="sd">        guides (int): Whether alignment guides are enabled. Default: 1</span>
+<span class="sd">        tooltips (int): Whether tooltips are enabled. Default: 1</span>
+<span class="sd">        connect (int): Whether connections are enabled. Default: 1</span>
+<span class="sd">        arrows (int): Whether arrows are enabled. Default: 1</span>
+<span class="sd">        fold (int): Whether page folding is enabled. Default: 1</span>
+
+<span class="sd">        size_preset (PageSize): Optional predefined page size. Overrides width and height.</span>
+<span class="sd">        width (int | float): Page width. Default: 850</span>
+<span class="sd">        height (int | float): Page height. Default: 1100</span>
+
+<span class="sd">        math (int): Whether math rendering is enabled. Default: 0</span>
+<span class="sd">        shadow (int): Whether shadows are enabled. Default: 0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">File</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;objects&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="c1"># There are two empty top level objects in every Draw.io diagram</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xml_class</span><span class="o">=</span><span class="s2">&quot;mxCell&quot;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">xml_class</span><span class="o">=</span><span class="s2">&quot;mxCell&quot;</span><span class="p">,</span> <span class="n">xml_parent</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="c1"># Properties</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">page_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">pages</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">page_num</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Page-</span><span class="si">{</span><span class="n">page_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">page_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;page_num&quot;</span><span class="p">,</span> <span class="n">page_num</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dx&quot;</span><span class="p">,</span> <span class="mi">2037</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dy&quot;</span><span class="p">,</span> <span class="mi">830</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">grid_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grid_size&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">guides</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;guides&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tooltips</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tooltips&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">arrows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arrows&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fold&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PageSize</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size_preset&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;width&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="s2">&quot;height&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Page created with size_preset - This overrides width/height arguments.&quot;</span>
+        <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">850</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_preset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">math</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shadow</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;shadow&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># In the Draw.io file format, each page is actually three nested XML</span>
+    <span class="c1"># tags. These are defined as XMLBase subclasses below</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">diagram</span><span class="p">:</span> <span class="n">Diagram</span> <span class="o">=</span> <span class="n">Diagram</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mxGraph</span><span class="p">:</span> <span class="n">mxGraph</span> <span class="o">=</span> <span class="n">mxGraph</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span> <span class="n">Root</span> <span class="o">=</span> <span class="n">Root</span><span class="p">()</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📄 Page created: &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
 <h3 id="src.drawpyo.page.Page.remove" class="doc doc-heading">
             <code class="highlight language-python"><span class="n">remove</span><span class="p">()</span></code>
 
@@ -1913,12 +2468,12 @@
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/drawpyo/page.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <summary>Source code in <code>src\drawpyo\page.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function removes the Page from its linked File object then deletes itself.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">remove_page</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1928,6 +2483,147 @@
     </div>
 
 </div>
+
+
+
+  </div>
+
+    </div>
+
+</div><hr />
+<h2 id="page-size-preset">Page Size Preset</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.drawpyo.utils.page_sizes.PageSize" class="doc doc-heading">
+            <code>src.drawpyo.utils.page_sizes.PageSize</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="tuple">tuple</span></code>, <code><span title="enum.Enum">Enum</span></code></p>
+
+
+
+        <p>Predefined page sizes expressed as (width, height) in Draw.io units.</p>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>src\drawpyo\utils\page_sizes.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PageSize</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Predefined page sizes expressed as (width, height) in Draw.io units.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">USLETTERLANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">850</span><span class="p">)</span>
+    <span class="n">USLEGALLANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1400</span><span class="p">,</span> <span class="mi">850</span><span class="p">)</span>
+    <span class="n">USTABLOIDLANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1700</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span>
+    <span class="n">USEXECUTIVELANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">700</span><span class="p">)</span>
+    <span class="n">USLETTERPORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">850</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span>
+    <span class="n">USLEGALPORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">850</span><span class="p">,</span> <span class="mi">1400</span><span class="p">)</span>
+    <span class="n">USTABLOIDPORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">1700</span><span class="p">)</span>
+    <span class="n">USEXECUTIVEPORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">A0LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4681</span><span class="p">,</span> <span class="mi">3300</span><span class="p">)</span>
+    <span class="n">A1LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3300</span><span class="p">,</span> <span class="mi">2336</span><span class="p">)</span>
+    <span class="n">A2LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2336</span><span class="p">,</span> <span class="mi">1654</span><span class="p">)</span>
+    <span class="n">A3LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1654</span><span class="p">,</span> <span class="mi">1169</span><span class="p">)</span>
+    <span class="n">A4LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1169</span><span class="p">,</span> <span class="mi">827</span><span class="p">)</span>
+    <span class="n">A5LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">827</span><span class="p">,</span> <span class="mi">583</span><span class="p">)</span>
+    <span class="n">A6LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">583</span><span class="p">,</span> <span class="mi">413</span><span class="p">)</span>
+    <span class="n">A7LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">413</span><span class="p">,</span> <span class="mi">291</span><span class="p">)</span>
+    <span class="n">A0PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3300</span><span class="p">,</span> <span class="mi">4681</span><span class="p">)</span>
+    <span class="n">A1PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2336</span><span class="p">,</span> <span class="mi">3300</span><span class="p">)</span>
+    <span class="n">A2PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1654</span><span class="p">,</span> <span class="mi">2336</span><span class="p">)</span>
+    <span class="n">A3PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1169</span><span class="p">,</span> <span class="mi">1654</span><span class="p">)</span>
+    <span class="n">A4PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">827</span><span class="p">,</span> <span class="mi">1169</span><span class="p">)</span>
+    <span class="n">A5PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">583</span><span class="p">,</span> <span class="mi">827</span><span class="p">)</span>
+    <span class="n">A6PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">413</span><span class="p">,</span> <span class="mi">583</span><span class="p">)</span>
+    <span class="n">A7PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">291</span><span class="p">,</span> <span class="mi">413</span><span class="p">)</span>
+    <span class="n">B4LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1390</span><span class="p">,</span> <span class="mi">980</span><span class="p">)</span>
+    <span class="n">B5LANDSCAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">980</span><span class="p">,</span> <span class="mi">690</span><span class="p">)</span>
+    <span class="n">B4PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">980</span><span class="p">,</span> <span class="mi">1390</span><span class="p">)</span>
+    <span class="n">B5PORTRAIT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">690</span><span class="p">,</span> <span class="mi">980</span><span class="p">)</span>
+    <span class="n">ASPECT16BY9</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>
+    <span class="n">ASPECT16BY10</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1920</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span>
+    <span class="n">ASPECT4BY3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
 
 
 
