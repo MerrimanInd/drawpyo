@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from os import path
 from typing import Optional, Dict, Any, List, Union, Tuple
 from ..utils.logger import logger

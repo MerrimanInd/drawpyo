@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import List as ListType, Optional, Any, Union
 from .objects import Object, object_from_library
 

@@ -7,7 +7,7 @@ from .utils.color_scheme import ColorScheme
 from .utils.logger import logger
 from .utils.page_sizes import PageSize
 
-from .drawio_import import load_diagram
+from .drawio_import import load_diagram, ParsedDiagram
 
 from . import utils
 from . import diagram
@@ -27,6 +27,7 @@ __all__ = [
     diagram_types,
     drawio_import,
     load_diagram,
+    ParsedDiagram,
 ]
 
 __version__ = "0.2.4"

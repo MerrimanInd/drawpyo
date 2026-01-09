@@ -32,6 +32,16 @@ To run the test suite enter in your terminal:
 uv run tox
 ```
 
+#### Pull Requests
+
+Ensure there is an existing issue describing the bug, feature, or improvement. If not, create one and discuss the approach before starting work. Fork the repository and create a feature branch from the `dev` branch.
+
+**PR Requirements:**
+- Code builds successfully and all tests pass.
+- New functionality includes appropriate tests.
+- Documentation is updated if behavior or usage has changed.
+- No unnecessary formatting or unrelated refactoring is included.
+
 #### Building
 
 Building can also be done with `uv`! The build system (flit) is specified in the `pyproject.toml` file and should have been installed automatically by `uv`. To build the wheels enter in your terminal:
