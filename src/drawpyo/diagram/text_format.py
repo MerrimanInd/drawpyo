@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional, Dict, Any, Union
 from ..utils.logger import logger
 from .base_diagram import DiagramBase

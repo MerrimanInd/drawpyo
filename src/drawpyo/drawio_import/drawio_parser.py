@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Optional
 from dataclasses import dataclass, field
 
 from .raw import RawMxCell, RawGeometry
-from drawpyo import logger
+from drawpyo.utils import logger
 from drawpyo.diagram import Object, Edge, DiagramBase
 
 

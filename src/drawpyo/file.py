@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import List, Optional, Any, Union, Dict
 from .xml_base import XMLBase
 from datetime import datetime

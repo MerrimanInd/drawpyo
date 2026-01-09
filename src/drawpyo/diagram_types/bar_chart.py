@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Callable, Union, Optional
 from copy import deepcopy
 from ..diagram.objects import Object, Group

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional, Any
 
 from .tree import NodeObject, TreeGroup, TreeDiagram
