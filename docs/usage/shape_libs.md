@@ -2,9 +2,10 @@
 
 The Draw.io app has a lot of built-in shape libraries available. The basic library contains shapes and building blocks but there are increasingly more specific libraries such as flowcharts, wiring diagrams, and org charts. You can also export and import shape libraries into Draw.io.
 
-To replicate this feature for drawpyo, I created a library format based on TOML. Draw.io's libraries are XML which isn't as human readable or writable and is more specification than necessary.
+To replicate this feature for drawpyo, we provide two options for shape libraries:
 
-Drawpyo also supports importing Draw.io's native XML shape libraries (mxlibrary format), which is useful for using third-party icon libraries like Azure, AWS, or Google Cloud icons.
+1. **TOML format** - A custom human-readable library format we created for drawpyo, which is simpler and more accessible than XML for defining custom shapes.
+2. **Draw.io's native XML format (mxlibrary)** - Direct support for Draw.io's XML shape libraries, which is useful for using third-party icon libraries like Azure, AWS, or Google Cloud icons.
 
 ## Built-In Shape Libraries
 
