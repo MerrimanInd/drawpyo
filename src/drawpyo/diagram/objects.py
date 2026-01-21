@@ -300,6 +300,10 @@ class Object(DiagramBase):
         Args:
             library (str or dict): The library containing the object
             obj_name (str): The name of the object in the library to generate
+            
+        Raises:
+            ValueError: If the library or object name is invalid or not found.
+            KeyError: If required keys are missing from the object definition.
         """
         if type(library) == str:
             if library in base_libraries:
@@ -309,15 +313,42 @@ class Object(DiagramBase):
                     self.apply_attribute_dict(obj_dict)
                 else:
                     raise ValueError(
-                        "Object {0} not in Library {1}".format(obj_name, library)
+                        f"Object '{obj_name}' not found in library '{library}'. "
+                        f"Available objects: {', '.join(list(library_dict.keys())[:10])}"
+                        + ("..." if len(library_dict) > 10 else "")
                     )
             else:
-                raise ValueError("Library {0} not in base_libraries".format(library))
+                raise ValueError(
+                    f"Library '{library}' not found in base_libraries. "
+                    f"Available libraries: {', '.join(base_libraries.keys())}"
+                )
         elif type(library) == dict:
+            if obj_name not in library:
+                raise ValueError(
+                    f"Object '{obj_name}' not found in provided library dictionary. "
+                    f"Available objects: {', '.join(list(library.keys())[:10])}"
+                    + ("..." if len(library) > 10 else "")
+                )
             obj_dict: Dict[str, Any] = library[obj_name]
+            
+            # Validate that we have at least some usable data
+            if not obj_dict:
+                raise ValueError(
+                    f"Object '{obj_name}' has no properties defined in the library"
+                )
+            
+            # Warn if baseStyle is missing (common in mxlibrary shapes)
+            if "baseStyle" not in obj_dict:
+                logger.warning(
+                    f"Object '{obj_name}' does not have a 'baseStyle' property. "
+                    f"This may result in a shape without styling."
+                )
+            
             self.apply_attribute_dict(obj_dict)
         else:
-            raise ValueError("Unparseable libary passed in.")
+            raise ValueError(
+                f"Invalid library type: expected str or dict, got {type(library).__name__}"
+            )
 
     @property
     def attributes(self) -> Dict[str, Any]:
