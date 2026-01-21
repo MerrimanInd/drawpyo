@@ -52,7 +52,7 @@ def main():
         # Create a new diagram file
         file = drawpyo.File()
         file.file_name = "azure_diagram_test"
-        file.file_path = "./output"
+        file.file_path = "./etc/reference drawio charts"
 
         # Create a page
         page = drawpyo.Page(file=file)
