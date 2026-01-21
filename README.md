@@ -51,6 +51,24 @@ item_from_lib = drawpyo.diagram.object_from_library(
     )
 ```
 
+## Import and use external shape libraries
+
+```python
+# Import Draw.io XML shape libraries (e.g., Azure, AWS, Google Cloud icons)
+drawpyo.register_mxlibrary(
+    "azure",
+    "https://raw.githubusercontent.com/dwarfered/azure-architecture-icons-for-drawio/main/azure-public-service-icons/004%20azure%20ecosystem.xml"
+)
+
+# Use the imported shapes
+azure_icon = drawpyo.diagram.object_from_library(
+    page=page,
+    library="azure",
+    obj_name="01038-icon-service-Collaborative-Service",
+    position=(100, 100)
+)
+```
+
 ## Style an object from a string
 
 ```python
