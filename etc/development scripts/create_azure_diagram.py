@@ -24,7 +24,7 @@ def main():
     # Create diagram
     file = drawpyo.File()
     file.file_name = "azure_architecture.drawio"
-    file.file_path = "../reference drawio charts"
+    file.file_path = "./etc/reference drawio charts"
     
     page = drawpyo.Page(file=file)
     page.name = "Azure Architecture Diagram"
