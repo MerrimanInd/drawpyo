@@ -1,9 +1,17 @@
 from unittest.mock import patch, mock_open
 import pytest
 import os
-import tempfile
+from pathlib import Path
 from drawpyo.drawio_import.mxlibrary_parser import parse_mxlibrary, load_mxlibrary
 import drawpyo
+
+# Path to test fixtures
+FIXTURES_DIR = Path(__file__).parent / "fixtures"
+SAMPLE_LIBRARY_PATH = FIXTURES_DIR / "sample_library.xml"
+
+# Path to test output directory
+OUTPUT_DIR = Path(__file__).parent.parent / "output"
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 
 class TestParseMxlibrary:
@@ -48,6 +56,39 @@ class TestParseMxlibrary:
 class TestLoadMxlibrary:
     """Tests for load_mxlibrary function"""
 
+    def test_load_mxlibrary_from_local_file(self):
+        """Test loading mxlibrary from an actual local file"""
+        shapes = load_mxlibrary(str(SAMPLE_LIBRARY_PATH))
+
+        assert len(shapes) == 4
+        assert "Test-Icon-1" in shapes
+        assert "Test-Icon-2" in shapes
+        assert "Simple-Box" in shapes
+        assert "firewall" in shapes
+
+        # Verify Test-Icon-1
+        icon1 = shapes["Test-Icon-1"]
+        assert icon1["width"] == 50
+        assert icon1["height"] == 50
+        assert "shape=image" in icon1["baseStyle"]
+
+        # Verify Test-Icon-2
+        icon2 = shapes["Test-Icon-2"]
+        assert icon2["width"] == 60
+        assert icon2["height"] == 60
+
+        # Verify Simple-Box
+        box = shapes["Simple-Box"]
+        assert box["width"] == 120
+        assert box["height"] == 60
+        assert "rounded=1" in box["baseStyle"]
+        assert "fillColor=#dae8fc" in box["baseStyle"]
+
+        firewall = shapes["firewall"]
+        assert firewall["width"] == 48
+        assert firewall["height"] == 48
+        assert "shape=image" in firewall["baseStyle"]
+
     def test_load_mxlibrary_file(self):
         """Test loading mxlibrary from a file path"""
         content = r"""<mxlibrary>[{"h":10,"xml":"&lt;mxCell vertex=\"1\" style=\"s1\" /&gt;","w":10,"title":"FileIcon"}]</mxlibrary>"""
@@ -89,19 +130,35 @@ class TestLoadMxlibrary:
             assert "HTTP 404" in str(exc_info.value)
 
     def test_load_mxlibrary_empty_library(self):
-        """Test loading an empty library raises ValueError"""
+        """Test loading an empty library returns empty dict with warning logged"""
         content = r"""<mxlibrary>[]</mxlibrary>"""
         with patch("urllib.request.urlopen") as mock_urlopen:
             mock_response = mock_urlopen.return_value.__enter__.return_value
             mock_response.read.return_value = content.encode("utf-8")
 
-            with pytest.raises(ValueError) as exc_info:
-                load_mxlibrary("http://example.com/empty.xml")
-            assert "No valid shapes found" in str(exc_info.value)
+            shapes = load_mxlibrary("http://example.com/empty.xml")
+            assert shapes == {}
+            assert len(shapes) == 0
 
 
 class TestRegisterMxlibrary:
     """Integration tests for register_mxlibrary function"""
+
+    def test_register_mxlibrary_from_local_file(self):
+        """Test registering an mxlibrary from a local file"""
+        drawpyo.register_mxlibrary("test_lib", str(SAMPLE_LIBRARY_PATH))
+
+        from drawpyo.diagram.objects import base_libraries
+
+        assert "test_lib" in base_libraries
+        assert "Test-Icon-1" in base_libraries["test_lib"]
+        assert "Test-Icon-2" in base_libraries["test_lib"]
+        assert "Simple-Box" in base_libraries["test_lib"]
+
+        # Verify the shapes were loaded correctly
+        icon1 = base_libraries["test_lib"]["Test-Icon-1"]
+        assert icon1["width"] == 50
+        assert icon1["height"] == 50
 
     def test_register_mxlibrary_url(self):
         """Test registering an mxlibrary from a mocked URL"""
@@ -150,30 +207,33 @@ class TestRegisterMxlibrary:
             assert "shape=image" in icon.baseStyle
             assert "image=data:image/svg+xml" in icon.baseStyle
 
-            with tempfile.TemporaryDirectory() as tmpdir:
-                file.file_path = tmpdir
-                file.file_name = "test_diagram.drawio"
-                file.write()
+            file.file_path = str(OUTPUT_DIR)
+            file.file_name = "test_diagram.drawio"
+            file.write()
 
-                output_path = os.path.join(tmpdir, "test_diagram.drawio")
-                assert os.path.exists(output_path)
+            output_path = OUTPUT_DIR / "test_diagram.drawio"
+            assert output_path.exists()
 
-                with open(output_path, "r") as f:
-                    content = f.read()
-                    assert "shape=image" in content
-                    assert "image=data:image/svg+xml" in content
+            with open(output_path, "r") as f:
+                content = f.read()
+                assert "shape=image" in content
+                assert "image=data:image/svg+xml" in content
 
     def test_register_mxlibrary_invalid_library(self):
-        """Test that registering an empty library raises an error"""
+        """Test that registering an empty library logs warning but doesn't raise"""
         content = r"""<mxlibrary>[]</mxlibrary>"""
 
         with patch("urllib.request.urlopen") as mock_urlopen:
             mock_response = mock_urlopen.return_value.__enter__.return_value
             mock_response.read.return_value = content.encode("utf-8")
 
-            with pytest.raises(ValueError) as exc_info:
-                drawpyo.register_mxlibrary("empty", "https://example.com/empty.xml")
-            assert "No valid shapes found" in str(exc_info.value)
+            # Should not raise an exception, just log warning
+            drawpyo.register_mxlibrary("empty", "https://example.com/empty.xml")
+
+            from drawpyo.diagram.objects import base_libraries
+
+            # Empty library should not be registered
+            assert "empty" not in base_libraries
 
 
 class TestObjectFromLibraryDict:
@@ -203,3 +263,94 @@ class TestObjectFromLibraryDict:
             assert obj.height == 40
             assert "shape=ellipse" in obj.baseStyle
             assert "fillColor=#ff0000" in obj.baseStyle
+
+
+class TestLocalFileIntegration:
+    """Integration tests using real local fixture files"""
+
+    def test_full_workflow_with_local_file(self):
+        """Test complete workflow: register local file, create objects, save diagram"""
+        # Register library from local file
+        drawpyo.register_mxlibrary("local_test", str(SAMPLE_LIBRARY_PATH))
+
+        # Create diagram
+        file = drawpyo.File()
+        page = drawpyo.Page(file=file)
+
+        # Create objects from the registered library
+        icon1 = drawpyo.diagram.object_from_library(
+            library="local_test",
+            obj_name="Test-Icon-1",
+            page=page,
+            position=(50, 50),
+        )
+
+        icon2 = drawpyo.diagram.object_from_library(
+            library="local_test",
+            obj_name="Test-Icon-2",
+            page=page,
+            position=(150, 50),
+        )
+
+        box = drawpyo.diagram.object_from_library(
+            library="local_test",
+            obj_name="Simple-Box",
+            page=page,
+            position=(50, 150),
+        )
+        firewall = drawpyo.diagram.object_from_library(
+            library="local_test",
+            obj_name="firewall",
+            page=page,
+            position=(250, 100),
+        )
+        # Verify objects were created correctly
+        assert icon1 is not None
+        assert icon1.width == 50
+        assert icon1.height == 50
+        assert "shape=image" in icon1.baseStyle
+
+        assert icon2 is not None
+        assert icon2.width == 60
+        assert icon2.height == 60
+
+        assert box is not None
+        assert box.width == 120
+        assert box.height == 60
+        assert "rounded=1" in box.baseStyle
+
+        assert firewall is not None
+        assert firewall.width == 48
+        assert firewall.height == 48
+        assert "shape=image" in firewall.baseStyle
+
+        # Save and verify the diagram
+        file.file_path = str(OUTPUT_DIR)
+        file.file_name = "test_local_diagram.drawio"
+        file.write()
+
+        output_path = OUTPUT_DIR / "test_local_diagram.drawio"
+        assert output_path.exists()
+
+        with open(output_path, "r") as f:
+            content = f.read()
+            assert "shape=image" in content
+            assert "rounded=1" in content
+            assert "fillColor=#dae8fc" in content
+
+    def test_load_library_dict_from_local_file(self):
+        """Test loading library as dict from local file and using directly"""
+        shapes = drawpyo.load_mxlibrary(str(SAMPLE_LIBRARY_PATH))
+
+        file = drawpyo.File()
+        page = drawpyo.Page(file=file)
+
+        # Use the shapes dict directly without registering
+        obj = drawpyo.diagram.object_from_library(
+            library=shapes, obj_name="Simple-Box", page=page, position=(100, 100)
+        )
+
+        assert obj is not None
+        assert obj.width == 120
+        assert obj.height == 60
+        assert "fillColor=#dae8fc" in obj.baseStyle

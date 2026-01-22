@@ -36,13 +36,18 @@ def register_mxlibrary(name: str, source: str) -> None:
     """
     from .diagram.objects import base_libraries
 
-    shapes = load_mxlibrary(source)
+    try:
+        shapes = load_mxlibrary(source)
+    except ValueError as e:
+        logger.warning(f"Failed to load mxlibrary '{name}' from '{source}': {str(e)}")
+        raise
 
     if not shapes:
-        raise ValueError(
+        logger.warning(
             f"No valid shapes found in mxlibrary from '{source}'. "
             f"Cannot register empty library '{name}'."
         )
+        return
 
     base_libraries[name] = shapes
     logger.info(f"Successfully registered mxlibrary '{name}' with {len(shapes)} shapes")

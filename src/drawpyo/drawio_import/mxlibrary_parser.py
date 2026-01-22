@@ -170,10 +170,11 @@ def load_mxlibrary(file_path_or_url: str) -> Dict[str, Dict[str, Any]]:
             )
 
         if not shapes:
-            raise ValueError(
+            logger.warning(
                 f"No valid shapes found in mxlibrary '{file_path_or_url}'. "
                 f"Errors: {'; '.join(errors)}"
             )
+            return {}
 
         return shapes
 

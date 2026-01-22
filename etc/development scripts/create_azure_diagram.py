@@ -1,5 +1,4 @@
 import drawpyo
-from drawpyo.utils.logger import logger
 
 # Register Azure icons
 azure_url = "https://raw.githubusercontent.com/dwarfered/azure-architecture-icons-for-drawio/refs/heads/main/azure-public-service-icons/004%20azure%20ecosystem.xml"
@@ -72,4 +71,6 @@ if len(icons) > 1:
 
 # Save
 file.write()
-logger.info("You can now open the file in Draw.io to see the Azure icons!")
+print(
+    "Azure diagram created successfully! You can now open the file in Draw.io to see the Azure icons!"
+)
