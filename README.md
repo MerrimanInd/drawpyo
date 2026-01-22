@@ -51,17 +51,19 @@ item_from_lib = drawpyo.diagram.object_from_library(
     )
 ```
 
-## Import and use external shape libraries
+## Import external shape libraries
+
+You can import and use external Draw.io XML shape libraries (e.g., Azure, AWS, Google Cloud icons):
 
 ```python
-# Import Draw.io XML shape libraries (e.g., Azure, AWS, Google Cloud icons)
+# Register an external library
 drawpyo.register_mxlibrary(
     "developer",
     "https://raw.githubusercontent.com/jgraph/drawio-libs/refs/heads/main/libs/integration/developer.xml"
 )
 
-# Use the imported shapes
-developer_icon = drawpyo.diagram.object_from_library(
+# Use shapes from the registered library
+icon = drawpyo.diagram.object_from_library(
     page=page,
     library="developer",
     obj_name="App Developing",

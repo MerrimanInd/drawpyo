@@ -300,7 +300,7 @@ class Object(DiagramBase):
         Args:
             library (str or dict): The library containing the object
             obj_name (str): The name of the object in the library to generate
-            
+
         Raises:
             ValueError: If the library or object name is invalid or not found.
             KeyError: If required keys are missing from the object definition.
@@ -330,20 +330,20 @@ class Object(DiagramBase):
                     + ("..." if len(library) > 10 else "")
                 )
             obj_dict: Dict[str, Any] = library[obj_name]
-            
+
             # Validate that we have at least some usable data
             if not obj_dict:
                 raise ValueError(
                     f"Object '{obj_name}' has no properties defined in the library"
                 )
-            
+
             # Warn if baseStyle is missing (common in mxlibrary shapes)
             if "baseStyle" not in obj_dict:
                 logger.warning(
                     f"Object '{obj_name}' does not have a 'baseStyle' property. "
                     f"This may result in a shape without styling."
                 )
-            
+
             self.apply_attribute_dict(obj_dict)
         else:
             raise ValueError(

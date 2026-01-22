@@ -8,22 +8,25 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]:
     """
     Parses an mxlibrary file content and extracts shape definitions.
-    
+
     Args:
         content: The string content of the mxlibrary file.
-        
+
     Returns:
         A tuple of (shapes_dict, errors_list) where:
-        - shapes_dict: Dictionary with keys as titles and values as dicts containing 
+        - shapes_dict: Dictionary with keys as titles and values as dicts containing
           properties like baseStyle, width, height, and xml_class.
         - errors_list: List of error messages for shapes that couldn't be parsed.
     """
     errors: List[str] = []
-    clean_content = content.replace("<mxlibrary>", "").replace("</mxlibrary>", "").strip()
-    
+    clean_content = (
+        content.replace("<mxlibrary>", "").replace("</mxlibrary>", "").strip()
+    )
+
     try:
         data = json.loads(clean_content)
     except json.JSONDecodeError as e:
@@ -32,7 +35,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
         end = content.rfind("]")
         if start != -1 and end != -1:
             try:
-                data = json.loads(content[start:end+1])
+                data = json.loads(content[start : end + 1])
             except json.JSONDecodeError:
                 errors.append(f"Failed to parse JSON content: {str(e)}")
                 return {}, errors
@@ -41,7 +44,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             return {}, errors
 
     shapes: Dict[str, Dict[str, Any]] = {}
-    
+
     if not isinstance(data, list):
         errors.append(f"Expected JSON array, got {type(data).__name__}")
         return {}, errors
@@ -50,18 +53,18 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
         if not isinstance(item, dict):
             errors.append(f"Item {idx}: Expected dict, got {type(item).__name__}")
             continue
-            
+
         title = item.get("title", "Untitled")
         w = item.get("w", 0)
         h = item.get("h", 0)
         xml_encoded = item.get("xml")
-        
+
         if not xml_encoded:
             errors.append(f"Item {idx} ({title}): Missing 'xml' field")
             continue
-            
+
         xml_str = html.unescape(xml_encoded)
-        
+
         try:
             try:
                 root_element = ET.fromstring(xml_str)
@@ -70,29 +73,29 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
 
             main_cell = None
             cells = []
-            
+
             if root_element.tag == "mxCell":
                 cells.append(root_element)
-            
+
             for cell in root_element.iter("mxCell"):
                 cells.append(cell)
-            
+
             for cell in cells:
                 if cell.get("vertex") == "1":
                     main_cell = cell
                     break
-            
+
             if main_cell is None and cells:
                 main_cell = cells[0]
-            
+
             if main_cell is not None:
                 style = main_cell.get("style", "")
-                
+
                 shapes[title] = {
                     "baseStyle": style,
                     "width": w,
                     "height": h,
-                    "xml_class": "mxCell"
+                    "xml_class": "mxCell",
                 }
             else:
                 errors.append(f"Item {idx} ({title}): No valid mxCell found in XML")
@@ -104,23 +107,24 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
 
     return shapes, errors
 
+
 def load_mxlibrary(file_path_or_url: str) -> Dict[str, Dict[str, Any]]:
     """
     Loads an mxlibrary from a file path or URL and parses it.
-    
+
     Args:
         file_path_or_url: Local file path or HTTP/HTTPS URL.
-        
+
     Returns:
         Dictionary of shapes.
-        
+
     Raises:
         ValueError: If the file/URL cannot be loaded or parsed.
         FileNotFoundError: If the local file doesn't exist.
         urllib.error.URLError: If the URL cannot be accessed.
     """
     content = ""
-    
+
     try:
         if file_path_or_url.lower().startswith(("http://", "https://")):
             try:
@@ -155,24 +159,24 @@ def load_mxlibrary(file_path_or_url: str) -> Dict[str, Dict[str, Any]]:
                 raise ValueError(
                     f"Error reading file '{file_path_or_url}': {str(e)}"
                 ) from e
-                
+
         shapes, errors = parse_mxlibrary(content)
-        
+
         if errors:
             logger.warning(
                 f"Encountered {len(errors)} error(s) while parsing mxlibrary "
                 f"from '{file_path_or_url}': {'; '.join(errors[:5])}"
                 + (" ..." if len(errors) > 5 else "")
             )
-        
+
         if not shapes:
             raise ValueError(
                 f"No valid shapes found in mxlibrary '{file_path_or_url}'. "
                 f"Errors: {'; '.join(errors)}"
             )
-            
+
         return shapes
-        
+
     except (ValueError, FileNotFoundError) as e:
         # Re-raise our custom errors
         raise

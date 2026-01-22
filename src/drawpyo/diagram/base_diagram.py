@@ -5,7 +5,6 @@ from typing import List, Optional, Tuple, Dict, Any, Union
 from ..xml_base import XMLBase
 from os import path
 
-
 __all__ = [
     "DiagramBase",
     "Geometry",

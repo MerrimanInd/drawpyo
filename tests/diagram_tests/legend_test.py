@@ -14,7 +14,6 @@ from drawpyo.utils.color_scheme import ColorScheme
 from drawpyo.page import Page
 from drawpyo.diagram.objects import Object, Group
 
-
 # -------------------------------------------------
 # Fixtures
 # -------------------------------------------------

@@ -5,7 +5,6 @@ from .pie_chart import PieChart
 from .legend import Legend
 from .binary_tree import BinaryNodeObject, BinaryTreeDiagram
 
-
 __all__ = [
     NodeObject,
     TreeGroup,

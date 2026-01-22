@@ -1,7 +1,6 @@
 import pytest
 from drawpyo import ColorScheme, StandardColor
 
-
 # ============================================================
 #  HEX VALIDATION
 # ============================================================
