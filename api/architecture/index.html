@@ -2492,7 +2492,8 @@ When using tags or tooltips, the open_tag value and id are shifted to the <UserO
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">126</span>
+<span class="normal">127</span>
 <span class="normal">128</span>
 <span class="normal">129</span>
 <span class="normal">130</span>
@@ -2693,8 +2694,7 @@ When using tags or tooltips, the open_tag value and id are shifted to the <UserO
 <span class="normal">325</span>
 <span class="normal">326</span>
 <span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DiagramBase</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
+<span class="normal">328</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DiagramBase</span><span class="p">(</span><span class="n">XMLBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class is the base for all diagram objects to inherit from. It defines some general creation methods and properties to make diagram objects printable and useful.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3033,7 +3033,8 @@ and also appended to the .style_attributes list.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">292</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">291</span>
+<span class="normal">292</span>
 <span class="normal">293</span>
 <span class="normal">294</span>
 <span class="normal">295</span>
@@ -3051,8 +3052,7 @@ and also appended to the .style_attributes list.</p>
 <span class="normal">307</span>
 <span class="normal">308</span>
 <span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes in a dictionary of attributes and applies them</span>
 <span class="sd">    to the object. These attributes can be style or properties. If the</span>
@@ -3125,7 +3125,8 @@ and also appended to the .style_attributes list.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">262</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">261</span>
+<span class="normal">262</span>
 <span class="normal">263</span>
 <span class="normal">264</span>
 <span class="normal">265</span>
@@ -3147,8 +3148,7 @@ and also appended to the .style_attributes list.</p>
 <span class="normal">281</span>
 <span class="normal">282</span>
 <span class="normal">283</span>
-<span class="normal">284</span>
-<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">apply_style_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function will apply a passed in style string to the object. This style string can be obtained from the Draw.io app by selecting Edit Style from the context menu of any object. This function will iterate through the attributes in the style string and assign the corresponding property the value.</span>
 
@@ -3255,7 +3255,8 @@ Python environment and further objects created that match the style.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram/base_diagram.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">313</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">312</span>
+<span class="normal">313</span>
 <span class="normal">314</span>
 <span class="normal">315</span>
 <span class="normal">316</span>
@@ -3270,8 +3271,7 @@ Python environment and further objects created that match the style.</p>
 <span class="normal">325</span>
 <span class="normal">326</span>
 <span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">328</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">from_style_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">style_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiagramBase</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This classmethod allows the intantiation of an object from a style</span>
