@@ -218,6 +218,115 @@ class TestObjectStrokeStyles:
         assert obj.line_pattern == "small_dash"
 
 
+class TestDashPattern:
+    """Tests for dashed and dashPattern property getters (Issue #56)"""
+
+    def test_dashPattern_direct_set(self, empty_page: drawpyo.Page) -> None:
+        """Setting dashPattern directly should be retrievable"""
+        obj = drawpyo.diagram.Object(page=empty_page)
+        obj.dashPattern = "8 8"
+        assert obj.dashPattern == "8 8"
+
+    def test_dashed_direct_set(self, empty_page: drawpyo.Page) -> None:
+        """Setting dashed directly should be retrievable"""
+        obj = drawpyo.diagram.Object(page=empty_page)
+        obj.dashed = 1
+        assert obj.dashed == 1
+
+    def test_dashPattern_from_style_string(self, empty_page: drawpyo.Page) -> None:
+        """dashPattern should return the pattern value, not the dashed flag"""
+        obj = drawpyo.diagram.Object(page=empty_page)
+        obj.apply_style_string(
+            "rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;"
+        )
+        assert obj.dashPattern == "8 8"
+        assert obj.dashed == 1
+
+    def test_dashed_from_line_pattern_medium_dash(
+        self, empty_page: drawpyo.Page
+    ) -> None:
+        """dashed should return only '1', not the full compound string"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="medium_dash")
+        assert obj.dashed == "1"
+
+    def test_dashPattern_from_line_pattern_medium_dash(
+        self, empty_page: drawpyo.Page
+    ) -> None:
+        """dashPattern should return '8 8' for medium_dash, not the full string"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="medium_dash")
+        assert obj.dashPattern == "8 8"
+
+    def test_dashPattern_from_line_pattern_large_dash(
+        self, empty_page: drawpyo.Page
+    ) -> None:
+        """dashPattern should return '12 12' for large_dash"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="large_dash")
+        assert obj.dashPattern == "12 12"
+
+    def test_dashPattern_none_for_solid(self, empty_page: drawpyo.Page) -> None:
+        """dashPattern should be None for solid line pattern"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="solid")
+        assert obj.dashPattern is None
+
+    def test_dashed_zero_for_solid(self, empty_page: drawpyo.Page) -> None:
+        """dashed should be '0' for solid line pattern"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="solid")
+        assert obj.dashed == "0"
+
+    def test_dashed_from_line_pattern_small_dash(
+        self, empty_page: drawpyo.Page
+    ) -> None:
+        """small_dash has no dashPattern component, dashed should be '1'"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="small_dash")
+        assert obj.dashed == "1"
+        assert obj.dashPattern is None
+
+    def test_direct_set_clears_line_pattern(self, empty_page: drawpyo.Page) -> None:
+        """Setting dashPattern or dashed directly should clear line_pattern"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="medium_dash")
+        obj.dashPattern = "12 12"
+        assert obj.dashPattern == "12 12"
+        assert obj._line_pattern is None
+
+    def test_dashPattern_in_style_attributes(self, empty_page: drawpyo.Page) -> None:
+        """dashPattern must be in style_attributes so it appears in XML output"""
+        obj = drawpyo.diagram.Object(page=empty_page)
+        assert "dashPattern" in obj.style_attributes
+
+    def test_dashPattern_in_style_string(self, empty_page: drawpyo.Page) -> None:
+        """line_pattern with a dash pattern should produce dashPattern in the style string"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="medium_dash")
+        assert "dashPattern=8 8" in obj.style
+        assert "dashed=1;" in obj.style
+
+    def test_solid_no_dashPattern_in_style_string(self, empty_page: drawpyo.Page) -> None:
+        """Solid line pattern should not include dashPattern in the style string"""
+        obj = drawpyo.diagram.Object(page=empty_page, line_pattern="solid")
+        assert "dashPattern" not in obj.style
+
+    def test_all_dot_patterns(self, empty_page: drawpyo.Page) -> None:
+        """Verify dashPattern extraction for all dot line patterns"""
+        for pattern, expected in [
+            ("small_dot", "1 1"),
+            ("medium_dot", "1 2"),
+            ("large_dot", "1 4"),
+        ]:
+            obj = drawpyo.diagram.Object(page=empty_page, line_pattern=pattern)
+            assert obj.dashPattern == expected, f"Failed for {pattern}"
+            assert obj.dashed == "1", f"dashed wrong for {pattern}"
+
+
+    def test_style_string_round_trip(self, empty_page: drawpyo.Page) -> None:
+        """Properties should survive a style string round trip"""
+        obj1 = drawpyo.diagram.Object(page=empty_page, line_pattern="medium_dash")
+        style = obj1.style
+
+        obj2 = drawpyo.diagram.Object(page=empty_page)
+        obj2.apply_style_string(style)
+        assert obj2.dashPattern == "8 8"
+        assert obj2.dashed == 1
+
+
 class TestObjectSpecialProperties:
     """Tests of special properties of objects"""
 
