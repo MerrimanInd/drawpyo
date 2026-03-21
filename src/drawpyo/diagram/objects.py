@@ -1,15 +1,15 @@
 from os import path
-from typing import Optional, Dict, Any, List, Union, Tuple
-from ..utils.logger import logger
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+from ..utils.color_scheme import ColorScheme
+from ..utils.logger import logger
+from ..utils.standard_colors import StandardColor
 from .base_diagram import (
     DiagramBase,
     Geometry,
     import_shape_database,
 )
 from .text_format import TextFormat
-from ..utils.color_scheme import ColorScheme
-from ..utils.standard_colors import StandardColor
 
 __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
@@ -144,6 +144,12 @@ class Object(DiagramBase):
         self.autosize_to_children: bool = kwargs.get("autosize_to_children", False)
         self.autocontract: bool = kwargs.get("autocontract", False)
         self.autosize_margin: int = kwargs.get("autosize_margin", 20)
+        self.object_attributes: Dict[str, str] = dict(
+            kwargs.get("object_attributes", {})
+        )
+        self.user_object_attributes: Dict[str, str] = dict(
+            kwargs.get("user_object_attributes", {})
+        )
 
         # Geometry
         self.position: Optional[tuple] = position
@@ -355,9 +361,16 @@ class Object(DiagramBase):
 
     @property
     def attributes(self) -> Dict[str, Any]:
+        id_value = self.id
+        value_value = self.value
+        if not (self.tag or self.tooltip) and (
+            self.object_attributes or self.user_object_attributes
+        ):
+            id_value = None
+            value_value = None
         return {
-            "id": self.id,
-            "value": self.value,
+            "id": id_value,
+            "value": value_value,
             "style": self.style,
             "vertex": self.vertex,
             "parent": self.xml_parent_id,
@@ -711,7 +724,37 @@ class Object(DiagramBase):
         tag: str = (
             self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         )
+        if self.tag or self.tooltip:
+            return tag
+        wrapper_tag = None
+        wrapper_attrs = None
+        if self.user_object_attributes:
+            wrapper_tag = "UserObject"
+            wrapper_attrs = self.user_object_attributes
+        elif self.object_attributes:
+            wrapper_tag = "object"
+            wrapper_attrs = self.object_attributes
+        if wrapper_tag and wrapper_attrs is not None:
+            return (
+                self._wrapper_open_tag(wrapper_tag, wrapper_attrs)
+                + "\n  "
+                + tag.replace("\n", "\n  ")
+                + f"\n</{wrapper_tag}>"
+            )
         return tag
+
+    def _wrapper_open_tag(self, tag: str, attrs: Dict[str, str]) -> str:
+        attrs = {k: v for k, v in attrs.items() if v is not None}
+        if "label" not in attrs and self.value is not None:
+            attrs["label"] = self.value
+        if "id" not in attrs:
+            attrs["id"] = self.id
+
+        open_tag = f"<{tag}"
+        for att, value in attrs.items():
+            xml_parameter = self.xml_ify(str(value))
+            open_tag = open_tag + " " + att + '="' + xml_parameter + '"'
+        return open_tag + ">"
 
 
 class BasicObject(Object):

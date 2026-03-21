@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Dict
 
 
 @dataclass
@@ -20,6 +20,9 @@ class RawMxCell:
 
     value: Optional[str] = None
     style: Optional[str] = None
+
+    object_attributes: Dict[str, str] = field(default_factory=dict)
+    user_object_attributes: Dict[str, str] = field(default_factory=dict)
 
     is_vertex: bool = False
     is_edge: bool = False

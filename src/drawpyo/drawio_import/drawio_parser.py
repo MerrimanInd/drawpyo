@@ -1,11 +1,12 @@
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
-from dataclasses import dataclass, field
 
-from .raw import RawMxCell, RawGeometry
-from drawpyo import logger
-from drawpyo.diagram import Object, Edge, DiagramBase
+from drawpyo import Page, logger
+from drawpyo.diagram import DiagramBase, Edge, Object
+
+from .raw import RawGeometry, RawMxCell
 
 
 # -----------------------------
@@ -35,10 +36,117 @@ class ParsedDiagram:
         """Total number of elements (shapes + edges)."""
         return len(self.shapes) + len(self.edges)
 
+    def add_to(
+        self,
+        page: Page,
+        offset: tuple = (0, 0),
+        include_shapes: bool = True,
+        include_edges: bool = True,
+    ) -> None:
+        """Attach diagram elements to a page, optionally applying an offset.
+
+        Args:
+            page: Target Page instance to attach elements to
+            offset: (dx, dy) applied to top-level objects and edge points
+            include_shapes: Whether to add shapes to the page
+            include_edges: Whether to add edges to the page
+        """
+        dx, dy = offset
+
+        if include_shapes:
+            for shape in self.shapes:
+                _update_page_links(shape, page)
+                shape.page = page
+            if dx or dy:
+                for shape in self.shapes:
+                    if isinstance(shape, Object) and shape.parent is None:
+                        shape.position = (
+                            shape.position[0] + dx,
+                            shape.position[1] + dy,
+                        )
+
+        if include_edges:
+            for edge in self.edges:
+                _update_page_links(edge, page)
+                edge.page = page
+            if dx or dy:
+                for edge in self.edges:
+                    for point in edge.geometry.points:
+                        point.x = point.x + dx
+                        point.y = point.y + dy
+
 
 # -----------------------------
 # XML Parsing
 # -----------------------------
+def _build_raw_cell(
+    cell_elem: ET.Element, cell_id_override: Optional[str] = None
+) -> Optional[RawMxCell]:
+    """
+    Builds a RawMxCell object from an XML element.
+
+    Args:
+        cell_elem: The XML element representing a cell.
+        cell_id_override: An optional override for the cell ID.
+
+    Returns:
+        A RawMxCell object or None if the cell ID is missing.
+    """
+    cell_id = cell_id_override or cell_elem.get("id")
+    if not cell_id:
+        return None
+
+    cell = RawMxCell(
+        id=cell_id,
+        parent=cell_elem.get("parent"),
+        value=cell_elem.get("value"),
+        style=cell_elem.get("style"),
+        is_vertex=cell_elem.get("vertex") == "1",
+        is_edge=cell_elem.get("edge") == "1",
+        source=cell_elem.get("source"),
+        target=cell_elem.get("target"),
+    )
+
+    geo_elem = cell_elem.find("mxGeometry")
+    if geo_elem is not None:
+        points = []
+
+        points_array = geo_elem.find("Array[@as='points']")
+        if points_array is not None:
+            for point_elem in points_array.findall("mxPoint"):
+                x = point_elem.get("x")
+                y = point_elem.get("y")
+                if x is not None and y is not None:
+                    points.append((float(x), float(y)))
+
+        cell.geometry = RawGeometry(
+            x=float(geo_elem.get("x")) if geo_elem.get("x") else None,
+            y=float(geo_elem.get("y")) if geo_elem.get("y") else None,
+            width=float(geo_elem.get("width")) if geo_elem.get("width") else None,
+            height=(float(geo_elem.get("height")) if geo_elem.get("height") else None),
+            relative=geo_elem.get("relative") == "1",
+            points=points,
+        )
+
+    return cell
+
+
+def _update_page_links(element: DiagramBase, page: Page) -> None:
+    """
+    Updates the 'link' attribute of user object attributes if it points to a Draw.io page.
+
+    Args:
+        element: The diagram element (shape or edge) to update.
+        page: The target Page instance.
+    """
+    user_attrs = getattr(element, "user_object_attributes", None)
+    if not user_attrs:
+        return
+    link = user_attrs.get("link")
+    if link and link.startswith("data:page/id,"):
+        user_attrs["link"] = f"data:page/id,{page.diagram.id}"
+
+
 def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
     """Parses draw.io XML into a dictionary of RawMxCell objects keyed by their IDs.
 
@@ -54,44 +162,29 @@ def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
     root = ET.fromstring(xml_string)
     cells: Dict[str, RawMxCell] = {}
 
+    for wrapper_tag in ("object", "UserObject"):
+        for wrapper_elem in root.findall(f".//{wrapper_tag}"):
+            cell_elem = wrapper_elem.find("mxCell")
+            if cell_elem is None:
+                continue
+
+            wrapper_attrs = dict(wrapper_elem.attrib)
+            cell_id = cell_elem.get("id") or wrapper_attrs.get("id")
+            cell = _build_raw_cell(cell_elem, cell_id_override=cell_id)
+            if cell is None:
+                continue
+
+            if wrapper_tag == "UserObject":
+                cell.user_object_attributes = wrapper_attrs
+            else:
+                cell.object_attributes = wrapper_attrs
+
+            cells[cell.id] = cell
+
     for cell_elem in root.findall(".//mxCell"):
-        cell_id = cell_elem.get("id")
-        if not cell_id:
+        cell = _build_raw_cell(cell_elem)
+        if cell is None or cell.id in cells:
             continue
-
-        cell = RawMxCell(
-            id=cell_id,
-            parent=cell_elem.get("parent"),
-            value=cell_elem.get("value"),
-            style=cell_elem.get("style"),
-            is_vertex=cell_elem.get("vertex") == "1",
-            is_edge=cell_elem.get("edge") == "1",
-            source=cell_elem.get("source"),
-            target=cell_elem.get("target"),
-        )
-
-        geo_elem = cell_elem.find("mxGeometry")
-        if geo_elem is not None:
-            points = []
-
-            points_array = geo_elem.find("Array[@as='points']")
-            if points_array is not None:
-                for point_elem in points_array.findall("mxPoint"):
-                    x = point_elem.get("x")
-                    y = point_elem.get("y")
-                    if x is not None and y is not None:
-                        points.append((float(x), float(y)))
-
-            cell.geometry = RawGeometry(
-                x=float(geo_elem.get("x")) if geo_elem.get("x") else None,
-                y=float(geo_elem.get("y")) if geo_elem.get("y") else None,
-                width=float(geo_elem.get("width")) if geo_elem.get("width") else None,
-                height=(
-                    float(geo_elem.get("height")) if geo_elem.get("height") else None
-                ),
-                relative=geo_elem.get("relative") == "1",
-                points=points,
-            )
 
         cells[cell.id] = cell
 
@@ -142,7 +235,11 @@ def _build_vertices(raw_cells: Dict[str, RawMxCell]) -> Dict[str, DiagramBase]:
         if not cell.is_vertex:
             continue
 
-        obj = Object(value=cell.value)
+        obj = Object(
+            id=cell.id,
+            object_attributes=cell.object_attributes,
+            user_object_attributes=cell.user_object_attributes,
+        )
         if cell.style:
             obj.apply_style_string(cell.style)
 
@@ -169,7 +266,13 @@ def _apply_geometry_recursive(
     raw_cells: Dict[str, RawMxCell],
     elements: Dict[str, DiagramBase],
 ):
-    """Apply geometry recursively, preserving relative positions."""
+    """Apply geometry recursively, preserving relative positions.
+
+    Args:
+        cell_id: The ID of the current cell to process.
+        raw_cells: Dictionary of all raw cell data.
+        elements: Dictionary of DiagramBase objects, to which geometry will be applied.
+    """
     cell = raw_cells[cell_id]
     obj = elements[cell_id]
 
@@ -198,7 +301,11 @@ def _build_edges(raw_cells: Dict[str, RawMxCell], elements: Dict[str, DiagramBas
         if not cell.is_edge:
             continue
 
-        e = Edge()
+        e = Edge(
+            id=cell.id,
+            object_attributes=cell.object_attributes,
+            user_object_attributes=cell.user_object_attributes,
+        )
         if cell.style:
             e.apply_style_string(cell.style)
 
