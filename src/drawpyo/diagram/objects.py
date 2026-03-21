@@ -125,6 +125,7 @@ class Object(DiagramBase):
             "sketch",
             "opacity",
             "dashed",
+            "dashPattern",
         ]
 
         self.geometry: Geometry = Geometry(parent_object=self)
@@ -175,6 +176,8 @@ class Object(DiagramBase):
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
         self.comic: Optional[bool] = kwargs.get("comic", None)
         self.sketch: Optional[bool] = kwargs.get("sketch", None)
+        self._dashed: Optional[bool] = None
+        self._dashPattern: Optional[str] = None
         self.line_pattern: Optional[str] = kwargs.get("line_pattern", "solid")
 
         self.out_edges: List[Any] = kwargs.get("out_edges", [])
@@ -406,7 +409,8 @@ class Object(DiagramBase):
         if self._line_pattern is None:
             return self._dashed
         else:
-            return line_styles[self._line_pattern]
+            style_value = line_styles[self._line_pattern]
+            return style_value.split(";")[0]
 
     @dashed.setter
     def dashed(self, value: bool) -> None:
@@ -423,7 +427,10 @@ class Object(DiagramBase):
         if self._line_pattern is None:
             return self._dashPattern
         else:
-            return line_styles[self._line_pattern]
+            style_value = line_styles[self._line_pattern]
+            if "dashPattern=" in style_value:
+                return style_value.split("dashPattern=")[1].split(";")[0]
+            return None
 
     @dashPattern.setter
     def dashPattern(self, value: str) -> None:
