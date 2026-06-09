@@ -20,7 +20,7 @@ class NodeObject(Object):
 
         Keyword Args:
             tree_children (list, optional): A list of other NodeObjects
-            parent (list, optional): The parent NodeObject
+            parent (NodeObject, optional): The parent NodeObject
             parent_edge_label (str, optional): The label for the edge drawn to the parent
         """
         super().__init__(**kwargs)
