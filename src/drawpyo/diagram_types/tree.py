@@ -20,12 +20,14 @@ class NodeObject(Object):
 
         Keyword Args:
             tree_children (list, optional): A list of other NodeObjects
-            parent (list, optional): The parent NodeObject
+            parent (NodeObject, optional): The parent NodeObject
+            parent_edge_label (str, optional): The label for the edge drawn to the parent
         """
         super().__init__(**kwargs)
         self.tree: Optional[TreeDiagram] = tree
         self.tree_children: List[NodeObject] = kwargs.get("tree_children", [])
         self.tree_parent: Optional[NodeObject] = kwargs.get("tree_parent", None)
+        self.parent_edge_label: Optional[str] = kwargs.get("parent_edge_label", None)
         self.peers: List[NodeObject] = []
         # self.level = kwargs.get("level", None)
         # self.peers = kwargs.get("peers", [])
@@ -562,7 +564,9 @@ class TreeDiagram:
             if len(actual_children) > 0:
                 # has children, go through each child and check its children
                 for child in actual_children:
-                    self.connect(tree_parent, child)
+                    self.connect(
+                        source=tree_parent, target=child, label=child.parent_edge_label
+                    )
                     child_actual_children = [
                         c for c in child.tree_children if c is not None
                     ]
@@ -647,8 +651,10 @@ class TreeDiagram:
                     edge.apply_attribute_dict(peer_style)
                     self.links.append(edge)
 
-    def connect(self, source: NodeObject, target: NodeObject) -> None:
-        edge = Edge(page=self.page, source=source, target=target)
+    def connect(
+        self, source: NodeObject, target: NodeObject, label: Optional[str] = None
+    ) -> None:
+        edge = Edge(page=self.page, source=source, target=target, label=label)
         edge.apply_attribute_dict(self.link_style_dict)
         if self.direction == "down":
             # parent style
@@ -685,7 +691,9 @@ class TreeDiagram:
         for lvl in self.objects.values():
             for obj in lvl:
                 if obj.tree_parent is not None:
-                    self.connect(source=obj.tree_parent, target=obj)
+                    self.connect(
+                        source=obj.tree_parent, target=obj, label=obj.parent_edge_label
+                    )
 
     def write(self, **kwargs) -> None:
         self.file.write(**kwargs)
