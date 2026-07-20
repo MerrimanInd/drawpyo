@@ -564,7 +564,9 @@ class TreeDiagram:
             if len(actual_children) > 0:
                 # has children, go through each child and check its children
                 for child in actual_children:
-                    self.connect(tree_parent, child)
+                    self.connect(
+                        source=tree_parent, target=child, label=child.parent_edge_label
+                    )
                     child_actual_children = [
                         c for c in child.tree_children if c is not None
                     ]
