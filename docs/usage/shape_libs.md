@@ -83,6 +83,8 @@ new_obj = drawpyo.diagram.object_from_library(
 
 ## XML Shape Libraries (mxlibrary)
 
+Requires drawpyo 0.2.6 or later. `load_mxlibrary()` and `register_mxlibrary()` are available on `main` but are not included in the 0.2.5 release.
+
 Drawpyo can import and use Draw.io's native XML shape library format (`.xml` files with `<mxlibrary>` tags). This is particularly useful for using third-party icon libraries like Azure icons, AWS icons, Google Cloud icons, and other custom shape collections available online.
 
 ### What is an mxlibrary?
