@@ -299,7 +299,9 @@ class TestDashPattern:
         assert "dashPattern=8 8" in obj.style
         assert "dashed=1;" in obj.style
 
-    def test_solid_no_dashPattern_in_style_string(self, empty_page: drawpyo.Page) -> None:
+    def test_solid_no_dashPattern_in_style_string(
+        self, empty_page: drawpyo.Page
+    ) -> None:
         """Solid line pattern should not include dashPattern in the style string"""
         obj = drawpyo.diagram.Object(page=empty_page, line_pattern="solid")
         assert "dashPattern" not in obj.style
@@ -314,7 +316,6 @@ class TestDashPattern:
             obj = drawpyo.diagram.Object(page=empty_page, line_pattern=pattern)
             assert obj.dashPattern == expected, f"Failed for {pattern}"
             assert obj.dashed == "1", f"dashed wrong for {pattern}"
-
 
     def test_style_string_round_trip(self, empty_page: drawpyo.Page) -> None:
         """Properties should survive a style string round trip"""
