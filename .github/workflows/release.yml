@@ -32,6 +32,24 @@ jobs:
           --user
       - name: Build a binary wheel and a source tarball
         run: python3 -m build
+      - name: Verify installed distribution and release version
+        env:
+          RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: |
+          python3 -m pip install dist/*.whl
+          python3 - <<'PY'
+          import os
+          from importlib.metadata import version
+          import drawpyo
+
+          package_version = version("drawpyo")
+          assert package_version == drawpyo.__version__, "Package and module versions differ"
+          assert callable(drawpyo.load_mxlibrary)
+          assert callable(drawpyo.register_mxlibrary)
+          tag = os.environ["RELEASE_TAG"]
+          if tag:
+              assert tag == package_version, f"Tag {tag} does not match package version {package_version}"
+          PY
       - name: Store the distribution packages
         uses: actions/upload-artifact@v4
         with:
@@ -47,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi-release
-      url: https://pypi.org/p/<package-name>  # Replace <package-name> with your PyPI project name
+      url: https://pypi.org/p/drawpyo
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
 

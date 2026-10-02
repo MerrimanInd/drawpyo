@@ -58,7 +58,7 @@ class TestLoadMxlibrary:
 
     def test_load_mxlibrary_from_local_file(self):
         """Test loading mxlibrary from an actual local file"""
-        shapes = load_mxlibrary(str(SAMPLE_LIBRARY_PATH))
+        shapes = drawpyo.load_mxlibrary(str(SAMPLE_LIBRARY_PATH))
 
         assert len(shapes) == 4
         assert "Test-Icon-1" in shapes
