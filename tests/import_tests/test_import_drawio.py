@@ -1,5 +1,7 @@
+import xml.etree.ElementTree as ET
+
 import pytest
-from drawpyo import load_diagram
+from drawpyo import File, Page, load_diagram
 from drawpyo.diagram import Object, Edge
 
 # Sample XML string for testing
@@ -81,3 +83,31 @@ class TestDrawpyoParsing:
     def test_no_edges(self, diagram):
         """Test that edges list is empty when no edges exist"""
         assert len(diagram.edges) == 0
+
+    def test_shape_values(self, diagram):
+        assert diagram.get_by_id("100").value == "List"
+        assert diagram.get_by_id("101").value == "Item 1"
+        assert diagram.get_by_id("102").value == "Item 2"
+
+
+@pytest.mark.parametrize(
+    "value",
+    ["Hello", "A & B <C> \"quoted\" 'apostrophe'", "Grüße 世界\nsecond line", ""],
+)
+def test_shape_text_survives_import_export(tmp_path, value):
+    root = ET.fromstring(SAMPLE_XML)
+    root.find(".//mxCell[@id='101']").set("value", value)
+    source_path = tmp_path / "source.drawio"
+    ET.ElementTree(root).write(source_path, encoding="utf-8")
+
+    diagram = load_diagram(str(source_path))
+    assert diagram.get_by_id("101").value == value
+
+    output = File(file_path=str(tmp_path), file_name="exported.drawio")
+    diagram.add_to(Page(file=output))
+    output_path = output.write()
+
+    exported = ET.parse(output_path)
+    assert exported.find(".//mxCell[@id='101']").get("value") == value
+    reloaded = load_diagram(output_path)
+    assert reloaded.get_by_id("101").value == value

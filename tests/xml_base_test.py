@@ -5,6 +5,8 @@ XMLBase is the base class for all exported objects in drawpyo.
 It provides basic functionality for generating XML tags and escaping.
 """
 
+import xml.etree.ElementTree as ET
+
 import pytest
 import drawpyo
 
@@ -82,6 +84,30 @@ class TestXMLBaseTags:
         obj = drawpyo.XMLBase(id="test_id", xml_class="mxCell", xml_parent="parent_id")
         assert 'id="test_id"' in obj.xml_open_tag
         assert 'parent="parent_id"' in obj.xml_open_tag
+
+    @pytest.mark.parametrize("wrapper_attribute", ["tag", "tooltip"])
+    @pytest.mark.parametrize(
+        "element_type", [drawpyo.diagram.Object, drawpyo.diagram.Edge]
+    )
+    def test_user_object_attributes_round_trip(
+        self, wrapper_attribute, element_type
+    ) -> None:
+        text = "A & B <C> \"quoted\" 'apostrophe'\n\t\r"
+        kwargs = {wrapper_attribute: text, "id": text}
+        if element_type is drawpyo.diagram.Object:
+            kwargs["value"] = text
+        else:
+            kwargs["label"] = text
+        obj = element_type(**kwargs)
+
+        wrapper = ET.fromstring(obj.xml)
+
+        assert wrapper.tag == "UserObject"
+        assert wrapper.get("label") == text
+        assert wrapper.get("id") == text
+        xml_attribute = "tags" if wrapper_attribute == "tag" else "tooltip"
+        assert wrapper.get(xml_attribute) == text
+        assert wrapper.find("mxCell") is not None
 
 
 class TestXmlIfy:
