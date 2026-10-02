@@ -237,6 +237,7 @@ def _build_vertices(raw_cells: Dict[str, RawMxCell]) -> Dict[str, DiagramBase]:
 
         obj = Object(
             id=cell.id,
+            value=cell.value or "",
             object_attributes=cell.object_attributes,
             user_object_attributes=cell.user_object_attributes,
         )
