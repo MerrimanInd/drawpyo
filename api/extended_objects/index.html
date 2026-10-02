@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1980,45 +1980,45 @@
 <span class="normal">92</span>
 <span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"List"</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
+<span class="w">        </span><span class="sd">"""The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            title (str, optional): The name in the heading of the list. Defaults to &quot;List&quot;.</span>
+<span class="sd">            title (str, optional): The name in the heading of the list. Defaults to "List".</span>
 <span class="sd">            list_items (list of strings, optional): A Python list of strings denoting the items. Defaults to empty.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">"general"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"list"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"autosizing"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">list_items</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;A Python list of strings of the objects in the list.</span>
+<span class="w">        </span><span class="sd">"""A Python list of strings of the objects in the list.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list of strings: The list items</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
 
     <span class="nd">@list_items</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;list_items must be a list!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"list_items must be a list!"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function creates a new Draw.io text item and adds it to the end of the list.</span>
+<span class="w">        </span><span class="sd">"""This function creates a new Draw.io text item and adds it to the end of the list.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            item_text (string): The name of the item to add.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">new_item</span> <span class="o">=</span> <span class="n">object_from_library</span><span class="p">(</span>
-            <span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list_item&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span>
+            <span class="n">library</span><span class="o">=</span><span class="s2">"general"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"list_item"</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span>
         <span class="p">)</span>
         <span class="n">new_item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">item_text</span>
         <span class="n">new_item</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
@@ -2028,11 +2028,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">autosize</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function removes any list items matching the text passed into the function.</span>
+<span class="w">        </span><span class="sd">"""This function removes any list items matching the text passed into the function.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            item_text (string): The text of the list item to remove.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">item_text</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
@@ -2042,7 +2042,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">autosize</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items."""</span>
         <span class="n">y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">startSize</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="n">child</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y_pos</span>
@@ -2052,11 +2052,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The width of the object. The difference between List&#39;s width and Object&#39;s width is that when the List.width is set all of the child objects will be set to the same width.</span>
+<span class="w">        </span><span class="sd">"""The width of the object. The difference between List's width and Object's width is that when the List.width is set all of the child objects will be set to the same width.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Union[int, float]: The width of the list object</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span>
 
     <span class="nd">@width</span><span class="o">.</span><span class="n">setter</span>
@@ -2177,7 +2177,7 @@
 
 
 <h3 id="src.drawpyo.diagram.extended_objects.List.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;List&#39;</span><span class="p">,</span> <span class="n">list_items</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'List'</span><span class="p">,</span> <span class="n">list_items</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2250,18 +2250,18 @@
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;List&quot;</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"List"</span><span class="p">,</span> <span class="n">list_items</span><span class="p">:</span> <span class="n">ListType</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
+<span class="w">    </span><span class="sd">"""The List object wraps the basic Object type but allows easier managing of a list object and its members. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        title (str, optional): The name in the heading of the list. Defaults to &quot;List&quot;.</span>
+<span class="sd">        title (str, optional): The name in the heading of the list. Defaults to "List".</span>
 <span class="sd">        list_items (list of strings, optional): A Python list of strings denoting the items. Defaults to empty.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autosizing&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">"general"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"list"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">autosizing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"autosizing"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">list_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">list_items</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2331,13 +2331,13 @@
 <span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function creates a new Draw.io text item and adds it to the end of the list.</span>
+<span class="w">    </span><span class="sd">"""This function creates a new Draw.io text item and adds it to the end of the list.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        item_text (string): The name of the item to add.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">new_item</span> <span class="o">=</span> <span class="n">object_from_library</span><span class="p">(</span>
-        <span class="n">library</span><span class="o">=</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;list_item&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span>
+        <span class="n">library</span><span class="o">=</span><span class="s2">"general"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"list_item"</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span>
     <span class="p">)</span>
     <span class="n">new_item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">item_text</span>
     <span class="n">new_item</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span>
@@ -2375,7 +2375,7 @@
 <span class="normal">75</span>
 <span class="normal">76</span>
 <span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">autosize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""This function resizes the parent List object to match the length of the list of items. It also restacks the list items to fill any gaps from deleted items."""</span>
     <span class="n">y_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">startSize</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">child</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y_pos</span>
@@ -2448,11 +2448,11 @@
 <span class="normal">66</span>
 <span class="normal">67</span>
 <span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function removes any list items matching the text passed into the function.</span>
+<span class="w">    </span><span class="sd">"""This function removes any list items matching the text passed into the function.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        item_text (string): The text of the list item to remove.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">item_text</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
@@ -2541,33 +2541,33 @@
 <span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PieSlice</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
         <span class="n">slice_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The PieSlice object wraps the basic Object type but allows easier managing of a pie chart slice. All of the arguments and keyword arguments for Object are available here as well.</span>
+<span class="w">        </span><span class="sd">"""The PieSlice object wraps the basic Object type but allows easier managing of a pie chart slice. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            title (str, optional): The name of the pie slice. Defaults to &quot;Slice&quot;.</span>
+<span class="sd">            title (str, optional): The name of the pie slice. Defaults to "Slice".</span>
 <span class="sd">            slice_value (float, optional): The numeric value of the pie slice. Defaults to 1.0.</span>
 <span class="sd">            startAngle (float, optional): The starting angle of the pie slice in degrees. Defaults to 0.0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;infographics&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;pie&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;startAngle&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;endAngle&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">"infographics"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"pie"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"startAngle"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"endAngle"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slice_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">slice_value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;startAngle&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"size"</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"startAngle"</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">endAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span> <span class="o">+</span> <span class="n">slice_value</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The size (width and height) of the pie slice.</span>
+<span class="w">        </span><span class="sd">"""The size (width and height) of the pie slice.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Union[int, float]: The size</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span>
 
     <span class="nd">@size</span><span class="o">.</span><span class="n">setter</span>
@@ -2641,7 +2641,7 @@
 
 
 <h3 id="src.drawpyo.diagram.extended_objects.PieSlice.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">slice_value</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">slice_value</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 </h3>
 
@@ -2738,24 +2738,24 @@
 <span class="normal">116</span>
 <span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
     <span class="n">slice_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The PieSlice object wraps the basic Object type but allows easier managing of a pie chart slice. All of the arguments and keyword arguments for Object are available here as well.</span>
+<span class="w">    </span><span class="sd">"""The PieSlice object wraps the basic Object type but allows easier managing of a pie chart slice. All of the arguments and keyword arguments for Object are available here as well.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        title (str, optional): The name of the pie slice. Defaults to &quot;Slice&quot;.</span>
+<span class="sd">        title (str, optional): The name of the pie slice. Defaults to "Slice".</span>
 <span class="sd">        slice_value (float, optional): The numeric value of the pie slice. Defaults to 1.0.</span>
 <span class="sd">        startAngle (float, optional): The starting angle of the pie slice in degrees. Defaults to 0.0.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">&quot;infographics&quot;</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">&quot;pie&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;startAngle&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;endAngle&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">format_as_library_object</span><span class="p">(</span><span class="n">library</span><span class="o">=</span><span class="s2">"infographics"</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="s2">"pie"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"startAngle"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_style_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"endAngle"</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">slice_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">slice_value</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;startAngle&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"size"</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"startAngle"</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">endAngle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">startAngle</span> <span class="o">+</span> <span class="n">slice_value</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2822,7 +2822,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

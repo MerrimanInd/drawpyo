@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1860,33 +1860,37 @@
 <span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
-<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NodeObject</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc.&quot;&quot;&quot;</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NodeObject</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""This class defines one of the nodes on a tree graph. It inherits from Object and performs the same in most regards. It also tracks the tree-specific parameters like the tree, children, parent, etc."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.</span>
+<span class="w">        </span><span class="sd">"""The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.</span>
 
 <span class="sd">        Keyword Args:</span>
 <span class="sd">            tree_children (list, optional): A list of other NodeObjects</span>
-<span class="sd">            parent (list, optional): The parent NodeObject</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            parent (NodeObject, optional): The parent NodeObject</span>
+<span class="sd">            parent_edge_label (str, optional): The label for the edge drawn to the parent</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TreeDiagram</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tree_children&quot;</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tree_parent&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tree_children"</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tree_parent"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent_edge_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"parent_edge_label"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">peers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># self.level = kwargs.get(&quot;level&quot;, None)</span>
-        <span class="c1"># self.peers = kwargs.get(&quot;peers&quot;, [])</span>
+        <span class="c1"># self.level = kwargs.get("level", None)</span>
+        <span class="c1"># self.peers = kwargs.get("peers", [])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TreeDiagram</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The TreeDiagram that owns the NodeObject</span>
+<span class="w">        </span><span class="sd">"""The TreeDiagram that owns the NodeObject</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            TreeDiagram</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span>
 
     <span class="nd">@tree</span><span class="o">.</span><span class="n">setter</span>
@@ -1897,11 +1901,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tree_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The parent NodeObject in the tree</span>
+<span class="w">        </span><span class="sd">"""The parent NodeObject in the tree</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            NodeObject</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree_parent</span>
 
     <span class="nd">@tree_parent</span><span class="o">.</span><span class="n">setter</span>
@@ -1911,11 +1915,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tree_parent</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new child to the object</span>
+<span class="w">        </span><span class="sd">"""Add a new child to the object</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            obj (NodeObject)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">_tree_parent</span> <span class="o">=</span> <span class="bp">self</span>
 
@@ -1927,28 +1931,28 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">size_of_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The height or the width of the level, depending on tree orientation.</span>
+<span class="w">        </span><span class="sd">"""The height or the width of the level, depending on tree orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">height</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">size_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The size of the object within its level, either its width or height depending on tree orientation.</span>
+<span class="w">        </span><span class="sd">"""The size of the object within its level, either its width or height depending on tree orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">width</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">height</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -2188,11 +2192,22 @@ Args:
           <tr class="doc-section-item">
             <td><code>parent</code></td>
             <td>
-                  <code><span title="list">list</span></code>
+                  <code><a class="autorefs autorefs-internal" title="src.drawpyo.diagram_types.tree.NodeObject" href="#src.drawpyo.diagram_types.tree.NodeObject">NodeObject</a></code>
             </td>
             <td>
               <div class="doc-md-description">
                 <p>The parent NodeObject</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>parent_edge_label</code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The label for the edge drawn to the parent</p>
               </div>
             </td>
           </tr>
@@ -2215,19 +2230,23 @@ Args:
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The NodeObject should be instantiated with an owning tree object. A NodeObject can only have a single parent but can have any number of children.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        tree (TreeDiagram, optional): The owning tree diagram. Defaults to None.</span>
 
 <span class="sd">    Keyword Args:</span>
 <span class="sd">        tree_children (list, optional): A list of other NodeObjects</span>
-<span class="sd">        parent (list, optional): The parent NodeObject</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        parent (NodeObject, optional): The parent NodeObject</span>
+<span class="sd">        parent_edge_label (str, optional): The label for the edge drawn to the parent</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TreeDiagram</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tree_children&quot;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tree_parent&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tree_children"</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tree_parent"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parent_edge_label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"parent_edge_label"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">peers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2251,19 +2270,19 @@ Args:
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a new child to the object</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Add a new child to the object</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        obj (NodeObject)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">tree_children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">_tree_parent</span> <span class="o">=</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
@@ -2331,7 +2350,7 @@ Args:
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.expand"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -2077,10 +2077,10 @@
 <span class="normal">424</span>
 <span class="normal">425</span>
 <span class="normal">426</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BarChart</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A configurable bar chart built entirely from Object and Group.</span>
+<span class="w">    </span><span class="sd">"""A configurable bar chart built entirely from Object and Group.</span>
 
 <span class="sd">    This chart is mutable - you can update data, styling, and position after creation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># Layout constants</span>
     <span class="n">DEFAULT_BAR_WIDTH</span> <span class="o">=</span> <span class="mi">40</span>
@@ -2097,10 +2097,10 @@
     <span class="n">TICK_COUNT</span> <span class="o">=</span> <span class="mi">5</span>
     <span class="n">TICK_LENGTH</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">TICK_LABEL_MARGIN</span> <span class="o">=</span> <span class="mi">4</span>
-    <span class="n">TICK_COLOR</span> <span class="o">=</span> <span class="s2">&quot;#000000&quot;</span>
+    <span class="n">TICK_COLOR</span> <span class="o">=</span> <span class="s2">"#000000"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Args:</span>
 <span class="sd">            data (dict[str, float]): Mapping of labels to numeric values.</span>
 
@@ -2109,7 +2109,7 @@
 <span class="sd">            bar_width (int): Width of each bar. Default: 40</span>
 <span class="sd">            bar_spacing (int): Space between bars. Default: 20</span>
 <span class="sd">            max_bar_height (int): Height of the largest bar. Default: 200</span>
-<span class="sd">            bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: [&quot;#66ccff&quot;]</span>
+<span class="sd">            bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: ["#66ccff"]</span>
 <span class="sd">            base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l</span>
 <span class="sd">            inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)</span>
 <span class="sd">            title (str): Optional chart title. Default: None</span>
@@ -2122,74 +2122,74 @@
 <span class="sd">            axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()</span>
 <span class="sd">            glass (bool): Whether bars have a glass effect. Default: False</span>
 <span class="sd">            rounded (bool): Whether bars have rounded corners. Default: False</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Validate data</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Data must be a dict."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data cannot be empty."</span><span class="p">)</span>
 
         <span class="n">invalid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
         <span class="k">if</span> <span class="n">invalid_keys</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="n">invalid_values</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
         <span class="p">]</span>
         <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="c1"># Position and dimensions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_width&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_WIDTH</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"position"</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"bar_width"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_WIDTH</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_spacing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;bar_spacing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_SPACING</span>
+            <span class="s2">"bar_spacing"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_SPACING</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;max_bar_height&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_MAX_BAR_HEIGHT</span>
+            <span class="s2">"max_bar_height"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_MAX_BAR_HEIGHT</span>
         <span class="p">)</span>
 
         <span class="c1"># Text formats</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_base_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;base_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"base_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inside_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inside_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inside_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_axis_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;axis_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"axis_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
         <span class="p">)</span>
 
         <span class="c1"># Label formatters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_base_label_formatter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;base_label_formatter&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">label</span>
+            <span class="s2">"base_label_formatter"</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">label</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inside_label_formatter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inside_label_formatter&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inside_label_formatter"</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
         <span class="p">)</span>
 
         <span class="c1"># Title</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span>
 
         <span class="c1"># Background color</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;background_color&quot;</span>
+            <span class="s2">"background_color"</span>
         <span class="p">)</span>
 
         <span class="c1"># Axis settings</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_show_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_axis&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"show_axis"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_axis_tick_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;axis_tick_count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
+            <span class="s2">"axis_tick_count"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
         <span class="p">)</span>
 
         <span class="c1"># Bar appearance</span>
         <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
+            <span class="s2">"bar_colors"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"#66ccff"</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
@@ -2197,8 +2197,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
             <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
         <span class="p">]</span> <span class="o">=</span> <span class="n">bar_colors</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"glass"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"rounded"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Build the chart</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
@@ -2227,19 +2227,19 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Validate data</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Data must be a dict."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data cannot be empty."</span><span class="p">)</span>
 
         <span class="n">invalid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
         <span class="k">if</span> <span class="n">invalid_keys</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="n">invalid_values</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
         <span class="p">]</span>
         <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
@@ -2254,7 +2254,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_position</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_position</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;new_position must be a tuple of (x, y)&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"new_position must be a tuple of (x, y)"</span><span class="p">)</span>
 
         <span class="n">dx</span> <span class="o">=</span> <span class="n">new_position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">dy</span> <span class="o">=</span> <span class="n">new_position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2280,7 +2280,7 @@
         <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s2">"#66ccff"</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
 
         <span class="c1"># Cycle through the list until we have the right amount of colors</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2294,7 +2294,7 @@
         <span class="n">min_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">min_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Negative values are not currently supported&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Negative values are not currently supported"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">max_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span> <span class="o">/</span> <span class="n">max_value</span>
@@ -2348,7 +2348,7 @@
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position</span>
 
         <span class="n">bg</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">),</span>
             <span class="n">width</span><span class="o">=</span><span class="n">width</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">,</span>
             <span class="n">height</span><span class="o">=</span><span class="n">height</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKGROUND_PADDING</span><span class="p">,</span>
@@ -2366,13 +2366,13 @@
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
             <span class="n">width</span><span class="o">=</span><span class="n">chart_width</span><span class="p">,</span>
             <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="o">.</span><span class="n">fontSize</span> <span class="ow">or</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span>
-            <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+            <span class="n">fillColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
+            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">)</span>
-        <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
+        <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">"center"</span>
         <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">&quot;top&quot;</span>
+            <span class="n">title_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">"top"</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">title_obj</span><span class="p">)</span>
 
@@ -2385,7 +2385,7 @@
         <span class="n">axis_y_bottom</span> <span class="o">=</span> <span class="n">content_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span>
 
         <span class="n">axis_line</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">axis_x</span><span class="p">,</span> <span class="n">axis_y_top</span><span class="p">),</span>
             <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
             <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span><span class="p">,</span>
@@ -2410,7 +2410,7 @@
             <span class="n">tick_y</span> <span class="o">=</span> <span class="n">content_y</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
 
             <span class="n">tick</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
-                <span class="n">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
                 <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">axis_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_LENGTH</span><span class="p">,</span> <span class="n">tick_y</span><span class="p">),</span>
                 <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TICK_LENGTH</span><span class="p">,</span>
                 <span class="n">height</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -2427,11 +2427,11 @@
                 <span class="p">),</span>
                 <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
                 <span class="n">height</span><span class="o">=</span><span class="n">font_size</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span>
-                <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-                <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+                <span class="n">fillColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
+                <span class="n">strokeColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axis_text_format</span><span class="p">)</span>
-            <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+            <span class="n">label_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">"right"</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">label_obj</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_add_bar_and_label</span><span class="p">(</span>
@@ -2457,8 +2457,8 @@
         <span class="c1"># INSIDE LABEL</span>
         <span class="n">inside_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inside_label_formatter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="n">inside_text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inside_text_format</span><span class="p">)</span>
-        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
-        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">&quot;middle&quot;</span>
+        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">"center"</span>
+        <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="o">=</span> <span class="n">inside_text_format</span><span class="o">.</span><span class="n">verticalAlign</span> <span class="ow">or</span> <span class="s2">"middle"</span>
 
         <span class="n">bar</span> <span class="o">=</span> <span class="n">Object</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="n">inside_label</span><span class="p">,</span>
@@ -2481,15 +2481,15 @@
             <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="n">bar_x</span><span class="p">,</span> <span class="n">content_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">LABEL_TOP_MARGIN</span><span class="p">),</span>
             <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span>
             <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_text_format</span><span class="o">.</span><span class="n">fontSize</span> <span class="ow">or</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">fillColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+            <span class="n">fillColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
+            <span class="n">strokeColor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_text_format</span><span class="p">)</span>
-        <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">&quot;center&quot;</span>
+        <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">text_format</span><span class="o">.</span><span class="n">align</span> <span class="ow">or</span> <span class="s2">"center"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">base_obj</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;BarChart(bars=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"BarChart(bars=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="si">}</span><span class="s2">)"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
@@ -2860,7 +2860,7 @@
 <span class="normal">134</span>
 <span class="normal">135</span>
 <span class="normal">136</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Args:</span>
 <span class="sd">        data (dict[str, float]): Mapping of labels to numeric values.</span>
 
@@ -2869,7 +2869,7 @@
 <span class="sd">        bar_width (int): Width of each bar. Default: 40</span>
 <span class="sd">        bar_spacing (int): Space between bars. Default: 20</span>
 <span class="sd">        max_bar_height (int): Height of the largest bar. Default: 200</span>
-<span class="sd">        bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: [&quot;#66ccff&quot;]</span>
+<span class="sd">        bar_colors (list[Union[str, StandardColor, ColorScheme]]): List of colors. Default: ["#66ccff"]</span>
 <span class="sd">        base_label_formatter (Callable[[str, float], str]): Custom label formatter for base (below) labels. Default: lambda l,v: l</span>
 <span class="sd">        inside_label_formatter (Callable[[str, float], str]): Custom label formatter for inside-bar labels. Default: lambda l,v: str(v)</span>
 <span class="sd">        title (str): Optional chart title. Default: None</span>
@@ -2882,74 +2882,74 @@
 <span class="sd">        axis_text_format (TextFormat): TextFormat for axis tick labels. Default: TextFormat()</span>
 <span class="sd">        glass (bool): Whether bars have a glass effect. Default: False</span>
 <span class="sd">        rounded (bool): Whether bars have rounded corners. Default: False</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Validate data</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dict.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Data must be a dict."</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data cannot be empty.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data cannot be empty."</span><span class="p">)</span>
 
     <span class="n">invalid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">invalid_keys</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"All keys must be strings. Invalid: </span><span class="si">{</span><span class="n">invalid_keys</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="n">invalid_values</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
     <span class="p">]</span>
     <span class="k">if</span> <span class="n">invalid_values</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Values must be numeric. Invalid: </span><span class="si">{</span><span class="n">invalid_values</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="c1"># Position and dimensions</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bar_width&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_WIDTH</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"position"</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_bar_width</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"bar_width"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_WIDTH</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_bar_spacing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;bar_spacing&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_SPACING</span>
+        <span class="s2">"bar_spacing"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_BAR_SPACING</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_max_bar_height</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;max_bar_height&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_MAX_BAR_HEIGHT</span>
+        <span class="s2">"max_bar_height"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_MAX_BAR_HEIGHT</span>
     <span class="p">)</span>
 
     <span class="c1"># Text formats</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_title_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_base_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;base_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"base_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_inside_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inside_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inside_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_axis_text_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TextFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;axis_text_format&quot;</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"axis_text_format"</span><span class="p">,</span> <span class="n">TextFormat</span><span class="p">())</span>
     <span class="p">)</span>
 
     <span class="c1"># Label formatters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_base_label_formatter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;base_label_formatter&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">label</span>
+        <span class="s2">"base_label_formatter"</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">label</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_inside_label_formatter</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;inside_label_formatter&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"inside_label_formatter"</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">label</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
     <span class="p">)</span>
 
     <span class="c1"># Title</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span>
 
     <span class="c1"># Background color</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;background_color&quot;</span>
+        <span class="s2">"background_color"</span>
     <span class="p">)</span>
 
     <span class="c1"># Axis settings</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_show_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_axis&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_show_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"show_axis"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_axis_tick_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;axis_tick_count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
+        <span class="s2">"axis_tick_count"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TICK_COUNT</span>
     <span class="p">)</span>
 
     <span class="c1"># Bar appearance</span>
     <span class="n">bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s2">&quot;bar_colors&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#66ccff&quot;</span><span class="p">]</span>
+        <span class="s2">"bar_colors"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"#66ccff"</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_bar_colors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_colors</span><span class="p">(</span><span class="n">bar_colors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
@@ -2957,8 +2957,8 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_original_bar_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
         <span class="nb">list</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StandardColor</span><span class="p">,</span> <span class="n">ColorScheme</span><span class="p">]]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="n">bar_colors</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;glass&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_glass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"glass"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_rounded</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"rounded"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Build the chart</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">Group</span><span class="p">()</span>
@@ -3028,7 +3028,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.expand"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

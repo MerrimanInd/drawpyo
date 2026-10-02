@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1684,126 +1684,126 @@
 <span class="normal">122</span>
 <span class="normal">123</span>
 <span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StandardColor</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
-    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">&quot;#000000&quot;</span>
-    <span class="n">WHITE</span> <span class="o">=</span> <span class="s2">&quot;#FFFFFF&quot;</span>
-    <span class="n">GRAY1</span> <span class="o">=</span> <span class="s2">&quot;#E6E6E6&quot;</span>
-    <span class="n">GRAY2</span> <span class="o">=</span> <span class="s2">&quot;#CCCCCC&quot;</span>
-    <span class="n">GRAY3</span> <span class="o">=</span> <span class="s2">&quot;#B3B3B3&quot;</span>
-    <span class="n">GRAY4</span> <span class="o">=</span> <span class="s2">&quot;#999999&quot;</span>
-    <span class="n">GRAY5</span> <span class="o">=</span> <span class="s2">&quot;#808080&quot;</span>
-    <span class="n">GRAY6</span> <span class="o">=</span> <span class="s2">&quot;#666666&quot;</span>
-    <span class="n">GRAY7</span> <span class="o">=</span> <span class="s2">&quot;#4D4D4D&quot;</span>
-    <span class="n">GRAY8</span> <span class="o">=</span> <span class="s2">&quot;#333333&quot;</span>
-    <span class="n">GRAY9</span> <span class="o">=</span> <span class="s2">&quot;#1A1A1A&quot;</span>
-    <span class="n">RED1</span> <span class="o">=</span> <span class="s2">&quot;#FFCCCC&quot;</span>
-    <span class="n">RED2</span> <span class="o">=</span> <span class="s2">&quot;#FF9999&quot;</span>
-    <span class="n">RED3</span> <span class="o">=</span> <span class="s2">&quot;#FF6666&quot;</span>
-    <span class="n">RED4</span> <span class="o">=</span> <span class="s2">&quot;#FF3333&quot;</span>
-    <span class="n">RED5</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span>
-    <span class="n">RED6</span> <span class="o">=</span> <span class="s2">&quot;#CC0000&quot;</span>
-    <span class="n">RED7</span> <span class="o">=</span> <span class="s2">&quot;#990000&quot;</span>
-    <span class="n">RED8</span> <span class="o">=</span> <span class="s2">&quot;#660000&quot;</span>
-    <span class="n">RED9</span> <span class="o">=</span> <span class="s2">&quot;#330000&quot;</span>
-    <span class="n">ORANGE1</span> <span class="o">=</span> <span class="s2">&quot;#FFE6CC&quot;</span>
-    <span class="n">ORANGE2</span> <span class="o">=</span> <span class="s2">&quot;#FFCC99&quot;</span>
-    <span class="n">ORANGE3</span> <span class="o">=</span> <span class="s2">&quot;#FFB366&quot;</span>
-    <span class="n">ORANGE4</span> <span class="o">=</span> <span class="s2">&quot;#FF9933&quot;</span>
-    <span class="n">ORANGE5</span> <span class="o">=</span> <span class="s2">&quot;#FF8000&quot;</span>
-    <span class="n">ORANGE6</span> <span class="o">=</span> <span class="s2">&quot;#CC6600&quot;</span>
-    <span class="n">ORANGE7</span> <span class="o">=</span> <span class="s2">&quot;#994C00&quot;</span>
-    <span class="n">ORANGE8</span> <span class="o">=</span> <span class="s2">&quot;#663300&quot;</span>
-    <span class="n">ORANGE9</span> <span class="o">=</span> <span class="s2">&quot;#331A00&quot;</span>
-    <span class="n">YELLOW1</span> <span class="o">=</span> <span class="s2">&quot;#FFFFCC&quot;</span>
-    <span class="n">YELLOW2</span> <span class="o">=</span> <span class="s2">&quot;#FFFF99&quot;</span>
-    <span class="n">YELLOW3</span> <span class="o">=</span> <span class="s2">&quot;#FFFF66&quot;</span>
-    <span class="n">YELLOW4</span> <span class="o">=</span> <span class="s2">&quot;#FFFF33&quot;</span>
-    <span class="n">YELLOW5</span> <span class="o">=</span> <span class="s2">&quot;#FFFF00&quot;</span>
-    <span class="n">YELLOW6</span> <span class="o">=</span> <span class="s2">&quot;#CCCC00&quot;</span>
-    <span class="n">YELLOW7</span> <span class="o">=</span> <span class="s2">&quot;#999900&quot;</span>
-    <span class="n">YELLOW8</span> <span class="o">=</span> <span class="s2">&quot;#666600&quot;</span>
-    <span class="n">YELLOW9</span> <span class="o">=</span> <span class="s2">&quot;#333300&quot;</span>
-    <span class="n">LIME1</span> <span class="o">=</span> <span class="s2">&quot;#E6FFCC&quot;</span>
-    <span class="n">LIME2</span> <span class="o">=</span> <span class="s2">&quot;#CCFF99&quot;</span>
-    <span class="n">LIME3</span> <span class="o">=</span> <span class="s2">&quot;#B3FF66&quot;</span>
-    <span class="n">LIME4</span> <span class="o">=</span> <span class="s2">&quot;#99FF33&quot;</span>
-    <span class="n">LIME5</span> <span class="o">=</span> <span class="s2">&quot;#80FF00&quot;</span>
-    <span class="n">LIME6</span> <span class="o">=</span> <span class="s2">&quot;#66CC00&quot;</span>
-    <span class="n">LIME7</span> <span class="o">=</span> <span class="s2">&quot;#4D9900&quot;</span>
-    <span class="n">LIME8</span> <span class="o">=</span> <span class="s2">&quot;#336600&quot;</span>
-    <span class="n">LIME9</span> <span class="o">=</span> <span class="s2">&quot;#1A3300&quot;</span>
-    <span class="n">GREEN1</span> <span class="o">=</span> <span class="s2">&quot;#CCFFCC&quot;</span>
-    <span class="n">GREEN2</span> <span class="o">=</span> <span class="s2">&quot;#99FF99&quot;</span>
-    <span class="n">GREEN3</span> <span class="o">=</span> <span class="s2">&quot;#66FF66&quot;</span>
-    <span class="n">GREEN4</span> <span class="o">=</span> <span class="s2">&quot;#33FF33&quot;</span>
-    <span class="n">GREEN5</span> <span class="o">=</span> <span class="s2">&quot;#00FF00&quot;</span>
-    <span class="n">GREEN6</span> <span class="o">=</span> <span class="s2">&quot;#00CC00&quot;</span>
-    <span class="n">GREEN7</span> <span class="o">=</span> <span class="s2">&quot;#009900&quot;</span>
-    <span class="n">GREEN8</span> <span class="o">=</span> <span class="s2">&quot;#006600&quot;</span>
-    <span class="n">GREEN9</span> <span class="o">=</span> <span class="s2">&quot;#003300&quot;</span>
-    <span class="n">EMERALD1</span> <span class="o">=</span> <span class="s2">&quot;#CCFFE6&quot;</span>
-    <span class="n">EMERALD2</span> <span class="o">=</span> <span class="s2">&quot;#99FFCC&quot;</span>
-    <span class="n">EMERALD3</span> <span class="o">=</span> <span class="s2">&quot;#66FFB3&quot;</span>
-    <span class="n">EMERALD4</span> <span class="o">=</span> <span class="s2">&quot;#33FF99&quot;</span>
-    <span class="n">EMERALD5</span> <span class="o">=</span> <span class="s2">&quot;#00FF80&quot;</span>
-    <span class="n">EMERALD6</span> <span class="o">=</span> <span class="s2">&quot;#00CC66&quot;</span>
-    <span class="n">EMERALD7</span> <span class="o">=</span> <span class="s2">&quot;#00994D&quot;</span>
-    <span class="n">EMERALD8</span> <span class="o">=</span> <span class="s2">&quot;#006633&quot;</span>
-    <span class="n">EMERALD9</span> <span class="o">=</span> <span class="s2">&quot;#00331A&quot;</span>
-    <span class="n">CYAN1</span> <span class="o">=</span> <span class="s2">&quot;#CCFFFF&quot;</span>
-    <span class="n">CYAN2</span> <span class="o">=</span> <span class="s2">&quot;#99FFFF&quot;</span>
-    <span class="n">CYAN3</span> <span class="o">=</span> <span class="s2">&quot;#66FFFF&quot;</span>
-    <span class="n">CYAN4</span> <span class="o">=</span> <span class="s2">&quot;#33FFFF&quot;</span>
-    <span class="n">CYAN5</span> <span class="o">=</span> <span class="s2">&quot;#00FFFF&quot;</span>
-    <span class="n">CYAN6</span> <span class="o">=</span> <span class="s2">&quot;#00CCCC&quot;</span>
-    <span class="n">CYAN7</span> <span class="o">=</span> <span class="s2">&quot;#009999&quot;</span>
-    <span class="n">CYAN8</span> <span class="o">=</span> <span class="s2">&quot;#006666&quot;</span>
-    <span class="n">CYAN9</span> <span class="o">=</span> <span class="s2">&quot;#003333&quot;</span>
-    <span class="n">BLUE1</span> <span class="o">=</span> <span class="s2">&quot;#CCE5FF&quot;</span>
-    <span class="n">BLUE2</span> <span class="o">=</span> <span class="s2">&quot;#99CCFF&quot;</span>
-    <span class="n">BLUE3</span> <span class="o">=</span> <span class="s2">&quot;#66B2FF&quot;</span>
-    <span class="n">BLUE4</span> <span class="o">=</span> <span class="s2">&quot;#3399FF&quot;</span>
-    <span class="n">BLUE5</span> <span class="o">=</span> <span class="s2">&quot;#007FFF&quot;</span>
-    <span class="n">BLUE6</span> <span class="o">=</span> <span class="s2">&quot;#0066CC&quot;</span>
-    <span class="n">BLUE7</span> <span class="o">=</span> <span class="s2">&quot;#004C99&quot;</span>
-    <span class="n">BLUE8</span> <span class="o">=</span> <span class="s2">&quot;#003366&quot;</span>
-    <span class="n">BLUE9</span> <span class="o">=</span> <span class="s2">&quot;#001933&quot;</span>
-    <span class="n">INDIGO1</span> <span class="o">=</span> <span class="s2">&quot;#CCCCFF&quot;</span>
-    <span class="n">INDIGO2</span> <span class="o">=</span> <span class="s2">&quot;#9999FF&quot;</span>
-    <span class="n">INDIGO3</span> <span class="o">=</span> <span class="s2">&quot;#6666FF&quot;</span>
-    <span class="n">INDIGO4</span> <span class="o">=</span> <span class="s2">&quot;#3333FF&quot;</span>
-    <span class="n">INDIGO5</span> <span class="o">=</span> <span class="s2">&quot;#0000FF&quot;</span>
-    <span class="n">INDIGO6</span> <span class="o">=</span> <span class="s2">&quot;#0000CC&quot;</span>
-    <span class="n">INDIGO7</span> <span class="o">=</span> <span class="s2">&quot;#000099&quot;</span>
-    <span class="n">INDIGO8</span> <span class="o">=</span> <span class="s2">&quot;#000066&quot;</span>
-    <span class="n">INDIGO9</span> <span class="o">=</span> <span class="s2">&quot;#000033&quot;</span>
-    <span class="n">PURPLE1</span> <span class="o">=</span> <span class="s2">&quot;#E5CCFF&quot;</span>
-    <span class="n">PURPLE2</span> <span class="o">=</span> <span class="s2">&quot;#CC99FF&quot;</span>
-    <span class="n">PURPLE3</span> <span class="o">=</span> <span class="s2">&quot;#B266FF&quot;</span>
-    <span class="n">PURPLE4</span> <span class="o">=</span> <span class="s2">&quot;#9933FF&quot;</span>
-    <span class="n">PURPLE5</span> <span class="o">=</span> <span class="s2">&quot;#7F00FF&quot;</span>
-    <span class="n">PURPLE6</span> <span class="o">=</span> <span class="s2">&quot;#6600CC&quot;</span>
-    <span class="n">PURPLE7</span> <span class="o">=</span> <span class="s2">&quot;#6600CC&quot;</span>
-    <span class="n">PURPLE8</span> <span class="o">=</span> <span class="s2">&quot;#330066&quot;</span>
-    <span class="n">PURPLE9</span> <span class="o">=</span> <span class="s2">&quot;#190033&quot;</span>
-    <span class="n">MAGENTA1</span> <span class="o">=</span> <span class="s2">&quot;#FFCCFF&quot;</span>
-    <span class="n">MAGENTA2</span> <span class="o">=</span> <span class="s2">&quot;#FF99CC&quot;</span>
-    <span class="n">MAGENTA3</span> <span class="o">=</span> <span class="s2">&quot;#FF66CC&quot;</span>
-    <span class="n">MAGENTA4</span> <span class="o">=</span> <span class="s2">&quot;#FF33FF&quot;</span>
-    <span class="n">MAGENTA5</span> <span class="o">=</span> <span class="s2">&quot;#FF00FF&quot;</span>
-    <span class="n">MAGENTA6</span> <span class="o">=</span> <span class="s2">&quot;#CC00CC&quot;</span>
-    <span class="n">MAGENTA7</span> <span class="o">=</span> <span class="s2">&quot;#990099&quot;</span>
-    <span class="n">MAGENTA8</span> <span class="o">=</span> <span class="s2">&quot;#660066&quot;</span>
-    <span class="n">MAGENTA9</span> <span class="o">=</span> <span class="s2">&quot;#330033&quot;</span>
-    <span class="n">CRIMSON1</span> <span class="o">=</span> <span class="s2">&quot;#FFCCE6&quot;</span>
-    <span class="n">CRIMSON2</span> <span class="o">=</span> <span class="s2">&quot;#FF99CC&quot;</span>
-    <span class="n">CRIMSON3</span> <span class="o">=</span> <span class="s2">&quot;#FF66B3&quot;</span>
-    <span class="n">CRIMSON4</span> <span class="o">=</span> <span class="s2">&quot;#FF3399&quot;</span>
-    <span class="n">CRIMSON5</span> <span class="o">=</span> <span class="s2">&quot;#FF0080&quot;</span>
-    <span class="n">CRIMSON6</span> <span class="o">=</span> <span class="s2">&quot;#CC0066&quot;</span>
-    <span class="n">CRIMSON7</span> <span class="o">=</span> <span class="s2">&quot;#99004D&quot;</span>
-    <span class="n">CRIMSON8</span> <span class="o">=</span> <span class="s2">&quot;#660033&quot;</span>
-    <span class="n">CRIMSON9</span> <span class="o">=</span> <span class="s2">&quot;#33001A&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">"none"</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">"#000000"</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="s2">"#FFFFFF"</span>
+    <span class="n">GRAY1</span> <span class="o">=</span> <span class="s2">"#E6E6E6"</span>
+    <span class="n">GRAY2</span> <span class="o">=</span> <span class="s2">"#CCCCCC"</span>
+    <span class="n">GRAY3</span> <span class="o">=</span> <span class="s2">"#B3B3B3"</span>
+    <span class="n">GRAY4</span> <span class="o">=</span> <span class="s2">"#999999"</span>
+    <span class="n">GRAY5</span> <span class="o">=</span> <span class="s2">"#808080"</span>
+    <span class="n">GRAY6</span> <span class="o">=</span> <span class="s2">"#666666"</span>
+    <span class="n">GRAY7</span> <span class="o">=</span> <span class="s2">"#4D4D4D"</span>
+    <span class="n">GRAY8</span> <span class="o">=</span> <span class="s2">"#333333"</span>
+    <span class="n">GRAY9</span> <span class="o">=</span> <span class="s2">"#1A1A1A"</span>
+    <span class="n">RED1</span> <span class="o">=</span> <span class="s2">"#FFCCCC"</span>
+    <span class="n">RED2</span> <span class="o">=</span> <span class="s2">"#FF9999"</span>
+    <span class="n">RED3</span> <span class="o">=</span> <span class="s2">"#FF6666"</span>
+    <span class="n">RED4</span> <span class="o">=</span> <span class="s2">"#FF3333"</span>
+    <span class="n">RED5</span> <span class="o">=</span> <span class="s2">"#FF0000"</span>
+    <span class="n">RED6</span> <span class="o">=</span> <span class="s2">"#CC0000"</span>
+    <span class="n">RED7</span> <span class="o">=</span> <span class="s2">"#990000"</span>
+    <span class="n">RED8</span> <span class="o">=</span> <span class="s2">"#660000"</span>
+    <span class="n">RED9</span> <span class="o">=</span> <span class="s2">"#330000"</span>
+    <span class="n">ORANGE1</span> <span class="o">=</span> <span class="s2">"#FFE6CC"</span>
+    <span class="n">ORANGE2</span> <span class="o">=</span> <span class="s2">"#FFCC99"</span>
+    <span class="n">ORANGE3</span> <span class="o">=</span> <span class="s2">"#FFB366"</span>
+    <span class="n">ORANGE4</span> <span class="o">=</span> <span class="s2">"#FF9933"</span>
+    <span class="n">ORANGE5</span> <span class="o">=</span> <span class="s2">"#FF8000"</span>
+    <span class="n">ORANGE6</span> <span class="o">=</span> <span class="s2">"#CC6600"</span>
+    <span class="n">ORANGE7</span> <span class="o">=</span> <span class="s2">"#994C00"</span>
+    <span class="n">ORANGE8</span> <span class="o">=</span> <span class="s2">"#663300"</span>
+    <span class="n">ORANGE9</span> <span class="o">=</span> <span class="s2">"#331A00"</span>
+    <span class="n">YELLOW1</span> <span class="o">=</span> <span class="s2">"#FFFFCC"</span>
+    <span class="n">YELLOW2</span> <span class="o">=</span> <span class="s2">"#FFFF99"</span>
+    <span class="n">YELLOW3</span> <span class="o">=</span> <span class="s2">"#FFFF66"</span>
+    <span class="n">YELLOW4</span> <span class="o">=</span> <span class="s2">"#FFFF33"</span>
+    <span class="n">YELLOW5</span> <span class="o">=</span> <span class="s2">"#FFFF00"</span>
+    <span class="n">YELLOW6</span> <span class="o">=</span> <span class="s2">"#CCCC00"</span>
+    <span class="n">YELLOW7</span> <span class="o">=</span> <span class="s2">"#999900"</span>
+    <span class="n">YELLOW8</span> <span class="o">=</span> <span class="s2">"#666600"</span>
+    <span class="n">YELLOW9</span> <span class="o">=</span> <span class="s2">"#333300"</span>
+    <span class="n">LIME1</span> <span class="o">=</span> <span class="s2">"#E6FFCC"</span>
+    <span class="n">LIME2</span> <span class="o">=</span> <span class="s2">"#CCFF99"</span>
+    <span class="n">LIME3</span> <span class="o">=</span> <span class="s2">"#B3FF66"</span>
+    <span class="n">LIME4</span> <span class="o">=</span> <span class="s2">"#99FF33"</span>
+    <span class="n">LIME5</span> <span class="o">=</span> <span class="s2">"#80FF00"</span>
+    <span class="n">LIME6</span> <span class="o">=</span> <span class="s2">"#66CC00"</span>
+    <span class="n">LIME7</span> <span class="o">=</span> <span class="s2">"#4D9900"</span>
+    <span class="n">LIME8</span> <span class="o">=</span> <span class="s2">"#336600"</span>
+    <span class="n">LIME9</span> <span class="o">=</span> <span class="s2">"#1A3300"</span>
+    <span class="n">GREEN1</span> <span class="o">=</span> <span class="s2">"#CCFFCC"</span>
+    <span class="n">GREEN2</span> <span class="o">=</span> <span class="s2">"#99FF99"</span>
+    <span class="n">GREEN3</span> <span class="o">=</span> <span class="s2">"#66FF66"</span>
+    <span class="n">GREEN4</span> <span class="o">=</span> <span class="s2">"#33FF33"</span>
+    <span class="n">GREEN5</span> <span class="o">=</span> <span class="s2">"#00FF00"</span>
+    <span class="n">GREEN6</span> <span class="o">=</span> <span class="s2">"#00CC00"</span>
+    <span class="n">GREEN7</span> <span class="o">=</span> <span class="s2">"#009900"</span>
+    <span class="n">GREEN8</span> <span class="o">=</span> <span class="s2">"#006600"</span>
+    <span class="n">GREEN9</span> <span class="o">=</span> <span class="s2">"#003300"</span>
+    <span class="n">EMERALD1</span> <span class="o">=</span> <span class="s2">"#CCFFE6"</span>
+    <span class="n">EMERALD2</span> <span class="o">=</span> <span class="s2">"#99FFCC"</span>
+    <span class="n">EMERALD3</span> <span class="o">=</span> <span class="s2">"#66FFB3"</span>
+    <span class="n">EMERALD4</span> <span class="o">=</span> <span class="s2">"#33FF99"</span>
+    <span class="n">EMERALD5</span> <span class="o">=</span> <span class="s2">"#00FF80"</span>
+    <span class="n">EMERALD6</span> <span class="o">=</span> <span class="s2">"#00CC66"</span>
+    <span class="n">EMERALD7</span> <span class="o">=</span> <span class="s2">"#00994D"</span>
+    <span class="n">EMERALD8</span> <span class="o">=</span> <span class="s2">"#006633"</span>
+    <span class="n">EMERALD9</span> <span class="o">=</span> <span class="s2">"#00331A"</span>
+    <span class="n">CYAN1</span> <span class="o">=</span> <span class="s2">"#CCFFFF"</span>
+    <span class="n">CYAN2</span> <span class="o">=</span> <span class="s2">"#99FFFF"</span>
+    <span class="n">CYAN3</span> <span class="o">=</span> <span class="s2">"#66FFFF"</span>
+    <span class="n">CYAN4</span> <span class="o">=</span> <span class="s2">"#33FFFF"</span>
+    <span class="n">CYAN5</span> <span class="o">=</span> <span class="s2">"#00FFFF"</span>
+    <span class="n">CYAN6</span> <span class="o">=</span> <span class="s2">"#00CCCC"</span>
+    <span class="n">CYAN7</span> <span class="o">=</span> <span class="s2">"#009999"</span>
+    <span class="n">CYAN8</span> <span class="o">=</span> <span class="s2">"#006666"</span>
+    <span class="n">CYAN9</span> <span class="o">=</span> <span class="s2">"#003333"</span>
+    <span class="n">BLUE1</span> <span class="o">=</span> <span class="s2">"#CCE5FF"</span>
+    <span class="n">BLUE2</span> <span class="o">=</span> <span class="s2">"#99CCFF"</span>
+    <span class="n">BLUE3</span> <span class="o">=</span> <span class="s2">"#66B2FF"</span>
+    <span class="n">BLUE4</span> <span class="o">=</span> <span class="s2">"#3399FF"</span>
+    <span class="n">BLUE5</span> <span class="o">=</span> <span class="s2">"#007FFF"</span>
+    <span class="n">BLUE6</span> <span class="o">=</span> <span class="s2">"#0066CC"</span>
+    <span class="n">BLUE7</span> <span class="o">=</span> <span class="s2">"#004C99"</span>
+    <span class="n">BLUE8</span> <span class="o">=</span> <span class="s2">"#003366"</span>
+    <span class="n">BLUE9</span> <span class="o">=</span> <span class="s2">"#001933"</span>
+    <span class="n">INDIGO1</span> <span class="o">=</span> <span class="s2">"#CCCCFF"</span>
+    <span class="n">INDIGO2</span> <span class="o">=</span> <span class="s2">"#9999FF"</span>
+    <span class="n">INDIGO3</span> <span class="o">=</span> <span class="s2">"#6666FF"</span>
+    <span class="n">INDIGO4</span> <span class="o">=</span> <span class="s2">"#3333FF"</span>
+    <span class="n">INDIGO5</span> <span class="o">=</span> <span class="s2">"#0000FF"</span>
+    <span class="n">INDIGO6</span> <span class="o">=</span> <span class="s2">"#0000CC"</span>
+    <span class="n">INDIGO7</span> <span class="o">=</span> <span class="s2">"#000099"</span>
+    <span class="n">INDIGO8</span> <span class="o">=</span> <span class="s2">"#000066"</span>
+    <span class="n">INDIGO9</span> <span class="o">=</span> <span class="s2">"#000033"</span>
+    <span class="n">PURPLE1</span> <span class="o">=</span> <span class="s2">"#E5CCFF"</span>
+    <span class="n">PURPLE2</span> <span class="o">=</span> <span class="s2">"#CC99FF"</span>
+    <span class="n">PURPLE3</span> <span class="o">=</span> <span class="s2">"#B266FF"</span>
+    <span class="n">PURPLE4</span> <span class="o">=</span> <span class="s2">"#9933FF"</span>
+    <span class="n">PURPLE5</span> <span class="o">=</span> <span class="s2">"#7F00FF"</span>
+    <span class="n">PURPLE6</span> <span class="o">=</span> <span class="s2">"#6600CC"</span>
+    <span class="n">PURPLE7</span> <span class="o">=</span> <span class="s2">"#6600CC"</span>
+    <span class="n">PURPLE8</span> <span class="o">=</span> <span class="s2">"#330066"</span>
+    <span class="n">PURPLE9</span> <span class="o">=</span> <span class="s2">"#190033"</span>
+    <span class="n">MAGENTA1</span> <span class="o">=</span> <span class="s2">"#FFCCFF"</span>
+    <span class="n">MAGENTA2</span> <span class="o">=</span> <span class="s2">"#FF99CC"</span>
+    <span class="n">MAGENTA3</span> <span class="o">=</span> <span class="s2">"#FF66CC"</span>
+    <span class="n">MAGENTA4</span> <span class="o">=</span> <span class="s2">"#FF33FF"</span>
+    <span class="n">MAGENTA5</span> <span class="o">=</span> <span class="s2">"#FF00FF"</span>
+    <span class="n">MAGENTA6</span> <span class="o">=</span> <span class="s2">"#CC00CC"</span>
+    <span class="n">MAGENTA7</span> <span class="o">=</span> <span class="s2">"#990099"</span>
+    <span class="n">MAGENTA8</span> <span class="o">=</span> <span class="s2">"#660066"</span>
+    <span class="n">MAGENTA9</span> <span class="o">=</span> <span class="s2">"#330033"</span>
+    <span class="n">CRIMSON1</span> <span class="o">=</span> <span class="s2">"#FFCCE6"</span>
+    <span class="n">CRIMSON2</span> <span class="o">=</span> <span class="s2">"#FF99CC"</span>
+    <span class="n">CRIMSON3</span> <span class="o">=</span> <span class="s2">"#FF66B3"</span>
+    <span class="n">CRIMSON4</span> <span class="o">=</span> <span class="s2">"#FF3399"</span>
+    <span class="n">CRIMSON5</span> <span class="o">=</span> <span class="s2">"#FF0080"</span>
+    <span class="n">CRIMSON6</span> <span class="o">=</span> <span class="s2">"#CC0066"</span>
+    <span class="n">CRIMSON7</span> <span class="o">=</span> <span class="s2">"#99004D"</span>
+    <span class="n">CRIMSON8</span> <span class="o">=</span> <span class="s2">"#660033"</span>
+    <span class="n">CRIMSON9</span> <span class="o">=</span> <span class="s2">"#33001A"</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1879,7 +1879,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

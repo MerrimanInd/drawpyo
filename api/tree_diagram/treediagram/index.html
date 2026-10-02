@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1923,9 +1923,7 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
 <span class="normal">182</span>
 <span class="normal">183</span>
 <span class="normal">184</span>
@@ -2435,33 +2433,41 @@
 <span class="normal">688</span>
 <span class="normal">689</span>
 <span class="normal">690</span>
-<span class="normal">691</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeDiagram</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree.&quot;&quot;&quot;</span>
+<span class="normal">691</span>
+<span class="normal">692</span>
+<span class="normal">693</span>
+<span class="normal">694</span>
+<span class="normal">695</span>
+<span class="normal">696</span>
+<span class="normal">697</span>
+<span class="normal">698</span>
+<span class="normal">699</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeDiagram</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The TreeDiagram contains a File object, a Page object, and all the NodeObjects in the tree."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.</span>
+<span class="w">        </span><span class="sd">"""The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.</span>
 
 <span class="sd">        Keyword Args:</span>
-<span class="sd">            direction (str, optional): Direction that the tree grows from the root. Options are &#39;up&#39;, &#39;down&#39;, &#39;left&#39;, and &#39;right&#39;. Defaults to &#39;down&#39;.</span>
-<span class="sd">            link_style (str, optional): Connection style of the edges. Options are &#39;orthogonal&#39;, &#39;straight&#39;, and &#39;curved&#39;. Defaults to &#39;orthogonal&#39;.</span>
+<span class="sd">            direction (str, optional): Direction that the tree grows from the root. Options are 'up', 'down', 'left', and 'right'. Defaults to 'down'.</span>
+<span class="sd">            link_style (str, optional): Connection style of the edges. Options are 'orthogonal', 'straight', and 'curved'. Defaults to 'orthogonal'.</span>
 <span class="sd">            level_spacing (int, optional): Spacing in pixels between levels. Defaults to 60.</span>
 <span class="sd">            item_spacing (int, optional): Spacing in pixels between groups within a level. Defaults to 15.</span>
 <span class="sd">            padding (int, optional): Spacing in pixels between objects within a group. Defaults to 10.</span>
 <span class="sd">            file_name (str, optional): The name of the tree diagram.</span>
 <span class="sd">            file_path (str, optional): The path where the tree diagram should be saved.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># formatting</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;level_spacing&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">item_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item_spacing&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;group_spacing&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;direction&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;link_style&quot;</span><span class="p">,</span> <span class="s2">&quot;orthogonal&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"level_spacing"</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"item_spacing"</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"group_spacing"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"direction"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"link_style"</span><span class="p">,</span> <span class="s2">"orthogonal"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"padding"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
         <span class="c1"># Set up the File and Page objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Heirarchical Diagram.drawio&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;C:/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"file_name"</span><span class="p">,</span> <span class="s2">"Heirarchical Diagram.drawio"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"file_path"</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"C:/"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">:</span> <span class="n">Page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
 
         <span class="c1"># Set up object and level lists</span>
@@ -2475,11 +2481,11 @@
     <span class="c1"># File object</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">file_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The file name of the TreeDiagram</span>
+<span class="w">        </span><span class="sd">"""The file name of the TreeDiagram</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">file_name</span>
 
     <span class="nd">@file_name</span><span class="o">.</span><span class="n">setter</span>
@@ -2488,11 +2494,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The file path where the TreeDiagram will be saved</span>
+<span class="w">        </span><span class="sd">"""The file path where the TreeDiagram will be saved</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">file_path</span>
 
     <span class="nd">@file_path</span><span class="o">.</span><span class="n">setter</span>
@@ -2502,22 +2508,22 @@
     <span class="c1"># These setters enforce the options for direction and link_style.</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The direction the tree diagram should grow. Options are &quot;up&quot;, &quot;down&quot;, &quot;left&quot;, or &quot;right&quot;.</span>
+<span class="w">        </span><span class="sd">"""The direction the tree diagram should grow. Options are "up", "down", "left", or "right".</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span>
 
     <span class="nd">@direction</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">directions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]</span>
+        <span class="n">directions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">,</span> <span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span> <span class="o">=</span> <span class="n">d</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid entry for direction. Must be </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span>
+                <span class="s2">"</span><span class="si">{0}</span><span class="s2"> is not a valid entry for direction. Must be </span><span class="si">{1}</span><span class="s2">."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">d</span><span class="p">,</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="p">)</span>
 
@@ -2527,124 +2533,124 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">origin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The origin points of the TreeDiagram. This is the point where the center of the top level of the TreeDiagram starts from. By default it&#39;s set to the top center of an edge of the page. Which edge depends on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The origin points of the TreeDiagram. This is the point where the center of the top level of the TreeDiagram starts from. By default it's set to the top center of an edge of the page. Which edge depends on the direction of the tree diagram.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: A tuple of ints</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">origins</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;up&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">),</span>
-            <span class="s2">&quot;down&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">),</span>
-            <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s2">"up"</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">),</span>
+            <span class="s2">"down"</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">),</span>
+            <span class="s2">"right"</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s2">"left"</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">origins</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">level_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            move (int): The amount to move within levels</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: A tuple containing a 0 and the move, in the right orientation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">move</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">move_between_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">            move (int): The direction to move between levels.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">            ValueError: "No direction defined!"</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: The final position, a tuple of ints</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"up"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">move</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"left"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"right"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">move_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">            move (int): The direction to move between levels.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">            ValueError: "No direction defined!"</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: The final position, a tuple of ints</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">abs_move_between_levels</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">            position (tuple): The absolute position to move between levels, a tuple of ints</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">            ValueError: "No direction defined!"</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: The final position, a tuple of ints</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"up"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"left"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"right"</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">abs_move_in_level</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">        </span><span class="sd">"""The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">            position (tuple): The absolute position to move within a levels, a tuple of ints</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">            ValueError: "No direction defined!"</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple: The final position, a tuple of ints</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># Style Properties</span>
@@ -2652,38 +2658,38 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">link_style</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The style of the links in the TreeDiagram</span>
+<span class="w">        </span><span class="sd">"""The style of the links in the TreeDiagram</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_link_style</span>
 
     <span class="nd">@link_style</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">link_style</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">link_styles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;orthogonal&quot;</span><span class="p">,</span> <span class="s2">&quot;straight&quot;</span><span class="p">,</span> <span class="s2">&quot;curved&quot;</span><span class="p">]</span>
+        <span class="n">link_styles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"orthogonal"</span><span class="p">,</span> <span class="s2">"straight"</span><span class="p">,</span> <span class="s2">"curved"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">link_styles</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_link_style</span> <span class="o">=</span> <span class="n">d</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid entry for link_style. Must be </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">link_styles</span><span class="p">)</span>
+                <span class="s2">"</span><span class="si">{0}</span><span class="s2"> is not a valid entry for link_style. Must be </span><span class="si">{1}</span><span class="s2">."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">d</span><span class="p">,</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">link_styles</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">link_style_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the correct waypoint style for the set link_style</span>
+<span class="w">        </span><span class="sd">"""Returns the correct waypoint style for the set link_style</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: A dict with &#39;waypoint&#39; as a key then the set link_style</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">&quot;orthogonal&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;waypoints&quot;</span><span class="p">:</span> <span class="s2">&quot;orthogonal&quot;</span><span class="p">}</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">&quot;straight&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;waypoints&quot;</span><span class="p">:</span> <span class="s2">&quot;straight&quot;</span><span class="p">}</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">&quot;curved&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;waypoints&quot;</span><span class="p">:</span> <span class="s2">&quot;curved&quot;</span><span class="p">}</span>
+<span class="sd">            dict: A dict with 'waypoint' as a key then the set link_style</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">"orthogonal"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"waypoints"</span><span class="p">:</span> <span class="s2">"orthogonal"</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">"straight"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"waypoints"</span><span class="p">:</span> <span class="s2">"straight"</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span> <span class="o">==</span> <span class="s2">"curved"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"waypoints"</span><span class="p">:</span> <span class="s2">"curved"</span><span class="p">}</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># Object Linking and Sorting</span>
@@ -2692,8 +2698,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">add_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span>
-            <span class="k">if</span> <span class="s2">&quot;tree_parent&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">tree_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tree_parent&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">"tree_parent"</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">tree_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tree_parent"</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 
     <span class="c1">###########################################################</span>
@@ -2706,51 +2712,51 @@
         <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+        <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"depth"</span><span class="p">,</span>
         <span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TreeDiagram&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"TreeDiagram"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Build a TreeDiagram from nested dict/list structures.</span>
 <span class="sd">        data: Nested dict/list structure representing the tree.</span>
 <span class="sd">        colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None</span>
-<span class="sd">        coloring: str - &quot;depth&quot; | &quot;hash&quot; | &quot;type&quot; - Method to match colors to nodes. Default: &quot;depth&quot;</span>
-<span class="sd">            1. &quot;depth&quot; - Color nodes based on their depth in the tree.</span>
-<span class="sd">            2. &quot;hash&quot; - Color nodes based on a hash of their value.</span>
-<span class="sd">            3. &quot;type&quot; - Color nodes based on their type (category, list_item, leaf).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"</span>
+<span class="sd">            1. "depth" - Color nodes based on their depth in the tree.</span>
+<span class="sd">            2. "hash" - Color nodes based on a hash of their value.</span>
+<span class="sd">            3. "type" - Color nodes based on their type (category, list_item, leaf).</span>
+<span class="sd">        """</span>
 
         <span class="n">diagram</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">)</span>
 
-        <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;list_item&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+        <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"category"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"list_item"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"leaf"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 
-        <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"depth"</span><span class="p">,</span> <span class="s2">"hash"</span><span class="p">,</span> <span class="s2">"type"</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;colors must be a list or None&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"colors must be a list or None"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">colors</span> <span class="o">==</span> <span class="p">[]:</span>
             <span class="n">colors</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Return a color from the palette based on mode.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">"""Return a color from the palette based on mode."""</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;depth&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"depth"</span><span class="p">:</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">%</span> <span class="n">n</span>
-            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"hash"</span><span class="p">:</span>
                 <span class="c1"># Stable hash using md5</span>
-                <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="n">h</span> <span class="o">%</span> <span class="n">n</span>
-            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"type"</span><span class="p">:</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="n">TYPE_INDEX</span><span class="p">[</span><span class="n">node_type</span><span class="p">]</span> <span class="o">%</span> <span class="n">n</span>
 
             <span class="k">return</span> <span class="n">colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">create_node</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Create NodeObject with proper color argument.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">"""Create NodeObject with proper color argument."""</span>
             <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">NodeObject</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
 
@@ -2763,15 +2769,15 @@
                     <span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">fillColor</span><span class="o">=</span><span class="n">color</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported color type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported color type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">],</span> <span class="n">item</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Recursively build tree nodes.&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">"""Recursively build tree nodes."""</span>
 
             <span class="c1"># LEAF NODE</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"leaf"</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
                 <span class="n">create_node</span><span class="p">(</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
                 <span class="k">return</span>
 
@@ -2779,10 +2785,10 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
-                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
                     <span class="n">key_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-                    <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">key_str</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">key_str</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
                     <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span><span class="n">diagram</span><span class="p">,</span> <span class="n">key_str</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
                     <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="k">return</span>
@@ -2794,10 +2800,10 @@
                     <span class="n">build</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
                 <span class="k">return</span>
 
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported type in tree data: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported type in tree data: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Top-level tree must be a dict&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Top-level tree must be a dict"</span><span class="p">)</span>
 
         <span class="n">build</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -2821,7 +2827,9 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual_children</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># has children, go through each child and check its children</span>
                 <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">actual_children</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tree_parent</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                        <span class="n">source</span><span class="o">=</span><span class="n">tree_parent</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">child</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">child</span><span class="o">.</span><span class="n">parent_edge_label</span>
+                    <span class="p">)</span>
                     <span class="n">child_actual_children</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">tree_children</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
                     <span class="p">]</span>
@@ -2879,19 +2887,19 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">connect_peers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">peer_style</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;endArrow&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;dashed&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;html&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;rounded&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;exitX&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;exitY&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-            <span class="s2">&quot;exitDx&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;exitDy&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;entryX&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;entryY&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-            <span class="s2">&quot;entryDx&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;entryDx&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;edgeStyle&quot;</span><span class="p">:</span> <span class="s2">&quot;orthogonalEdgeStyle&quot;</span><span class="p">,</span>
+            <span class="s2">"endArrow"</span><span class="p">:</span> <span class="s2">"none"</span><span class="p">,</span>
+            <span class="s2">"dashed"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"html"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"rounded"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"exitX"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"exitY"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="s2">"exitDx"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"exitDy"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"entryX"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"entryY"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+            <span class="s2">"entryDx"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"entryDx"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"edgeStyle"</span><span class="p">:</span> <span class="s2">"orthogonalEdgeStyle"</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">peer</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">peers</span><span class="p">:</span>
@@ -2906,31 +2914,33 @@
                     <span class="n">edge</span><span class="o">.</span><span class="n">apply_attribute_dict</span><span class="p">(</span><span class="n">peer_style</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">NodeObject</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">edge</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
         <span class="n">edge</span><span class="o">.</span><span class="n">apply_attribute_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">link_style_dict</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
             <span class="c1"># parent style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitX</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitY</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="c1"># child style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryX</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryY</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"up"</span><span class="p">:</span>
             <span class="c1"># parent style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitX</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitY</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="c1"># child style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryX</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryY</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"left"</span><span class="p">:</span>
             <span class="c1"># parent style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitX</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitY</span> <span class="o">=</span> <span class="mf">0.5</span>
             <span class="c1"># child style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryX</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">entryY</span> <span class="o">=</span> <span class="mf">0.5</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"right"</span><span class="p">:</span>
             <span class="c1"># parent style</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitX</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">edge</span><span class="o">.</span><span class="n">exitY</span> <span class="o">=</span> <span class="mf">0.5</span>
@@ -2944,7 +2954,9 @@
         <span class="k">for</span> <span class="n">lvl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">lvl</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">tree_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                        <span class="n">source</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">tree_parent</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">parent_edge_label</span>
+                    <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -3345,9 +3357,7 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
 <span class="normal">185</span>
 <span class="normal">186</span>
 <span class="normal">187</span>
@@ -3373,30 +3383,32 @@
 <span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
-<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The TreeDiagram initiates its own File and Page objects. There are a number of formatting parameters that can be set to fine tune the rendering of the tree.</span>
 
 <span class="sd">    Keyword Args:</span>
-<span class="sd">        direction (str, optional): Direction that the tree grows from the root. Options are &#39;up&#39;, &#39;down&#39;, &#39;left&#39;, and &#39;right&#39;. Defaults to &#39;down&#39;.</span>
-<span class="sd">        link_style (str, optional): Connection style of the edges. Options are &#39;orthogonal&#39;, &#39;straight&#39;, and &#39;curved&#39;. Defaults to &#39;orthogonal&#39;.</span>
+<span class="sd">        direction (str, optional): Direction that the tree grows from the root. Options are 'up', 'down', 'left', and 'right'. Defaults to 'down'.</span>
+<span class="sd">        link_style (str, optional): Connection style of the edges. Options are 'orthogonal', 'straight', and 'curved'. Defaults to 'orthogonal'.</span>
 <span class="sd">        level_spacing (int, optional): Spacing in pixels between levels. Defaults to 60.</span>
 <span class="sd">        item_spacing (int, optional): Spacing in pixels between groups within a level. Defaults to 15.</span>
 <span class="sd">        padding (int, optional): Spacing in pixels between objects within a group. Defaults to 10.</span>
 <span class="sd">        file_name (str, optional): The name of the tree diagram.</span>
 <span class="sd">        file_path (str, optional): The path where the tree diagram should be saved.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># formatting</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">level_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;level_spacing&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">item_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;item_spacing&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">group_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;group_spacing&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;direction&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;link_style&quot;</span><span class="p">,</span> <span class="s2">&quot;orthogonal&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">level_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"level_spacing"</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">item_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"item_spacing"</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">group_spacing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"group_spacing"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"direction"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">link_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"link_style"</span><span class="p">,</span> <span class="s2">"orthogonal"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"padding"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
     <span class="c1"># Set up the File and Page objects</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span> <span class="n">File</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Heirarchical Diagram.drawio&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file_path&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;C:/&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"file_name"</span><span class="p">,</span> <span class="s2">"Heirarchical Diagram.drawio"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"file_path"</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"C:/"</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="p">:</span> <span class="n">Page</span> <span class="o">=</span> <span class="n">Page</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
 
     <span class="c1"># Set up object and level lists</span>
@@ -3517,9 +3529,7 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">342</span>
-<span class="normal">343</span>
-<span class="normal">344</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">344</span>
 <span class="normal">345</span>
 <span class="normal">346</span>
 <span class="normal">347</span>
@@ -3541,31 +3551,33 @@
 <span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
-<span class="normal">366</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_between_levels</span><span class="p">(</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_between_levels</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">    </span><span class="sd">"""The functions takes in a starting position and an absolute position along the coordinates between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">        position (tuple): The absolute position to move between levels, a tuple of ints</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">        ValueError: "No direction defined!"</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: The final position, a tuple of ints</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"up"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"left"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"right"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3681,9 +3693,7 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">368</span>
-<span class="normal">369</span>
-<span class="normal">370</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">370</span>
 <span class="normal">371</span>
 <span class="normal">372</span>
 <span class="normal">373</span>
@@ -3701,27 +3711,29 @@
 <span class="normal">385</span>
 <span class="normal">386</span>
 <span class="normal">387</span>
-<span class="normal">388</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_in_level</span><span class="p">(</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">abs_move_in_level</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="w">    </span><span class="sd">"""The functions takes in a starting position and an absolute position along the coordinates within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">        position (tuple): The absolute position to move within a levels, a tuple of ints</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">        ValueError: "No direction defined!"</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: The final position, a tuple of ints</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3732,7 +3744,7 @@
 
 
 <h3 id="src.drawpyo.diagram_types.tree.TreeDiagram.from_dict" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coloring</span><span class="o">=</span><span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">coloring</span><span class="o">=</span><span class="s1">'depth'</span><span class="p">,</span> <span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
@@ -3754,9 +3766,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">446</span>
 <span class="normal">447</span>
 <span class="normal">448</span>
 <span class="normal">449</span>
@@ -3856,57 +3866,59 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">543</span>
 <span class="normal">544</span>
 <span class="normal">545</span>
-<span class="normal">546</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span>
     <span class="bp">cls</span><span class="p">,</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">colors</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+    <span class="n">coloring</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"depth"</span><span class="p">,</span>
     <span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TreeDiagram&quot;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"TreeDiagram"</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Build a TreeDiagram from nested dict/list structures.</span>
 <span class="sd">    data: Nested dict/list structure representing the tree.</span>
 <span class="sd">    colors: List of ColorSchemes, StandardColors, or color hex strings to use for coloring nodes. Default: None</span>
-<span class="sd">    coloring: str - &quot;depth&quot; | &quot;hash&quot; | &quot;type&quot; - Method to match colors to nodes. Default: &quot;depth&quot;</span>
-<span class="sd">        1. &quot;depth&quot; - Color nodes based on their depth in the tree.</span>
-<span class="sd">        2. &quot;hash&quot; - Color nodes based on a hash of their value.</span>
-<span class="sd">        3. &quot;type&quot; - Color nodes based on their type (category, list_item, leaf).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Default: "depth"</span>
+<span class="sd">        1. "depth" - Color nodes based on their depth in the tree.</span>
+<span class="sd">        2. "hash" - Color nodes based on a hash of their value.</span>
+<span class="sd">        3. "type" - Color nodes based on their type (category, list_item, leaf).</span>
+<span class="sd">    """</span>
 
     <span class="n">diagram</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">diagram_kwargs</span><span class="p">)</span>
 
-    <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;list_item&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="n">TYPE_INDEX</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"category"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"list_item"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"leaf"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 
-    <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">coloring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"depth"</span><span class="p">,</span> <span class="s2">"hash"</span><span class="p">,</span> <span class="s2">"type"</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid coloring mode: </span><span class="si">{</span><span class="n">coloring</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;colors must be a list or None&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"colors must be a list or None"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">colors</span> <span class="o">==</span> <span class="p">[]:</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a color from the palette based on mode.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return a color from the palette based on mode."""</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;depth&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"depth"</span><span class="p">:</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">%</span> <span class="n">n</span>
-        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;hash&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"hash"</span><span class="p">:</span>
             <span class="c1"># Stable hash using md5</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">h</span> <span class="o">%</span> <span class="n">n</span>
-        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">coloring</span> <span class="o">==</span> <span class="s2">"type"</span><span class="p">:</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">TYPE_INDEX</span><span class="p">[</span><span class="n">node_type</span><span class="p">]</span> <span class="o">%</span> <span class="n">n</span>
 
         <span class="k">return</span> <span class="n">colors</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">create_node</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create NodeObject with proper color argument.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Create NodeObject with proper color argument."""</span>
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NodeObject</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
 
@@ -3919,15 +3931,15 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
                 <span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">tree_parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">fillColor</span><span class="o">=</span><span class="n">color</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported color type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported color type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">],</span> <span class="n">item</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively build tree nodes.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Recursively build tree nodes."""</span>
 
         <span class="c1"># LEAF NODE</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-            <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"leaf"</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
             <span class="n">create_node</span><span class="p">(</span><span class="n">diagram</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
             <span class="k">return</span>
 
@@ -3935,10 +3947,10 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
-                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid dict key type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
                 <span class="n">key_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-                <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">key_str</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">choose_color</span><span class="p">(</span><span class="n">key_str</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
                 <span class="n">node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span><span class="n">diagram</span><span class="p">,</span> <span class="n">key_str</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
                 <span class="n">build</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">return</span>
@@ -3950,10 +3962,10 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
                 <span class="n">build</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported type in tree data: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unsupported type in tree data: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Top-level tree must be a dict&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Top-level tree must be a dict"</span><span class="p">)</span>
 
     <span class="n">build</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -4035,9 +4047,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">284</span>
-<span class="normal">285</span>
-<span class="normal">286</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">286</span>
 <span class="normal">287</span>
 <span class="normal">288</span>
 <span class="normal">289</span>
@@ -4047,18 +4057,20 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">293</span>
 <span class="normal">294</span>
 <span class="normal">295</span>
-<span class="normal">296</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">level_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">level_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""The functions takes in a relative distance to move within levels. It outputs a tuple with the relative move in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        move (int): The amount to move within levels</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: A tuple containing a 0 and the move, in the right orientation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">move</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4175,9 +4187,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">298</span>
-<span class="normal">299</span>
-<span class="normal">300</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
 <span class="normal">303</span>
@@ -4197,29 +4207,31 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span>
-<span class="normal">320</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_between_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_between_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""The functions takes in a starting position and a relative distance to move between levels. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">        move (int): The direction to move between levels.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">        ValueError: "No direction defined!"</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: The final position, a tuple of ints</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"up"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">move</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"down"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"left"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s2">"right"</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -4335,9 +4347,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">324</span>
 <span class="normal">325</span>
 <span class="normal">326</span>
 <span class="normal">327</span>
@@ -4353,25 +4363,27 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">337</span>
 <span class="normal">338</span>
 <span class="normal">339</span>
-<span class="normal">340</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">move_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""The functions takes in a starting position and a relative distance to move within a level. It outputs a tuple with the final absolute position in the correct direction (horizontal or vertical) depending on the direction of the tree diagram.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        start (tuple): The starting position, a tuple of ints</span>
 <span class="sd">        move (int): The direction to move between levels.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ValueError: &quot;No direction defined!&quot;</span>
+<span class="sd">        ValueError: "No direction defined!"</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: The final position, a tuple of ints</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">,</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">move</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No direction defined!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No direction defined!"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -4416,9 +4428,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
 <span class="normal">110</span>
@@ -4487,27 +4497,29 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">173</span>
 <span class="normal">174</span>
 <span class="normal">175</span>
-<span class="normal">176</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they&#39;re grouped together for auto positioning. Each level of a TreeDiagram is a set of groups.&quot;&quot;&quot;</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TreeGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""This class defines a group within a TreeDiagram. When a set of NodeObjects share the same parent they're grouped together for auto positioning. Each level of a TreeDiagram is a set of groups."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.</span>
+<span class="w">        </span><span class="sd">"""The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tree (TreeDiagram, optional): The TreeDiagram that owns the group. Defaults to None.</span>
 <span class="sd">            parent_object (NodeObject, optional): The parent object in the group. Defaults to None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TreeDiagram</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent_object</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent_object</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">parent_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The object that defines the parent of the group.</span>
+<span class="w">        </span><span class="sd">"""The object that defines the parent of the group.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            NodeObject</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent_object</span>
 
     <span class="nd">@parent_object</span><span class="o">.</span><span class="n">setter</span>
@@ -4517,7 +4529,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent_object</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">center_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function centers the parent_objects along the group and then offsets it by the level spacing.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""This function centers the parent_objects along the group and then offsets it by the level spacing."""</span>
         <span class="n">children_grp</span> <span class="o">=</span> <span class="n">TreeGroup</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_object</span><span class="p">:</span>
@@ -4532,32 +4544,32 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">move_between_levels</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="o">-</span><span class="n">level_space</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent_object</span><span class="o">.</span><span class="n">center_position</span> <span class="o">=</span> <span class="n">pos</span>
 
-    <span class="c1"># I don&#39;t love that these are copy-pasted from NodeObject but the multiple</span>
+    <span class="c1"># I don't love that these are copy-pasted from NodeObject but the multiple</span>
     <span class="c1"># inheritance was too much of a pain to have TreeGroup inherit.</span>
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">size_of_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The height or the width of the level, depending on tree orientation.</span>
+<span class="w">        </span><span class="sd">"""The height or the width of the level, depending on tree orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">size_in_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The size of the object within its level, either its width or height depending on tree orientation.</span>
+<span class="w">        </span><span class="sd">"""The size of the object within its level, either its width or height depending on tree orientation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;down&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"up"</span><span class="p">,</span> <span class="s2">"down"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -4774,22 +4786,22 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
-<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""The TreeGroup is instantiated with all the arguments of the Group. Additionally, the owning tree and the parent_object.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        tree (TreeDiagram, optional): The TreeDiagram that owns the group. Defaults to None.</span>
 <span class="sd">        parent_object (NodeObject, optional): The parent object in the group. Defaults to None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TreeDiagram</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">parent_object</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NodeObject</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent_object</span>
@@ -4815,9 +4827,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/drawpyo/diagram_types/tree.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
 <span class="normal">137</span>
 <span class="normal">138</span>
 <span class="normal">139</span>
@@ -4829,8 +4839,10 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function centers the parent_objects along the group and then offsets it by the level spacing.&quot;&quot;&quot;</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""This function centers the parent_objects along the group and then offsets it by the level spacing."""</span>
     <span class="n">children_grp</span> <span class="o">=</span> <span class="n">TreeGroup</span><span class="p">(</span><span class="n">tree</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_object</span><span class="p">:</span>
@@ -4909,7 +4921,7 @@ coloring: str - "depth" | "hash" | "type" - Method to match colors to nodes. Def
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.expand"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

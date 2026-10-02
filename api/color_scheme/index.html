@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1667,16 +1667,16 @@
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ColorScheme</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represents a set of colors used for an object&#39;s fill, stroke and font.</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Represents a set of colors used for an object's fill, stroke and font.</span>
 
 <span class="sd">    A color can be:</span>
 <span class="sd">        • None</span>
 <span class="sd">        • A hex string</span>
 <span class="sd">        • A DefaultColor</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">HEX_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^#[0-9A-Fa-f]</span><span class="si">{6}</span><span class="s2">$&quot;</span><span class="p">)</span>
+    <span class="n">HEX_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"^#[0-9A-Fa-f]</span><span class="si">{6}</span><span class="s2">$"</span><span class="p">)</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># Initialization</span>
@@ -1691,7 +1691,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">fill_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">stroke_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">:</span> <span class="n">ColorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated</span><span class="p">(</span><span class="n">font_color</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎨 ColorScheme created: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"🎨 ColorScheme created: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="c1">###########################################################</span>
     <span class="c1"># Public Setters</span>
@@ -1711,7 +1711,7 @@
     <span class="c1">###########################################################</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_validated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="n">ColorType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ColorType</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate hex strings or DefaultColor enums.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Validate hex strings or DefaultColor enums."""</span>
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1721,19 +1721,19 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_valid_hex</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Invalid color &#39;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;Expected &#39;#RRGGBB&#39; (example: #A1B2C3).&quot;</span>
+                    <span class="sa">f</span><span class="s2">"Invalid color '</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">'. "</span>
+                    <span class="sa">f</span><span class="s2">"Expected '#RRGGBB' (example: #A1B2C3)."</span>
                 <span class="p">)</span>
             <span class="k">return</span> <span class="n">color</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Color must be a hex string like &#39;#AABBCC&#39;, None, or a DefaultColor enum. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Color must be a hex string like '#AABBCC', None, or a DefaultColor enum. "</span>
+            <span class="sa">f</span><span class="s2">"Received: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_valid_hex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if string is a valid #RRGGBB hex color.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return True if string is a valid #RRGGBB hex color."""</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">HEX_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
     <span class="c1">###########################################################</span>
@@ -1742,9 +1742,9 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;fill: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;| stroke: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;| font: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"fill: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_color</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"| stroke: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stroke_color</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"| font: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -1787,7 +1787,7 @@
 <span class="normal">77</span>
 <span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_valid_hex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if string is a valid #RRGGBB hex color.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if string is a valid #RRGGBB hex color."""</span>
     <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">HEX_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1854,7 +1854,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
