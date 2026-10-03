@@ -7,7 +7,7 @@ from .utils.color_scheme import ColorScheme
 from .utils.logger import logger
 from .utils.page_sizes import PageSize
 
-from .drawio_import import load_diagram, load_mxlibrary
+from .drawio_import import load_diagram, load_diagrams, load_mxlibrary
 from .library_manager import register_mxlibrary
 
 from . import utils
@@ -28,6 +28,7 @@ __all__ = [
     diagram_types,
     drawio_import,
     load_diagram,
+    load_diagrams,
     load_mxlibrary,
     register_mxlibrary,
 ]
