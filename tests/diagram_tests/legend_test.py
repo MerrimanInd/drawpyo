@@ -311,3 +311,141 @@ class TestLegendAttachedUpdates:
         assert "fillColor=#aa0000;" not in page.xml
         assert len(page.objects) == 2 + len(component.group.objects)
         assert all(obj in page.objects for obj in component.group.objects)
+
+    def test_updates_preserve_page_stacking_order(self):
+        component = Legend(
+            {"old": "#aa0000", "other": "#bb0000"}, background_color="#eeeeee"
+        )
+        pages = [Page(), Page()]
+        prefixes = []
+        annotations = []
+        for index, page in enumerate(pages):
+            for _ in range(index + 1):
+                Object(page=page, value="Below")
+            prefixes.append(page.objects.copy())
+            component.add_to_page(page)
+            annotations.append(Object(page=page, value="Above", position=(0, 0)))
+
+        for step in range(3):
+            if step == 0:
+                component.update_mapping({"old": "#00aa00", "other": "#00bb00"})
+            elif step == 1:
+                component.update_mapping({"new": "#0000aa"})
+            else:
+                component.update_mapping(
+                    {"new": "#0000aa", "more": "#0000bb", "last": "#0000cc"}
+                )
+
+            for page, prefix, annotation in zip(pages, prefixes, annotations):
+                expected = prefix + component.group.objects + [annotation]
+                assert page.objects == expected
+                cells = ET.fromstring(page.xml).findall(".//mxCell")
+                assert [cell.get("id") for cell in cells] == [
+                    str(obj.id) for obj in expected
+                ]
+
+    def test_failed_rebuild_preserves_objects_and_allows_retry(self):
+        component = Legend({"old": "#aa0000"}, background_color="#eeeeee")
+        pages = [Page(), Page()]
+        for page in pages:
+            component.add_to_page(page)
+        group = component.group
+        objects = group.objects
+        old_objects = objects.copy()
+        old_geometry = (
+            group.geometry.x,
+            group.geometry.y,
+            group.geometry.width,
+            group.geometry.height,
+        )
+        old_xml = [page.xml for page in pages]
+
+        with pytest.raises(ValueError):
+            component.update_mapping({})
+
+        assert component.group is group
+        assert group.objects is objects
+        assert group.objects == old_objects
+        assert (
+            group.geometry.x,
+            group.geometry.y,
+            group.geometry.width,
+            group.geometry.height,
+        ) == old_geometry
+        assert [page.xml for page in pages] == old_xml
+
+        component.update_mapping({"new": "#0000aa"})
+
+        for page in pages:
+            assert all(obj not in page.objects for obj in old_objects)
+            assert all(obj in page.objects for obj in component.group.objects)
+            assert len(page.objects) == 2 + len(component.group.objects)
+            values = {
+                cell.get("value") for cell in ET.fromstring(page.xml).iter("mxCell")
+            }
+            assert "new" in values
+            assert "old" not in values
+            assert "partial" not in values
+
+    def test_updates_keep_positions_of_unrelated_objects_inside_span(self):
+        component = Legend({"a": "#aa0000"}, background_color="#eeeeee")
+        page = Page()
+        component.add_to_page(page)
+
+        # Unrelated objects between the component's own objects, so the
+        # component does not occupy one contiguous span.
+        on_page = Object(page=page)
+        nested = Object(page=page)
+        trailing = Object(page=page)
+        page.objects.remove(on_page)
+        page.objects.remove(nested)
+        page.objects.remove(trailing)
+        base = page.objects.index(component.group.objects[0])
+        page.objects.insert(base + 1, on_page)
+        page.objects.insert(base + 2, nested)
+        page.objects.append(trailing)
+
+        indices = [page.objects.index(obj) for obj in (on_page, nested, trailing)]
+
+        # Growing the component changes how many objects replace the old ones.
+        component.update_mapping({"a": "#aa0000", "b": "#00aa00", "c": "#0000aa"})
+
+        # Unrelated objects keep their order and stay inside the span the
+        # component occupies, instead of the whole component being pushed to
+        # the end of the page (which would flip the stacking order).
+        assert page.objects.index(on_page) < page.objects.index(nested)
+        assert page.objects.index(nested) < page.objects.index(trailing)
+        assert indices[0] == page.objects.index(on_page)
+        assert indices[1] == page.objects.index(nested)
+        component_indexes = [page.objects.index(obj) for obj in component.group.objects]
+        assert min(component_indexes) < page.objects.index(on_page)
+        assert max(component_indexes) > page.objects.index(nested)
+        assert all(obj in page.objects for obj in component.group.objects)
+        cells = ET.fromstring(page.xml).findall(".//mxCell")
+        assert [cell.get("id") for cell in cells] == [
+            str(obj.id) for obj in page.objects
+        ]
+
+    def test_failed_page_sync_rolls_back_and_allows_retry(self):
+        component = Legend({"old": "#aa0000"}, background_color="#eeeeee")
+        page = Page()
+        component.add_to_page(page)
+        old_objects = component.group.objects.copy()
+        old_xml = page.xml
+
+        objects = page.objects
+        # Simulate a page that rejects replacement mid-sync.
+        page.objects = tuple(objects)
+        try:
+            with pytest.raises(TypeError):
+                component.update_mapping({"new": "#0000aa"})
+        finally:
+            page.objects = objects
+
+        assert component.group.objects == old_objects
+        assert page.xml == old_xml
+
+        component.update_mapping({"new": "#0000aa"})
+
+        assert all(obj not in page.objects for obj in old_objects)
+        assert all(obj in page.objects for obj in component.group.objects)

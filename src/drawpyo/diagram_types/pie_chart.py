@@ -158,15 +158,44 @@ class PieChart:
     def _rebuild(self):
         old_objects = self._group.objects.copy()
         self._group.objects.clear()
-        self._build_chart()
+        try:
+            self._build_chart()
+            self._sync_pages(old_objects)
+        except Exception:
+            # Transactional: restore the group and every attached page so the
+            # caller can retry and still replace all obsolete objects.
+            self._group.objects[:] = old_objects
+            self._group.update_geometry()
+            raise
 
-        # Pages store individual objects, so replace their previous content too.
+    def _sync_pages(self, old_objects: list[Object]) -> None:
+        """Replace this chart's objects on every attached page.
+
+        Replacements go into the slots the old objects occupied, so the
+        stacking position relative to unrelated objects is preserved even when
+        the object count changes. Surplus objects are removed and extra ones are
+        inserted next to the block, leaving unrelated objects in place.
+        """
         for page in self._pages:
-            for obj in old_objects:
-                if obj in page.objects:
-                    page.remove_object(obj)
-            for obj in self._group.objects:
-                page.add_object(obj)
+            indices = [i for i, obj in enumerate(page.objects) if obj in old_objects]
+            if not indices:
+                # Not attached (or already removed): append the new objects.
+                for obj in self._group.objects:
+                    page.add_object(obj)
+                continue
+
+            new_objects = self._group.objects
+            shared = min(len(indices), len(new_objects))
+            for index, obj in zip(indices[:shared], new_objects[:shared]):
+                page.objects[index] = obj
+
+            if len(new_objects) > shared:
+                page.objects[indices[shared - 1] + 1 : indices[shared - 1] + 1] = (
+                    new_objects[shared:]
+                )
+            elif len(indices) > shared:
+                for index in reversed(indices[shared:]):
+                    del page.objects[index]
 
     def _build_chart(self):
         x, y = self._position
