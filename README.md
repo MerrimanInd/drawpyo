@@ -53,6 +53,8 @@ item_from_lib = drawpyo.diagram.object_from_library(
 
 ## Import external shape libraries
 
+Requires drawpyo 0.2.6 or later. This functionality is available on `main` but is not included in the 0.2.5 release.
+
 You can import and use external Draw.io XML shape libraries (e.g., Azure, AWS, Google Cloud icons):
 
 ```python

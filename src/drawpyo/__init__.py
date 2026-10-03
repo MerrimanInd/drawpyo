@@ -33,4 +33,4 @@ __all__ = [
     register_mxlibrary,
 ]
 
-__version__ = "0.2.4"
+__version__ = "0.2.6"
