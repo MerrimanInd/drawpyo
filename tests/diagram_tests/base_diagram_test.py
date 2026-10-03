@@ -184,7 +184,7 @@ class TestImportShapeDatabase:
         library.write_text(
             'title = "Custom shapes"\n'
             '[base]\nwidth = 120\nfillColor = "red"\n'
-            "points = [[0, 0.5], [1, 0.5]]\n"
+            "points = [[0.0, 0.5], [1.0, 0.5]]\n"
             '[child]\ninherit = "base"\nfillColor = "blue"\n'
             '[sibling]\ninherit = "base"\nheight = 60\n',
             encoding="utf-8",
