@@ -1,0 +1,167 @@
+<mxfile host="Drawpyo" modified="2026-10-03T23:59:57" agent="Python 3.10, Drawpyo 0.23" version="21.6.5" type="device">
+  <diagram name="Dependencies" id="123490244991136">
+    <mxGraphModel dx="2037" dy="830" grid="1" gridSize="10" guides="1" toolTips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="123490244988592" value="Dependency types" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=top;" vertex="1" parent="1">
+  <mxGeometry x="40" y="40" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244996080" value="" style="whiteSpace=wrap;rounded=0;fillColor=#DAE8FC;glass=0;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="76" width="20" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244989120" value="Internal module" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="70" y="76" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244986624" value="" style="whiteSpace=wrap;rounded=0;fillColor=#D5E8D4;glass=0;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="104" width="20" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244986528" value="Internal package" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="70" y="104" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490245000448" value="" style="whiteSpace=wrap;rounded=0;fillColor=#F5F5F5;glass=0;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="132" width="20" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244986672" value="Standard library" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="70" y="132" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244991952" value="" style="whiteSpace=wrap;rounded=0;fillColor=#E1D5E7;glass=0;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="160" width="20" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244999056" value="External" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="70" y="160" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490245001120" value="" style="whiteSpace=wrap;rounded=0;fillColor=#F8CECC;glass=0;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="188" width="20" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244996512" value="Cycle member" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="70" y="188" width="200" height="20" as="geometry" />
+</mxCell>
+        <mxCell id="123490244988352" value="" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="225" width="1" height="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244993536" value="" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="75" y="225" width="1" height="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244990656" style="dashed=1;dashPattern=8 8;rounded=0;jettySize=auto;endArrow=classic;endFill=1;strokeWidth=1;" edge="1" parent="1" source="123490244988352" target="123490244993536">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244994832" value="Type-checking only" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="88" y="218" width="150" height="18" as="geometry" />
+</mxCell>
+        <mxCell id="123490244997664" value="" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="40" y="249" width="1" height="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244998528" value="" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;" vertex="1" parent="1">
+  <mxGeometry x="75" y="249" width="1" height="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244986240" style="rounded=0;jettySize=auto;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244997664" target="123490244998528">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+        <mxCell id="123490244985568" value="Cycle dependency" style="whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=none;dashed=0;align=left;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="88" y="242" width="150" height="18" as="geometry" />
+</mxCell>
+        <UserObject label="&lt;b&gt;drawpyo&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;Ca 3 · Ce 4 · I 0.57&lt;/font&gt;" id="123490244995792" tooltip="Kind: internal package&#xa;Sources:&#xa;  drawpyo/__init__.py&#xa;  drawpyo/file.py&#xa;  drawpyo/library_manager.py&#xa;  drawpyo/page.py&#xa;  drawpyo/xml_base.py&#xa;Fan-in / Ca: 3&#xa;Fan-out / Ce: 4&#xa;Instability: 0.571&#xa;SCC: 1&#xa;Cycle: 1 (4 nodes)&#xa;Metrics measure static import coupling only.">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#F8CECC;strokeColor=#B85450;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="40" y="278" width="140" height="76" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;drawpyo.diagram&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;Ca 3 · Ce 2 · I 0.40&lt;/font&gt;" id="123490244996896" tooltip="Kind: internal package&#xa;Sources:&#xa;  drawpyo/diagram/__init__.py&#xa;  drawpyo/diagram/base_diagram.py&#xa;  drawpyo/diagram/edges.py&#xa;  drawpyo/diagram/extended_objects.py&#xa;  drawpyo/diagram/objects.py&#xa;  drawpyo/diagram/text_format.py&#xa;Fan-in / Ca: 3&#xa;Fan-out / Ce: 2&#xa;Instability: 0.400&#xa;SCC: 1&#xa;Cycle: 1 (4 nodes)&#xa;Metrics measure static import coupling only.">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#F8CECC;strokeColor=#B85450;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="249" y="278" width="147" height="76" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;drawpyo.diagram_types&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;Ca 1 · Ce 3 · I 0.75&lt;/font&gt;" id="123490244997616" tooltip="Kind: internal package&#xa;Sources:&#xa;  drawpyo/diagram_types/__init__.py&#xa;  drawpyo/diagram_types/bar_chart.py&#xa;  drawpyo/diagram_types/binary_tree.py&#xa;  drawpyo/diagram_types/class_diagram.py&#xa;  drawpyo/diagram_types/dependency_diagram.py&#xa;  drawpyo/diagram_types/legend.py&#xa;  drawpyo/diagram_types/pie_chart.py&#xa;  drawpyo/diagram_types/tree.py&#xa;Fan-in / Ca: 1&#xa;Fan-out / Ce: 3&#xa;Instability: 0.750&#xa;SCC: 1&#xa;Cycle: 1 (4 nodes)&#xa;Metrics measure static import coupling only.">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#F8CECC;strokeColor=#B85450;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="40" y="374" width="189" height="76" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;drawpyo.drawio_import&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;Ca 1 · Ce 2 · I 0.67&lt;/font&gt;" id="123490244992288" tooltip="Kind: internal package&#xa;Sources:&#xa;  drawpyo/drawio_import/__init__.py&#xa;  drawpyo/drawio_import/drawio_parser.py&#xa;  drawpyo/drawio_import/mxlibrary_parser.py&#xa;  drawpyo/drawio_import/raw.py&#xa;Fan-in / Ca: 1&#xa;Fan-out / Ce: 2&#xa;Instability: 0.667&#xa;SCC: 1&#xa;Cycle: 1 (4 nodes)&#xa;Metrics measure static import coupling only.">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#F8CECC;strokeColor=#B85450;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="249" y="374" width="189" height="76" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;drawpyo.utils&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;Ca 3 · Ce 0 · I 0.00&lt;/font&gt;" id="123490244998720" tooltip="Kind: internal package&#xa;Sources:&#xa;  drawpyo/utils/__init__.py&#xa;  drawpyo/utils/color_scheme.py&#xa;  drawpyo/utils/logger.py&#xa;  drawpyo/utils/page_sizes.py&#xa;  drawpyo/utils/standard_colors.py&#xa;Fan-in / Ca: 3&#xa;Fan-out / Ce: 0&#xa;Instability: 0.000&#xa;SCC: 2&#xa;Metrics measure static import coupling only.">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#D5E8D4;strokeColor=#82B366;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="618" y="278" width="140" height="76" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;toml&lt;/b&gt;" id="123490244986192" tooltip="Kind: external">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="618" y="394" width="120" height="52" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="&lt;b&gt;tomllib&lt;/b&gt;" id="123490244997424" tooltip="Kind: external">
+<mxCell style="whiteSpace=wrap;rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;dashed=0;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+  <mxGeometry x="618" y="486" width="120" height="52" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×2" id="123490244995456" tooltip="Dependency: drawpyo -&gt; drawpyo.diagram&#xa;Import sites: 2&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/__init__.py:14 — from . import diagram&#xa;  drawpyo/library_manager.py:37 — from .diagram.objects import base_libraries">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244995792" target="123490244996896">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490244999920" tooltip="Dependency: drawpyo -&gt; drawpyo.diagram_types&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/__init__.py:15 — from . import diagram_types">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244995792" target="123490244997616">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×3" id="123490244989216" tooltip="Dependency: drawpyo -&gt; drawpyo.drawio_import&#xa;Import sites: 3&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/__init__.py:10 — from .drawio_import import load_diagram, load_diagrams, load_mxlibrary&#xa;  drawpyo/__init__.py:16 — from . import drawio_import&#xa;  drawpyo/library_manager.py:2 — from .drawio_import import load_mxlibrary">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244995792" target="123490244992288">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×9" id="123490244987920" tooltip="Dependency: drawpyo -&gt; drawpyo.utils&#xa;Import sites: 9&#xa;Type-checking only: no&#xa;Evidence:&#xa;  drawpyo/__init__.py:5 — from .utils.standard_colors import StandardColor&#xa;  drawpyo/__init__.py:6 — from .utils.color_scheme import ColorScheme&#xa;  drawpyo/__init__.py:7 — from .utils.logger import logger&#xa;  drawpyo/__init__.py:8 — from .utils.page_sizes import PageSize&#xa;  drawpyo/__init__.py:13 — from . import utils&#xa;  drawpyo/file.py:4 — from .utils import logger&#xa;  drawpyo/library_manager.py:1 — from .utils.logger import logger&#xa;  drawpyo/page.py:3 — from .utils.logger import logger&#xa;  drawpyo/page.py:4 — from .utils.page_sizes import PageSize">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeWidth=4;" edge="1" parent="1" source="123490244995792" target="123490244998720">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490244985040" tooltip="Dependency: drawpyo.diagram -&gt; drawpyo&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/diagram/base_diagram.py:6 — from ..xml_base import XMLBase">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244996896" target="123490244995792">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×7" id="123490249920752" tooltip="Dependency: drawpyo.diagram -&gt; drawpyo.utils&#xa;Import sites: 7&#xa;Type-checking only: no&#xa;Evidence:&#xa;  drawpyo/diagram/edges.py:3 — from ..utils.logger import logger&#xa;  drawpyo/diagram/edges.py:13 — from ..utils.color_scheme import ColorScheme&#xa;  drawpyo/diagram/edges.py:14 — from ..utils.standard_colors import StandardColor&#xa;  drawpyo/diagram/objects.py:4 — from ..utils.color_scheme import ColorScheme&#xa;  drawpyo/diagram/objects.py:5 — from ..utils.logger import logger&#xa;  drawpyo/diagram/objects.py:6 — from ..utils.standard_colors import StandardColor&#xa;  drawpyo/diagram/text_format.py:2 — from ..utils.logger import logger">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeWidth=3;" edge="1" parent="1" source="123490244996896" target="123490244998720">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490252078960" tooltip="Dependency: drawpyo.diagram -&gt; toml&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Evidence:&#xa;  drawpyo/diagram/base_diagram.py:74 — import toml">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeWidth=1;" edge="1" parent="1" source="123490244996896" target="123490244986192">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490245257456" tooltip="Dependency: drawpyo.diagram -&gt; tomllib&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Evidence:&#xa;  drawpyo/diagram/base_diagram.py:78 — import tomllib">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeWidth=1;" edge="1" parent="1" source="123490244996896" target="123490244997424">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×9" id="123490245258656" tooltip="Dependency: drawpyo.diagram_types -&gt; drawpyo&#xa;Import sites: 9&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/diagram_types/bar_chart.py:7 — from ..page import Page&#xa;  drawpyo/diagram_types/binary_tree.py:6 — import drawpyo&#xa;  drawpyo/diagram_types/dependency_diagram.py:19 — from ..file import File&#xa;  drawpyo/diagram_types/dependency_diagram.py:20 — from ..page import Page&#xa;  drawpyo/diagram_types/legend.py:7 — from ..page import Page&#xa;  drawpyo/diagram_types/pie_chart.py:7 — from ..page import Page&#xa;  drawpyo/diagram_types/tree.py:6 — from ..file import File&#xa;  drawpyo/diagram_types/tree.py:7 — from ..page import Page&#xa;  drawpyo/diagram_types/tree.py:10 — import drawpyo">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244997616" target="123490244995792">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×14" id="123490245247568" tooltip="Dependency: drawpyo.diagram_types -&gt; drawpyo.diagram&#xa;Import sites: 14&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/diagram_types/bar_chart.py:3 — from ..diagram.objects import Object, Group&#xa;  drawpyo/diagram_types/bar_chart.py:4 — from ..diagram.text_format import TextFormat&#xa;  drawpyo/diagram_types/class_diagram.py:10 — from ..diagram.edges import Edge&#xa;  drawpyo/diagram_types/class_diagram.py:11 — from ..diagram.text_format import TextFormat&#xa;  drawpyo/diagram_types/dependency_diagram.py:16 — from ..diagram.edges import Edge&#xa;  drawpyo/diagram_types/dependency_diagram.py:17 — from ..diagram.objects import Object&#xa;  drawpyo/diagram_types/dependency_diagram.py:18 — from ..diagram.text_format import TextFormat&#xa;  drawpyo/diagram_types/legend.py:3 — from ..diagram.objects import Object, Group&#xa;  drawpyo/diagram_types/legend.py:4 — from ..diagram.text_format import TextFormat&#xa;  drawpyo/diagram_types/pie_chart.py:3 — from ..diagram.objects import Object, Group&#xa;  drawpyo/diagram_types/pie_chart.py:4 — from ..diagram.text_format import TextFormat&#xa;  drawpyo/diagram_types/pie_chart.py:8 — from ..diagram.extended_objects import PieSlice&#xa;  drawpyo/diagram_types/tree.py:8 — from ..diagram.objects import Object, Group&#xa;  drawpyo/diagram_types/tree.py:9 — from ..diagram.edges import Edge">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244997616" target="123490244996896">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="×6" id="123490245247904" tooltip="Dependency: drawpyo.diagram_types -&gt; drawpyo.utils&#xa;Import sites: 6&#xa;Type-checking only: no&#xa;Evidence:&#xa;  drawpyo/diagram_types/bar_chart.py:5 — from ..utils.standard_colors import StandardColor&#xa;  drawpyo/diagram_types/bar_chart.py:6 — from ..utils.color_scheme import ColorScheme&#xa;  drawpyo/diagram_types/legend.py:5 — from ..utils.standard_colors import StandardColor&#xa;  drawpyo/diagram_types/legend.py:6 — from ..utils.color_scheme import ColorScheme&#xa;  drawpyo/diagram_types/pie_chart.py:5 — from ..utils.standard_colors import StandardColor&#xa;  drawpyo/diagram_types/pie_chart.py:6 — from ..utils.color_scheme import ColorScheme">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeWidth=3;" edge="1" parent="1" source="123490244997616" target="123490244998720">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490245248048" tooltip="Dependency: drawpyo.drawio_import -&gt; drawpyo&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/drawio_import/drawio_parser.py:10 — from drawpyo import Page, logger">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244992288" target="123490244995792">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+        <UserObject label="None" id="123490245248000" tooltip="Dependency: drawpyo.drawio_import -&gt; drawpyo.diagram&#xa;Import sites: 1&#xa;Type-checking only: no&#xa;Part of a dependency cycle&#xa;Evidence:&#xa;  drawpyo/drawio_import/drawio_parser.py:11 — from drawpyo.diagram import DiagramBase, Edge, Object">
+<mxCell style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;rounded=0;jettySize=auto;entryX=0;entryY=0.5;exitX=1;exitY=0.5;endArrow=classic;endFill=1;strokeColor=#B85450;strokeWidth=3;" edge="1" parent="1" source="123490244992288" target="123490244996896">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+</UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
