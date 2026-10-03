@@ -258,6 +258,41 @@ class TestEdgeEffects:
         edge = Edge(page=empty_page, flowAnimation=True)
         assert edge.flowAnimation is True
 
+    def test_curved(self, empty_page: drawpyo.Page) -> None:
+        """Checks for curved corners"""
+        edge = Edge(page=empty_page, curved=1)
+        assert edge.curved == 1
+        assert "curved=1" in edge.style
+
+        edge_zero = Edge(page=empty_page, curved=0)
+        assert edge_zero.curved == 0
+        assert "curved=0" in edge_zero.style
+
+    def test_curved_default_none(self, empty_page: drawpyo.Page) -> None:
+        """Checks that curved defaults to None and does not emit curved attribute"""
+        edge = Edge(page=empty_page)
+        assert edge.curved is None
+        assert "curved=" not in edge.style
+
+    def test_curved_waypoints_interaction(self, empty_page: drawpyo.Page) -> None:
+        """Checks that explicit curved takes precedence over waypoints='curved'"""
+        # Default waypoints='curved' adds curved=1 via baseStyle
+        edge_default = Edge(page=empty_page, waypoints="curved")
+        assert edge_default.curved is None
+        assert "curved=1" in edge_default.style
+
+        # Explicit curved=0 overrides waypoints='curved'
+        edge_override_zero = Edge(page=empty_page, waypoints="curved", curved=0)
+        assert edge_override_zero.curved == 0
+        assert "curved=0" in edge_override_zero.style
+        assert "curved=1" not in edge_override_zero.style
+
+        # Explicit curved=1 with waypoints='curved'
+        edge_override_one = Edge(page=empty_page, waypoints="curved", curved=1)
+        assert edge_override_one.curved == 1
+        assert "curved=1" in edge_override_one.style
+        assert edge_override_one.style.count("curved=1") == 1
+
 
 class TestEdgeConnectionStyles:
     """Edge connection style tests"""

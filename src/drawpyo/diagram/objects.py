@@ -1,15 +1,15 @@
 from os import path
-from typing import Optional, Dict, Any, List, Union, Tuple
-from ..utils.logger import logger
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+from ..utils.color_scheme import ColorScheme
+from ..utils.logger import logger
+from ..utils.standard_colors import StandardColor
 from .base_diagram import (
     DiagramBase,
     Geometry,
     import_shape_database,
 )
 from .text_format import TextFormat
-from ..utils.color_scheme import ColorScheme
-from ..utils.standard_colors import StandardColor
 
 __all__ = ["Object", "BasicObject", "Group", "object_from_library"]
 
@@ -125,6 +125,7 @@ class Object(DiagramBase):
             "sketch",
             "opacity",
             "dashed",
+            "dashPattern",
         ]
 
         self.geometry: Geometry = Geometry(parent_object=self)
@@ -143,6 +144,12 @@ class Object(DiagramBase):
         self.autosize_to_children: bool = kwargs.get("autosize_to_children", False)
         self.autocontract: bool = kwargs.get("autocontract", False)
         self.autosize_margin: int = kwargs.get("autosize_margin", 20)
+        self.object_attributes: Dict[str, str] = dict(
+            kwargs.get("object_attributes", {})
+        )
+        self.user_object_attributes: Dict[str, str] = dict(
+            kwargs.get("user_object_attributes", {})
+        )
 
         # Geometry
         self.position: Optional[tuple] = position
@@ -175,6 +182,8 @@ class Object(DiagramBase):
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
         self.comic: Optional[bool] = kwargs.get("comic", None)
         self.sketch: Optional[bool] = kwargs.get("sketch", None)
+        self._dashed: Optional[bool] = None
+        self._dashPattern: Optional[str] = None
         self.line_pattern: Optional[str] = kwargs.get("line_pattern", "solid")
 
         self.out_edges: List[Any] = kwargs.get("out_edges", [])
@@ -300,6 +309,10 @@ class Object(DiagramBase):
         Args:
             library (str or dict): The library containing the object
             obj_name (str): The name of the object in the library to generate
+
+        Raises:
+            ValueError: If the library or object name is invalid or not found.
+            KeyError: If required keys are missing from the object definition.
         """
         if type(library) == str:
             if library in base_libraries:
@@ -309,21 +322,55 @@ class Object(DiagramBase):
                     self.apply_attribute_dict(obj_dict)
                 else:
                     raise ValueError(
-                        "Object {0} not in Library {1}".format(obj_name, library)
+                        f"Object '{obj_name}' not found in library '{library}'. "
+                        f"Available objects: {', '.join(list(library_dict.keys())[:10])}"
+                        + ("..." if len(library_dict) > 10 else "")
                     )
             else:
-                raise ValueError("Library {0} not in base_libraries".format(library))
+                raise ValueError(
+                    f"Library '{library}' not found in base_libraries. "
+                    f"Available libraries: {', '.join(base_libraries.keys())}"
+                )
         elif type(library) == dict:
+            if obj_name not in library:
+                raise ValueError(
+                    f"Object '{obj_name}' not found in provided library dictionary. "
+                    f"Available objects: {', '.join(list(library.keys())[:10])}"
+                    + ("..." if len(library) > 10 else "")
+                )
             obj_dict: Dict[str, Any] = library[obj_name]
+
+            # Validate that we have at least some usable data
+            if not obj_dict:
+                raise ValueError(
+                    f"Object '{obj_name}' has no properties defined in the library"
+                )
+
+            # Warn if baseStyle is missing (common in mxlibrary shapes)
+            if "baseStyle" not in obj_dict:
+                logger.warning(
+                    f"Object '{obj_name}' does not have a 'baseStyle' property. "
+                    f"This may result in a shape without styling."
+                )
+
             self.apply_attribute_dict(obj_dict)
         else:
-            raise ValueError("Unparseable libary passed in.")
+            raise ValueError(
+                f"Invalid library type: expected str or dict, got {type(library).__name__}"
+            )
 
     @property
     def attributes(self) -> Dict[str, Any]:
+        id_value = self.id
+        value_value = self.value
+        if not (self.tag or self.tooltip) and (
+            self.object_attributes or self.user_object_attributes
+        ):
+            id_value = None
+            value_value = None
         return {
-            "id": self.id,
-            "value": self.value,
+            "id": id_value,
+            "value": value_value,
             "style": self.style,
             "vertex": self.vertex,
             "parent": self.xml_parent_id,
@@ -375,7 +422,8 @@ class Object(DiagramBase):
         if self._line_pattern is None:
             return self._dashed
         else:
-            return line_styles[self._line_pattern]
+            style_value = line_styles[self._line_pattern]
+            return style_value.split(";")[0]
 
     @dashed.setter
     def dashed(self, value: bool) -> None:
@@ -392,7 +440,10 @@ class Object(DiagramBase):
         if self._line_pattern is None:
             return self._dashPattern
         else:
-            return line_styles[self._line_pattern]
+            style_value = line_styles[self._line_pattern]
+            if "dashPattern=" in style_value:
+                return style_value.split("dashPattern=")[1].split(";")[0]
+            return None
 
     @dashPattern.setter
     def dashPattern(self, value: str) -> None:
@@ -673,7 +724,37 @@ class Object(DiagramBase):
         tag: str = (
             self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         )
+        if self.tag or self.tooltip:
+            return tag
+        wrapper_tag = None
+        wrapper_attrs = None
+        if self.user_object_attributes:
+            wrapper_tag = "UserObject"
+            wrapper_attrs = self.user_object_attributes
+        elif self.object_attributes:
+            wrapper_tag = "object"
+            wrapper_attrs = self.object_attributes
+        if wrapper_tag and wrapper_attrs is not None:
+            return (
+                self._wrapper_open_tag(wrapper_tag, wrapper_attrs)
+                + "\n  "
+                + tag.replace("\n", "\n  ")
+                + f"\n</{wrapper_tag}>"
+            )
         return tag
+
+    def _wrapper_open_tag(self, tag: str, attrs: Dict[str, str]) -> str:
+        attrs = {k: v for k, v in attrs.items() if v is not None}
+        if "label" not in attrs and self.value is not None:
+            attrs["label"] = self.value
+        if "id" not in attrs:
+            attrs["id"] = self.id
+
+        open_tag = f"<{tag}"
+        for att, value in attrs.items():
+            xml_parameter = self.xml_ify(str(value))
+            open_tag = open_tag + " " + att + '="' + xml_parameter + '"'
+        return open_tag + ">"
 
 
 class BasicObject(Object):

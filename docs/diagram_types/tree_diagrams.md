@@ -24,6 +24,22 @@ There are a number of configuration parameters available to fine tune the layout
 | level_spacing | Spacing in pixels between levels                                            | 60           |
 | item_spacing  | Spacing in pixels between groups within a level                             | 15           |
 | padding       | Spacing in pixels between objects within a group                            | 10           |
+| group_factory | Callable invoked with `tree=tree` to create layout groups                  | `TreeGroup`  |
+
+Pass a `TreeGroup` subclass or factory to customize group layout without replacing `TreeDiagram.auto_layout()`:
+
+```python
+from drawpyo.diagram_types import TreeDiagram, TreeGroup
+
+class CustomTreeGroup(TreeGroup):
+    def center_parent(self):
+        # Apply a custom parent-positioning rule.
+        ...
+
+tree = TreeDiagram(group_factory=CustomTreeGroup)
+```
+
+The factory is called for every group created during layout and must return a fresh group each time.
 
 ## Add Nodes
 

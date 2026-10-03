@@ -54,6 +54,8 @@ coverage.xml
 .pytest_cache/
 cover/
 
+tests/output/*.drawio
+
 # Translations
 *.mo
 *.pot

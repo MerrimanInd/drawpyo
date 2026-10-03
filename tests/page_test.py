@@ -68,6 +68,13 @@ class TestPageInit:
         page = drawpyo.Page(name="Custom Page")
         assert page.name == "Custom Page"
 
+    def test_with_name_changed(self) -> None:
+        """Checks if a page reflects a name change into its Diagram"""
+        page = drawpyo.Page(name="Initial Page")
+        page.name = "Custom Page"
+        assert page.name == "Custom Page"
+        assert page.diagram.name == "Custom Page"
+
     def test_with_file_reference(self, empty_file: drawpyo.File) -> None:
         """Checks if a page is created with a file link"""
         page = drawpyo.Page(file=empty_file)

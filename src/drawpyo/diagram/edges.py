@@ -62,6 +62,7 @@ class Edge(DiagramBase):
             pattern (str): How the line of the edge should be rendered
             shadow (bool, optional): Add a shadow to the edge
             rounded (bool): Whether the corner of the line should be rounded
+            curved (int, bool, optional): Whether the edge line should be curved. Defaults to None.
             flowAnimation (bool): Add a marching ants animation along the edge
             sketch (bool, optional): Add sketch styling to the edge
             line_end_target (str): What graphic the edge should be rendered with at the target
@@ -92,6 +93,13 @@ class Edge(DiagramBase):
         super().__init__(**kwargs)
         self.xml_class: str = "mxCell"
 
+        self.object_attributes: Dict[str, str] = dict(
+            kwargs.get("object_attributes", {})
+        )
+        self.user_object_attributes: Dict[str, str] = dict(
+            kwargs.get("user_object_attributes", {})
+        )
+
         # Style
         self.color_scheme: Optional[ColorScheme] = kwargs.get("color_scheme", None)
         self.text_format: Optional[TextFormat] = kwargs.get("text_format", TextFormat())
@@ -118,6 +126,7 @@ class Edge(DiagramBase):
         self.startSize: Optional[int] = kwargs.get("startSize", None)
 
         self.rounded: int = kwargs.get("rounded", 0)
+        self.curved: Optional[Union[int, bool]] = kwargs.get("curved", None)
         self.sketch: Optional[bool] = kwargs.get("sketch", None)
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
         self.flowAnimation: Optional[bool] = kwargs.get("flowAnimation", None)
@@ -210,15 +219,20 @@ class Edge(DiagramBase):
         Returns:
             dict: Dictionary of object attributes and their values
         """
+        id_value = self.id
+        if self.object_attributes or self.user_object_attributes:
+            id_value = None
         base_attr_dict: Dict[str, Any] = {
-            "id": self.id,
+            "id": id_value,
             "style": self.style,
             "edge": self.edge,
             "parent": self.xml_parent_id,
             "source": self.source_id,
             "target": self.target_id,
         }
-        if self.value is not None:
+        if self.value is not None and not (
+            self.object_attributes or self.user_object_attributes
+        ):
             base_attr_dict["value"] = self.value
         return base_attr_dict
 
@@ -322,6 +336,7 @@ class Edge(DiagramBase):
         """
         return [
             "rounded",
+            "curved",
             "sketch",
             "shadow",
             "flowAnimation",
@@ -364,9 +379,11 @@ class Edge(DiagramBase):
         if connection_style is not None and connection_style != "":
             style_str.append(connection_style)
 
-        waypoint_style: Optional[str] = style_str_from_dict(
-            waypoints_db[self.waypoints]
-        )
+        waypoint_data = waypoints_db[self.waypoints]
+        if self.curved is not None and "curved" in waypoint_data:
+            waypoint_data = waypoint_data.copy()
+            del waypoint_data["curved"]
+        waypoint_style: Optional[str] = style_str_from_dict(waypoint_data)
         if waypoint_style is not None and waypoint_style != "":
             style_str.append(waypoint_style)
 
@@ -591,7 +608,35 @@ class Edge(DiagramBase):
         tag: str = (
             self.xml_open_tag + "\n  " + self.geometry.xml + "\n" + self.xml_close_tag
         )
+        wrapper_tag = None
+        wrapper_attrs = None
+        if self.user_object_attributes:
+            wrapper_tag = "UserObject"
+            wrapper_attrs = self.user_object_attributes
+        elif self.object_attributes:
+            wrapper_tag = "object"
+            wrapper_attrs = self.object_attributes
+        if wrapper_tag and wrapper_attrs is not None:
+            return (
+                self._wrapper_open_tag(wrapper_tag, wrapper_attrs)
+                + "\n  "
+                + tag.replace("\n", "\n  ")
+                + f"\n</{wrapper_tag}>"
+            )
         return tag
+
+    def _wrapper_open_tag(self, tag: str, attrs: Dict[str, str]) -> str:
+        attrs = {k: v for k, v in attrs.items() if v is not None}
+        if "label" not in attrs and self.value is not None:
+            attrs["label"] = self.value
+        if "id" not in attrs:
+            attrs["id"] = self.id
+
+        open_tag = f"<{tag}"
+        for att, value in attrs.items():
+            xml_parameter = self.xml_ify(str(value))
+            open_tag = open_tag + " " + att + '="' + xml_parameter + '"'
+        return open_tag + ">"
 
 
 class BasicEdge(Edge):

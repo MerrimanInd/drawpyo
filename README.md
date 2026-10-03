@@ -51,6 +51,28 @@ item_from_lib = drawpyo.diagram.object_from_library(
     )
 ```
 
+## Import external shape libraries
+
+Requires drawpyo 0.2.6 or later. This functionality is available on `main` but is not included in the 0.2.5 release.
+
+You can import and use external Draw.io XML shape libraries (e.g., Azure, AWS, Google Cloud icons):
+
+```python
+# Register an external library
+drawpyo.register_mxlibrary(
+    "developer",
+    "https://raw.githubusercontent.com/jgraph/drawio-libs/refs/heads/main/libs/integration/developer.xml"
+)
+
+# Use shapes from the registered library
+icon = drawpyo.diagram.object_from_library(
+    page=page,
+    library="developer",
+    obj_name="App Developing",
+    position=(100, 100)
+)
+```
+
 ## Style an object from a string
 
 ```python
@@ -74,6 +96,28 @@ This video demonstrates an exemplary automatic diagram layout process:
 />](https://www.youtube.com/embed/HwUqUZZVMgQ)
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
+
+## Import existing diagrams
+
+`load_diagram(path)` loads a single-page file. For a multipage file, select a
+zero-based page explicitly with `load_diagram(path, page_index=1)`, or load all
+pages independently with `load_diagrams(path)`. Compressed and uncompressed
+pages are supported, including files containing both formats.
+
+```python
+import drawpyo
+
+output = drawpyo.File()
+for diagram in drawpyo.load_diagrams("source.drawio"):
+    page = drawpyo.Page(file=output, name=diagram.name)
+    diagram.add_to(page)
+output.write()
+```
+
+Each imported diagram has `page_id`, `name`, and its own `get_by_id()` lookup.
+Cell IDs are scoped to their original page, so repeated IDs do not merge pages.
+Calling `load_diagram()` on a multipage file without `page_index` raises
+`ValueError`.
 
 ## Contributions
 

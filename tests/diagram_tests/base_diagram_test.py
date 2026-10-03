@@ -179,6 +179,91 @@ class TestStyleStrFromDict:
 class TestImportShapeDatabase:
     """Tests the shape database import function"""
 
+    def test_inheritance_preserves_parent_and_isolates_siblings(self, tmp_path):
+        library = tmp_path / "shapes.toml"
+        library.write_text(
+            'title = "Custom shapes"\n'
+            '[base]\nwidth = 120\nfillColor = "red"\n'
+            "points = [[0.0, 0.5], [1.0, 0.5]]\n"
+            '[child]\ninherit = "base"\nfillColor = "blue"\n'
+            '[sibling]\ninherit = "base"\nheight = 60\n',
+            encoding="utf-8",
+        )
+
+        data = import_shape_database(str(library))
+
+        assert data["title"] == "Custom shapes"
+        assert data["base"]["fillColor"] == "red"
+        assert "height" not in data["base"]
+        assert data["child"]["width"] == 120
+        assert data["child"]["fillColor"] == "blue"
+        assert data["sibling"]["fillColor"] == "red"
+        assert "inherit" not in data["child"]
+        data["child"]["points"][0][0] = 9
+        assert data["base"]["points"][0][0] == 0
+        assert data["sibling"]["points"][0][0] == 0
+
+    @pytest.mark.parametrize("reverse_order", [False, True])
+    def test_inheritance_chain_is_independent_of_table_order(
+        self, tmp_path, reverse_order
+    ):
+        tables = [
+            '[base]\nwidth = 120\nfillColor = "red"\n',
+            '[child]\ninherit = "base"\nfillColor = "blue"\n',
+            '[grandchild]\ninherit = "child"\nheight = 60\n',
+        ]
+        library = tmp_path / "shapes.toml"
+        library.write_text(
+            "".join(reversed(tables) if reverse_order else tables), encoding="utf-8"
+        )
+
+        data = import_shape_database(str(library))
+
+        assert data["grandchild"] == {
+            "width": 120,
+            "fillColor": "blue",
+            "height": 60,
+        }
+        assert data["base"] == {"width": 120, "fillColor": "red"}
+
+    def test_builtin_shapes_inherit_without_contaminating_defaults(self):
+        data = import_shape_database("shape_libraries/general.toml", relative=True)
+
+        assert data["default"] == {
+            "baseStyle": "",
+            "html": 1,
+            "white_space": "wrap",
+            "rounded": 0,
+        }
+        assert data["rectangle"] == data["default"]
+        assert data["rounded_rectangle"]["rounded"] == 1
+        assert data["ellipse"]["baseStyle"] == "ellipse"
+        rectangle = drawpyo.diagram.object_from_library(data, "rectangle")
+        assert rectangle.rounded == 0
+        assert "shape=dataStorage" not in rectangle.style
+        assert "inherit=" not in rectangle.style
+
+    @pytest.mark.parametrize(
+        "tables",
+        [
+            '[a]\ninherit = "a"\n',
+            '[a]\ninherit = "b"\n[b]\ninherit = "a"\n',
+        ],
+    )
+    def test_cyclic_inheritance_raises_clear_error(self, tmp_path, tables):
+        library = tmp_path / "shapes.toml"
+        library.write_text(tables, encoding="utf-8")
+
+        with pytest.raises(ValueError, match="Cyclic shape inheritance"):
+            import_shape_database(str(library))
+
+    def test_missing_parent_raises_clear_error(self, tmp_path):
+        library = tmp_path / "shapes.toml"
+        library.write_text('[child]\ninherit = "missing"\n', encoding="utf-8")
+
+        with pytest.raises(ValueError, match="Unknown inherited shape 'missing'"):
+            import_shape_database(str(library))
+
     def test_import_general_library(self) -> None:
         """Checks the import of the shared shape library"""
         from os import path

@@ -4,7 +4,6 @@ import re
 from .logger import logger
 from .standard_colors import StandardColor
 
-
 ColorType = Union[str, StandardColor, None]
 
 

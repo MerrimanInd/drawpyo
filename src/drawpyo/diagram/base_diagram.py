@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import List, Optional, Tuple, Dict, Any, Union
 
 from ..xml_base import XMLBase
 from os import path
-
 
 __all__ = [
     "DiagramBase",
@@ -80,14 +80,33 @@ def import_shape_database(file_name: str, relative: bool = False) -> Dict[str, A
         with open(file_name, "rb") as f:
             data = tomllib.load(f)
 
-    for obj in data.values():
-        if "inherit" in obj:
-            # To make the inheritor styles take precedence the inherited
-            # object needs to be updated not the other way around. The copy is
-            # created, updated, and replaced.
-            new_obj = data[obj["inherit"]]
-            new_obj.update(obj)
-            obj = new_obj
+    resolved: Dict[str, Any] = {}
+    resolving = set()
+
+    def resolve_shape(name: str) -> Dict[str, Any]:
+        if name in resolved:
+            return resolved[name]
+        if name in resolving:
+            raise ValueError(f"Cyclic shape inheritance involving '{name}'")
+        if name not in data or not isinstance(data[name], dict):
+            raise ValueError(f"Unknown inherited shape '{name}'")
+
+        resolving.add(name)
+        obj = deepcopy(data[name])
+        parent = obj.pop("inherit", None)
+        if parent is not None:
+            inherited = deepcopy(resolve_shape(parent))
+            inherited.update(obj)
+            obj = inherited
+        resolving.remove(name)
+        resolved[name] = obj
+        return obj
+
+    for name, obj in data.items():
+        if isinstance(obj, dict):
+            resolve_shape(name)
+
+    data.update(resolved)
 
     return data
 

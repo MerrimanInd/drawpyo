@@ -47,13 +47,6 @@ class Page:
 
         # Properties
 
-        if self.file is not None:
-            page_num = len(self.file.pages)
-        else:
-            page_num = 1
-        self.name: str = kwargs.get("name", f"Page-{page_num}")
-        self.page_num: int = kwargs.get("page_num", page_num)
-
         self.dx: Union[int, float] = kwargs.get("dx", 2037)
         self.dy: Union[int, float] = kwargs.get("dy", 830)
         self.grid: int = kwargs.get("grid", 1)
@@ -80,9 +73,16 @@ class Page:
 
         # In the Draw.io file format, each page is actually three nested XML
         # tags. These are defined as XMLBase subclasses below
-        self.diagram: Diagram = Diagram(name=self.name)
+        self.diagram: Diagram = Diagram()
         self.mxGraph: mxGraph = mxGraph(page=self)
         self.root: Root = Root()
+
+        if self.file is not None:
+            page_num = len(self.file.pages)
+        else:
+            page_num = 1
+        self.name: str = kwargs.get("name", f"Page-{page_num}")
+        self.page_num: int = kwargs.get("page_num", page_num)
 
         logger.info(f"📄 Page created: '{self.__repr__()}'")
 
@@ -101,6 +101,14 @@ class Page:
 
     def remove_object(self, obj: Any) -> None:
         self.objects.remove(obj)
+
+    @property
+    def name(self) -> str:
+        return self.diagram.name
+
+    @name.setter
+    def name(self, n: str) -> None:
+        self.diagram.name = n
 
     @property
     def file(self) -> Optional[Any]:

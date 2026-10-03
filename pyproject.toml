@@ -34,6 +34,9 @@ addopts = [
     "--import-mode=importlib",
 ]
 
+[tool.black]
+target-version = ["py310"]
+
 [dependency-groups]
 dev = [
     "mkdocs>=1.6.1",
