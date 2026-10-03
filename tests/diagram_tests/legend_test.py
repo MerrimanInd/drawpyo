@@ -174,6 +174,17 @@ class TestLegendUpdateMapping:
         assert len(legend.group.objects) == 2
         assert legend.group.objects[0].value == ""
 
+    def test_update_mapping_refreshes_attached_page(self, simple_mapping):
+        page = Page()
+        legend = Legend(mapping=simple_mapping)
+        legend.add_to_page(page)
+        old_objects = set(legend.group.objects)
+
+        legend.update_mapping({"New": "#000000"})
+
+        assert old_objects.isdisjoint(page.objects)
+        assert set(legend.group.objects).issubset(set(page.objects))
+
 
 # -------------------------------------------------
 # Movement

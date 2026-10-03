@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from drawpyo.diagram_types.bar_chart import BarChart
 from drawpyo.diagram.text_format import TextFormat
 from drawpyo.diagram.objects import Object, Group
+from drawpyo.page import Page
 
 
 class TestBarChartInitialization:
@@ -367,6 +368,17 @@ class TestBarChartGroupIntegration:
 
         # Should call add_object for each object in the group
         assert mock_page.add_object.call_count == len(chart.group.objects)
+
+    def test_update_data_refreshes_attached_page(self):
+        page = Page()
+        chart = BarChart({"A": 10})
+        chart.add_to_page(page)
+        old_objects = set(chart.group.objects)
+
+        chart.update_data({"A": 10, "B": 20})
+
+        assert old_objects.isdisjoint(page.objects)
+        assert set(chart.group.objects).issubset(set(page.objects))
 
 
 class TestBarChartRepr:

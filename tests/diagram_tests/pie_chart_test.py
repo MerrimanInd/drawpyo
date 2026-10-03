@@ -5,6 +5,7 @@ from drawpyo.diagram.text_format import TextFormat
 from drawpyo.diagram.objects import Object, Group
 from drawpyo.utils.standard_colors import StandardColor
 from drawpyo.utils.color_scheme import ColorScheme
+from drawpyo.page import Page
 
 
 class TestPieChartInitialization:
@@ -390,6 +391,17 @@ class TestPieChartGroupIntegration:
 
         # More data means more objects
         assert new_count > initial_count
+
+    def test_update_data_refreshes_attached_page(self):
+        page = Page()
+        chart = PieChart({"A": 10})
+        chart.add_to_page(page)
+        old_objects = set(chart.group.objects)
+
+        chart.update_data({"A": 10, "B": 20})
+
+        assert old_objects.isdisjoint(page.objects)
+        assert set(chart.group.objects).issubset(set(page.objects))
 
 
 class TestPieChartRepr:

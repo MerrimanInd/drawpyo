@@ -65,6 +65,7 @@ class Legend:
         )
 
         self._group = Group()
+        self._attached_pages: list[Page] = []
         self._build()
 
     # -----------------------------------------------------
@@ -99,6 +100,8 @@ class Legend:
         self._group.update_geometry()
 
     def add_to_page(self, page: Page):
+        if page not in self._attached_pages:
+            self._attached_pages.append(page)
         for obj in self._group.objects:
             page.add_object(obj)
 
@@ -107,8 +110,16 @@ class Legend:
     # -----------------------------------------------------
 
     def _rebuild(self):
+        old_objects = list(self._group.objects)
+        for page in self._attached_pages:
+            for obj in old_objects:
+                if obj in page.objects:
+                    page.remove_object(obj)
         self._group.objects.clear()
         self._build()
+        for page in self._attached_pages:
+            for obj in self._group.objects:
+                page.add_object(obj)
 
     def _build(self):
         x, y = self._position

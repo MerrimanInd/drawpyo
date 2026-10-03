@@ -133,6 +133,7 @@ class BarChart:
 
         # Build the chart
         self._group: Group = Group()
+        self._attached_pages: list[Page] = []
         self._build_chart()
 
     # ------------------------------------------------------------------
@@ -198,6 +199,8 @@ class BarChart:
         self._group.update_geometry()
 
     def add_to_page(self, page: Page) -> None:
+        if page not in self._attached_pages:
+            self._attached_pages.append(page)
         for obj in self._group.objects:
             page.add_object(obj)
 
@@ -247,8 +250,16 @@ class BarChart:
         return width, height
 
     def _rebuild(self) -> None:
+        old_objects = list(self._group.objects)
+        for page in self._attached_pages:
+            for obj in old_objects:
+                if obj in page.objects:
+                    page.remove_object(obj)
         self._group.objects.clear()
         self._build_chart()
+        for page in self._attached_pages:
+            for obj in self._group.objects:
+                page.add_object(obj)
 
     def _build_chart(self) -> None:
         x, y = self._position
