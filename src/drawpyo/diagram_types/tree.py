@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple, Dict, Any, Callable
 
 import hashlib
 from ..file import File
@@ -135,7 +135,7 @@ class TreeGroup(Group):
 
     def center_parent(self) -> None:
         """This function centers the parent_objects along the group and then offsets it by the level spacing."""
-        children_grp = TreeGroup(tree=self.tree)
+        children_grp = self.tree._new_group()
         for obj in self.objects:
             if obj is not self.parent_object:
                 children_grp.add_object(obj)
@@ -190,6 +190,7 @@ class TreeDiagram:
             level_spacing (int, optional): Spacing in pixels between levels. Defaults to 60.
             item_spacing (int, optional): Spacing in pixels between groups within a level. Defaults to 15.
             padding (int, optional): Spacing in pixels between objects within a group. Defaults to 10.
+            group_factory (Callable, optional): Factory called with `tree=self` to create TreeGroups during layout. Defaults to TreeGroup.
             file_name (str, optional): The name of the tree diagram.
             file_path (str, optional): The path where the tree diagram should be saved.
         """
@@ -200,6 +201,11 @@ class TreeDiagram:
         self.direction: str = kwargs.get("direction", "down")
         self.link_style: str = kwargs.get("link_style", "orthogonal")
         self.padding: int = kwargs.get("padding", 10)
+        self.group_factory: Callable[..., TreeGroup] = kwargs.get(
+            "group_factory", TreeGroup
+        )
+        if not callable(self.group_factory):
+            raise TypeError("group_factory must be callable.")
 
         # Set up the File and Page objects
         self.file: File = File()
@@ -555,9 +561,13 @@ class TreeDiagram:
     def roots(self) -> List[NodeObject]:
         return [x for x in self.objects if x.tree_parent is None]
 
+    def _new_group(self) -> TreeGroup:
+        """Create a fresh layout group through the configured factory."""
+        return self.group_factory(tree=self)
+
     def auto_layout(self) -> TreeGroup:
         def layout_child(tree_parent: Optional[NodeObject]) -> TreeGroup:
-            grp = TreeGroup(tree=self)
+            grp = self._new_group()
             grp.parent_object = tree_parent
             # Filter out None children (for BinaryNodeObject compatibility)
             actual_children = [c for c in tree_parent.tree_children if c is not None]
@@ -604,7 +614,7 @@ class TreeDiagram:
         #     grp.parent_object = parent
         #     return grp
 
-        top_group = TreeGroup(tree=self)
+        top_group = self._new_group()
 
         for root in self.roots:
             top_group.add_object(layout_child(root))
