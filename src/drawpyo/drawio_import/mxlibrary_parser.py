@@ -1,12 +1,69 @@
 import json
+import base64
 import html
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
+import urllib.parse
+import zlib
 from typing import Dict, Any, List, Tuple
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+def _decode_library_xml(xml_encoded: str) -> str:
+    """Decode the XML payload stored in a draw.io mxlibrary item."""
+    xml_str = html.unescape(xml_encoded)
+
+    if xml_str.lstrip().startswith("<"):
+        return xml_str
+
+    try:
+        compressed = base64.b64decode(xml_str, validate=True)
+    except Exception:
+        return urllib.parse.unquote(xml_str)
+
+    for window_bits in (-15, zlib.MAX_WBITS):
+        try:
+            decoded = zlib.decompress(compressed, window_bits).decode("utf-8")
+            return urllib.parse.unquote(decoded)
+        except Exception:
+            continue
+
+    return xml_str
+
+
+def _cell_to_dict(cell: ET.Element) -> Dict[str, Any]:
+    """Return serializable mxCell attributes while preserving geometry."""
+    cell_dict: Dict[str, Any] = dict(cell.attrib)
+    geometry = cell.find("mxGeometry")
+    if geometry is not None:
+        cell_dict["geometry"] = dict(geometry.attrib)
+    return cell_dict
+
+
+def _select_main_cell(cells: List[ET.Element]) -> ET.Element | None:
+    """Choose the visible styled cell rather than structural root cells."""
+    styled_cells = [cell for cell in cells if cell.get("style")]
+
+    for cell in styled_cells:
+        if cell.get("vertex") == "1":
+            return cell
+
+    for cell in styled_cells:
+        if "shape=" in cell.get("style", ""):
+            return cell
+
+    for cell in styled_cells:
+        style = cell.get("style", "")
+        if "fillColor" in style or "strokeColor" in style:
+            return cell
+
+    if styled_cells:
+        return styled_cells[0]
+
+    return cells[0] if cells else None
 
 
 def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]:
@@ -63,7 +120,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             errors.append(f"Item {idx} ({title}): Missing 'xml' field")
             continue
 
-        xml_str = html.unescape(xml_encoded)
+        xml_str = _decode_library_xml(xml_encoded)
 
         try:
             try:
@@ -71,7 +128,6 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             except ET.ParseError:
                 root_element = ET.fromstring(f"<root>{xml_str}</root>")
 
-            main_cell = None
             cells = []
 
             if root_element.tag == "mxCell":
@@ -80,13 +136,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             for cell in root_element.iter("mxCell"):
                 cells.append(cell)
 
-            for cell in cells:
-                if cell.get("vertex") == "1":
-                    main_cell = cell
-                    break
-
-            if main_cell is None and cells:
-                main_cell = cells[0]
+            main_cell = _select_main_cell(cells)
 
             if main_cell is not None:
                 style = main_cell.get("style", "")
@@ -96,6 +146,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
                     "width": w,
                     "height": h,
                     "xml_class": "mxCell",
+                    "cells": [_cell_to_dict(cell) for cell in cells],
                 }
             else:
                 errors.append(f"Item {idx} ({title}): No valid mxCell found in XML")

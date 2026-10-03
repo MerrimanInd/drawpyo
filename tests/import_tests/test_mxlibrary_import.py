@@ -1,4 +1,7 @@
 from unittest.mock import patch, mock_open
+import base64
+import urllib.parse
+import zlib
 import pytest
 import os
 from pathlib import Path
@@ -51,6 +54,37 @@ class TestParseMxlibrary:
         assert "NoXML" not in shapes
         assert len(errors) == 1
         assert "Missing 'xml' field" in errors[0]
+
+    def test_parse_mxlibrary_decodes_compound_stencil_items(self):
+        """Compressed multi-cell mxGraphModel items keep their stencil cells."""
+        graph_xml = (
+            '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>'
+            '<mxCell id="2" style="fillColor=none;strokeColor=none;" parent="1">'
+            '<mxGeometry x="10" y="20" width="84" height="73" as="geometry"/>'
+            "</mxCell>"
+            '<mxCell id="3" style="fillColor=#FFFFFF;shape=stencil(payload);" parent="2">'
+            '<mxGeometry x="1" y="2" width="82" height="71" as="geometry"/>'
+            "</mxCell>"
+            "</root></mxGraphModel>"
+        )
+        compressed = zlib.compress(urllib.parse.quote(graph_xml).encode("utf-8"))[2:-4]
+        encoded_xml = base64.b64encode(compressed).decode("ascii")
+        xml_content = (
+            '<mxlibrary>[{"h":117,"w":104,"title":"OCI Icon",'
+            f'"xml":"{encoded_xml}"'
+            "}]</mxlibrary>"
+        )
+
+        shapes, errors = parse_mxlibrary(xml_content)
+
+        assert errors == []
+        assert "OCI Icon" in shapes
+        icon = shapes["OCI Icon"]
+        assert "shape=stencil(payload)" in icon["baseStyle"]
+        assert icon["width"] == 104
+        assert icon["height"] == 117
+        assert [cell["id"] for cell in icon["cells"]] == ["0", "1", "2", "3"]
+        assert icon["cells"][3]["geometry"]["width"] == "82"
 
 
 class TestLoadMxlibrary:
