@@ -83,6 +83,7 @@ class PieChart:
         )
 
         # Build
+        self._pages: list[Page] = []
         self._group: Group = Group()
         self._build_chart()
 
@@ -137,6 +138,8 @@ class PieChart:
         self._group.update_geometry()
 
     def add_to_page(self, page: Page):
+        if page not in self._pages:
+            self._pages.append(page)
         for obj in self._group.objects:
             page.add_object(obj)
 
@@ -153,8 +156,17 @@ class PieChart:
         return [colors[i % len(colors)] for i in range(count)]
 
     def _rebuild(self):
+        old_objects = self._group.objects.copy()
         self._group.objects.clear()
         self._build_chart()
+
+        # Pages store individual objects, so replace their previous content too.
+        for page in self._pages:
+            for obj in old_objects:
+                if obj in page.objects:
+                    page.remove_object(obj)
+            for obj in self._group.objects:
+                page.add_object(obj)
 
     def _build_chart(self):
         x, y = self._position

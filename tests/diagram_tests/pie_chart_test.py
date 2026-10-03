@@ -1,5 +1,7 @@
 import pytest
+from xml.etree import ElementTree as ET
 from unittest.mock import Mock
+from drawpyo.page import Page
 from drawpyo.diagram_types.pie_chart import PieChart
 from drawpyo.diagram.text_format import TextFormat
 from drawpyo.diagram.objects import Object, Group
@@ -552,3 +554,119 @@ class TestPieChartColorNormalization:
         colors = chart._normalize_colors(["#ff0000", "#00ff00"], 5)
 
         assert colors == ["#ff0000", "#00ff00", "#ff0000", "#00ff00", "#ff0000"]
+
+
+class TestPieChartAttachedUpdates:
+    """Regression coverage for stale page content after rebuilding (#138)."""
+
+    @pytest.mark.parametrize("page_count", [1, 2])
+    def test_repeated_updates_replace_page_content(self, page_count):
+        data = {"old-a": 11, "old-b": 12, "old-c": 13}
+        component = PieChart(data, title="Persistent title", background_color="#eeeeee")
+        pages = [Page() for _ in range(page_count)]
+        unrelated = [Object(page=page, value="Unrelated") for page in pages]
+        unrelated_xml = [obj.xml for obj in unrelated]
+        for page in pages:
+            component.add_to_page(page)
+            component.add_to_page(page)
+            assert len(page.objects) == 3 + len(component.group.objects)
+
+        for replacement in [{"middle": 21}, {"new-a": 31, "new-b": 32, "new-c": 33}]:
+            old_objects = list(component.group.objects)
+            old_labels = {
+                f"{key}: {value / sum(data.values()) * 100:.1f}%"
+                for key, value in data.items()
+            }
+            component.update_data(replacement)
+            data = replacement
+            expected_labels = {
+                f"{key}: {value / sum(data.values()) * 100:.1f}%"
+                for key, value in data.items()
+            }
+
+            for page, other, original_xml in zip(pages, unrelated, unrelated_xml):
+                cells = ET.fromstring(page.xml).findall(".//mxCell")
+                values = {cell.get("value") for cell in cells}
+                assert expected_labels <= values
+                assert old_labels.isdisjoint(values)
+                assert values >= {"Persistent title", "Unrelated"}
+                assert all(obj not in page.objects for obj in old_objects)
+                assert all(obj in page.objects for obj in component.group.objects)
+                assert len(page.objects) == 3 + len(component.group.objects)
+                assert other in page.objects
+                assert other.xml == original_xml
+                ids = [cell.get("id") for cell in cells]
+                assert len(ids) == len(set(ids))
+                assert set(ids) == {str(obj.id) for obj in page.objects}
+                assert {str(obj.id) for obj in old_objects}.isdisjoint(ids)
+
+                component.add_to_page(page)
+                assert len(page.objects) == 3 + len(component.group.objects)
+
+    def test_update_before_attachment(self):
+        component = PieChart({"old-a": 11, "old-b": 12, "old-c": 13})
+        component.update_data({"middle": 21})
+        page = Page()
+        component.add_to_page(page)
+
+        data = {"middle": 21}
+        values = {cell.get("value") for cell in ET.fromstring(page.xml).iter("mxCell")}
+        assert {
+            f"{key}: {value / sum(data.values()) * 100:.1f}%"
+            for key, value in data.items()
+        } <= values
+        assert len(page.objects) == 2 + len(component.group.objects)
+        assert all(obj in page.objects for obj in component.group.objects)
+
+    @pytest.mark.parametrize("move_first", [False, True])
+    def test_move_and_update_change_exported_positions(self, move_first):
+        component = PieChart({"old-a": 11, "old-b": 12, "old-c": 13}, position=(10, 20))
+        reference = PieChart({"middle": 21}, position=(10, 20))
+        expected_positions = [
+            (obj.position[0] + 100, obj.position[1] + 200)
+            for obj in reference.group.objects
+        ]
+        page = Page()
+        component.add_to_page(page)
+
+        if move_first:
+            component.move((110, 220))
+        component.update_data({"middle": 21})
+        if not move_first:
+            component.move((110, 220))
+
+        cells = {
+            cell.get("id"): cell for cell in ET.fromstring(page.xml).iter("mxCell")
+        }
+        for obj, position in zip(component.group.objects, expected_positions):
+            assert obj in page.objects
+            assert obj.position == pytest.approx(position)
+            geometry = cells[str(obj.id)].find("mxGeometry")
+            assert (
+                float(geometry.get("x")),
+                float(geometry.get("y")),
+            ) == pytest.approx(position)
+
+    def test_update_after_page_object_removed(self):
+        component = PieChart({"old-a": 11, "old-b": 12, "old-c": 13})
+        page = Page()
+        component.add_to_page(page)
+        page.remove_object(component.group.objects[0])
+
+        component.update_data({"middle": 21})
+
+        assert len(page.objects) == 2 + len(component.group.objects)
+        assert all(obj in page.objects for obj in component.group.objects)
+
+    def test_color_update_changes_exported_styles(self):
+        component = PieChart({"A": 1}, slice_colors=["#aa0000"])
+        page = Page()
+        component.add_to_page(page)
+        assert "fillColor=#aa0000;" in page.xml
+
+        component.update_colors(["#00aa00"])
+
+        assert "fillColor=#00aa00;" in page.xml
+        assert "fillColor=#aa0000;" not in page.xml
+        assert len(page.objects) == 2 + len(component.group.objects)
+        assert all(obj in page.objects for obj in component.group.objects)
