@@ -319,7 +319,9 @@ class Object(DiagramBase):
                 library_dict: Dict[str, Any] = base_libraries[library]
                 if obj_name in library_dict:
                     obj_dict: Dict[str, Any] = library_dict[obj_name]
-                    self.apply_attribute_dict(obj_dict)
+                    self.apply_attribute_dict(
+                        {k: v for k, v in obj_dict.items() if k != "cells"}
+                    )
                 else:
                     raise ValueError(
                         f"Object '{obj_name}' not found in library '{library}'. "
@@ -353,7 +355,9 @@ class Object(DiagramBase):
                     f"This may result in a shape without styling."
                 )
 
-            self.apply_attribute_dict(obj_dict)
+            self.apply_attribute_dict(
+                {k: v for k, v in obj_dict.items() if k != "cells"}
+            )
         else:
             raise ValueError(
                 f"Invalid library type: expected str or dict, got {type(library).__name__}"
