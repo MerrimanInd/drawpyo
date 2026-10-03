@@ -97,6 +97,28 @@ This video demonstrates an exemplary automatic diagram layout process:
 
 For more details, refer to the [documentation](https://merrimanind.github.io/drawpyo/).
 
+## Import existing diagrams
+
+`load_diagram(path)` loads a single-page file. For a multipage file, select a
+zero-based page explicitly with `load_diagram(path, page_index=1)`, or load all
+pages independently with `load_diagrams(path)`. Compressed and uncompressed
+pages are supported, including files containing both formats.
+
+```python
+import drawpyo
+
+output = drawpyo.File()
+for diagram in drawpyo.load_diagrams("source.drawio"):
+    page = drawpyo.Page(file=output, name=diagram.name)
+    diagram.add_to(page)
+output.write()
+```
+
+Each imported diagram has `page_id`, `name`, and its own `get_by_id()` lookup.
+Cell IDs are scoped to their original page, so repeated IDs do not merge pages.
+Calling `load_diagram()` on a multipage file without `page_index` raises
+`ValueError`.
+
 ## Contributions
 
 Contributions are welcome. See the [contribution guidelines](CONTRIBUTING.md) or join our [Discord server](https://discord.gg/CSMHupUvRp) for more information.

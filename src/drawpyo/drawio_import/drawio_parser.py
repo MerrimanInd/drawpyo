@@ -1,7 +1,11 @@
+import base64
+import binascii
 import xml.etree.ElementTree as ET
+import zlib
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
+from urllib.parse import unquote
 
 from drawpyo import Page, logger
 from drawpyo.diagram import DiagramBase, Edge, Object
@@ -19,6 +23,8 @@ class ParsedDiagram:
     shapes: List[DiagramBase] = field(default_factory=list)
     edges: List[Edge] = field(default_factory=list)
     _id_map: Dict[str, DiagramBase] = field(default_factory=dict, repr=False)
+    page_id: Optional[str] = None
+    name: Optional[str] = None
 
     def get_by_id(self, cell_id: str) -> Optional[DiagramBase]:
         """Get an element by its Draw.io cell ID.
@@ -159,7 +165,48 @@ def _parse_drawio_xml(xml_string: str) -> Dict[str, RawMxCell]:
     Raises:
         ET.ParseError: If XML is malformed
     """
+    pages = _parse_pages(xml_string)
+    if len(pages) != 1:
+        raise ValueError("File contains multiple pages; use load_diagrams()")
+    return _parse_cells(pages[0][2])
+
+
+def _parse_pages(
+    xml_string: str,
+) -> List[tuple[Optional[str], Optional[str], ET.Element]]:
+    """Extract graph models without sharing cell IDs between pages."""
     root = ET.fromstring(xml_string)
+    if root.tag == "mxGraphModel":
+        return [(None, None, root)]
+    if root.tag == "diagram":
+        diagrams = [root]
+    elif root.tag == "mxfile":
+        diagrams = root.findall("diagram")
+    else:
+        raise ValueError("Expected a Draw.io mxfile, diagram, or mxGraphModel")
+    if not diagrams:
+        raise ValueError("No diagram pages found in file")
+
+    pages = []
+    for diagram in diagrams:
+        model = diagram.find("mxGraphModel")
+        if model is None:
+            encoded = "".join((diagram.text or "").split())
+            try:
+                compressed = base64.b64decode(encoded, validate=True)
+                xml = unquote(zlib.decompress(compressed, -15).decode("utf-8"))
+                model = ET.fromstring(xml)
+            except (binascii.Error, zlib.error, UnicodeError, ET.ParseError) as e:
+                raise ValueError(
+                    f"Invalid compressed Draw.io page '{diagram.get('name', '')}'"
+                ) from e
+        if model.tag != "mxGraphModel":
+            raise ValueError("Diagram page does not contain an mxGraphModel")
+        pages.append((diagram.get("id"), diagram.get("name"), model))
+    return pages
+
+
+def _parse_cells(root: ET.Element) -> Dict[str, RawMxCell]:
     cells: Dict[str, RawMxCell] = {}
 
     for wrapper_tag in ("object", "UserObject"):
@@ -254,8 +301,6 @@ def _attach_children(raw_cells: Dict[str, RawMxCell], elements: Dict[str, Diagra
     for cell in raw_cells.values():
         if not cell.is_vertex:
             continue
-        if cell.parent in ("0", "1", None):
-            continue
         if cell.parent in elements:
             parent_obj: Object = elements[cell.parent]
             child_obj: Object = elements[cell.id]
@@ -283,8 +328,10 @@ def _apply_geometry_recursive(
             cell.geometry.x or 0,
             cell.geometry.y or 0,
         )
-        obj.width = cell.geometry.width or obj.width
-        obj.height = cell.geometry.height or obj.height
+        if cell.geometry.width is not None:
+            obj.width = cell.geometry.width
+        if cell.geometry.height is not None:
+            obj.height = cell.geometry.height
 
     for child_id in cell.children:
         if child_id in elements:
@@ -339,9 +386,11 @@ def _build_diagram(raw_cells: Dict[str, RawMxCell]) -> ParsedDiagram:
     elements = _build_vertices(raw_cells)
     _attach_children(raw_cells, elements)
 
-    # Apply geometry starting from layer roots (parent == "1")
+    # A top-level vertex can belong to any layer, not just the default layer.
     root_ids = [
-        cell.id for cell in raw_cells.values() if cell.is_vertex and cell.parent == "1"
+        cell.id
+        for cell in raw_cells.values()
+        if cell.is_vertex and cell.parent not in elements
     ]
 
     for root_id in root_ids:
@@ -358,7 +407,28 @@ def _build_diagram(raw_cells: Dict[str, RawMxCell]) -> ParsedDiagram:
 # -----------------------------
 # Public API
 # -----------------------------
-def load_diagram(file_path: str) -> ParsedDiagram:
+def load_diagrams(file_path: str) -> List[ParsedDiagram]:
+    """Load every page independently, retaining each page's ID and name.
+
+    Supports uncompressed XML and base64/raw-DEFLATE/URI-encoded pages.
+    Cell IDs, parent relationships, and edge endpoints are scoped to each page.
+    Empty pages are retained in their original order.
+    """
+    logger.info(f"📂 Loading .drawio: '{file_path}'")
+    try:
+        pages = _parse_pages(Path(file_path).read_text(encoding="utf-8"))
+        result = []
+        for page_id, name, model in pages:
+            diagram = _build_diagram(_parse_cells(model))
+            diagram.page_id = page_id
+            diagram.name = name
+            result.append(diagram)
+        return result
+    except ET.ParseError as e:
+        raise ValueError(f"Invalid Draw.io XML format: {e}") from e
+
+
+def load_diagram(file_path: str, page_index: Optional[int] = None) -> ParsedDiagram:
     """Load a Draw.io file into a structured diagram object.
 
     This is the main entry point for parsing Draw.io files. It reads the file,
@@ -367,6 +437,8 @@ def load_diagram(file_path: str) -> ParsedDiagram:
 
     Args:
         file_path: Path to the .drawio or .xml file
+        page_index: Zero-based page to load. Required for multipage files;
+            omitted for single-page files. Use load_diagrams() for all pages.
 
     Returns:
         ParsedDiagram containing shapes, edges, and convenience methods
@@ -375,11 +447,13 @@ def load_diagram(file_path: str) -> ParsedDiagram:
         FileNotFoundError: If the file doesn't exist
         ValueError: If the XML is invalid or not a valid Draw.io file
     """
-    try:
-        logger.info(f"📂 Loading .drawio: '{file_path}'")
-        raw_cells = _parse_drawio_file(file_path)
-        if not raw_cells:
-            raise ValueError("No diagram elements found in file")
-        return _build_diagram(raw_cells)
-    except ET.ParseError as e:
-        raise ValueError(f"Invalid Draw.io XML format: {e}")
+    diagrams = load_diagrams(file_path)
+    if page_index is None:
+        if len(diagrams) != 1:
+            raise ValueError(
+                "File contains multiple pages; specify page_index or use load_diagrams()"
+            )
+        page_index = 0
+    if not isinstance(page_index, int) or not 0 <= page_index < len(diagrams):
+        raise ValueError("page_index must be a valid zero-based page index")
+    return diagrams[page_index]
