@@ -62,6 +62,7 @@ class Edge(DiagramBase):
             pattern (str): How the line of the edge should be rendered
             shadow (bool, optional): Add a shadow to the edge
             rounded (bool): Whether the corner of the line should be rounded
+            curved (int, bool, optional): Whether the edge line should be curved. Defaults to None.
             flowAnimation (bool): Add a marching ants animation along the edge
             sketch (bool, optional): Add sketch styling to the edge
             line_end_target (str): What graphic the edge should be rendered with at the target
@@ -125,6 +126,7 @@ class Edge(DiagramBase):
         self.startSize: Optional[int] = kwargs.get("startSize", None)
 
         self.rounded: int = kwargs.get("rounded", 0)
+        self.curved: Optional[Union[int, bool]] = kwargs.get("curved", None)
         self.sketch: Optional[bool] = kwargs.get("sketch", None)
         self.shadow: Optional[bool] = kwargs.get("shadow", None)
         self.flowAnimation: Optional[bool] = kwargs.get("flowAnimation", None)
@@ -334,6 +336,7 @@ class Edge(DiagramBase):
         """
         return [
             "rounded",
+            "curved",
             "sketch",
             "shadow",
             "flowAnimation",
@@ -376,9 +379,11 @@ class Edge(DiagramBase):
         if connection_style is not None and connection_style != "":
             style_str.append(connection_style)
 
-        waypoint_style: Optional[str] = style_str_from_dict(
-            waypoints_db[self.waypoints]
-        )
+        waypoint_data = waypoints_db[self.waypoints]
+        if self.curved is not None and "curved" in waypoint_data:
+            waypoint_data = waypoint_data.copy()
+            del waypoint_data["curved"]
+        waypoint_style: Optional[str] = style_str_from_dict(waypoint_data)
         if waypoint_style is not None and waypoint_style != "":
             style_str.append(waypoint_style)
 
