@@ -152,6 +152,76 @@ _NODE_STYLES = {
 }
 _CYCLE_STYLE = ("#F8CECC", "#B85450")
 _CYCLE_EDGE_COLOR = "#B85450"
+_ROUTING_CLEARANCE = 10
+_ROUTING_GAP = _ROUTING_CLEARANCE * 2 + 8
+_ROUTING_FRAME_MARGIN = _ROUTING_CLEARANCE * 3
+_BEND_PENALTY = 24
+_CROSSING_PENALTY = 300
+_OVERLAP_PENALTY = 250
+
+
+_Point = Tuple[float, float]
+
+
+@dataclass(frozen=True)
+class _Rectangle:
+    left: float
+    top: float
+    right: float
+    bottom: float
+
+    def expanded(self, amount: float) -> "_Rectangle":
+        return _Rectangle(
+            self.left - amount,
+            self.top - amount,
+            self.right + amount,
+            self.bottom + amount,
+        )
+
+
+class _RouteOccupancy:
+    """Spatial index for already-routed horizontal and vertical segments."""
+
+    def __init__(self) -> None:
+        self.horizontal: Dict[float, List[Tuple[float, float]]] = {}
+        self.vertical: Dict[float, List[Tuple[float, float]]] = {}
+
+    def add(self, path: Sequence[_Point]) -> None:
+        for first, second in zip(path, path[1:]):
+            if first[1] == second[1]:
+                bounds = tuple(sorted((first[0], second[0])))
+                self.horizontal.setdefault(first[1], []).append(bounds)
+            else:
+                bounds = tuple(sorted((first[1], second[1])))
+                self.vertical.setdefault(first[0], []).append(bounds)
+
+    def penalty(self, first: _Point, second: _Point) -> float:
+        penalty = 0.0
+        if first[1] == second[1]:
+            left, right = sorted((first[0], second[0]))
+            for other_left, other_right in self.horizontal.get(first[1], ()):
+                overlap = max(0.0, min(right, other_right) - max(left, other_left))
+                if overlap:
+                    penalty += _OVERLAP_PENALTY + overlap * 4
+            for x, ranges in self.vertical.items():
+                if left < x < right and any(
+                    top < first[1] < bottom for top, bottom in ranges
+                ):
+                    penalty += _CROSSING_PENALTY
+        else:
+            top, bottom = sorted((first[1], second[1]))
+            for other_top, other_bottom in self.vertical.get(first[0], ()):
+                overlap = max(
+                    0.0, min(bottom, other_bottom) - max(top, other_top)
+                )
+                if overlap:
+                    penalty += _OVERLAP_PENALTY + overlap * 4
+            for y, ranges in self.horizontal.items():
+                if top < y < bottom and any(
+                    left < first[0] < right for left, right in ranges
+                ):
+                    penalty += _CROSSING_PENALTY
+        return penalty
 
 
 class _ImportVisitor(ast.NodeVisitor):
@@ -827,6 +897,7 @@ class DependencyDiagram:
         self.links: List[Edge] = []
         self.analysis: Optional[DependencyAnalysis] = None
         self._node_objects: Dict[str, Object] = {}
+        self._routed_paths: Tuple[Tuple[_Point, ...], ...] = ()
 
     @classmethod
     def create_from_path(
@@ -916,7 +987,10 @@ class DependencyDiagram:
         if self.analysis is None:
             return
         legend_height = self._add_legend() if self.show_legend else 0
-        graph_origin = (self.padding, self.padding + legend_height)
+        graph_origin = (
+            self.padding + _ROUTING_FRAME_MARGIN,
+            self.padding + legend_height + _ROUTING_FRAME_MARGIN,
+        )
 
         sizes: Dict[str, Tuple[int, int]] = {}
         for node in self.analysis.nodes.values():
@@ -968,6 +1042,7 @@ class DependencyDiagram:
             self.objects.append(obj)
             self._node_objects[node_id] = obj
 
+        rendered_edges: List[Tuple[DependencyEdge, Edge]] = []
         for dependency in self.analysis.edges:
             edge = Edge(
                 page=self.page,
@@ -994,13 +1069,10 @@ class DependencyDiagram:
                 ),
                 tooltip=self._edge_tooltip(dependency),
             )
-            if self.direction == "right":
-                edge.exitX, edge.exitY = 1, 0.5
-                edge.entryX, edge.entryY = 0, 0.5
-            else:
-                edge.exitX, edge.exitY = 0.5, 1
-                edge.entryX, edge.entryY = 0.5, 0
             self.links.append(edge)
+            rendered_edges.append((dependency, edge))
+
+        self._route_edges(rendered_edges)
 
         self._fit_page()
 
@@ -1119,7 +1191,7 @@ class DependencyDiagram:
 
         block_sizes: Dict[str, Tuple[int, int]] = {}
         member_offsets: Dict[str, Dict[str, Tuple[int, int]]] = {}
-        grid_gap = max(15, self.node_spacing // 2)
+        grid_gap = max(_ROUTING_GAP, self.node_spacing // 2)
         for key, members in super_members.items():
             columns = max(1, math.ceil(math.sqrt(len(members))))
             rows = math.ceil(len(members) / columns)
@@ -1167,6 +1239,7 @@ class DependencyDiagram:
             layers: Dict[int, List[str]] = {}
             for key in order:
                 layers.setdefault(layer[key], []).append(key)
+            self._order_layers(layers, adjacency, reverse, super_members)
             primary_offsets: Dict[int, int] = {}
             primary = 0
             for layer_index in sorted(layers):
@@ -1175,31 +1248,448 @@ class DependencyDiagram:
                     block_sizes[key][0 if self.direction == "right" else 1]
                     for key in layers[layer_index]
                 )
-                primary += maximum + self.layer_spacing
+                primary += maximum + max(self.layer_spacing, _ROUTING_GAP)
 
             component_cross_size = 0
             for layer_index in sorted(layers):
                 cross = component_cross_offset
-                for key in sorted(
-                    layers[layer_index], key=lambda item: super_members[item][0]
-                ):
+                for key in layers[layer_index]:
                     block_width, block_height = block_sizes[key]
                     if self.direction == "right":
                         block_x, block_y = primary_offsets[layer_index], cross
-                        cross += block_height + self.node_spacing
+                        cross += block_height + max(self.node_spacing, _ROUTING_GAP)
                         component_cross_size = max(
                             component_cross_size, cross - component_cross_offset
                         )
                     else:
                         block_x, block_y = cross, primary_offsets[layer_index]
-                        cross += block_width + self.node_spacing
+                        cross += block_width + max(self.node_spacing, _ROUTING_GAP)
                         component_cross_size = max(
                             component_cross_size, cross - component_cross_offset
                         )
                     for member, (offset_x, offset_y) in member_offsets[key].items():
                         positions[member] = (block_x + offset_x, block_y + offset_y)
-            component_cross_offset += component_cross_size + self.component_spacing
+            component_cross_offset += component_cross_size + max(
+                self.component_spacing, _ROUTING_GAP
+            )
         return positions
+
+    @staticmethod
+    def _order_layers(
+        layers: Dict[int, List[str]],
+        adjacency: Mapping[str, Set[str]],
+        reverse: Mapping[str, Set[str]],
+        super_members: Mapping[str, Tuple[str, ...]],
+    ) -> None:
+        """Reduce crossings with deterministic forward/backward barycentric sweeps."""
+        layer_for = {
+            key: layer_index
+            for layer_index, keys in layers.items()
+            for key in keys
+        }
+
+        def positions() -> Dict[str, int]:
+            return {
+                key: index
+                for keys in layers.values()
+                for index, key in enumerate(keys)
+            }
+
+        def reorder(
+            layer_index: int,
+            neighbors: Mapping[str, Set[str]],
+            toward_lower_layers: bool,
+        ) -> None:
+            ranks = positions()
+
+            def sort_key(key: str) -> Tuple[float, str]:
+                relevant = [
+                    neighbor
+                    for neighbor in neighbors[key]
+                    if (
+                        layer_for[neighbor] < layer_index
+                        if toward_lower_layers
+                        else layer_for[neighbor] > layer_index
+                    )
+                ]
+                barycenter = (
+                    sum(ranks[item] for item in relevant) / len(relevant)
+                    if relevant
+                    else float(ranks[key])
+                )
+                return barycenter, super_members[key][0]
+
+            layers[layer_index].sort(key=sort_key)
+
+        layer_indexes = sorted(layers)
+        for _ in range(4):
+            for layer_index in layer_indexes[1:]:
+                reorder(layer_index, reverse, True)
+            for layer_index in reversed(layer_indexes[:-1]):
+                reorder(layer_index, adjacency, False)
+
+    def _route_edges(
+        self, rendered_edges: Sequence[Tuple[DependencyEdge, Edge]]
+    ) -> None:
+        if not rendered_edges:
+            return
+
+        rectangles = {
+            node_id: _Rectangle(
+                float(obj.position[0]),
+                float(obj.position[1]),
+                float(obj.position[0] + obj.width),
+                float(obj.position[1] + obj.height),
+            )
+            for node_id, obj in self._node_objects.items()
+        }
+        faces: Dict[Tuple[int, str], str] = {}
+        endpoint_groups: Dict[Tuple[str, str], List[Tuple[int, str]]] = {}
+        for index, (dependency, _) in enumerate(rendered_edges):
+            source_face, target_face = self._preferred_faces(
+                rectangles[dependency.source], rectangles[dependency.target]
+            )
+            for role, node_id, face in (
+                ("source", dependency.source, source_face),
+                ("target", dependency.target, target_face),
+            ):
+                endpoint = (index, role)
+                faces[endpoint] = face
+                endpoint_groups.setdefault((node_id, face), []).append(endpoint)
+
+        ports: Dict[Tuple[int, str], Tuple[_Point, _Point, float]] = {}
+        for (node_id, face), endpoints in sorted(endpoint_groups.items()):
+            rectangle = rectangles[node_id]
+
+            def endpoint_key(endpoint: Tuple[int, str]) -> Tuple[float, str, str]:
+                index, role = endpoint
+                dependency = rendered_edges[index][0]
+                other_id = (
+                    dependency.target if role == "source" else dependency.source
+                )
+                other = rectangles[other_id]
+                other_center = (
+                    (other.top + other.bottom) / 2
+                    if face in {"left", "right"}
+                    else (other.left + other.right) / 2
+                )
+                return other_center, other_id, role
+
+            endpoints.sort(key=endpoint_key)
+            for rank, endpoint in enumerate(endpoints, start=1):
+                fraction = rank / (len(endpoints) + 1)
+                port, stub = self._port_points(rectangle, face, fraction)
+                ports[endpoint] = (port, stub, fraction)
+
+        order = sorted(
+            range(len(rendered_edges)),
+            key=lambda index: self._routing_order_key(
+                rendered_edges[index][0], rectangles
+            ),
+        )
+        obstacles = [
+            rectangle.expanded(_ROUTING_CLEARANCE)
+            for rectangle in rectangles.values()
+        ]
+        occupied_paths: List[List[_Point]] = []
+        occupancy = _RouteOccupancy()
+        routed_paths: Dict[int, List[_Point]] = {}
+        for index in order:
+            dependency, edge = rendered_edges[index]
+            source_port, source_stub, source_fraction = ports[(index, "source")]
+            target_port, target_stub, target_fraction = ports[(index, "target")]
+            self._set_edge_port(
+                edge, faces[(index, "source")], source_fraction, source=True
+            )
+            self._set_edge_port(
+                edge, faces[(index, "target")], target_fraction, source=False
+            )
+
+            middle = self._find_orthogonal_route(
+                source_stub, target_stub, obstacles, occupancy
+            )
+            path = self._simplify_path(
+                [source_port, source_stub, *middle[1:-1], target_stub, target_port]
+            )
+            for point in path[1:-1]:
+                edge.add_point_pos(point)  # type: ignore[arg-type]
+            if any(
+                self._paths_cross(path, prior_path)
+                for prior_path in occupied_paths
+            ):
+                edge.jumpStyle = "arc"
+                edge.jumpSize = 6
+            occupied_paths.append(path)
+            occupancy.add(path)
+            routed_paths[index] = path
+
+        # Retain deterministic link order while routing the hardest edges first.
+        self._routed_paths = tuple(
+            tuple(routed_paths[index]) for index in range(len(rendered_edges))
+        )
+
+    def _preferred_faces(
+        self, source: _Rectangle, target: _Rectangle
+    ) -> Tuple[str, str]:
+        if source == target:
+            return ("right", "bottom") if self.direction == "right" else (
+                "bottom",
+                "right",
+            )
+        source_center = (
+            (source.left + source.right) / 2,
+            (source.top + source.bottom) / 2,
+        )
+        target_center = (
+            (target.left + target.right) / 2,
+            (target.top + target.bottom) / 2,
+        )
+        delta_x = target_center[0] - source_center[0]
+        delta_y = target_center[1] - source_center[1]
+        if abs(delta_x) >= abs(delta_y):
+            return ("right", "left") if delta_x >= 0 else ("left", "right")
+        return ("bottom", "top") if delta_y >= 0 else ("top", "bottom")
+
+    @staticmethod
+    def _port_points(
+        rectangle: _Rectangle, face: str, fraction: float
+    ) -> Tuple[_Point, _Point]:
+        if face == "left":
+            y = rectangle.top + (rectangle.bottom - rectangle.top) * fraction
+            return (rectangle.left, y), (
+                rectangle.left - _ROUTING_CLEARANCE,
+                y,
+            )
+        if face == "right":
+            y = rectangle.top + (rectangle.bottom - rectangle.top) * fraction
+            return (rectangle.right, y), (
+                rectangle.right + _ROUTING_CLEARANCE,
+                y,
+            )
+        if face == "top":
+            x = rectangle.left + (rectangle.right - rectangle.left) * fraction
+            return (x, rectangle.top), (
+                x,
+                rectangle.top - _ROUTING_CLEARANCE,
+            )
+        x = rectangle.left + (rectangle.right - rectangle.left) * fraction
+        return (x, rectangle.bottom), (
+            x,
+            rectangle.bottom + _ROUTING_CLEARANCE,
+        )
+
+    @staticmethod
+    def _set_edge_port(
+        edge: Edge, face: str, fraction: float, *, source: bool
+    ) -> None:
+        coordinates = {
+            "left": (0.0, fraction),
+            "right": (1.0, fraction),
+            "top": (fraction, 0.0),
+            "bottom": (fraction, 1.0),
+        }[face]
+        if source:
+            edge.exitX, edge.exitY = coordinates
+        else:
+            edge.entryX, edge.entryY = coordinates
+
+    @staticmethod
+    def _routing_order_key(
+        dependency: DependencyEdge, rectangles: Mapping[str, _Rectangle]
+    ) -> Tuple[float, str, str]:
+        source = rectangles[dependency.source]
+        target = rectangles[dependency.target]
+        distance = abs(
+            (source.left + source.right) / 2 - (target.left + target.right) / 2
+        ) + abs(
+            (source.top + source.bottom) / 2
+            - (target.top + target.bottom) / 2
+        )
+        return -distance, dependency.source, dependency.target
+
+    @classmethod
+    def _find_orthogonal_route(
+        cls,
+        start: _Point,
+        end: _Point,
+        obstacles: Sequence[_Rectangle],
+        occupancy: _RouteOccupancy,
+    ) -> List[_Point]:
+        frame_margin = _ROUTING_CLEARANCE * 2
+        xs = {start[0], end[0]}
+        ys = {start[1], end[1]}
+        for obstacle in obstacles:
+            xs.update((obstacle.left, obstacle.right))
+            ys.update((obstacle.top, obstacle.bottom))
+        xs.update((min(xs) - frame_margin, max(xs) + frame_margin))
+        ys.update((min(ys) - frame_margin, max(ys) + frame_margin))
+
+        valid_points = {
+            (x, y)
+            for x in xs
+            for y in ys
+            if not cls._point_inside_obstacle((x, y), obstacles)
+        }
+        if start not in valid_points or end not in valid_points:
+            raise RuntimeError("Unable to place a dependency edge outside node bounds")
+
+        neighbors: Dict[_Point, List[_Point]] = {
+            point: [] for point in valid_points
+        }
+        by_y: Dict[float, List[float]] = {}
+        by_x: Dict[float, List[float]] = {}
+        for x, y in valid_points:
+            by_y.setdefault(y, []).append(x)
+            by_x.setdefault(x, []).append(y)
+        for y, row in by_y.items():
+            row.sort()
+            for left, right in zip(row, row[1:]):
+                first, second = (left, y), (right, y)
+                if cls._segment_clear(first, second, obstacles):
+                    neighbors[first].append(second)
+                    neighbors[second].append(first)
+        for x, column in by_x.items():
+            column.sort()
+            for top, bottom in zip(column, column[1:]):
+                first, second = (x, top), (x, bottom)
+                if cls._segment_clear(first, second, obstacles):
+                    neighbors[first].append(second)
+                    neighbors[second].append(first)
+
+        start_state = (start, "")
+        costs = {start_state: 0.0}
+        previous: Dict[Tuple[_Point, str], Tuple[_Point, str]] = {}
+        pending: List[Tuple[float, float, _Point, str]] = [
+            (cls._manhattan(start, end), 0.0, start, "")
+        ]
+        final_state: Optional[Tuple[_Point, str]] = None
+        while pending:
+            _, cost, point, incoming = heapq.heappop(pending)
+            state = (point, incoming)
+            if cost != costs.get(state):
+                continue
+            if point == end:
+                final_state = state
+                break
+            for neighbor in sorted(neighbors[point]):
+                direction = "h" if neighbor[1] == point[1] else "v"
+                bend = _BEND_PENALTY if incoming and incoming != direction else 0
+                route_penalty = occupancy.penalty(point, neighbor)
+                next_cost = (
+                    cost
+                    + cls._manhattan(point, neighbor)
+                    + bend
+                    + route_penalty
+                )
+                next_state = (neighbor, direction)
+                if next_cost < costs.get(next_state, math.inf):
+                    costs[next_state] = next_cost
+                    previous[next_state] = state
+                    estimate = next_cost + cls._manhattan(neighbor, end)
+                    heapq.heappush(
+                        pending, (estimate, next_cost, neighbor, direction)
+                    )
+
+        if final_state is None:
+            raise RuntimeError("Unable to route a dependency edge around node bounds")
+        route = []
+        state = final_state
+        while True:
+            route.append(state[0])
+            if state == start_state:
+                break
+            state = previous[state]
+        route.reverse()
+        return cls._simplify_path(route)
+
+    @staticmethod
+    def _point_inside_obstacle(
+        point: _Point, obstacles: Sequence[_Rectangle]
+    ) -> bool:
+        x, y = point
+        return any(
+            obstacle.left < x < obstacle.right
+            and obstacle.top < y < obstacle.bottom
+            for obstacle in obstacles
+        )
+
+    @staticmethod
+    def _segment_clear(
+        first: _Point, second: _Point, obstacles: Sequence[_Rectangle]
+    ) -> bool:
+        if first[1] == second[1]:
+            left, right = sorted((first[0], second[0]))
+            y = first[1]
+            return not any(
+                obstacle.top < y < obstacle.bottom
+                and max(left, obstacle.left) < min(right, obstacle.right)
+                for obstacle in obstacles
+            )
+        top, bottom = sorted((first[1], second[1]))
+        x = first[0]
+        return not any(
+            obstacle.left < x < obstacle.right
+            and max(top, obstacle.top) < min(bottom, obstacle.bottom)
+            for obstacle in obstacles
+        )
+
+    @staticmethod
+    def _segments_cross(
+        first: _Point,
+        second: _Point,
+        other_first: _Point,
+        other_second: _Point,
+    ) -> bool:
+        first_horizontal = first[1] == second[1]
+        other_horizontal = other_first[1] == other_second[1]
+        if first_horizontal == other_horizontal:
+            return False
+        horizontal_first, horizontal_second = (
+            (first, second) if first_horizontal else (other_first, other_second)
+        )
+        vertical_first, vertical_second = (
+            (other_first, other_second) if first_horizontal else (first, second)
+        )
+        horizontal_min, horizontal_max = sorted(
+            (horizontal_first[0], horizontal_second[0])
+        )
+        vertical_min, vertical_max = sorted(
+            (vertical_first[1], vertical_second[1])
+        )
+        return (
+            horizontal_min < vertical_first[0] < horizontal_max
+            and vertical_min < horizontal_first[1] < vertical_max
+        )
+
+    @classmethod
+    def _paths_cross(
+        cls, first_path: Sequence[_Point], second_path: Sequence[_Point]
+    ) -> bool:
+        return any(
+            cls._segments_cross(first, second, other_first, other_second)
+            for first, second in zip(first_path, first_path[1:])
+            for other_first, other_second in zip(second_path, second_path[1:])
+        )
+
+    @staticmethod
+    def _manhattan(first: _Point, second: _Point) -> float:
+        return abs(first[0] - second[0]) + abs(first[1] - second[1])
+
+    @staticmethod
+    def _simplify_path(path: Sequence[_Point]) -> List[_Point]:
+        simplified: List[_Point] = []
+        for point in path:
+            if simplified and point == simplified[-1]:
+                continue
+            if len(simplified) >= 2:
+                first, second = simplified[-2:]
+                if (first[0] == second[0] == point[0]) or (
+                    first[1] == second[1] == point[1]
+                ):
+                    simplified[-1] = point
+                    continue
+            simplified.append(point)
+        return simplified
 
     @staticmethod
     def _node_tooltip(node: DependencyNode) -> str:
@@ -1243,6 +1733,14 @@ class DependencyDiagram:
             return
         maximum_x = max(obj.position[0] + obj.width for obj in self.objects)
         maximum_y = max(obj.position[1] + obj.height for obj in self.objects)
+        route_points = [
+            point
+            for edge in self.links
+            for point in edge.geometry.points
+        ]
+        if route_points:
+            maximum_x = max(maximum_x, max(point.x for point in route_points))
+            maximum_y = max(maximum_y, max(point.y for point in route_points))
         self.page.width = max(850, maximum_x + self.padding)
         self.page.height = max(1100, maximum_y + self.padding)
 

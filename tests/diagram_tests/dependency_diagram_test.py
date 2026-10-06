@@ -436,6 +436,14 @@ def test_rendering_styles_tooltips_layout_and_options_are_forwarded(tmp_path):
     assert rendered_edge.strokeColor == "#B85450"
     assert rendered_edge.strokeWidth == 3
     assert "Import sites: 2" in rendered_edge.tooltip
+    single_weight_edge = next(
+        edge
+        for edge in diagram.links
+        if edge.source is diagram._node_objects["sample.b"]
+        and edge.target is diagram._node_objects["sample.a"]
+    )
+    assert single_weight_edge.label is None
+    assert ElementTree.fromstring(single_weight_edge.xml).get("label") == ""
     assert "Ca" in diagram._node_objects["sample.a"].value
     assert diagram._node_objects["sample.a"].fillColor == "#F8CECC"
     ElementTree.fromstring(diagram.file.xml)
@@ -481,6 +489,79 @@ def test_disconnected_layout_and_analysis_order_are_deterministic(tmp_path):
     assert len(set(obj.position for obj in first._node_objects.values())) == len(
         first._node_objects
     )
+
+
+@pytest.mark.parametrize("direction", ["right", "down"])
+@pytest.mark.parametrize("link_style", ["orthogonal", "straight", "curved"])
+def test_routes_avoid_unrelated_nodes_for_every_link_style(
+    tmp_path, direction, link_style
+):
+    package = _package(tmp_path)
+    (package / "a.py").write_text(
+        "from . import b\nfrom . import c\n", encoding="utf-8"
+    )
+    (package / "b.py").write_text("from . import c\n", encoding="utf-8")
+    (package / "c.py").write_text("", encoding="utf-8")
+
+    diagram = DependencyDiagram.create_from_path(
+        package,
+        direction=direction,
+        link_style=link_style,
+        show_legend=False,
+    )
+
+    def crosses_interior(first, second, obj):
+        left, top = obj.position
+        right, bottom = left + obj.width, top + obj.height
+        if first[1] == second[1]:
+            segment_left, segment_right = sorted((first[0], second[0]))
+            return (
+                top < first[1] < bottom
+                and max(segment_left, left) < min(segment_right, right)
+            )
+        segment_top, segment_bottom = sorted((first[1], second[1]))
+        return (
+            left < first[0] < right
+            and max(segment_top, top) < min(segment_bottom, bottom)
+        )
+
+    for dependency, path in zip(diagram.analysis.edges, diagram._routed_paths):
+        assert all(
+            not crosses_interior(first, second, obj)
+            for node_id, obj in diagram._node_objects.items()
+            if node_id not in {dependency.source, dependency.target}
+            for first, second in zip(path, path[1:])
+        )
+
+    outgoing = [
+        edge
+        for dependency, edge in zip(diagram.analysis.edges, diagram.links)
+        if dependency.source == "sample.a"
+    ]
+    assert len({(edge.exitX, edge.exitY) for edge in outgoing}) == len(outgoing)
+    assert any(edge.geometry.points for edge in diagram.links)
+
+
+def test_obstacle_aware_routes_are_deterministic(tmp_path):
+    package = _package(tmp_path)
+    (package / "a.py").write_text(
+        "from . import b\nfrom . import c\n", encoding="utf-8"
+    )
+    (package / "b.py").write_text("from . import c\n", encoding="utf-8")
+    (package / "c.py").write_text("", encoding="utf-8")
+
+    first = DependencyDiagram.create_from_path(package, show_legend=False)
+    second = DependencyDiagram.create_from_path(package, show_legend=False)
+
+    assert first._routed_paths == second._routed_paths
+    assert [
+        (edge.exitX, edge.exitY, edge.entryX, edge.entryY)
+        for edge in first.links
+    ] == [
+        (edge.exitX, edge.exitY, edge.entryX, edge.entryY)
+        for edge in second.links
+    ]
+    assert any(edge.jumpStyle == "arc" for edge in first.links)
 
 
 def test_single_python_file_and_missing_namespace(tmp_path):

@@ -80,9 +80,25 @@ Loose top-level modules with no package ancestor remain module nodes.
 | `show_edge_weights` | `False` | Label repeated dependencies and scale their edge width. |
 | `show_legend` | `True` | Add the node and edge style legend. |
 | `direction` | `"right"` | Lay out dependencies left-to-right; `"down"` is also supported. |
+| `link_style` | `"orthogonal"` | Draw routed links as orthogonal, piecewise straight, or curved. |
 
 Common virtual environments, caches, build outputs, version-control folders,
 and hidden tool directories are ignored automatically.
+
+## Layout and Routing
+
+Dependency diagrams reserve corridors between nodes and route every connector
+around unrelated node shapes. Connection points are spread across node faces so
+that fan-in and fan-out remain distinguishable. The router also reduces shared
+segments and crossings where possible and uses line jumps for crossings that
+cannot be avoided.
+
+Obstacle avoidance applies to every `link_style`. Consequently, `straight`
+means piecewise-straight: a link remains a single straight segment when the
+path is clear and receives bends when required to avoid a node. Layout and
+routing are deterministic for the same analysis and options. Spacing options
+are treated as requested minimums; the generator may reserve additional room
+when a routing corridor requires it.
 
 ## Import Resolution
 
