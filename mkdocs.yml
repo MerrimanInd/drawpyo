@@ -33,6 +33,7 @@ nav:
     - Tree Diagrams: diagram_types/tree_diagrams.md
     - Binary Tree Diagrams: diagram_types/binary_tree_diagrams.md
     - Class Diagrams: diagram_types/class_diagrams.md
+    - Python Dependency Diagrams: diagram_types/dependency_diagrams.md
     - Bar Charts: diagram_types/bar_charts.md
     - Pie Charts: diagram_types/pie_charts.md
     - Legends: diagram_types/legends.md
@@ -54,6 +55,7 @@ nav:
         - BinaryTreeDiagram: api/binary_tree_diagram/binarytreediagram.md
         - BinaryNodeObject: api/binary_tree_diagram/binarynodeobject.md
       - Class Diagram: api/class_diagram/classdiagram.md
+      - Python Dependency Diagram: api/dependency_diagram/dependencydiagram.md
       - Bar Chart: api/bar_chart/barchart.md
       - Pie Chart: api/pie_chart/piechart.md
       - Legend: api/legend/legend.md
