@@ -1,4 +1,7 @@
 from unittest.mock import patch, mock_open
+import base64
+import urllib.parse
+import zlib
 import pytest
 import os
 from pathlib import Path
@@ -51,6 +54,29 @@ class TestParseMxlibrary:
         assert "NoXML" not in shapes
         assert len(errors) == 1
         assert "Missing 'xml' field" in errors[0]
+
+    def test_parse_mxlibrary_decodes_compressed_single_cell_item(self):
+        """A compressed mxGraphModel with one shape loads its style."""
+        graph_xml = (
+            '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>'
+            '<mxCell id="2" vertex="1" style="shape=stencil(payload);" parent="1">'
+            '<mxGeometry width="82" height="71" as="geometry"/>'
+            "</mxCell></root></mxGraphModel>"
+        )
+        compressed = zlib.compress(urllib.parse.quote(graph_xml).encode("utf-8"))[2:-4]
+        encoded_xml = base64.b64encode(compressed).decode("ascii")
+        xml_content = (
+            '<mxlibrary>[{"h":71,"w":82,"title":"Compressed Icon",'
+            f'"xml":"{encoded_xml}"'
+            "}]</mxlibrary>"
+        )
+
+        shapes, errors = parse_mxlibrary(xml_content)
+
+        assert errors == []
+        assert shapes["Compressed Icon"]["baseStyle"] == "shape=stencil(payload);"
+        assert shapes["Compressed Icon"]["width"] == 82
+        assert shapes["Compressed Icon"]["height"] == 71
 
 
 class TestLoadMxlibrary:
