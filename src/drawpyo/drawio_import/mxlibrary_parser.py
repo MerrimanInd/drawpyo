@@ -1,12 +1,37 @@
 import json
+import base64
 import html
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
+import urllib.parse
+import zlib
 from typing import Dict, Any, List, Tuple
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+def _decode_library_xml(xml_encoded: str) -> str:
+    """Decode the XML payload stored in a draw.io mxlibrary item."""
+    xml_str = html.unescape(xml_encoded)
+
+    if xml_str.lstrip().startswith("<"):
+        return xml_str
+
+    try:
+        compressed = base64.b64decode(xml_str, validate=True)
+    except Exception:
+        return urllib.parse.unquote(xml_str)
+
+    for window_bits in (-15, zlib.MAX_WBITS):
+        try:
+            decoded = zlib.decompress(compressed, window_bits).decode("utf-8")
+            return urllib.parse.unquote(decoded)
+        except Exception:
+            continue
+
+    return xml_str
 
 
 def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]:
@@ -63,7 +88,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             errors.append(f"Item {idx} ({title}): Missing 'xml' field")
             continue
 
-        xml_str = html.unescape(xml_encoded)
+        xml_str = _decode_library_xml(xml_encoded)
 
         try:
             try:
@@ -71,7 +96,6 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             except ET.ParseError:
                 root_element = ET.fromstring(f"<root>{xml_str}</root>")
 
-            main_cell = None
             cells = []
 
             if root_element.tag == "mxCell":
@@ -80,6 +104,7 @@ def parse_mxlibrary(content: str) -> Tuple[Dict[str, Dict[str, Any]], List[str]]
             for cell in root_element.iter("mxCell"):
                 cells.append(cell)
 
+            main_cell = None
             for cell in cells:
                 if cell.get("vertex") == "1":
                     main_cell = cell

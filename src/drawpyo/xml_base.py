@@ -78,7 +78,8 @@ class XMLBase:
             str: The opening tag of the object with all the attributes.
         """
         if self.tag or self.tooltip:
-            label = self.xml_ify(str(self.value))
+            label = "" if self.value is None else str(self.value)
+            label = self.xml_ify(label)
             object_id = self.xml_ify(str(self.id))
             open_user_object_tag = f'<UserObject label="{label}" id="{object_id}"'
             if self.tag:
