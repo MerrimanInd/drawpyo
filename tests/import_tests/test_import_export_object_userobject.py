@@ -119,3 +119,31 @@ def test_parsed_diagram_add_to_offset(diagram):
     assert obj_2 is not None
     assert obj_1.position == (360, 390)
     assert obj_2.position == (160, 300)
+
+
+def test_parsed_diagram_add_to_registers_on_page(diagram):
+    file = File(file_name="test.drawio", file_path=".")
+    page = Page(file=file)
+
+    diagram.add_to(page)
+
+    for shape in diagram.shapes:
+        assert shape.page is page
+        assert shape in page.objects
+    for edge in diagram.edges:
+        assert edge.page is page
+        assert edge in page.objects
+
+
+def test_parsed_diagram_add_to_include_flags(diagram):
+    file = File(file_name="test.drawio", file_path=".")
+    page = Page(file=file)
+
+    diagram.add_to(page, include_shapes=False, include_edges=True)
+
+    for shape in diagram.shapes:
+        assert shape.page is None
+        assert shape not in page.objects
+    for edge in diagram.edges:
+        assert edge.page is page
+        assert edge in page.objects

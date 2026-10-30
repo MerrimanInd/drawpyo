@@ -37,6 +37,33 @@ A `ParsedDiagram` has:
 | `_id_map`       | Internal mapping of Draw.io cell IDs to objects for fast access |
 | `get_by_id(id)` | Retrieve a shape or edge by its original Draw.io ID             |
 | `element_count` | Total number of shapes + edges in the diagram                   |
+| `add_to(page, ...)` | Attach imported shapes and edges to a `Page` (see below)    |
+
+---
+
+## Adding a Parsed Diagram to a Page
+
+After loading a diagram, attach its elements to a page with `ParsedDiagram.add_to()`. This sets each element's page, registers it for export, optionally shifts top-level geometry by an offset, and rewrites Draw.io page links on `UserObject` elements.
+
+```python
+from drawpyo import File, Page, load_diagram
+
+diagram = load_diagram("source.drawio")
+output = File()
+page = Page(file=output, name=diagram.name or "Imported")
+
+diagram.add_to(page)  # optional: offset=(dx, dy), include_shapes=..., include_edges=...
+output.write()
+```
+
+| Parameter        | Default | Description |
+| ---------------- | ------- | ----------- |
+| `page`           | —       | Target `Page` to receive shapes and edges |
+| `offset`         | `(0, 0)` | Added to top-level object positions and edge waypoint coordinates |
+| `include_shapes` | `True`  | When `False`, shapes are left unattached |
+| `include_edges`  | `True`  | When `False`, edges are left unattached |
+
+For multipage files, load each page with `load_diagrams()` and call `add_to()` once per `ParsedDiagram`.
 
 ---
 
